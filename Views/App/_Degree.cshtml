@@ -1,0 +1,72 @@
+﻿@model DegreeMapping.Models.Degree
+
+@using (Html.BeginForm("DegreeSave", "App", FormMethod.Post, new { @class = "form-horizontal" }))
+{
+    @Html.HiddenFor(x => x.Id);
+    @Html.HiddenFor(x => x.InstitutionId)
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                @Html.LabelFor(x => x.Name) :
+                @Html.TextBoxFor(x => x.Name, new { @class = "form-control" })
+            </div>
+        </div>
+    </div>
+  
+    <div class="row pt-2">
+        <div class="col-md-3">
+            <div class="form-group">
+                @Html.LabelFor(x => x.DegreeType) :
+                @Html.TextBoxFor(x => x.DegreeType, new { @class = "form-control" })
+            </div>
+        </div>
+    </div>
+
+    <div class="row pt-2">
+        <div class="col-md-2">
+            <div class="form-group">
+                @Html.LabelFor(x => x.Active) :
+                @Html.CheckBoxFor(x => x.Active)
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-group">
+                @Html.LabelFor(x => x.LimitedAccess) :
+                @Html.CheckBoxFor(x => x.LimitedAccess)
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-group">
+                @Html.LabelFor(x => x.RestrictedAccess) :
+                @Html.CheckBoxFor(x => x.RestrictedAccess)
+            </div>
+        </div>
+    </div>
+
+    <div class="row pt-2">
+        <div class="col-md-10">
+            <div class="form-group">
+                @Html.LabelFor(x => x.Description) :
+                @Html.TextAreaFor(x => x.Description, new { @class = "form-control", col = "5", rows = "4", maxlength="100" })
+                <span class="alert alert-warning">100 characters max</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="row pt-2">
+        <div class="col-md-10">
+            <div class="form-group">
+                @Html.LabelFor(x => x.CatalogYear) :
+                @Html.TextAreaFor(x => x.CatalogYear, new { @class = "form-control", col = "5", rows = "4" })
+            </div>
+        </div>
+    </div>
+
+    <div class="row pt-2">
+        <div class="col-md-10">
+            <div class="form-group">
+                <button type="submit" class="btn btn-success">Save</button>
+            </div>
+        </div>
+    </div>
+}

@@ -1,0 +1,87 @@
+﻿@model DegreeMapping.Models.Course
+
+@using (Html.BeginForm("CourseSave", "App", FormMethod.Post, new { @Class = "form-horizontal" }))
+{
+    @Html.HiddenFor(x => x.Id)
+    @Html.HiddenFor(x => x.DegreeId)
+    <div class="row pt-2">
+        <div class="col-md-10">
+            <div class="form-group">
+                @Html.LabelFor(x => x.Name) :
+                @Html.TextBoxFor(x => x.Name, new { @class = "form-control", required = "required" })
+            </div>
+        </div>
+    </div>
+
+    <div class="row pt-2">
+        <div class="col-md-10">
+            <div class="form-group">
+                @Html.LabelFor(x => x.Code) :
+                @Html.TextBoxFor(x => x.Code, new { @class = "form-control", required = "required" })
+            </div>
+        </div>
+    </div>
+
+    <div class="row pt-2">
+        <div class="col-md-3">
+            <div class="form-group">
+                @Html.LabelFor(x => x.Credits) :
+                @Html.TextBoxFor(x => x.Credits, new { @class = "form-control" })
+            </div>
+        </div>
+    </div>
+
+    <div class="row pt-2">
+        <div class="col-md-2">
+            <div class="form-group">
+                @Html.LabelFor(x => x.Active) :
+                @Html.CheckBoxFor(x => x.Active)
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-group">
+                @Html.LabelFor(x => x.Critical) :
+                @Html.CheckBoxFor(x => x.Critical)
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-group">
+                @Html.LabelFor(x => x.Required) :
+                @Html.CheckBoxFor(x => x.Required)
+            </div>
+        </div>
+        <div class="">
+            <div class="form-group">
+                @Html.LabelFor(x => x.CommonProgramPrerequiste) :
+                @Html.CheckBoxFor(x => x.CommonProgramPrerequiste)
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row pt-2">
+        <div class="col-md-10">
+            <div class="form-group">
+                @Html.LabelFor(x => x.Description) :
+                @Html.TextAreaFor(x => x.Description, new { @class = "form-control", col = "10", rows = "4", maxlength = "100" })
+                <span class="alert alert-warning">100 characters max</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="row pt-2">
+        <div class="col-md-2">
+            <div class="form-group">
+                <button type="submit" class="btn btn-success">Save</button>
+            </div>
+        </div>
+        @if (Model.Id > 0)
+        {
+            <div class="col-md-2">
+                <div class="form-group">
+                    @Html.ActionLink("Delete", "CourseDelete", new { id = Model.Id, degreeId = Model.DegreeId }, new { @class = "btn btn-danger", onclick = "return confirm('Are you sure you wish to delete this course?');" })
+                </div>
+            </div>
+        }
+    </div>
+}

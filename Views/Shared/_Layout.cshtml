@@ -1,0 +1,60 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Degree Mapping - @ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("UCF Degree Mapping", "Index", "Home", null, new { @class = "navbar-brand h1" })
+            </div>
+            <div class="navbar-collapse collapse">
+                @*<ul class="nav navbar-nav float-right">
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        if (User.Identity.Name == "jgiron")
+                        {
+                            <li>@Html.ActionLink("Edit User", "EditUser", "App")</li>
+                        }
+                        <li>@Html.ActionLink("Sign Out", "SignOut", "Home")</li>
+
+                    }
+                </ul>*@
+                <div class="float-right">
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <span class="px-3">@Html.ActionLink("Institutions", "Institutions", "App", null, new { @class="btn btn-primary"})</span>
+                        if (User.Identity.Name == "jgiron")
+                        {
+                         <span class="px-3">@Html.ActionLink("View Users", "ViewUsers", "App", null, new { @class="btn btn-primary h1" })</span>
+                        }
+                        <span class="px-3">@Html.ActionLink("Sign Out", "SignOut", "Home", null, new { @class="btn btn-primary h1" })</span>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            [Add SLAS FOOTER]
+            You are signed in as @User.Identity.Name
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,42 @@
+﻿@model DegreeMapping.Models.User
+
+@{
+    ViewBag.Title = "Sign In";
+}
+
+
+<div class="row">
+    <div class="col-md-12">
+        @using (Html.BeginForm("Index", "Home", FormMethod.Post, new { @class = "form-horizontal"}))
+        {
+            <div class="form-group">
+                <div class="col-md-10">
+                    @Html.LabelFor(x => x.NID)
+                    @Html.TextBoxFor(x => x.NID, new { @class = "form-control", required = "required", placeholder="UCF NID" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-10">
+                    @Html.LabelFor(x => x.Password)
+                    @Html.TextBoxFor(x => x.Password, new { @class = "form-control", type="password", required="required", placeholder="Password" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-10">
+                    <button class="btn btn-primary">Sign In</button>
+                </div>
+            </div>
+
+            if (!string.IsNullOrEmpty(Model.Message))
+            {
+                <div class="form-group">
+                    <div class="col-md-10 alert alert-warning">
+                        @Html.Raw(Model.Message)
+                    </div>
+                </div>
+            }
+        }
+    </div>
+</div>

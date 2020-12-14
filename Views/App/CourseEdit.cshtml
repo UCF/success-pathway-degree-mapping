@@ -1,0 +1,11 @@
+﻿@model DegreeMapping.Models.Course
+
+<div class="row py-5">
+    <div class="col-md-12">
+        <small>@Html.ActionLink("Institutions", "Institutions") <span class="glyphicon glyphicon-arrow-right"></span> @Html.ActionLink(Model.Institution, "InstitutionView", new { id = Model.InstitutionId }) <span class="glyphicon glyphicon-arrow-right"></span> @Html.ActionLink(Model.Degree, "DegreeView", new { id = Model.DegreeId })</small>
+        <h1>@Html.Raw(Model.Name)</h1>
+    </div>
+</div>
+<div class="container px-5">
+    @Html.Action("_Course", "App", new { model = Model })
+</div>
