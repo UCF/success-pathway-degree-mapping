@@ -10,6 +10,7 @@ using Microsoft.Owin.Security.Provider;
 
 namespace DegreeMapping.Controllers
 {
+    [Authorize]
     public class AppController : Controller
     {
         // GET: App

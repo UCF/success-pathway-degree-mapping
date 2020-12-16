@@ -1,0 +1,45 @@
+﻿@model DegreeMapping.Models.Institution
+@{
+    List<DegreeMapping.Models.Degree> list_d = DegreeMapping.Models.Degree.List(Model.Id);
+}
+
+<div class="row py-5">
+    <div class="col-md-12">
+        <small>@Html.ActionLink("Institutions", "Institutions")</small>
+        <h1>@Model.Name</h1>
+        <div class="form-group">
+            <div class="col-md-10">
+                @Html.LabelFor(x => x.URL) : @Html.Raw(Model.URL)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-10">
+                @Html.LabelFor(x => x.Active) : @Model.Active
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-10">
+                @Html.ActionLink("Edit Institution", "InstitutionEdit", new { id = Model.Id })
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row px-5">
+    <div class="col-md-12">
+        <div>
+            @Html.ActionLink("Add Degree", "DegreeAdd", new { institutionId = Model.Id })
+        </div>
+        @if (list_d.Count > 0)
+        {
+            <ul>
+                @foreach (DegreeMapping.Models.Degree d in list_d.OrderBy(x => x.Name))
+                {
+                    <li>
+                        @Html.ActionLink(d.Name, "DegreeView", new { id = d.Id })
+                    </li>
+                }
+            </ul>
+        }
+    </div>
+</div>

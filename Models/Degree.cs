@@ -34,22 +34,30 @@ namespace DegreeMapping.Models
         public DateTime UpdateDate { get; set; }
         public string NID { get; set; }
 
+        public int? UCFDegreeId { get; set; }
+        public string UCFDegreeName { get; set; }
+
+
         public Degree()
         {
             Active = true;
+            CatalogYear = string.Empty;
             LimitedAccess = false;
             RestrictedAccess = false;
             NID = HttpContext.Current.User.Identity.Name;
+            UCFDegreeId = null;
         }
 
         public Degree(int institutionId)
         {
             Active = true;
+            CatalogYear = string.Empty;
             LimitedAccess = false;
             RestrictedAccess = false;
             InstitutionId = institutionId;
             Institution = DegreeMapping.Models.Institution.Get(institutionId).Name;
             NID = HttpContext.Current.User.Identity.Name;
+            UCFDegreeId = null;
         }
 
         public static int Insert(Degree d)
@@ -70,6 +78,10 @@ namespace DegreeMapping.Models
                 cmd.Parameters.AddWithValue("@CatalogYear", d.CatalogYear);
                 cmd.Parameters.AddWithValue("@UpdateDate", DateTime.Now);
                 cmd.Parameters.AddWithValue("@NID", d.NID);
+                if (d.UCFDegreeId.HasValue)
+                {
+                    cmd.Parameters.AddWithValue("@UCFDegreeId", d.UCFDegreeId.Value);
+                }
                 id = Convert.ToInt32(cmd.ExecuteScalar());
                 cn.Close();
             }
@@ -96,6 +108,10 @@ namespace DegreeMapping.Models
                 cmd.Parameters.AddWithValue("@Active", d.Active);
                 cmd.Parameters.AddWithValue("@UpdateDate", DateTime.Now);
                 cmd.Parameters.AddWithValue("@NID", d.NID);
+                if (d.UCFDegreeId.HasValue)
+                {
+                    cmd.Parameters.AddWithValue("@UCFDegreeId", d.UCFDegreeId.Value);
+                }
                 id = Convert.ToInt32(cmd.ExecuteScalar());
                 cn.Close();
             }
@@ -171,6 +187,10 @@ namespace DegreeMapping.Models
                 d.AddDate = Convert.ToDateTime(dr["AddDate"].ToString());
                 d.UpdateDate = Convert.ToDateTime(dr["UpdateDate"].ToString());
                 d.NID = dr["NID"].ToString();
+                int ucfDegreeId;
+                Int32.TryParse(dr["UCFDegreeId"].ToString(), out ucfDegreeId);
+                d.UCFDegreeId = ucfDegreeId;
+                d.UCFDegreeName = dr["UCFDegreeName"].ToString();
             }
         }
     }

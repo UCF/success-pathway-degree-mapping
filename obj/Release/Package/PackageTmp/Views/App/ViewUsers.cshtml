@@ -1,0 +1,49 @@
+﻿@model List<string>
+
+
+
+<div class="row py-5">
+    <div class="col-md-12">
+        <small>@Html.ActionLink("Institutions", "Institutions")</small>
+        <h1>Manage Users</h1>
+    </div>
+</div>
+
+<div class="container pt-3 px-5">
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Add User</h2>
+            @using (Html.BeginForm("UserAdd", "App", FormMethod.Post, new { @Class = "form-inline" }))
+            {
+                <div class="row" style="width:100%">
+                    <div class="col-md-6">
+                        <div class="input-group">
+                            <label class="sr-only" for="nid">NID</label>
+                            <input type="text" class="form-control" autofocus="" value="" name="nid" placeholder="NID" id="nid" style="width:500px;" autocomplete="off">
+                            <span class="">
+                                <button type="submit" class="btn btn-success">Add User</button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            }
+            </div>
+    </div>
+    <div class="row pt-5">
+        <div class="col-md-12">
+            @if (Model.Count > 0)
+            {
+                <h2>Authorized Users</h2>
+                <ul class="list-group">
+                    @foreach (string nid in Model)
+                    {
+                        <li class="list-group-item">
+                            @nid <span class="px-3"> @Html.ActionLink("Delete", "UserDelete", new { nid = nid }, new { @class = "btn btn-danger" })</span>
+                        </li>
+                    }
+                </ul>
+            }
+
+        </div>
+    </div>
+</div>

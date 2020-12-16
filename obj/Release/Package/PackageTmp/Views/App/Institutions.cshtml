@@ -1,0 +1,19 @@
+﻿@model List<DegreeMapping.Models.Institution>
+
+
+<div class="row py-5">
+    <div class="col-md-12">
+        <h1 class="heading-underline">Institutions</h1>
+        @Html.ActionLink("Add Institution", "InstitutionAdd")
+        <div class="pt-3">
+            <ul>
+                @foreach (DegreeMapping.Models.Institution i in Model.OrderBy(x => x.Name))
+                {
+                    <li>
+                        @Html.ActionLink(i.Name, "InstitutionView", new { id = i.Id })
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+</div>

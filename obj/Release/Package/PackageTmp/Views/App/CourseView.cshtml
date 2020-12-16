@@ -1,0 +1,57 @@
+﻿@model DegreeMapping.Models.Course
+
+
+<div class="row py-5">
+    <div class="col-md-12">
+        <small>@Html.ActionLink("Institutions", "Institutions", new { id = Model.InstitutionId }) <span class="glyphicon glyphicon-arrow-right"></span> @Html.ActionLink(Model.Institution, "InstitutionView", new { id = Model.InstitutionId }) <span class="glyphicon glyphicon-arrow-right"></span> @Html.ActionLink(Model.Degree, "DegreeView", new { id = Model.DegreeId })</small>
+        <h2>@Html.Raw(Model.Name)</h2>
+        <div class="form-group">
+            <div class="col-md-10">
+                @Html.LabelFor(x => x.Active) : @Model.Active
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-10">
+                @Html.LabelFor(x => x.Code) : @Model.Code.ToUpper()
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-10">
+                @Html.LabelFor(x => x.Credits) : @Model.Credits
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-10">
+                @Html.LabelFor(x => x.Critical) : @Model.Critical
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-10">
+                @Html.LabelFor(x => x.CommonProgramPrerequiste) : @Model.CommonProgramPrerequiste
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-10">
+                @Html.LabelFor(x => x.Required) : @Model.Required
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-10">
+                @Html.LabelFor(x => x.Description) <br />
+                @Html.Raw(Model.Description)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-10">
+                @Html.ActionLink("Edit Course", "CourseEdit", new { id = Model.Id })
+            </div>
+        </div>
+    </div>
+</div>

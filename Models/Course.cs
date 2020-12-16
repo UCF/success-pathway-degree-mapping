@@ -34,6 +34,7 @@ namespace DegreeMapping.Models
         public DateTime AddDate { get; set; }
         public DateTime UpdateDate { get; set; }
         public string NID { get; set; }
+        public int Semester { get; set; }
 
         public Course()
         {
@@ -42,6 +43,7 @@ namespace DegreeMapping.Models
             Active = true;
             Credits = 3;
             NID = HttpContext.Current.User.Identity.Name;
+            Semester = 1;
         }
         public Course(int degreeId)
         {
@@ -55,6 +57,7 @@ namespace DegreeMapping.Models
             Institution = d.Institution;
             InstitutionId = d.InstitutionId;
             NID = HttpContext.Current.User.Identity.Name;
+            Semester = 1;
         }
 
         public static int Insert(Course c)
@@ -67,7 +70,7 @@ namespace DegreeMapping.Models
                 cmd.CommandText = "InsertCourse";
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@DegreeId", c.DegreeId);
-                cmd.Parameters.AddWithValue("@Code", c.Code);
+                cmd.Parameters.AddWithValue("@Code", c.Code.ToUpper());
                 cmd.Parameters.AddWithValue("@Name", c.Name);
                 cmd.Parameters.AddWithValue("@Credits", c.Credits);
                 cmd.Parameters.AddWithValue("@Critical", c.Critical);
@@ -77,6 +80,7 @@ namespace DegreeMapping.Models
                 cmd.Parameters.AddWithValue("@Active", c.Active);
                 cmd.Parameters.AddWithValue("@UpdateDate", DateTime.Now);
                 cmd.Parameters.AddWithValue("@NID", c.NID);
+                cmd.Parameters.AddWithValue("@Semester", c.Semester);
                 id = Convert.ToInt32(cmd.ExecuteScalar());
                 cn.Close();
             }
@@ -93,7 +97,7 @@ namespace DegreeMapping.Models
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@Id", c.Id);
                 cmd.Parameters.AddWithValue("@DegreeId", c.DegreeId);
-                cmd.Parameters.AddWithValue("@Code", c.Code);
+                cmd.Parameters.AddWithValue("@Code", c.Code.ToUpper());
                 cmd.Parameters.AddWithValue("@Name", c.Name);
                 cmd.Parameters.AddWithValue("@Credits", c.Credits);
                 cmd.Parameters.AddWithValue("@Critical", c.Critical);
@@ -103,6 +107,7 @@ namespace DegreeMapping.Models
                 cmd.Parameters.AddWithValue("@Active", c.Active);
                 cmd.Parameters.AddWithValue("@UpdateDate", DateTime.Now);
                 cmd.Parameters.AddWithValue("@NID", c.NID);
+                cmd.Parameters.AddWithValue("@Semester", c.Semester);
                 cmd.ExecuteScalar();
                 cn.Close();
             }
@@ -164,7 +169,7 @@ namespace DegreeMapping.Models
             if (dr.HasRows)
             {
                 c.Id = Convert.ToInt32(dr["Id"].ToString());
-                c.DegreeId = Convert.ToInt32(dr["DegreeId"].ToString());
+                c.DegreeId = Convert.ToInt32(dr["DegreeId"].ToString().ToUpper());
                 c.Code = dr["Code"].ToString();
                 c.Name = dr["Name"].ToString();
                 c.Credits = Convert.ToInt32(dr["Credits"].ToString());
@@ -180,6 +185,7 @@ namespace DegreeMapping.Models
                 c.AddDate = Convert.ToDateTime(dr["AddDate"].ToString());
                 c.UpdateDate = Convert.ToDateTime(dr["UpdateDate"].ToString());
                 c.NID = dr["NID"].ToString();
+                c.Semester = Convert.ToInt32(dr["Semester"].ToString());
             }
         }
 
