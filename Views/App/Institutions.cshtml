@@ -4,10 +4,9 @@
 <div class="row py-5">
     <div class="col-md-12">
         <h1 class="heading-underline">Institutions</h1>
-        @Html.ActionLink("Add Institution", "InstitutionAdd")
         <div class="pt-3">
             <ul>
-                @foreach (DegreeMapping.Models.Institution i in Model.Where(x => x.Name=="UCF"))
+                @foreach (DegreeMapping.Models.Institution i in Model.Where(x => x.Name == "UCF"))
                 {
                     <li>
                         @Html.ActionLink(i.Name, "InstitutionView", new { id = i.Id })
@@ -17,9 +16,10 @@
         </div>
 
         <h2>Partner Institutions</h2>
+        @Html.ActionLink("Add Institution", "InstitutionAdd")
         <div class="pt-3">
             <ul>
-                @foreach (DegreeMapping.Models.Institution i in Model.Where(x=>x.Name != "UCF").OrderBy(x => x.Name))
+                @foreach (DegreeMapping.Models.Institution i in Model.Where(x => x.Name != "UCF").OrderBy(x => x.Name))
                 {
                     <li>
                         @Html.ActionLink(i.Name, "InstitutionView", new { id = i.Id })

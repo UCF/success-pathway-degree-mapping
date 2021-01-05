@@ -9,11 +9,11 @@
 </div>
 <div class="row">
     <div class="col-md-12">
-        @Html.LabelFor(x=>x.Value) : @Model.Value
+        @Html.LabelFor(x => x.Active) : @(Model.Active?"Yes":"No")
         <br />
-        @Html.LabelFor(x=>x.Required) : @Model.Required
+        @Html.LabelFor(x => x.Value) : @Model.Value
         <br />
-        @Html.LabelFor(x=>x.Active) : @Model.Active
+        @Html.LabelFor(x => x.Required) : @(Model.Required?"Yes":"No")
         <br />
         @Html.ActionLink("Edit Note", "NoteEdit", new { id = Model.Id })
     </div>

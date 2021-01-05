@@ -7,7 +7,7 @@
         <h2>@Html.Raw(Model.Name)</h2>
         <div class="form-group">
             <div class="col-md-10">
-                @Html.LabelFor(x => x.Active) : @Model.Active
+                @Html.LabelFor(x => x.Active) : @(Model.Active?"Yes":"No")
             </div>
         </div>
 
@@ -25,19 +25,31 @@
 
         <div class="form-group">
             <div class="col-md-10">
-                @Html.LabelFor(x => x.Critical) : @Model.Critical
+                @Html.LabelFor(x => x.Critical) : @(Model.Critical?"Yes":"No")
             </div>
         </div>
 
         <div class="form-group">
             <div class="col-md-10">
-                @Html.LabelFor(x => x.CommonProgramPrerequiste) : @Model.CommonProgramPrerequiste
+                @Html.LabelFor(x => x.CommonProgramPrerequiste) : @(Model.CommonProgramPrerequiste?"Yes":"No")
             </div>
         </div>
 
         <div class="form-group">
             <div class="col-md-10">
-                @Html.LabelFor(x => x.Required) : @Model.Required
+                @Html.LabelFor(x => x.Required) : @(Model.Required?"Yes":"No")
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-10">
+                @Html.LabelFor(x => x.Semester) : @Model.Semester
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-10">
+                @Html.LabelFor(x => x.UCFRelatedCourse) : @Model.UCFRelatedCourse
             </div>
         </div>
 

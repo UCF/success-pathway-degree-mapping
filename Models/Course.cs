@@ -10,6 +10,7 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.InteropServices;
 using System.Web.Mvc;
+using System.Globalization;
 
 namespace DegreeMapping.Models
 {
@@ -30,11 +31,14 @@ namespace DegreeMapping.Models
         public string Degree { get; set; }
         public string Institution { get; set; }
         [DisplayName("Institution Id")]
-        public int InstitutionId { get;set;}
+        public int InstitutionId { get; set; }
         public DateTime AddDate { get; set; }
         public DateTime UpdateDate { get; set; }
         public string NID { get; set; }
         public int Semester { get; set; }
+        public int? UCFCourseId { get; set; }
+        [DisplayName("UCF Related Course")]
+        public string UCFRelatedCourse { get; set; }
 
         public Course()
         {
@@ -65,13 +69,14 @@ namespace DegreeMapping.Models
             int id = 0;
             using (SqlConnection cn = new SqlConnection(Database.DC_DegreeMapping))
             {
+                TextInfo textInfo = new CultureInfo("en-US", false).TextInfo;
                 cn.Open();
                 SqlCommand cmd = cn.CreateCommand();
                 cmd.CommandText = "InsertCourse";
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@DegreeId", c.DegreeId);
                 cmd.Parameters.AddWithValue("@Code", c.Code.ToUpper());
-                cmd.Parameters.AddWithValue("@Name", c.Name);
+                cmd.Parameters.AddWithValue("@Name", textInfo.ToTitleCase(c.Name));
                 cmd.Parameters.AddWithValue("@Credits", c.Credits);
                 cmd.Parameters.AddWithValue("@Critical", c.Critical);
                 cmd.Parameters.AddWithValue("@CommonProgramPrerequiste", c.CommonProgramPrerequiste);
@@ -81,6 +86,10 @@ namespace DegreeMapping.Models
                 cmd.Parameters.AddWithValue("@UpdateDate", DateTime.Now);
                 cmd.Parameters.AddWithValue("@NID", c.NID);
                 cmd.Parameters.AddWithValue("@Semester", c.Semester);
+                if (c.UCFCourseId.HasValue)
+                {
+                    cmd.Parameters.AddWithValue("@UCFCourseId", c.UCFCourseId);
+                }
                 id = Convert.ToInt32(cmd.ExecuteScalar());
                 cn.Close();
             }
@@ -91,6 +100,7 @@ namespace DegreeMapping.Models
         {
             using (SqlConnection cn = new SqlConnection(Database.DC_DegreeMapping))
             {
+                TextInfo textInfo = new CultureInfo("en-US", false).TextInfo;
                 cn.Open();
                 SqlCommand cmd = cn.CreateCommand();
                 cmd.CommandText = "UpdateCourse";
@@ -98,7 +108,7 @@ namespace DegreeMapping.Models
                 cmd.Parameters.AddWithValue("@Id", c.Id);
                 cmd.Parameters.AddWithValue("@DegreeId", c.DegreeId);
                 cmd.Parameters.AddWithValue("@Code", c.Code.ToUpper());
-                cmd.Parameters.AddWithValue("@Name", c.Name);
+                cmd.Parameters.AddWithValue("@Name", textInfo.ToTitleCase(c.Name));
                 cmd.Parameters.AddWithValue("@Credits", c.Credits);
                 cmd.Parameters.AddWithValue("@Critical", c.Critical);
                 cmd.Parameters.AddWithValue("@CommonProgramPrerequiste", c.CommonProgramPrerequiste);
@@ -108,6 +118,10 @@ namespace DegreeMapping.Models
                 cmd.Parameters.AddWithValue("@UpdateDate", DateTime.Now);
                 cmd.Parameters.AddWithValue("@NID", c.NID);
                 cmd.Parameters.AddWithValue("@Semester", c.Semester);
+                if (c.UCFCourseId.HasValue)
+                {
+                    cmd.Parameters.AddWithValue("@UCFCourseId", c.UCFCourseId);
+                }
                 cmd.ExecuteScalar();
                 cn.Close();
             }
@@ -186,6 +200,13 @@ namespace DegreeMapping.Models
                 c.UpdateDate = Convert.ToDateTime(dr["UpdateDate"].ToString());
                 c.NID = dr["NID"].ToString();
                 c.Semester = Convert.ToInt32(dr["Semester"].ToString());
+                int ucfCourseId;
+                Int32.TryParse(dr["UCFCourseId"].ToString(), out ucfCourseId);
+                if (ucfCourseId > 0)
+                {
+                    c.UCFCourseId = ucfCourseId;
+                }
+                c.UCFRelatedCourse = dr["UCFRelatedCourse"].ToString();
             }
         }
 

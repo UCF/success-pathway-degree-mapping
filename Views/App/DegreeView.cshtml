@@ -63,7 +63,7 @@
             else
             {
                 <div>
-                    @Model.Name is mapped to @Model.UCFDegreeName
+                   Degree is mapped to UCF @Model.UCFDegreeName
                 </div>
             }
         </div>
@@ -75,9 +75,15 @@
         @Html.ActionLink("Add Course", "CourseAdd", new { degreeId = Model.Id })
         @if (list_c.Count > 0)
         {
+            int semester = 0;
             <ul>
-                @foreach (DegreeMapping.Models.Course c in list_c.OrderBy(x => x.Name))
+                @foreach (DegreeMapping.Models.Course c in list_c.OrderBy(x => x.Semester).ThenBy(x => x.Code))
                 {
+                    if (semester != c.Semester)
+                    {
+                        semester = c.Semester;
+                        <li style="list-style:none; margin-left:-20px"><strong>Semester @semester</strong></li>
+                    }
                     <li>
                         @Html.ActionLink(c.Code.ToUpper() + " " + c.Name, "CourseView", new { id = c.Id })
                     </li>
@@ -88,7 +94,7 @@
     <div class="col-md-6">
         <div>
             <h3>Notes/Requirements</h3>
-            @Html.ActionLink("Add Notes", "NoteAdd", new { degreeId = Model.Id })
+            @Html.ActionLink("Add Note", "NoteAdd", new { degreeId = Model.Id })
         </div>
         @if (list_n.Count > 0)
         {

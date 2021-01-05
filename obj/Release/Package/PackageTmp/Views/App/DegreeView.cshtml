@@ -5,12 +5,12 @@
 }
 
 <div class="row py-5">
-    <div class="col-md-12">
+    <div class="col-md-6">
     <small>@Html.ActionLink("Institutions", "Institutions") <span class="glyphicon glyphicon-arrow-right"></span> @Html.ActionLink(Model.Institution, "InstitutionView", new { id = Model.InstitutionId })</small>
     <h1>@Html.Raw(Model.Name)</h1>
     <div class="form-group">
         <div class="col-md-10">
-            @Html.LabelFor(x => x.Active) : @Model.Active
+            @Html.LabelFor(x => x.Active) : @(Model.Active?"Yes":"No")
         </div>
     </div>
 
@@ -22,13 +22,13 @@
 
     <div class="form-group">
         <div class="col-md-10">
-            @Html.LabelFor(x => x.LimitedAccess) : @Model.LimitedAccess
+            @Html.LabelFor(x => x.LimitedAccess) : @(Model.LimitedAccess?"Yes":"No")
         </div>
     </div>
 
     <div class="form-group">
         <div class="col-md-10">
-            @Html.LabelFor(x => x.RestrictedAccess) : @Model.RestrictedAccess
+            @Html.LabelFor(x => x.RestrictedAccess) : @(Model.RestrictedAccess?"Yes":"No")
         </div>
     </div>
 
@@ -50,6 +50,24 @@
         </div>
     </div>
 </div>
+    @if (Model.InstitutionId != 1)
+    {
+        <div class="col-md-6 pt-5">
+            <h2>UCF Related Degree</h2>
+            @if (string.IsNullOrEmpty(Model.UCFDegreeName))
+            {
+                <div>
+                    Not Assigned
+                </div>
+            }
+            else
+            {
+                <div>
+                   Degree is mapped to UCF @Model.UCFDegreeName
+                </div>
+            }
+        </div>
+    }
 </div>
 <div class="row py-3 px-5">
     <div class="col-md-6">
@@ -57,11 +75,17 @@
         @Html.ActionLink("Add Course", "CourseAdd", new { degreeId = Model.Id })
         @if (list_c.Count > 0)
         {
+            int semester = 0;
             <ul>
-                @foreach (DegreeMapping.Models.Course c in list_c.OrderBy(x => x.Name))
+                @foreach (DegreeMapping.Models.Course c in list_c.OrderBy(x => x.Semester).ThenBy(x => x.Code))
                 {
+                    if (semester != c.Semester)
+                    {
+                        semester = c.Semester;
+                        <li style="list-style:none; margin-left:-20px"><strong>Semester @semester</strong></li>
+                    }
                     <li>
-                        @Html.ActionLink(c.Name, "CourseView", new { id = c.Id })
+                        @Html.ActionLink(c.Code.ToUpper() + " " + c.Name, "CourseView", new { id = c.Id })
                     </li>
                 }
             </ul>
@@ -69,8 +93,8 @@
     </div>
     <div class="col-md-6">
         <div>
-            <h3>Notes</h3>
-            @Html.ActionLink("Add Notes", "NoteAdd", new { degreeId = Model.Id })
+            <h3>Notes/Requirements</h3>
+            @Html.ActionLink("Add Note", "NoteAdd", new { degreeId = Model.Id })
         </div>
         @if (list_n.Count > 0)
         {

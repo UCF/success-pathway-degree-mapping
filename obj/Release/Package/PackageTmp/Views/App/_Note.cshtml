@@ -8,7 +8,7 @@
         <div class="col-md-10">
             <div class="form-group">
                 @Html.LabelFor(x => x.Name) :
-                @Html.TextBoxFor(x => x.Name, new { @class = "form-control", required = "required" })
+                @Html.TextBoxFor(x => x.Name, new { @class = "form-control" })
             </div>
         </div>
     </div>
@@ -17,8 +17,8 @@
         <div class="col-md-10">
             <div class="form-group">
                 @Html.LabelFor(x => x.Value) :
-                @Html.TextAreaFor(x => x.Value, new { @class = "form-control", required = "required", col = "10", rows = "4" })
-                <span class="alert alert-warning">100 characters max</span>
+                @Html.TextAreaFor(x => x.Value, new { @class = "form-control", col = "40", rows = "6" })
+                <span class="alert alert-warning">500 characters max</span>
             </div>
         </div>
     </div>

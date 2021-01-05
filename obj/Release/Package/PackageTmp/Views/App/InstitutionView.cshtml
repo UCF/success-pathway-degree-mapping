@@ -15,7 +15,7 @@
 
         <div class="form-group">
             <div class="col-md-10">
-                @Html.LabelFor(x => x.Active) : @Model.Active
+                @Html.LabelFor(x => x.Active) : @(Model.Active?"Yes":"No")
             </div>
         </div>
         <div class="form-group">
@@ -28,6 +28,7 @@
 <div class="row px-5">
     <div class="col-md-12">
         <div>
+            <h2>Degrees</h2>
             @Html.ActionLink("Add Degree", "DegreeAdd", new { institutionId = Model.Id })
         </div>
         @if (list_d.Count > 0)

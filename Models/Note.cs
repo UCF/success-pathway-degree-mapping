@@ -89,7 +89,7 @@ namespace DegreeMapping.Models
             }
         }
 
-        public static List<Note> List(int institutionId)
+        public static List<Note> List(int degreeId)
         {
             List<Note> list_n = new List<Note>();
             using (SqlConnection cn = new SqlConnection(Database.DC_DegreeMapping))
@@ -98,7 +98,7 @@ namespace DegreeMapping.Models
                 SqlCommand cmd = cn.CreateCommand();
                 cmd.CommandText = "GetNote";
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@InstitutionId", institutionId);
+                cmd.Parameters.AddWithValue("@DegreeId", degreeId);
                 SqlDataReader dr = cmd.ExecuteReader();
                 if (dr.HasRows)
                 {
