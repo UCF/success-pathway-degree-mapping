@@ -47,3 +47,9 @@ C:\wwwroot\DegreeMapping\DegreeMapping\obj\Debug\DegreeMapping.csproj.CoreCompil
 C:\wwwroot\DegreeMapping\DegreeMapping\obj\Debug\DegreeMapping.csproj.CopyComplete
 C:\wwwroot\DegreeMapping\DegreeMapping\obj\Debug\DegreeMapping.dll
 C:\wwwroot\DegreeMapping\DegreeMapping\obj\Debug\DegreeMapping.pdb
+C:\wwwroot\DegreeMapping\DegreeMapping\bin\System.Net.Http.Formatting.dll
+C:\wwwroot\DegreeMapping\DegreeMapping\bin\System.Web.Http.dll
+C:\wwwroot\DegreeMapping\DegreeMapping\bin\System.Web.Http.WebHost.dll
+C:\wwwroot\DegreeMapping\DegreeMapping\bin\System.Net.Http.Formatting.xml
+C:\wwwroot\DegreeMapping\DegreeMapping\bin\System.Web.Http.xml
+C:\wwwroot\DegreeMapping\DegreeMapping\bin\System.Web.Http.WebHost.xml

@@ -75,8 +75,8 @@ namespace DegreeMapping.Models
                 cmd.CommandText = "InsertCourse";
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@DegreeId", c.DegreeId);
-                cmd.Parameters.AddWithValue("@Code", c.Code.ToUpper());
-                cmd.Parameters.AddWithValue("@Name", textInfo.ToTitleCase(c.Name));
+                cmd.Parameters.AddWithValue("@Code", c.Code.ToUpper().Trim());
+                cmd.Parameters.AddWithValue("@Name", textInfo.ToTitleCase(c.Name.Trim()));
                 cmd.Parameters.AddWithValue("@Credits", c.Credits);
                 cmd.Parameters.AddWithValue("@Critical", c.Critical);
                 cmd.Parameters.AddWithValue("@CommonProgramPrerequiste", c.CommonProgramPrerequiste);
@@ -107,8 +107,8 @@ namespace DegreeMapping.Models
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@Id", c.Id);
                 cmd.Parameters.AddWithValue("@DegreeId", c.DegreeId);
-                cmd.Parameters.AddWithValue("@Code", c.Code.ToUpper());
-                cmd.Parameters.AddWithValue("@Name", textInfo.ToTitleCase(c.Name));
+                cmd.Parameters.AddWithValue("@Code", c.Code.ToUpper().Trim());
+                cmd.Parameters.AddWithValue("@Name", textInfo.ToTitleCase(c.Name.Trim()));
                 cmd.Parameters.AddWithValue("@Credits", c.Credits);
                 cmd.Parameters.AddWithValue("@Critical", c.Critical);
                 cmd.Parameters.AddWithValue("@CommonProgramPrerequiste", c.CommonProgramPrerequiste);
