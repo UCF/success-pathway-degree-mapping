@@ -1,6 +1,6 @@
 ﻿@model DegreeMapping.Models.Course
 @{ 
-    List<DegreeMapping.Models.Course> list_course = DegreeMapping.Models.Course.List(1);
+    List<DegreeMapping.Models.Course> list_course = DegreeMapping.Models.Course.List(Model.DegreeId).Where(x=>x.Semester <= 1).ToList();
 }
 
 
