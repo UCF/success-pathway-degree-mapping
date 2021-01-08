@@ -16,10 +16,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/10/2013 16:29:20</publishTime>
     </File>
     <File Include="bin/DegreeMapping.dll">
-      <publishTime>01/07/2021 16:42:29</publishTime>
+      <publishTime>01/08/2021 11:07:20</publishTime>
     </File>
     <File Include="bin/DegreeMapping.pdb">
-      <publishTime>01/07/2021 16:42:29</publishTime>
+      <publishTime>01/08/2021 11:07:20</publishTime>
     </File>
     <File Include="bin/EntityFramework.dll">
       <publishTime>04/16/2020 20:38:42</publishTime>
@@ -211,7 +211,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>12/12/2020 20:27:10</publishTime>
     </File>
     <File Include="Views/App/_Course.cshtml">
-      <publishTime>01/04/2021 13:54:53</publishTime>
+      <publishTime>01/08/2021 10:39:34</publishTime>
     </File>
     <File Include="Views/App/_Dashboard.cshtml">
       <publishTime>12/09/2020 16:15:37</publishTime>
@@ -232,7 +232,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>12/07/2020 16:49:17</publishTime>
     </File>
     <File Include="Views/Home/Index.cshtml">
-      <publishTime>01/07/2021 09:24:30</publishTime>
+      <publishTime>01/08/2021 09:29:41</publishTime>
     </File>
     <File Include="Views/Home/SignOut.cshtml">
       <publishTime>12/11/2020 14:44:35</publishTime>
@@ -241,7 +241,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>12/07/2020 16:49:17</publishTime>
     </File>
     <File Include="Views/Shared/_Layout.cshtml">
-      <publishTime>12/15/2020 22:17:23</publishTime>
+      <publishTime>01/08/2021 09:46:07</publishTime>
     </File>
     <File Include="Views/Web.config">
       <publishTime>12/11/2020 09:49:58</publishTime>

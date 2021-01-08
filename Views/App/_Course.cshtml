@@ -1,8 +1,14 @@
 ﻿@model DegreeMapping.Models.Course
 @{ 
-    List<DegreeMapping.Models.Course> list_course = DegreeMapping.Models.Course.List(Model.DegreeId).Where(x=>x.Semester <= 1).ToList();
-}
+    DegreeMapping.Models.Degree d = DegreeMapping.Models.Degree.Get(Model.DegreeId);
 
+
+    List<DegreeMapping.Models.Course> list_course = new List<DegreeMapping.Models.Course>();
+    if (d.UCFDegreeId.HasValue)
+    {
+        list_course = DegreeMapping.Models.Course.List(d.UCFDegreeId.Value).Where(x => x.Semester <= 1).ToList();
+    }
+}
 
 @using (Html.BeginForm("CourseSave", "App", FormMethod.Post, new { @Class = "form-horizontal" }))
 {
@@ -15,7 +21,7 @@
                 @Html.TextBoxFor(x => x.Name, new { @class = "form-control", required = "required" })
             </div>
         </div>
-        @if (Model.InstitutionId > 1)
+        @if (list_course.Count > 0)
         {
             <div class="col-md-5">
                 <div class="form-group">
