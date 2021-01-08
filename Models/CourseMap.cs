@@ -69,8 +69,12 @@ namespace DegreeMapping.Models
             foreach (Course c in list_course)
             {
                 CourseMap cm = new CourseMap(c);
-                Course UCFCourse = Course.Get(c.UCFCourseId.Value);
-                CourseMap.SetUCFCourseMap(ref cm, UCFCourse);
+                if (c.UCFCourseId.HasValue)
+                {
+                    Course UCFCourse = new Course();
+                    UCFCourse = Course.Get(c.UCFCourseId.Value);
+                    CourseMap.SetUCFCourseMap(ref cm, UCFCourse);
+                }
                 list_courseMap.Add(cm);
             }
             return list_courseMap;

@@ -13,23 +13,26 @@ namespace DegreeMapping.Models
         private int Id { get { return 3; } }
         private int Code { get { return 27; } }
 
-        string parameter = "keyData";
         public override void OnActionExecuting(HttpActionContext actionContext)
         {
-            if (actionContext.ActionArguments == null || !actionContext.ActionArguments.ContainsKey(parameter))
+            if (actionContext.ActionArguments == null || !actionContext.ActionArguments.ContainsKey("institutionId"))
             {
-                throw new Exception(string.Format("Parameter '{0}' not present ", parameter));
+                throw new Exception("Institution Id not present");
+            }
+
+            if (actionContext.ActionArguments == null || !actionContext.ActionArguments.ContainsKey("degreeId"))
+            {
+                throw new Exception("Degree Id not present");
             }
             //ModelDataMethodResult 
 
-            if (string.IsNullOrEmpty("Id") || string.IsNullOrEmpty("Code"))
-            {
-                throw new Exception("Error: could not find data");
-            }
+            //if (string.IsNullOrEmpty("Id") || string.IsNullOrEmpty("Code"))
+            //{
+            //    throw new Exception("Error: could not find data");
+            //}
 
             base.OnActionExecuting(actionContext);
         }
-
     }
 }
 //https://developerslogblog.wordpress.com/2018/05/08/how-to-adding-custom-action-filters-to-a-web-api/

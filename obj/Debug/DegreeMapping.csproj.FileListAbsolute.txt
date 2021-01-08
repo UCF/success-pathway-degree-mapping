@@ -15,7 +15,10 @@ C:\wwwroot\DegreeMapping\DegreeMapping\bin\Microsoft.Owin.Security.OAuth.dll
 C:\wwwroot\DegreeMapping\DegreeMapping\bin\Microsoft.Web.Infrastructure.dll
 C:\wwwroot\DegreeMapping\DegreeMapping\bin\Newtonsoft.Json.dll
 C:\wwwroot\DegreeMapping\DegreeMapping\bin\Owin.dll
+C:\wwwroot\DegreeMapping\DegreeMapping\bin\System.Net.Http.Formatting.dll
 C:\wwwroot\DegreeMapping\DegreeMapping\bin\System.Web.Helpers.dll
+C:\wwwroot\DegreeMapping\DegreeMapping\bin\System.Web.Http.dll
+C:\wwwroot\DegreeMapping\DegreeMapping\bin\System.Web.Http.WebHost.dll
 C:\wwwroot\DegreeMapping\DegreeMapping\bin\System.Web.Mvc.dll
 C:\wwwroot\DegreeMapping\DegreeMapping\bin\System.Web.Optimization.dll
 C:\wwwroot\DegreeMapping\DegreeMapping\bin\System.Web.Razor.dll
@@ -33,6 +36,9 @@ C:\wwwroot\DegreeMapping\DegreeMapping\bin\Microsoft.Owin.Security.xml
 C:\wwwroot\DegreeMapping\DegreeMapping\bin\Microsoft.Owin.Security.Cookies.xml
 C:\wwwroot\DegreeMapping\DegreeMapping\bin\Microsoft.Owin.Security.Google.xml
 C:\wwwroot\DegreeMapping\DegreeMapping\bin\Microsoft.Owin.Security.OAuth.xml
+C:\wwwroot\DegreeMapping\DegreeMapping\bin\System.Net.Http.Formatting.xml
+C:\wwwroot\DegreeMapping\DegreeMapping\bin\System.Web.Http.xml
+C:\wwwroot\DegreeMapping\DegreeMapping\bin\System.Web.Http.WebHost.xml
 C:\wwwroot\DegreeMapping\DegreeMapping\bin\System.Web.Helpers.xml
 C:\wwwroot\DegreeMapping\DegreeMapping\bin\System.Web.Mvc.xml
 C:\wwwroot\DegreeMapping\DegreeMapping\bin\System.Web.Optimization.xml
@@ -47,9 +53,3 @@ C:\wwwroot\DegreeMapping\DegreeMapping\obj\Debug\DegreeMapping.csproj.CoreCompil
 C:\wwwroot\DegreeMapping\DegreeMapping\obj\Debug\DegreeMapping.csproj.CopyComplete
 C:\wwwroot\DegreeMapping\DegreeMapping\obj\Debug\DegreeMapping.dll
 C:\wwwroot\DegreeMapping\DegreeMapping\obj\Debug\DegreeMapping.pdb
-C:\wwwroot\DegreeMapping\DegreeMapping\bin\System.Net.Http.Formatting.dll
-C:\wwwroot\DegreeMapping\DegreeMapping\bin\System.Web.Http.dll
-C:\wwwroot\DegreeMapping\DegreeMapping\bin\System.Web.Http.WebHost.dll
-C:\wwwroot\DegreeMapping\DegreeMapping\bin\System.Net.Http.Formatting.xml
-C:\wwwroot\DegreeMapping\DegreeMapping\bin\System.Web.Http.xml
-C:\wwwroot\DegreeMapping\DegreeMapping\bin\System.Web.Http.WebHost.xml

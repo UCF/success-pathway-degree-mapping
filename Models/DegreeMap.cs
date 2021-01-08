@@ -40,10 +40,11 @@ namespace DegreeMapping.Models
             LimitedAccess = d.LimitedAccess;
             RestrictedAccess = d.RestrictedAccess;
             Description = d.Description;
-
-            DegreeMapping.Models.Degree ucfDegree = DegreeMapping.Models.Degree.Get(d.UCFDegreeId.Value);
-            SetUCFDegreeMap(ucfDegree);
-
+            if (d.UCFDegreeId.HasValue)
+            {
+                DegreeMapping.Models.Degree ucfDegree = DegreeMapping.Models.Degree.Get(d.UCFDegreeId.Value);
+                SetUCFDegreeMap(ucfDegree);
+            }
             CourseMap = DegreeMapping.Models.CourseMap.List(degreeId);
         }
 

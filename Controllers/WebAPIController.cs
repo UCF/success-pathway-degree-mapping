@@ -9,14 +9,14 @@ using System.Web.Http;
 namespace DegreeMapping.Controllers
 {
     [RoutePrefix("api/Degree")]
-    //[MyCustomAttribute]
+    [MyCustomAttribute]
     public class WebAPIController : ApiController
     {
         [HttpGet]
         [Route("GetDegree")]
         public DegreeMap GetDegree(int institutionId, int degreeId)
         {
-            DegreeMap dm = new DegreeMap(2,3);
+            DegreeMap dm = new DegreeMap(institutionId,degreeId);
             return dm;
         }
     }
