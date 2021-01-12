@@ -6,6 +6,8 @@ using System.Web.Mvc.Ajax;
 using System.Data;
 using System.Data.SqlClient;
 using System.Web.UI.WebControls.WebParts;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace DegreeMapping.Models
 {
@@ -13,9 +15,14 @@ namespace DegreeMapping.Models
     {
         public int Id { get; set; }
         public int DegreeId { get; set; }
+        [DisplayName("Title")]
         public string Name { get; set; }
         public string Value { get; set; }
         public bool Required { get; set; }
+        [DisplayName("Show title on website")]
+        public bool ShowName { get; set; }
+        [DisplayName("Display Order")]
+        public int OrderBy { get; set; }
         public DateTime AddDate { get; set; }
         public DateTime UpdateDate { get; set; }
         public string NID { get; set; }
@@ -31,6 +38,8 @@ namespace DegreeMapping.Models
             Required = false;
             Active = true;
             NID = HttpContext.Current.User.Identity.Name;
+            ShowName = false;
+            OrderBy = 1;
         }
 
         public Note(int degreeId)
@@ -44,6 +53,8 @@ namespace DegreeMapping.Models
             Required = true;
             Active = true;
             NID = HttpContext.Current.User.Identity.Name;
+            ShowName = false;
+            OrderBy = 1;
         }
 
         public static int Insert(Note n)
@@ -62,6 +73,8 @@ namespace DegreeMapping.Models
                 cmd.Parameters.AddWithValue("@Active", n.Active);
                 cmd.Parameters.AddWithValue("@UpdateDate", DateTime.Now);
                 cmd.Parameters.AddWithValue("@NID", n.NID);
+                cmd.Parameters.AddWithValue("@ShowName", n.ShowName);
+                cmd.Parameters.AddWithValue("@OrderBy", n.OrderBy);
                 id = Convert.ToInt32(cmd.ExecuteScalar());
                 cn.Close();
             }
@@ -84,6 +97,8 @@ namespace DegreeMapping.Models
                 cmd.Parameters.AddWithValue("@Active", n.Active);
                 cmd.Parameters.AddWithValue("@UpdateDate", DateTime.Now);
                 cmd.Parameters.AddWithValue("@NID", n.NID);
+                cmd.Parameters.AddWithValue("@ShowName", n.ShowName);
+                cmd.Parameters.AddWithValue("@OrderBy", n.OrderBy);
                 cmd.ExecuteScalar();
                 cn.Close();
             }
@@ -111,7 +126,7 @@ namespace DegreeMapping.Models
                 }
                 cn.Close();
             }
-            return list_n;
+            return list_n.OrderBy(x=>x.OrderBy).ThenBy(x=>x.Name).ToList();
         }
 
         public static Note Get(int id)
@@ -153,6 +168,8 @@ namespace DegreeMapping.Models
                 n.DegreeId = Convert.ToInt32(dr["DegreeId"].ToString());
                 n.Institution = dr["Institution"].ToString();
                 n.InstitutionId = Convert.ToInt32(dr["InstitutionId"].ToString());
+                n.ShowName = Convert.ToBoolean(dr["ShowName"].ToString());
+                n.OrderBy = Convert.ToInt32(dr["OrderBy"].ToString());
             }
         }
 

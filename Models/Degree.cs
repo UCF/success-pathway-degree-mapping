@@ -19,6 +19,7 @@ namespace DegreeMapping.Models
         public string Name { get; set; }
         [DisplayName("Degree Type")]
         public string DegreeType { get; set; }
+        public string GPA { get; set; }
         [DisplayName("Limited Access")]
         public bool LimitedAccess {get;set;}
         [DisplayName("Restricted Access")]
@@ -70,6 +71,7 @@ namespace DegreeMapping.Models
                 cmd.CommandText = "InsertDegree";
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@Name", d.Name);
+                cmd.Parameters.AddWithValue("@GPA", d.GPA);
                 cmd.Parameters.AddWithValue("@InstitutionId", d.InstitutionId);
                 cmd.Parameters.AddWithValue("@DegreeType", d.DegreeType);
                 cmd.Parameters.AddWithValue("@LimitedAccess", d.LimitedAccess);
@@ -99,6 +101,7 @@ namespace DegreeMapping.Models
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@Id", d.Id);
                 cmd.Parameters.AddWithValue("@Name", d.Name);
+                cmd.Parameters.AddWithValue("@GPA", d.GPA);
                 cmd.Parameters.AddWithValue("@InstitutionId", d.InstitutionId);
                 cmd.Parameters.AddWithValue("@DegreeType", d.DegreeType);
                 cmd.Parameters.AddWithValue("@LimitedAccess", d.LimitedAccess);
@@ -176,6 +179,7 @@ namespace DegreeMapping.Models
             {
                 d.Id = Convert.ToInt32(dr["Id"].ToString());
                 d.Name = dr["Name"].ToString();
+                d.GPA = dr["GPA"].ToString();
                 d.DegreeType = dr["DegreeType"].ToString();
                 d.LimitedAccess = Convert.ToBoolean(dr["LimitedAccess"].ToString());
                 d.RestrictedAccess = Convert.ToBoolean(dr["RestrictedAccess"].ToString());

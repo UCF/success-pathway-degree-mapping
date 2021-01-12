@@ -6,50 +6,56 @@
 
 <div class="row py-5">
     <div class="col-md-6">
-    <small>@Html.ActionLink("Institutions", "Institutions") <span class="glyphicon glyphicon-arrow-right"></span> @Html.ActionLink(Model.Institution, "InstitutionView", new { id = Model.InstitutionId })</small>
-    <h1>@Html.Raw(Model.Name)</h1>
-    <div class="form-group">
-        <div class="col-md-10">
-            @Html.LabelFor(x => x.Active) : @(Model.Active?"Yes":"No")
+        <small>@Html.ActionLink("Institutions", "Institutions") <span class="glyphicon glyphicon-arrow-right"></span> @Html.ActionLink(Model.Institution, "InstitutionView", new { id = Model.InstitutionId })</small>
+        <h1>@Html.Raw(Model.Name)</h1>
+        <div class="form-group">
+            <div class="col-md-10">
+                @Html.LabelFor(x => x.Active) : @(Model.Active?"Yes":"No")
+            </div>
         </div>
-    </div>
 
-    <div class="form-group">
-        <div class="col-md-10">
-            @Html.LabelFor(x => x.DegreeType) : @Html.Raw(Model.DegreeType)
+        <div class="form-group">
+            <div class="col-md-10">
+                @Html.LabelFor(x => x.GPA) : @Model.GPA
+            </div>
         </div>
-    </div>
 
-    <div class="form-group">
-        <div class="col-md-10">
-            @Html.LabelFor(x => x.LimitedAccess) : @(Model.LimitedAccess?"Yes":"No")
+        <div class="form-group">
+            <div class="col-md-10">
+                @Html.LabelFor(x => x.DegreeType) : @Html.Raw(Model.DegreeType)
+            </div>
         </div>
-    </div>
 
-    <div class="form-group">
-        <div class="col-md-10">
-            @Html.LabelFor(x => x.RestrictedAccess) : @(Model.RestrictedAccess?"Yes":"No")
+        <div class="form-group">
+            <div class="col-md-10">
+                @Html.LabelFor(x => x.LimitedAccess) : @(Model.LimitedAccess?"Yes":"No")
+            </div>
         </div>
-    </div>
 
-    <div class="form-group">
-        <div class="col-md-10">
-            @Html.LabelFor(x => x.Description) : @Html.Raw(Model.Description)
+        <div class="form-group">
+            <div class="col-md-10">
+                @Html.LabelFor(x => x.RestrictedAccess) : @(Model.RestrictedAccess?"Yes":"No")
+            </div>
         </div>
-    </div>
 
-    <div class="form-group">
-        <div class="col-md-10">
-            @Html.LabelFor(x => x.CatalogYear) : @Model.CatalogYear
+        <div class="form-group">
+            <div class="col-md-10">
+                @Html.LabelFor(x => x.Description) : @Html.Raw(Model.Description)
+            </div>
         </div>
-    </div>
 
-    <div class="form-group">
-        <div class="col-md-10">
-            @Html.ActionLink("Edit Degree", "DegreeEdit", new { id = Model.Id })
+        <div class="form-group">
+            <div class="col-md-10">
+                @Html.LabelFor(x => x.CatalogYear) : @Model.CatalogYear
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-10">
+                @Html.ActionLink("Edit Degree", "DegreeEdit", new { id = Model.Id })
+            </div>
         </div>
     </div>
-</div>
     @if (Model.InstitutionId != 1)
     {
         <div class="col-md-6 pt-5">

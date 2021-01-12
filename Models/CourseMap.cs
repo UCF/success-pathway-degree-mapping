@@ -77,6 +77,19 @@ namespace DegreeMapping.Models
                 }
                 list_courseMap.Add(cm);
             }
+            return list_courseMap.OrderBy(x=>x.CourseCode).ThenBy(x=>x.CourseName).ToList();
+        }
+
+        public static List<CourseMap> UCFList(int UCFdegreeId)
+        {
+            List<CourseMap> list_courseMap = new List<CourseMap>();
+            List<Course> list_c = DegreeMapping.Models.Course.List(UCFdegreeId);
+            foreach (DegreeMapping.Models.Course c in list_c.Where(x=>x.Semester >= 5).OrderBy(x=>x.Semester).ThenBy(x=>x.Code))
+            {
+                CourseMap cm = new CourseMap();
+                CourseMap.SetUCFCourseMap(ref cm, c);
+                list_courseMap.Add(cm);
+            }
             return list_courseMap;
         }
     }

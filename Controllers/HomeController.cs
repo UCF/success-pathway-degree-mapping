@@ -43,6 +43,11 @@ namespace DegreeMapping.Controllers
             return RedirectToAction("Index","Home");
         }
 
+        public ActionResult Example()
+        {
+            return View();
+        }
+
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
