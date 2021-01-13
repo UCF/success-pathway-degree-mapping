@@ -5,6 +5,7 @@
     <div class="col-md-12">
         <small>@Html.ActionLink("Institutions", "Institutions") <span class="glyphicon glyphicon-arrow-right"></span> @Html.ActionLink(Model.Institution, "InstitutionView", new { id = Model.InstitutionId }) <span class="glyphicon glyphicon-arrow-right"></span> @Html.ActionLink(Model.Degree, "DegreeView", new { id = Model.DegreeId })</small>
         <h1>@Model.Name</h1>
+        <div>@Html.LabelFor(x => x.ShowName) : @(Model.ShowName?"Yes":"No") </div>
     </div>
 </div>
 <div class="row">
@@ -14,6 +15,8 @@
         @Html.LabelFor(x => x.Value) : @Model.Value
         <br />
         @Html.LabelFor(x => x.Required) : @(Model.Required?"Yes":"No")
+        <br />
+        @Html.LabelFor(x => x.OrderBy) : @Model.OrderBy
         <br />
         @Html.ActionLink("Edit Note", "NoteEdit", new { id = Model.Id })
     </div>

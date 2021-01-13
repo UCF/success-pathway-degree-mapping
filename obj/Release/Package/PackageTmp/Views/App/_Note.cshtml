@@ -9,6 +9,7 @@
             <div class="form-group">
                 @Html.LabelFor(x => x.Name) :
                 @Html.TextBoxFor(x => x.Name, new { @class = "form-control" })
+                @Html.LabelFor(x => x.ShowName) : @Html.CheckBoxFor(x => x.ShowName)
             </div>
         </div>
     </div>
@@ -19,6 +20,15 @@
                 @Html.LabelFor(x => x.Value) :
                 @Html.TextAreaFor(x => x.Value, new { @class = "form-control", col = "40", rows = "6" })
                 <span class="alert alert-warning">500 characters max</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="row pt-2">
+        <div class="col-md-10">
+            <div class="form-group">
+                @Html.LabelFor(x => x.OrderBy) :
+                @Html.TextBoxFor(x => x.OrderBy, new { @Class="form-control", type="Number", style="width:75px"})
             </div>
         </div>
     </div>
