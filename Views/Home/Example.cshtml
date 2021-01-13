@@ -1,4 +1,10 @@
-﻿    
+﻿    <style>
+        .card-inverse {
+            color:white;
+            background-color:black;
+        }
+    </style>
+
     <div class="container">
         <section class="ucf-section ucf-section-success-pathway-semesters " data-section-link-title="Communication Sciences &amp; Disorders (B.A. or B.S)" aria-label="Communication Sciences &amp; Disorders (B.A. or B.S)">
             <p class="lead">UCF Success Pathways are intended to guide students who want to earn an A.A. at state college and transfer to UCF to earn a baccalaureate degree. Each major outlines the sequence of courses, hints for success, milestones, and co-curricular experiences you should complete in order to earn your associates degree (A.A.) and be “junior ready” when you transfer to UCF.</p>
@@ -48,7 +54,7 @@
                     <br>
                     State College Plan<br>
                 </button><p></p>
-                <div class="dropdown-menu">
+                <div class="dropdown-menu" id="InstitutionList">
                     <a class="dropdown-item" href="#">General</a><br>
                     <a class="dropdown-item" href="#">Daytona State College</a><br>
                     <a class="dropdown-item" href="#">Valencia College</a>
@@ -92,7 +98,7 @@
                 <div class="card">
                     <div class="card-header card-inverse">
                         <h4>Semester 5</h4>
-                        <p class="card-text">Total 12 Units</p>
+                        <p class="card-text"><span id="UCFSemester_5_Total"></span></p>
                     </div>
                     <div class="card-block">
                         <span id="UCFSemester_5"></span>
@@ -102,33 +108,30 @@
                 <div class="card">
                     <div class="card-header card-inverse">
                         <h4>Semester 6</h4>
-                        <p class="card-text">Total 12 Units</p>
+                        <p class="card-text"><span id="UCFSemester_6_Total"></span></p>
                     </div>
                     <div class="card-block">
                         <span id="UCFSemester_6"></span>
-                        <p></p>
                     </div>
                     <p></p>
                 </div>
                 <div class="card">
                     <div class="card-header card-inverse">
                         <h4>Semester 7</h4>
-                        <p class="card-text">Total 12 Units</p>
+                        <p class="card-text"><span id="UCFSemester_7_Total"></span></p>
                     </div>
                     <div class="card-block">
                         <span id="UCFSemester_7"></span>
-                        <p class="card-text">Total 12 Units</p>
                     </div>
                     <p></p>
                 </div>
                 <div class="card">
                     <div class="card-header card-inverse">
                         <h4>Semester 8</h4>
-                        <p class="card-text">Total 12 Units</p>
+                        <p class="card-text"><span id="UCFSemester_8_Total"></span></p>
                     </div>
                     <div class="card-block">
                         <span id="UCFSemester_8"></span>
-                        <p class="card-text">Total 12 Units</p>
                     </div>
                     <p></p>
                 </div>
@@ -137,4 +140,5 @@
     </div>
 
 
-<script src="~/Scripts/degreemapping.js"></script>
+<script src="/Scripts/degreemapping.js"></script>
+<script src="/Scripts/degreelist.js"></script>

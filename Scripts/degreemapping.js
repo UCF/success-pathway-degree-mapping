@@ -51,7 +51,7 @@ var degreeMapping =
 
     displayDegreeNotes(data) {
         let div = "";
-        console.log(data.DegreeNotes.length);
+        //console.log(data.DegreeNotes.length);
         if (data.DegreeNotes.length > 0) {
             for (x = 0; x <= data.DegreeNotes.length - 1; x++) {
                 if (data.DegreeNotes[x].ShowName) {
@@ -68,19 +68,17 @@ var degreeMapping =
 
     displayUCFSemster(data, semester) {
         let output = "";
-        let courseName = "";
-        //console.log(data.UCFCourses[0].UCFSemester);
-        if (data.CourseMap.length > 0) {
-            for (x = 0; data.CourseMap.length - 1; x++) {
-                //console.log(data.CourseMap[x].UCFSemester);
-                //if (data.CourseMap[x].UCFSemester == semester) {
-                //    output += "<p class=\"card - text\"><strong>" + data.CourseMap[x].UCFCourseCode + "</strong><br>" + data.CourseMap[x].UCFCourseName + "<br>" + data.CourseMap[x].UCFCredits + " Units</p>";
-                //}
+        let total = 0;
+        if (data.UCFCourses.length > 0) {
+            for (x = 0; x <= data.UCFCourses.length - 1; x++) {
+                if (data.UCFCourses[x].UCFSemester == semester) {
+                    output += "<p class=\"card - text\"><strong>" + data.UCFCourses[x].UCFCourseCode + "</strong><br>" + data.UCFCourses[x].UCFCourseName + "<br>" + data.UCFCourses[x].UCFCredits + " Units</p>";
+                    total = total + 1*data.UCFCourses[x].UCFCredits;
+                }
             }
         }
-        $("UCFSemester_" + semester).html(output);
-
-
+        $("#UCFSemester_" + semester).html(output);
+        $("#UCFSemester_" + semester + "_Total").html("Total " + total + " Units");
     },
 
 
@@ -112,5 +110,4 @@ var degreeMapping =
 }
 $(document).ready(function () {
     degreeMapping.init(2, 3);
-    //degreeMapping.getDegree(2, 4);
 })

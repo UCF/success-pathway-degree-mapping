@@ -10,6 +10,8 @@ namespace DegreeMapping.Models
 {
     public class Institution
     {
+        public static int UCFId { get { return 1; } }
+   
         public int Id { get; set; }
         public string Name { get; set; }
         public string URL { get; set; }
