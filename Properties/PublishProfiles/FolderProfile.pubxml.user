@@ -16,10 +16,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/10/2013 16:29:20</publishTime>
     </File>
     <File Include="bin/DegreeMapping.dll">
-      <publishTime>01/13/2021 15:44:28</publishTime>
+      <publishTime>01/13/2021 16:44:05</publishTime>
     </File>
     <File Include="bin/DegreeMapping.pdb">
-      <publishTime>01/13/2021 15:44:28</publishTime>
+      <publishTime>01/13/2021 16:44:05</publishTime>
     </File>
     <File Include="bin/EntityFramework.dll">
       <publishTime>04/16/2020 20:38:42</publishTime>
@@ -63,8 +63,14 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="bin/System.Net.Http.Formatting.dll">
       <publishTime>11/28/2018 13:00:36</publishTime>
     </File>
+    <File Include="bin/System.Web.Cors.dll">
+      <publishTime>11/28/2018 12:58:44</publishTime>
+    </File>
     <File Include="bin/System.Web.Helpers.dll">
       <publishTime>11/28/2018 12:04:24</publishTime>
+    </File>
+    <File Include="bin/System.Web.Http.Cors.dll">
+      <publishTime>11/28/2018 13:01:26</publishTime>
     </File>
     <File Include="bin/System.Web.Http.dll">
       <publishTime>11/28/2018 13:01:00</publishTime>
@@ -259,7 +265,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>12/07/2020 16:49:17</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>01/07/2021 09:30:51</publishTime>
+      <publishTime>01/13/2021 16:40:44</publishTime>
     </File>
   </ItemGroup>
 </Project>

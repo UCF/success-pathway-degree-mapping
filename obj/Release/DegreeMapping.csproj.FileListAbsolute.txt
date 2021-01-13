@@ -53,3 +53,6 @@ C:\wwwroot\DegreeMapping\DegreeMapping\bin\System.Web.Http.WebHost.dll
 C:\wwwroot\DegreeMapping\DegreeMapping\bin\System.Net.Http.Formatting.xml
 C:\wwwroot\DegreeMapping\DegreeMapping\bin\System.Web.Http.xml
 C:\wwwroot\DegreeMapping\DegreeMapping\bin\System.Web.Http.WebHost.xml
+C:\wwwroot\DegreeMapping\DegreeMapping\bin\System.Web.Cors.dll
+C:\wwwroot\DegreeMapping\DegreeMapping\bin\System.Web.Http.Cors.dll
+C:\wwwroot\DegreeMapping\DegreeMapping\bin\System.Web.Http.Cors.xml
