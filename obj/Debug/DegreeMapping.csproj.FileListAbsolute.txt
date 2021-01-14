@@ -53,3 +53,6 @@ C:\wwwroot\DegreeMapping\DegreeMapping\obj\Debug\DegreeMapping.csproj.CoreCompil
 C:\wwwroot\DegreeMapping\DegreeMapping\obj\Debug\DegreeMapping.csproj.CopyComplete
 C:\wwwroot\DegreeMapping\DegreeMapping\obj\Debug\DegreeMapping.dll
 C:\wwwroot\DegreeMapping\DegreeMapping\obj\Debug\DegreeMapping.pdb
+C:\wwwroot\DegreeMapping\DegreeMapping\bin\System.Web.Cors.dll
+C:\wwwroot\DegreeMapping\DegreeMapping\bin\System.Web.Http.Cors.dll
+C:\wwwroot\DegreeMapping\DegreeMapping\bin\System.Web.Http.Cors.xml
