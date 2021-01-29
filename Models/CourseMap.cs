@@ -77,7 +77,7 @@ namespace DegreeMapping.Models
                 }
                 list_courseMap.Add(cm);
             }
-            return list_courseMap.OrderBy(x=>x.CourseCode).ThenBy(x=>x.CourseName).ToList();
+            return list_courseMap.OrderBy(x=>x.UCFCourseCode).ToList();
         }
 
         public static List<CourseMap> UCFList(int UCFdegreeId)

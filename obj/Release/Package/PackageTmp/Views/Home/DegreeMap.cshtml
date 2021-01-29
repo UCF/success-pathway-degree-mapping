@@ -1,0 +1,140 @@
+﻿@{
+    string url = HttpContext.Current.Request.Url.Host.ToLower();
+    string path = "";
+    if (url == "portal.connect.ucf.edu")
+    {
+        path = "/Pathway";
+    }
+}
+
+<div class="container">
+    <section class="ucf-section ucf-section-success-pathway-semesters " data-section-link-title="Communication Sciences &amp; Disorders (B.A. or B.S)" aria-label="Communication Sciences &amp; Disorders (B.A. or B.S)">
+        <p class="lead">UCF Success Pathways are intended to guide students who want to earn an A.A. at state college and transfer to UCF to earn a baccalaureate degree. Each major outlines the sequence of courses, hints for success, milestones, and co-curricular experiences you should complete in order to earn your associates degree (A.A.) and be “junior ready” when you transfer to UCF.</p>
+        <p>&nbsp;</p>
+        <div class="row">
+            <div class=" col-md-1">
+            </div>
+            <div class=" col-md-10">
+                <div class="card-deck">
+                    <div class="card">
+                        <div class="card-header card-inverse" style="background-color:black; color:white">
+                            <h3 id="DegreeTitle"></h3>
+                            <p class="card-text">Major Type and Requirements</p>
+                        </div>
+                        <div class="card-block">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <p class="card-text"><strong>Required GPA : </strong><span id="UCFGPA"></span></p>
+                                    <p class="card-text"><strong>Limited  Access : </strong><span id="UCFLimitedAccess"></span></p>
+                                    <p class="card-text"><strong>Restricted Access : </strong><span id="UCFRestrictedAccess"></span></p>
+                                    <span id="ForeignLanguageRequirement"></span>
+                                    <p></p>
+                                </div>
+                                <div class="col-md-6">
+                                    <span id="Section1"></span>
+                                </div>
+                                <p></p>
+                            </div>
+                            <p></p>
+                        </div>
+                        <p></p>
+                    </div>
+                </div>
+            </div>
+            <div class=" col-md-1">
+            </div>
+        </div>
+
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <h3 class="heading-underline">General Pathway</h3>
+        <p class="lead">Listed courses are to account for degree requirements, pre-requisites and critical courses to prepare students for admission to intended major at UCF. Courses should be completed before transfering to UCF.</p>
+        <div class="btn-group">
+            <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <br>
+                State College Plan<br>
+            </button><p></p>
+            <div class="dropdown-menu" id="InstitutionList">
+                <a class="dropdown-item" href="#">General</a><br>
+                <a class="dropdown-item" href="#">Daytona State College</a><br>
+                <a class="dropdown-item" href="#">Valencia College</a>
+            </div>
+            <p>&nbsp;</p>
+
+        </div>
+        <div class="lead bold" id="Institution"></div>
+        <p>&nbsp;</p>
+        <div class="row">
+            <div class=" col-md-12">
+                <table class="table table-sm table-bordered table-hover table-responsive">
+                    <thead class="thead-inverse">
+                        <tr>
+                            <th style="width:25%">UCF Course Prefix &amp; Course Number</th>
+                            <th style="width:10%">Units / Credits</th>
+                            <th style="width:25%">State College Course Prefix &amp; Number</th>
+                            <th style="width:10%">Units / Credits</th>
+                            <th style="width:10%">Critical Course</th>
+                            <th style="width:10%">Common Program Prerequisite (CPP)</th>
+                            <th style="width:10%">Required Core Course</th>
+                        </tr>
+                    </thead>
+                    <tbody id="DegreemapRow">
+                    </tbody>
+                </table>
+                <p class="lead">Notes:</p>
+                <ul id="Section2">
+                    <li>Consult your state college advisor for recommendations to complete AA graduation requirements.</li>
+                    <li>Students pursuing the B.A. degree must demonstrate proficiency in a foreign language equivalent to one year in college (eight credit hours). ASL I and II&nbsp;can also be used to fulfill this requirement.</li>
+                    <li>Students pursuing the B.S. degree must complete two upper division health sciences courses (six credit hours) approved by the program.</li>
+                    <li>Critical Courses are courses that are either a pre-requisite to upper level courses or to be admitted into the major.</li>
+                </ul>
+            </div>
+        </div>
+        <p>&nbsp;</p>
+        <h3 class="heading-underline">UCF Pathway</h3>
+        <p class="lead">Courses are suggested in a certain order taking into account degree requirements, pre-requisites and critical courses arranged by the semester in which you should complete them to be on track to graduation. We want you to graduate on time by avoiding excess credits. </p>
+        <div class="card-deck">
+            <div class="card">
+                <div class="card-header card-inverse">
+                    <h4>Semester 5</h4>
+                    <p class="card-text"><span id="UCFSemester_5_Total"></span></p>
+                </div>
+                <div class="card-block">
+                    <span id="UCFSemester_5"></span>
+                </div>
+                <p></p>
+            </div>
+            <div class="card">
+                <div class="card-header card-inverse">
+                    <h4>Semester 6</h4>
+                    <p class="card-text"><span id="UCFSemester_6_Total"></span></p>
+                </div>
+                <div class="card-block">
+                    <span id="UCFSemester_6"></span>
+                </div>
+                <p></p>
+            </div>
+            <div class="card">
+                <div class="card-header card-inverse">
+                    <h4>Semester 7</h4>
+                    <p class="card-text"><span id="UCFSemester_7_Total"></span></p>
+                </div>
+                <div class="card-block">
+                    <span id="UCFSemester_7"></span>
+                </div>
+                <p></p>
+            </div>
+            <div class="card">
+                <div class="card-header card-inverse">
+                    <h4>Semester 8</h4>
+                    <p class="card-text"><span id="UCFSemester_8_Total"></span></p>
+                </div>
+                <div class="card-block">
+                    <span id="UCFSemester_8"></span>
+                </div>
+                <p></p>
+            </div>
+        </div>
+    </section>
+</div>
+<script src="@path/Scripts/degreemapping.js"></script>

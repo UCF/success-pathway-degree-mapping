@@ -26,19 +26,24 @@ namespace DegreeMapping
                 // If any http headers are shown in preflight error in browser console add them below
                 HttpContext.Current.Response.AddHeader("Access-Control-Allow-Headers", "Content-Type, Accept, Pragma, Cache-Control, Authorization, APIKey");
                 HttpContext.Current.Response.AddHeader("Access-Control-Max-Age", "1728000");
-                HttpContext.Current.Response.AddHeader("Access-Control-Allow-Origin","*");
+
+                if (ValidOrigin(HttpContext.Current.Request.Url.ToString()))
+                {
+                    HttpContext.Current.Response.AddHeader("Access-Control-Allow-Origin", "*");
+                }
                 HttpContext.Current.Response.End();
             }
         }
-        //protected void Application_BeginRequest()
-        //{
 
 
-        //    if (Request.Headers.AllKeys.Contains("Origin") && Request.HttpMethod == "OPTIONS")
-        //    {
-        //        Response.Flush();
-        //    }
-        //}
+        private static bool ValidOrigin(string url)
+        {
+            if (url.ToLower().Contains("connect.ucf.edu") || url.ToLower().Contains("smca.ucf.edu") || url.ToLower().Contains("portal.connect.ucf.edu"))
+            {
+                return true;
+            }
+            return false;
+        }
 
         protected void Application_Start()
         {

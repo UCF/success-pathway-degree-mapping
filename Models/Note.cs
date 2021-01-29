@@ -13,10 +13,19 @@ namespace DegreeMapping.Models
 {
     public class Note
     {
+        public struct NoteTypeValue
+        {
+            public static int Note { get { return 1;  } }
+            public static int ListItem { get { return 2; } }
+            public static int ForeignLanguageRequirement { get { return 3; } }
+            public static int AdditionalRequirement { get { return 4; } }
+        }
+
         public int Id { get; set; }
         public int DegreeId { get; set; }
         [DisplayName("Title")]
         public string Name { get; set; }
+        [DisplayName("Content")]
         public string Value { get; set; }
         public bool Required { get; set; }
         [DisplayName("Show title on website")]
@@ -30,6 +39,12 @@ namespace DegreeMapping.Models
         public string Degree { get; set; }
         public string Institution { get; set; }
         public int InstitutionId { get; set; }
+        [DisplayName("Foreign Language Requirement")]
+        public bool ForeignLanguageRequirement { get; set; }
+        [DisplayName("Display Section")]
+        public int Section { get; set; }
+        [DisplayName("Note Type")]
+        public int NoteType { get; set; }
 
 
         public Note()
@@ -38,8 +53,10 @@ namespace DegreeMapping.Models
             Required = false;
             Active = true;
             NID = HttpContext.Current.User.Identity.Name;
+            Section = 1;
             ShowName = false;
             OrderBy = 1;
+            NoteType = Note.NoteTypeValue.Note;
         }
 
         public Note(int degreeId)
@@ -53,13 +70,16 @@ namespace DegreeMapping.Models
             Required = true;
             Active = true;
             NID = HttpContext.Current.User.Identity.Name;
+            Section = 1;
             ShowName = false;
             OrderBy = 1;
+            NoteType = Note.NoteTypeValue.Note;
         }
 
         public static int Insert(Note n)
         {
             int id = 0;
+            n.Name = (!string.IsNullOrEmpty(n.Name)) ? n.Name : "Note";
             using (SqlConnection cn = new SqlConnection(Database.DC_DegreeMapping))
             {
                 cn.Open();
@@ -75,6 +95,9 @@ namespace DegreeMapping.Models
                 cmd.Parameters.AddWithValue("@NID", n.NID);
                 cmd.Parameters.AddWithValue("@ShowName", n.ShowName);
                 cmd.Parameters.AddWithValue("@OrderBy", n.OrderBy);
+                cmd.Parameters.AddWithValue("@ForeignLanguageRequirement", n.ForeignLanguageRequirement);
+                cmd.Parameters.AddWithValue("@Section", n.Section);
+                cmd.Parameters.AddWithValue("@NoteType", n.NoteType);
                 id = Convert.ToInt32(cmd.ExecuteScalar());
                 cn.Close();
             }
@@ -83,6 +106,7 @@ namespace DegreeMapping.Models
 
         public static void Update(Note n)
         {
+            n.Name = (!string.IsNullOrEmpty(n.Name)) ? n.Name : "Note";
             using (SqlConnection cn = new SqlConnection(Database.DC_DegreeMapping))
             {
                 cn.Open();
@@ -99,6 +123,9 @@ namespace DegreeMapping.Models
                 cmd.Parameters.AddWithValue("@NID", n.NID);
                 cmd.Parameters.AddWithValue("@ShowName", n.ShowName);
                 cmd.Parameters.AddWithValue("@OrderBy", n.OrderBy);
+                cmd.Parameters.AddWithValue("@ForeignLanguageRequirement", n.ForeignLanguageRequirement);
+                cmd.Parameters.AddWithValue("@Section", n.Section);
+                cmd.Parameters.AddWithValue("@NoteType", n.NoteType);
                 cmd.ExecuteScalar();
                 cn.Close();
             }
@@ -170,6 +197,9 @@ namespace DegreeMapping.Models
                 n.InstitutionId = Convert.ToInt32(dr["InstitutionId"].ToString());
                 n.ShowName = Convert.ToBoolean(dr["ShowName"].ToString());
                 n.OrderBy = Convert.ToInt32(dr["OrderBy"].ToString());
+                n.ForeignLanguageRequirement = Convert.ToBoolean(dr["ForeignLanguageRequirement"].ToString());
+                n.Section = Convert.ToInt32(dr["Section"].ToString());
+                n.NoteType = Convert.ToInt32(dr["NoteType"].ToString());
             }
         }
 
@@ -184,6 +214,16 @@ namespace DegreeMapping.Models
                 cmd.Parameters.AddWithValue("@Id", id);
                 cmd.ExecuteScalar();
                 cn.Close();
+            }
+        }
+
+        public static string GetNoteTypeValue(int noteTypeValue)
+        {
+            switch (noteTypeValue) {
+                case 4: return "Additional Requirements";
+                case 3: return "Foreign Langauge Requirement";
+                case 2: return "List Item";
+                default: return "Note";
             }
         }
     }

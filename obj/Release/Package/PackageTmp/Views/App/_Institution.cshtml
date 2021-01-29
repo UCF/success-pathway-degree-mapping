@@ -25,7 +25,8 @@
 
     <div class="form-group">
         <div class="col-md-10">
-            <button class="btn btn-success">Save</button>
+            @Html.ActionLink("Back", "InstitutionView", new { id = Model.Id }, new { @Class = "btn btn-primary btn-lg" })
+            <button class="btn btn-success btn-lg">Save</button>
         </div>
     </div>
 }

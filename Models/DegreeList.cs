@@ -8,36 +8,44 @@ namespace DegreeMapping.Models
 {
     public class DegreeList
     {
-        public int DegreeId { get; set; }
+        public int Id { get; set; }
         public string Degree { get; set; }
-        public int UCFDegreeId { get; set; }
-        public string UCFDegree { get; set; }
-        public int InstitutinId { get; set; }
+        public int InstitutionId { get; set; }
         public string Institution { get; set; }
+        public List<DegreeList> Degrees {get; set; }
 
         public DegreeList()
-        { 
-            
-        
+        {
+            Degrees = new List<DegreeList>();
         }
 
-        public static List<DegreeList> GetDegreeList()
+        public DegreeList(Degree d)
+        {
+            Id = d.Id;
+            Degree = d.Name;
+            this.InstitutionId = d.InstitutionId;
+            this.Institution = d.Institution;
+            Degrees = new List<DegreeList>();
+        }
+
+        public static List<DegreeList> List()
         {
             List<DegreeList> list_dl = new List<DegreeList>();
-            List<DegreeMapping.Models.Degree> list_d = DegreeMapping.Models.Degree.List(null);
-            foreach (DegreeMapping.Models.Degree d in list_d.Where(x=>x.InstitutionId != DegreeMapping.Models.Institution.UCFId))
+            List<Degree> list_d = Models.Degree.List(DegreeMapping.Models.Institution.UCFId);
+            List<Degree> list_d2 = Models.Degree.List(null);
+            foreach (Degree d in list_d.OrderBy(x => x.Name))
             {
-                if(d.UCFDegreeId.HasValue) 
+                DegreeList dl = new DegreeList(d);
+                foreach(Degree d2 in list_d2.Where(x=>x.UCFDegreeId==d.Id))
                 {
-                    DegreeList dl = new DegreeList();
-                    dl.Degree = d.Name;
-                    dl.DegreeId = d.Id;
-                    dl.Institution = d.Institution;
-                    dl.InstitutinId = d.InstitutionId;
-                    dl.UCFDegree = d.UCFDegreeName;
-                    dl.UCFDegreeId = d.UCFDegreeId.Value;
-                    list_dl.Add(dl);
+                    DegreeList dl2 = new DegreeList();
+                    dl2.Id = d2.Id;
+                    dl2.Degree = d2.Name;
+                    dl2.InstitutionId = d2.InstitutionId;
+                    dl2.Institution = d2.Institution;
+                    dl.Degrees.Add(dl2);
                 }
+                list_dl.Add(dl);
             }
             return list_dl;
         }

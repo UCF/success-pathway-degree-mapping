@@ -183,6 +183,7 @@ namespace DegreeMapping.Controllers
         }
 
         [HttpPost]
+        [ValidateInput(false)]
         public ActionResult NoteSave(Note n)
         {
             if (n.Id > 0)
@@ -194,7 +195,7 @@ namespace DegreeMapping.Controllers
                 int id = Note.Insert(n);
                 n.Id = id;
             }
-            return RedirectToAction("NoteView", "App", new { id = n.Id });
+            return RedirectToAction("DegreeView", "App", new { id = n.DegreeId });
         }
 
         public ActionResult _Note(Note model)

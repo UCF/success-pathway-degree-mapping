@@ -4,6 +4,7 @@
 <div class="row py-5">
     <div class="col-md-12">
         <small>@Html.ActionLink("Institutions", "Institutions", new { id = Model.InstitutionId }) <span class="glyphicon glyphicon-arrow-right"></span> @Html.ActionLink(Model.Institution, "InstitutionView", new { id = Model.InstitutionId }) <span class="glyphicon glyphicon-arrow-right"></span> @Html.ActionLink(Model.Degree, "DegreeView", new { id = Model.DegreeId })</small>
+        <h1>@Model.Institution</h1>
         <h2>@Html.Raw(Model.Name)</h2>
         <div class="form-group">
             <div class="col-md-10">
@@ -13,7 +14,7 @@
 
         <div class="form-group">
             <div class="col-md-10">
-                @Html.LabelFor(x => x.Code) : @Model.Code.ToUpper()
+                @Html.LabelFor(x => x.Code) : @Model.Code
             </div>
         </div>
 
@@ -61,8 +62,9 @@
         </div>
 
         <div class="form-group">
-            <div class="col-md-10">
-                @Html.ActionLink("Edit Course", "CourseEdit", new { id = Model.Id })
+            <div class="col-md-10 lg">
+                @Html.ActionLink("BACK", "DegreeView", new { id = Model.DegreeId }, new { @Class="btn btn-primary btn-lg" })
+                @Html.ActionLink("EDIT COURSE", "CourseEdit", new { id = Model.Id }, new { @Class="btn btn-info btn-lg"})
             </div>
         </div>
     </div>

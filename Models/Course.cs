@@ -42,19 +42,22 @@ namespace DegreeMapping.Models
 
         public Course()
         {
-            CommonProgramPrerequiste = false;
-            Required = false;
+            CommonProgramPrerequiste = true;
+            Critical = true;
+            Required = true;
             Active = true;
             Credits = 3;
             NID = HttpContext.Current.User.Identity.Name;
             Semester = 1;
+
         }
         public Course(int degreeId)
         {
-            CommonProgramPrerequiste = false;
-            Required = false;
+            CommonProgramPrerequiste = true;
+            Required = true;
             Active = true;
             Credits = 3;
+            Critical = true;
             DegreeId = degreeId;
             DegreeMapping.Models.Degree d = DegreeMapping.Models.Degree.Get(degreeId);
             Degree = d.Name;
@@ -69,14 +72,14 @@ namespace DegreeMapping.Models
             int id = 0;
             using (SqlConnection cn = new SqlConnection(Database.DC_DegreeMapping))
             {
-                TextInfo textInfo = new CultureInfo("en-US", false).TextInfo;
+                c.Name = (!string.IsNullOrEmpty(c.Name)) ? c.Name.Trim() : c.Name;
                 cn.Open();
                 SqlCommand cmd = cn.CreateCommand();
                 cmd.CommandText = "InsertCourse";
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@DegreeId", c.DegreeId);
-                cmd.Parameters.AddWithValue("@Code", c.Code.ToUpper().Trim());
-                cmd.Parameters.AddWithValue("@Name", textInfo.ToTitleCase(c.Name.Trim()));
+                cmd.Parameters.AddWithValue("@Code", c.Code.Trim());
+                cmd.Parameters.AddWithValue("@Name", c.Name);
                 cmd.Parameters.AddWithValue("@Credits", c.Credits);
                 cmd.Parameters.AddWithValue("@Critical", c.Critical);
                 cmd.Parameters.AddWithValue("@CommonProgramPrerequiste", c.CommonProgramPrerequiste);
@@ -100,15 +103,15 @@ namespace DegreeMapping.Models
         {
             using (SqlConnection cn = new SqlConnection(Database.DC_DegreeMapping))
             {
-                TextInfo textInfo = new CultureInfo("en-US", false).TextInfo;
+                c.Name = (!string.IsNullOrEmpty(c.Name)) ? c.Name.Trim() : c.Name;
                 cn.Open();
                 SqlCommand cmd = cn.CreateCommand();
                 cmd.CommandText = "UpdateCourse";
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@Id", c.Id);
                 cmd.Parameters.AddWithValue("@DegreeId", c.DegreeId);
-                cmd.Parameters.AddWithValue("@Code", c.Code.ToUpper().Trim());
-                cmd.Parameters.AddWithValue("@Name", textInfo.ToTitleCase(c.Name.Trim()));
+                cmd.Parameters.AddWithValue("@Code", c.Code.Trim());
+                cmd.Parameters.AddWithValue("@Name", c.Name);
                 cmd.Parameters.AddWithValue("@Credits", c.Credits);
                 cmd.Parameters.AddWithValue("@Critical", c.Critical);
                 cmd.Parameters.AddWithValue("@CommonProgramPrerequiste", c.CommonProgramPrerequiste);

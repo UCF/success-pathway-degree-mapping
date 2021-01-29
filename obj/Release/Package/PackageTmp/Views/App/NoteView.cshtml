@@ -1,23 +1,33 @@
 ﻿@model DegreeMapping.Models.Note
-
+@{
+    string NoteTypeValue = DegreeMapping.Models.Note.GetNoteTypeValue(Model.NoteType);
+ }
 
 <div class="row py-5">
     <div class="col-md-12">
         <small>@Html.ActionLink("Institutions", "Institutions") <span class="glyphicon glyphicon-arrow-right"></span> @Html.ActionLink(Model.Institution, "InstitutionView", new { id = Model.InstitutionId }) <span class="glyphicon glyphicon-arrow-right"></span> @Html.ActionLink(Model.Degree, "DegreeView", new { id = Model.DegreeId })</small>
-        <h1>@Model.Name</h1>
-        <div>@Html.LabelFor(x => x.ShowName) : @(Model.ShowName?"Yes":"No") </div>
+        <h1>@Model.Institution</h1>
+        <h2>@Model.Name</h2>
+        @*<div>@Html.LabelFor(x => x.ShowName) : @(Model.ShowName?"Yes":"No") </div>*@
     </div>
 </div>
 <div class="row">
     <div class="col-md-12">
+        @Html.LabelFor(x => x.NoteType) : @NoteTypeValue
+        <br/>
         @Html.LabelFor(x => x.Active) : @(Model.Active?"Yes":"No")
         <br />
-        @Html.LabelFor(x => x.Value) : @Model.Value
-        <br />
-        @Html.LabelFor(x => x.Required) : @(Model.Required?"Yes":"No")
-        <br />
+        @Html.LabelFor(x => x.Value) : 
+    <div class="pl-3 py-3">
+        @Html.Raw(Model.Value)
+    </div>
+
+        @*@Html.LabelFor(x => x.ForeignLanguageRequirement) : @(Model.ForeignLanguageRequirement?"Yes":"No")*@
+        @*@Html.LabelFor(x => x.Required) : @(Model.Required?"Yes":"No")*@
+        @*@Html.LabelFor(x => x.Section) : @Model.Section*@
         @Html.LabelFor(x => x.OrderBy) : @Model.OrderBy
         <br />
-        @Html.ActionLink("Edit Note", "NoteEdit", new { id = Model.Id })
+        @Html.ActionLink("Cancel", "DegreeView", new { id = Model.DegreeId }, new { @Class = "btn btn-primary btn-lg" })
+        @Html.ActionLink("Edit Note", "NoteEdit", new { id = Model.Id }, new { @Class = "btn btn-info btn-lg" })
     </div>
 </div>

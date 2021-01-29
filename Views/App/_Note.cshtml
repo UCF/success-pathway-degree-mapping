@@ -4,12 +4,32 @@
 {
     @Html.HiddenFor(x => x.Id)
     @Html.HiddenFor(x => x.DegreeId)
+
+    <div class="row pt-2">
+        <div class="col-md-10">
+            <div class="form-group">
+                <div>
+                    <label>Note : @Html.RadioButtonFor(x => x.NoteType, 1)</label>
+                </div>
+                <div>
+                    <label>List Item : @Html.RadioButtonFor(x => x.NoteType, 2)</label>
+                </div>
+                <div>
+                    <label>Foreign Language Requirement : @Html.RadioButtonFor(x => x.NoteType, 3)</label>
+                </div>
+                <div>
+                    <label>Additional Requirements : @Html.RadioButtonFor(x => x.NoteType, 4)</label>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="row pt-2">
         <div class="col-md-10">
             <div class="form-group">
                 @Html.LabelFor(x => x.Name) :
-                @Html.TextBoxFor(x => x.Name, new { @class = "form-control" })
-                @Html.LabelFor(x => x.ShowName) : @Html.CheckBoxFor(x => x.ShowName)
+                @Html.TextBoxFor(x => x.Name, new { @class = "form-control", required ="required" })
+                <span class="hidden">@Html.LabelFor(x => x.ShowName) : @Html.CheckBoxFor(x => x.ShowName)</span>
             </div>
         </div>
     </div>
@@ -18,8 +38,8 @@
         <div class="col-md-10">
             <div class="form-group">
                 @Html.LabelFor(x => x.Value) :
-                @Html.TextAreaFor(x => x.Value, new { @class = "form-control", col = "40", rows = "6" })
-                <span class="alert alert-warning">500 characters max</span>
+                @Html.TextAreaFor(x => x.Value, new { @class = "form-control", cols = "80", rows = "20" })
+                <span class="alert alert-warning">2000 characters max</span>
             </div>
         </div>
     </div>
@@ -28,16 +48,26 @@
         <div class="col-md-10">
             <div class="form-group">
                 @Html.LabelFor(x => x.OrderBy) :
-                @Html.TextBoxFor(x => x.OrderBy, new { @Class="form-control", type="Number", style="width:75px"})
+                @Html.TextBoxFor(x => x.OrderBy, new { @Class = "form-control", type = "Number", style = "width:75px" })
+            </div>
+        </div>
+    </div>
+
+    <div class="row pt-2 hidden">
+        <div class="col-md-10">
+            <div class="form-group">
+                @Html.LabelFor(x => x.Required) :
+                @Html.CheckBoxFor(x => x.Required)
             </div>
         </div>
     </div>
 
     <div class="row pt-2">
         <div class="col-md-10">
-            <div class="form-group">
-                @Html.LabelFor(x => x.Required) :
-                @Html.CheckBoxFor(x => x.Required)
+            <div class="form-group hidden">
+                @Html.LabelFor(x => x.Section) :
+                <label style="font-weight:normal">@Html.RadioButtonFor(x => x.Section, 1) 1st Section</label>
+                <label style="font-weight:normal">@Html.RadioButtonFor(x => x.Section, 2) 2nd Section</label>
             </div>
         </div>
     </div>
@@ -52,19 +82,56 @@
     </div>
 
     <div class="row pt-2">
-        <div class="col-md-2">
-            <div class="form-group">
-                <button type="submit" class="btn btn-success">Save</button>
+        <div class="col-md-10">
+            <div class="form-group text-right">
+
+                <button type="submit" class="btn btn-success btn-lg">Save</button>
+                @if (Model.Id > 0)
+                {
+                    @Html.ActionLink("Cancel", "NoteView", new { id = Model.Id }, new { @Class = "btn btn-primary btn-lg" })
+
+                }
+                else
+                {
+                    @Html.ActionLink("Cancel", "DegreeView", new { id = Model.DegreeId }, new { @Class = "btn btn-primary btn-lg" })
+                }
+                @if (Model.Id > 0)
+                {
+                    @Html.ActionLink("Delete", "NoteDelete", new { id = Model.Id, degreeId = Model.DegreeId }, new { @class = "btn btn-danger btn-lg", onclick = "return confirm('Are you sure you wish to delete this note?');" })
+                }
             </div>
         </div>
-
-        @if (Model.Id > 0)
-        {
-            <div class="col-md-2">
-                <div class="form-group">
-                    @Html.ActionLink("Delete", "NoteDelete", new { id = Model.Id, degreeId = Model.DegreeId }, new { @class = "btn btn-danger", onclick = "return confirm('Are you sure you wish to delete this note?');" })
-                </div>
-            </div>
-        }
     </div>
 }
+
+<script type="text/javascript">
+    function SetNoteType(val) {
+        //1 note
+        //2 list item
+        //3 foreign requirement
+        //4 additional requirement
+        if (val == 2) {
+            $("#Name").val("List Item");
+            $("#Name").prop("readonly", true);
+        } else if (val == 3) {
+            $("#Name").val("Foreign Language Requirement");
+            $("#Name").prop("readonly", true);
+        } else if (val == 4) {
+            $("#Name").val("Additional Requirements");
+            $("#Name").prop("readonly", true);
+        } else {
+            $("#Name").val("");
+            $("#Name").prop("readonly", false);
+        }
+    }
+    $("[name='NoteType']").on('click', function () {
+        SetNoteType($(this).val());
+    })
+    $(function () {
+        $("[name='NoteType']").each(function () {
+            if ($(this).is(":checked")) {
+                SetNoteType($(this).val());
+            }
+        })
+    })
+</script>

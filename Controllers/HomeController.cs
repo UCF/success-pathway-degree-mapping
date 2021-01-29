@@ -1,6 +1,7 @@
 ﻿using DegreeMapping.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlTypes;
 using System.DirectoryServices.ActiveDirectory;
 using System.Linq;
 using System.Web;
@@ -12,6 +13,10 @@ namespace DegreeMapping.Controllers
     {
         public ActionResult Index()
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Institutions", "App");
+            }
             Models.User u = new Models.User();
             return View(u);
         }
@@ -44,6 +49,21 @@ namespace DegreeMapping.Controllers
         }
 
         public ActionResult Example()
+        {
+            return View();
+        }
+
+        public ActionResult DegreeList()
+        {
+            return View();
+        }
+
+        public ActionResult DegreeGeneric()
+        {
+            return View();
+        }
+
+        public ActionResult DegreeMap()
         {
             return View();
         }

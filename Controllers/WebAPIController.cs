@@ -27,7 +27,7 @@ namespace DegreeMapping.Controllers
         [Route("GetDegreeList")]
         public List<DegreeList> GetDegreeList()
         {
-            return DegreeList.GetDegreeList();
+            return DegreeList.List();
         }
     }
 

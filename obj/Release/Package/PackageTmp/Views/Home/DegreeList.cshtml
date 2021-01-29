@@ -1,0 +1,15 @@
+﻿@{ 
+    string url = HttpContext.Current.Request.Url.Host.ToLower();
+    string path = "";
+    if (url == "portal.connect.ucf.edu") {
+        path = "/Pathway";
+    }
+}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <span id="DegreeListOutput"></span>
+            </div>
+        </div>
+    </div>
+    <script src="@path/Scripts/DegreeList.js"></script>

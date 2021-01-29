@@ -11,7 +11,7 @@ namespace DegreeMapping.Models
     public class Institution
     {
         public static int UCFId { get { return 1; } }
-   
+        public static int GenericId { get { return 7; } }
         public int Id { get; set; }
         public string Name { get; set; }
         public string URL { get; set; }
@@ -21,7 +21,8 @@ namespace DegreeMapping.Models
         public string NID { get; set; }
 
         public Institution()
-        { 
+        {
+            Active = true;
             NID = HttpContext.Current.User.Identity.Name;
         }
 
