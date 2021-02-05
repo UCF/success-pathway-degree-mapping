@@ -39,6 +39,7 @@ namespace DegreeMapping.Models
         public int? UCFCourseId { get; set; }
         [DisplayName("UCF Related Course")]
         public string UCFRelatedCourse { get; set; }
+        public int UCFCourseCredits { get; set; }
 
         public Course()
         {
@@ -204,12 +205,18 @@ namespace DegreeMapping.Models
                 c.NID = dr["NID"].ToString();
                 c.Semester = Convert.ToInt32(dr["Semester"].ToString());
                 int ucfCourseId;
+                int ucfCourseCredits;
+                c.UCFRelatedCourse = dr["UCFRelatedCourse"].ToString();
                 Int32.TryParse(dr["UCFCourseId"].ToString(), out ucfCourseId);
                 if (ucfCourseId > 0)
                 {
                     c.UCFCourseId = ucfCourseId;
                 }
-                c.UCFRelatedCourse = dr["UCFRelatedCourse"].ToString();
+                Int32.TryParse(dr["UCFCourseCredits"].ToString(), out ucfCourseCredits);
+                if(ucfCourseCredits > 0)
+                {
+                    c.UCFCourseCredits = Convert.ToInt32(dr["UCFCourseCredits"].ToString());
+                }
             }
         }
 

@@ -93,7 +93,14 @@
     <div class="row pt-2">
         <div class="col-md-10">
             <div class="form-group">
-                @Html.ActionLink("Back","DegreeView", new { id=Model.Id}, new { @class="btn btn-primary" })
+                @if (Model.Id == 0)
+                {
+                    @Html.ActionLink("Back", "InstitutionView", new { id = Model.InstitutionId }, new { @class = "btn btn-primary" })
+                }
+                else
+                {
+                    @Html.ActionLink("Back", "DegreeView", new { id = Model.Id }, new { @class = "btn btn-primary" })
+                }
                 <button type="submit" class="btn btn-success">Save</button>
             </div>
         </div>

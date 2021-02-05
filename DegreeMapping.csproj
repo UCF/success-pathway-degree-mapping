@@ -179,6 +179,7 @@
     <Compile Include="Models\APIKeyMessageHandler.cs" />
     <Compile Include="Models\Authentication.cs" />
     <Compile Include="Models\Course.cs" />
+    <Compile Include="Models\CourseList.cs" />
     <Compile Include="Models\CourseMap.cs" />
     <Compile Include="Models\DegreeList.cs" />
     <Compile Include="Models\DegreeMap.cs" />
@@ -190,6 +191,7 @@
     <Compile Include="Models\LoginUserModel.cs" />
     <Compile Include="Models\MyCustomAttribute.cs" />
     <Compile Include="Models\Note.cs" />
+    <Compile Include="Models\NoteList.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -210,6 +212,7 @@
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\degreeGeneric.js" />
     <Content Include="Scripts\DegreeList.js" />
+    <Content Include="Scripts\DegreeMap.js" />
     <Content Include="Scripts\degreemapping.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />

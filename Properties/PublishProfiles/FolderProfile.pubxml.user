@@ -16,10 +16,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/10/2013 16:29:20</publishTime>
     </File>
     <File Include="bin/DegreeMapping.dll">
-      <publishTime>01/29/2021 16:34:27</publishTime>
+      <publishTime>02/01/2021 14:11:33</publishTime>
     </File>
     <File Include="bin/DegreeMapping.pdb">
-      <publishTime>01/29/2021 16:34:27</publishTime>
+      <publishTime>02/01/2021 14:11:33</publishTime>
     </File>
     <File Include="bin/EntityFramework.dll">
       <publishTime>04/16/2020 20:38:42</publishTime>
@@ -220,7 +220,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>01/15/2021 10:20:04</publishTime>
     </File>
     <File Include="Views/App/NoteView.cshtml">
-      <publishTime>01/21/2021 10:50:38</publishTime>
+      <publishTime>02/01/2021 14:07:59</publishTime>
     </File>
     <File Include="Views/App/ViewUsers.cshtml">
       <publishTime>12/12/2020 20:27:10</publishTime>
@@ -232,13 +232,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>12/09/2020 16:15:37</publishTime>
     </File>
     <File Include="Views/App/_Degree.cshtml">
-      <publishTime>01/28/2021 11:49:13</publishTime>
+      <publishTime>02/01/2021 14:09:29</publishTime>
     </File>
     <File Include="Views/App/_Institution.cshtml">
       <publishTime>01/28/2021 13:54:05</publishTime>
     </File>
     <File Include="Views/App/_Note.cshtml">
-      <publishTime>01/29/2021 15:26:37</publishTime>
+      <publishTime>02/01/2021 14:07:33</publishTime>
     </File>
     <File Include="Views/Home/About.cshtml">
       <publishTime>12/07/2020 16:49:17</publishTime>

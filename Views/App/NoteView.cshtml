@@ -27,7 +27,7 @@
         @*@Html.LabelFor(x => x.Section) : @Model.Section*@
         @Html.LabelFor(x => x.OrderBy) : @Model.OrderBy
         <br />
-        @Html.ActionLink("Cancel", "DegreeView", new { id = Model.DegreeId }, new { @Class = "btn btn-primary btn-lg" })
+        @Html.ActionLink("Back", "DegreeView", new { id = Model.DegreeId }, new { @Class = "btn btn-primary btn-lg" })
         @Html.ActionLink("Edit Note", "NoteEdit", new { id = Model.Id }, new { @Class = "btn btn-info btn-lg" })
     </div>
 </div>
