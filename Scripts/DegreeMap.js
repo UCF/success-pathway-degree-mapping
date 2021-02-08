@@ -1,4 +1,20 @@
 ﻿var degreemap = {
+    target : {
+        UCFGPA: "UCFGPA",
+        UCFLimitedAccess: "UCFLimitedAccess",
+        UCFRestrictedAccess: "UCFRestrictedAccess",
+        AdditionalRequirements: "AdditionalRequirements",
+        ForeignLanugage: "ForeignLanugage",
+        ListItems: "ListItems",
+        Institution: "Institution",
+        InstitutionList: "InstitutionList",
+        DegreemapRow: "DegreemapRow",
+
+
+
+
+
+    },
     degreeId: 0,
     institutionId: 0,
     ucfDegreeId: 0,
@@ -15,9 +31,9 @@
                 let gpa = data[x].GPA;
                 let limitedAccess = this.getTrueFalse(data[x].LimitedAccess);
                 let restrictedAccess = this.getTrueFalse(data[x].RestrictedAccess);
-                $("#UCFGPA").html(gpa);
-                $("#UCFLimitedAccess").html(limitedAccess);
-                $("#UCFRestrictedAccess").html(restrictedAccess);
+                $("#" + this.target.UCFGPA).html(gpa);
+                $("#" + this.target.UCFLimitedAccess).html(limitedAccess);
+                $("#" + this.target.UCFRestrictedAccess).html(restrictedAccess);
                 return;
             }
         }
@@ -26,14 +42,13 @@
         let output = "";
         for (x = 0; x <= data.length - 1; x++) {
             if (this.ucfDegreeId == data[x].Id) {
-                //console.log(data[x]);
                 if (data[x].Degrees.length > 0) {
                     for (y = 0; y <= data[x].Degrees.length - 1; y++) {
                         if (data[x].Degrees[y].Notes.length > 0) {
                             for (z = 0; data[x].Degrees[y].Notes.length - 1; z++) {
                                 if (data[x].Degrees[y].Notes[z].NoteType == degreemap.noteType.additionalRequirement) {
                                     output = data[x].Degrees[y].Notes[z].Content;
-                                    $("#AdditionalRequirements").html(output);
+                                    $("#" + this.target.AdditionalRequirements).html(output);
                                     return;
                                 }
                             }
@@ -47,14 +62,13 @@
         let output = "";
         for (x = 0; x <= data.length - 1; x++) {
             if (this.ucfDegreeId == data[x].Id) {
-                console.log(data[x]);
                 if (data[x].Degrees.length > 0) {
                     for (y = 0; y <= data[x].Degrees.length - 1; y++) {
                         if (data[x].Degrees[y].Notes.length > 0) {
                             for (z = 0; data[x].Degrees[y].Notes.length - 1; z++) {
                                 if (data[x].Degrees[y].Notes[z].NoteType == degreemap.noteType.foreginLaguage) {
                                     output = data[x].Degrees[y].Notes[z].Content;
-                                    $("#ForeignLanugage").html(output);
+                                    $("#" + this.target.ForeignLanugage).html(output);
                                     return;
                                 }
                             }
@@ -77,7 +91,7 @@
                                     output += "<li><strong>" + data[x].Degrees[y].Notes[z].Content + "</strong></li>";
                                 }
                             }
-                            $("#ListItems").append(output);
+                            $("#" + this.target.ListItems).append(output);
                             return;
                         }
                     }
@@ -90,7 +104,7 @@
             if (this.ucfDegreeId == data[x].Id) {
                 if (data[x].Degrees.length > 0) {
                     for (y = 0; y <= data[x].Degrees.length - 1; y++) {
-                        $("#Institution").html(data[x].Degrees[y].Institution + " Pathway");
+                        $("#" + this.target.Institution).html(data[x].Degrees[y].Institution + " Pathway");
                         return;
                     }
                 }
@@ -113,7 +127,7 @@
                         }
                         
                     }
-                    $("#InstitutionList").html(generic + output);
+                    $("#" + this.target.InstitutionList).html(generic + output);
                     return;
                 }
             }
@@ -137,7 +151,7 @@
                                     let required = data[x].Degrees[y].Courses[z].Required;
                                     courseRow += this.courseDisplayTemplate(ucfCourse, ucfCredits, partnerCourse, partnerCredits, critical, cpp, required);
                                 }
-                                $("#DegreemapRow").html(courseRow);
+                                $("#" + this.target.DegreemapRow).html(courseRow);
                                 return;
                             }
                         }
@@ -208,7 +222,10 @@
             headers: { "APIKey": "Th1sIsth3Way" },
             cache: false,
             success: function (data) {
-                //console.log(data);
+                console.log(data);
+                if (degreemap.ucfDegreeId == 0) {
+                    degreemap.getUCFID(data);
+                }
                 degreemap.displayDefaultInfo(data);
                 degreemap.displayInstitutionName(data);
                 degreemap.displayAdditionalRequirements(data);
@@ -235,6 +252,19 @@
             host = "/home";
         }
         this.hostname = host;
+    },
+    getUCFID: function (data) {
+        for (x = 0; x <= data.length - 1; x++) {
+            id = data[x].Id;
+            if (data[x].Degrees.length > 0) {
+                for (y = 0; y <= data[x].Degrees.length - 1; y++) {
+                    if (data[x].Degrees[y].Id == this.degreeId) {
+                        this.ucfDegreeId = id;
+                        return;
+                    }
+                }
+            }
+        }
     },
     init: function () {
         this.degreeId = (this.getUrlVars()["degreeid"] > 0) ? this.getUrlVars()["degreeid"] : 0;
