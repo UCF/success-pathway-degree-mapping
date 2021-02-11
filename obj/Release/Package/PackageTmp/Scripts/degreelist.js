@@ -28,7 +28,7 @@
             headers: { "APIKey": "Th1sIsth3Way" },
             cache: false,
             success: function (data) {
-                //console.log(data);
+                console.log(data);
                 degreeList.displayDegreeList(data);
             }
         })

@@ -16,10 +16,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/10/2013 16:29:20</publishTime>
     </File>
     <File Include="bin/DegreeMapping.dll">
-      <publishTime>02/01/2021 14:11:33</publishTime>
+      <publishTime>02/11/2021 14:04:24</publishTime>
     </File>
     <File Include="bin/DegreeMapping.pdb">
-      <publishTime>02/01/2021 14:11:33</publishTime>
+      <publishTime>02/11/2021 14:04:24</publishTime>
     </File>
     <File Include="bin/EntityFramework.dll">
       <publishTime>04/16/2020 20:38:42</publishTime>
@@ -163,7 +163,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>01/27/2021 08:59:22</publishTime>
     </File>
     <File Include="Scripts/degreelist.js">
-      <publishTime>01/28/2021 16:38:18</publishTime>
+      <publishTime>02/04/2021 09:40:19</publishTime>
+    </File>
+    <File Include="Scripts/DegreeMap.js">
+      <publishTime>02/11/2021 13:54:04</publishTime>
     </File>
     <File Include="Scripts/degreemapping.js">
       <publishTime>01/28/2021 16:32:41</publishTime>
@@ -253,7 +256,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>01/26/2021 16:07:23</publishTime>
     </File>
     <File Include="Views/Home/DegreeMap.cshtml">
-      <publishTime>01/27/2021 09:48:12</publishTime>
+      <publishTime>02/05/2021 09:44:34</publishTime>
     </File>
     <File Include="Views/Home/Example.cshtml">
       <publishTime>01/25/2021 14:00:20</publishTime>

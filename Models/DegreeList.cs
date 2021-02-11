@@ -11,6 +11,7 @@ namespace DegreeMapping.Models
     {
         public int Id { get; set; }
         public string Degree { get; set; }
+        public string DegreeType { get; set; }
         public int InstitutionId { get; set; }
         public string Institution { get; set; }
         public string GPA { get; set; }
@@ -19,7 +20,6 @@ namespace DegreeMapping.Models
         public List<DegreeList> Degrees {get; set; }
         public List<CourseList> Courses { get; set; }
         public List<NoteList> Notes { get; set; }
-
 
         public DegreeList()
         {
@@ -30,6 +30,7 @@ namespace DegreeMapping.Models
         {
             Id = d.Id;
             Degree = d.Name;
+            DegreeType = d.DegreeType;
             this.InstitutionId = d.InstitutionId;
             this.Institution = d.Institution;
             this.GPA = d.GPA;
@@ -54,6 +55,7 @@ namespace DegreeMapping.Models
                     DegreeList dl2 = new DegreeList();
                     dl2.Id = d2.Id;
                     dl2.Degree = d2.Name;
+                    dl2.DegreeType = d2.DegreeType;
                     dl2.InstitutionId = d2.InstitutionId;
                     dl2.Institution = d2.Institution;
                     dl2.Courses = CourseList.List(dl2.Id);

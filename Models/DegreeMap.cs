@@ -11,6 +11,7 @@ namespace DegreeMapping.Models
         public string Institution { get; set; }
         public string GPA { get; set; }
         public string Degree { get; set; }
+        public string DegreeType { get; set; }
         public bool Active { get; set; }
         public bool LimitedAccess { get; set; }
         public bool RestrictedAccess { get; set; }
@@ -19,6 +20,7 @@ namespace DegreeMapping.Models
         public string UCFInstitution { get; set; }
         public string UCFGPA { get; set; }
         public string UCFDegree { get; set; }
+        public string UCFDegreeType { get; set; }
         public bool UCFActive { get; set; }
         public bool UCFLimitedAccess { get; set; }
         public bool UCFRestrictedAccess { get; set; }
@@ -51,6 +53,7 @@ namespace DegreeMapping.Models
             Institution = d.Institution;
             GPA = d.GPA;
             this.Degree = d.Name;
+            DegreeType = d.DegreeType;
             LimitedAccess = d.LimitedAccess;
             RestrictedAccess = d.RestrictedAccess;
             Description = d.Description;
@@ -72,6 +75,7 @@ namespace DegreeMapping.Models
             UCFInstitution = d.Institution;
             UCFGPA = d.GPA;
             UCFDegree = d.Name;
+            UCFDegreeType = d.DegreeType;
             UCFActive = d.Active;
             UCFLimitedAccess = d.LimitedAccess;
             UCFRestrictedAccess = d.RestrictedAccess;
