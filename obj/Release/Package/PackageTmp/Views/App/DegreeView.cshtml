@@ -8,7 +8,7 @@
     <div class="col-md-6">
         <small>@Html.ActionLink("Institutions", "Institutions") <span class="glyphicon glyphicon-arrow-right"></span> @Html.ActionLink(Model.Institution, "InstitutionView", new { id = Model.InstitutionId })</small>
         <h1>@Model.Institution</h1>
-        <h2>@Html.Raw(Model.Name)</h2>
+        <h2>@Html.Raw(Model.Name)  Model.DegreeType </h2>
         <div class="form-group">
             <div class="col-md-10">
                 @Html.LabelFor(x => x.Active) : @(Model.Active?"Yes":"No")

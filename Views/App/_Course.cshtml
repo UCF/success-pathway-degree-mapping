@@ -128,7 +128,15 @@
         <div class="col-md-8">
             <div class="form-group text-right">
                 <button type="submit" class="btn btn-success btn-lg">Save</button>
-                @Html.ActionLink("Cancel", "CourseView", new { id = Model.Id }, new { @Class = "btn btn-primary btn-lg" })
+                @if (Model.Id > 0)
+                {
+                    @Html.ActionLink("Cancel", "CourseView", new { id = Model.Id }, new { @Class = "btn btn-primary btn-lg" })
+                }
+                else
+                {
+                    @Html.ActionLink("Cancel", "DegreeView", new { id = Model.DegreeId }, new { @Class = "btn btn-primary btn-lg" })
+                }
+
                 @if (Model.Id > 0)
                 {
                     @Html.ActionLink("Delete", "CourseDelete", new { id = Model.Id, degreeId = Model.DegreeId }, new { @class = "btn btn-danger btn-lg", onclick = "return confirm('Are you sure you wish to delete this course?');" })
