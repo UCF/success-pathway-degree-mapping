@@ -16,10 +16,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/10/2013 16:29:20</publishTime>
     </File>
     <File Include="bin/DegreeMapping.dll">
-      <publishTime>02/12/2021 14:16:42</publishTime>
+      <publishTime>02/18/2021 13:38:57</publishTime>
     </File>
     <File Include="bin/DegreeMapping.pdb">
-      <publishTime>02/12/2021 14:16:42</publishTime>
+      <publishTime>02/18/2021 13:38:57</publishTime>
     </File>
     <File Include="bin/EntityFramework.dll">
       <publishTime>04/16/2020 20:38:42</publishTime>
@@ -190,7 +190,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>01/15/2021 10:17:18</publishTime>
     </File>
     <File Include="Views/App/CourseView.cshtml">
-      <publishTime>01/28/2021 16:10:43</publishTime>
+      <publishTime>02/18/2021 10:44:14</publishTime>
     </File>
     <File Include="Views/App/DegreeAdd.cshtml">
       <publishTime>12/10/2020 16:20:54</publishTime>
@@ -199,7 +199,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>01/15/2021 10:15:28</publishTime>
     </File>
     <File Include="Views/App/DegreeView.cshtml">
-      <publishTime>02/12/2021 14:11:03</publishTime>
+      <publishTime>02/18/2021 10:42:42</publishTime>
     </File>
     <File Include="Views/App/Index.cshtml">
       <publishTime>12/09/2020 09:57:51</publishTime>
@@ -214,7 +214,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>01/29/2021 14:51:19</publishTime>
     </File>
     <File Include="Views/App/InstitutionView.cshtml">
-      <publishTime>02/12/2021 14:09:21</publishTime>
+      <publishTime>02/18/2021 11:48:15</publishTime>
     </File>
     <File Include="Views/App/NoteAdd.cshtml">
       <publishTime>01/15/2021 10:20:09</publishTime>
@@ -229,13 +229,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>12/12/2020 20:27:10</publishTime>
     </File>
     <File Include="Views/App/_Course.cshtml">
-      <publishTime>02/12/2021 10:58:49</publishTime>
+      <publishTime>02/18/2021 11:07:55</publishTime>
     </File>
     <File Include="Views/App/_Dashboard.cshtml">
       <publishTime>12/09/2020 16:15:37</publishTime>
     </File>
     <File Include="Views/App/_Degree.cshtml">
-      <publishTime>02/01/2021 14:09:29</publishTime>
+      <publishTime>02/18/2021 10:59:26</publishTime>
     </File>
     <File Include="Views/App/_Institution.cshtml">
       <publishTime>01/28/2021 13:54:05</publishTime>

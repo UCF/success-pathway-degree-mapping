@@ -19,6 +19,7 @@ namespace DegreeMapping.Models
         public int Id { get; set; }
         [DisplayName("Degree Id")]
         public int DegreeId { get; set; }
+        [DisplayName("Course Name")]
         public string Code { get; set; }
         public string Name { get; set; }
         public int Credits { get; set; }

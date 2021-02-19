@@ -2,13 +2,18 @@
 @{ 
     List<DegreeMapping.Models.Course> list_c = DegreeMapping.Models.Course.List(Model.Id);
     List<DegreeMapping.Models.Note> list_n = DegreeMapping.Models.Note.List(Model.Id);
+    bool noCourseMapped = true;
 }
 
-<div class="row py-5">
-    <div class="col-md-6">
+<div class="row pt-5">
+    <div class="col-md-12">
         <small>@Html.ActionLink("Institutions", "Institutions") <span class="glyphicon glyphicon-arrow-right"></span> @Html.ActionLink(Model.Institution, "InstitutionView", new { id = Model.InstitutionId })</small>
-        <h1>@Model.Institution</h1>
-        <h2>@Html.Raw(Model.Name)  Model.DegreeType </h2>
+        <h1>@Model.Institution : @Html.Raw(Model.Name)</h1>
+    </div>
+</div>
+
+<div class="row pt-5">
+    <div class="col-md-6">
         <div class="form-group">
             <div class="col-md-10">
                 @Html.LabelFor(x => x.Active) : @(Model.Active?"Yes":"No")
@@ -21,7 +26,7 @@
             </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group hidden">
             <div class="col-md-10">
                 @Html.LabelFor(x => x.DegreeType) : @Html.Raw(Model.DegreeType)
             </div>
@@ -59,7 +64,7 @@
     </div>
     @if (Model.InstitutionId > 1)
     {
-        <div class="col-md-6 pt-5">
+        <div class="col-md-6">
             <h2 class="pt-5">UCF Related Degree</h2>
             @if (string.IsNullOrEmpty(Model.UCFDegreeName))
             {
@@ -83,23 +88,40 @@
         @if (list_c.Count > 0)
         {
             int semester = 0;
-            <ul>
-                @foreach (DegreeMapping.Models.Course c in list_c.OrderBy(x => x.Semester).ThenBy(x => x.Code))
-                {
-                    if (semester != c.Semester)
-                    {
-                        semester = c.Semester;
-                        <li style="list-style:none; margin-left:-20px"><strong>Semester @semester</strong></li>
-                    }
-                    <li>
-                        @Html.ActionLink(c.Code + " " + c.Name, "CourseView", new { id = c.Id })
-                    </li>
-                }
-            </ul>
+    <ul>
+        @foreach (DegreeMapping.Models.Course c in list_c.OrderBy(x => x.Semester).ThenBy(x => x.Code))
+        {
+            if (semester != c.Semester)
+            {
+                semester = c.Semester;
+                <li style="list-style:none; margin-left:-20px"><strong>Semester @semester</strong></li>
+            }
+            if (c.UCFCourseId == null && c.InstitutionId != DegreeMapping.Models.Institution.UCFId)
+            {
+                noCourseMapped = false;
+                <li>
+                    <span style="color:red">❌</span>
+                    @Html.ActionLink(c.Code, "CourseView", new { id = c.Id })
+                </li>
+            }
+            else
+            {
+                <li>
+                    @Html.ActionLink(c.Code, "CourseView", new { id = c.Id })
+                </li>
+            }
+        }
+    </ul>
+        }
+        @if(!noCourseMapped)
+        { 
+            <div>
+                <span style="color:red">❌</span> - Course is not mapped
+            </div>
         }
     </div>
     <div class="col-md-6">
-        @if (Model.InstitutionId != DegreeMapping.Models.Institution.UCFId)
+        @if (Model.InstitutionId == DegreeMapping.Models.Institution.UCFId)
         {
             <div>
                 <h3>Notes/Requirements</h3>

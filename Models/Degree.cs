@@ -46,6 +46,7 @@ namespace DegreeMapping.Models
             LimitedAccess = false;
             RestrictedAccess = false;
             NID = HttpContext.Current.User.Identity.Name;
+            GPA = "2.0";
             UCFDegreeId = null;
         }
 
@@ -58,6 +59,7 @@ namespace DegreeMapping.Models
             InstitutionId = institutionId;
             Institution = DegreeMapping.Models.Institution.Get(institutionId).Name;
             NID = HttpContext.Current.User.Identity.Name;
+            GPA = "2.0";
             UCFDegreeId = null;
         }
 

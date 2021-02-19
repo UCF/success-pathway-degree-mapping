@@ -37,7 +37,7 @@
                 @foreach (DegreeMapping.Models.Degree d in list_d.OrderBy(x => x.Name))
                 {
                     <li>
-                        @Html.ActionLink(d.Name + " " + d.DegreeType, "DegreeView", new { id = d.Id })
+                        @Html.ActionLink(d.Name, "DegreeView", new { id = d.Id })
                     </li>
                 }
             </ul>

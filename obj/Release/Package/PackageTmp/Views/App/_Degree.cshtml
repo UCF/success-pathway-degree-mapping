@@ -6,6 +6,7 @@
 {
     @Html.HiddenFor(x => x.Id);
     @Html.HiddenFor(x => x.InstitutionId)
+    @Html.HiddenFor(x => x.DegreeType)
     <div class="row">
         <div class="col-md-6">
             <div class="form-group">
@@ -37,12 +38,6 @@
   
     <div class="row pt-2">
         <div class="col-md-3">
-            <div class="form-group">
-                @Html.LabelFor(x => x.DegreeType) :
-                @Html.TextBoxFor(x => x.DegreeType, new { @class = "form-control" })
-            </div>
-        </div>
-        <div class="pl-5 col-md-2">
             <div class="form-group">
                 @Html.LabelFor(x => x.GPA) :
                 @Html.TextBoxFor(x => x.GPA, new { @class = "form-control" })

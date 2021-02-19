@@ -32,11 +32,11 @@
                         {
                             if (Model.UCFCourseId == c.Id)
                             {
-                                <option selected="selected" value="@c.Id">@c.Code  -  @c.Name</option>
+                                <option selected="selected" value="@c.Id">@c.Code</option>
                             }
                             else
                             {
-                                <option value="@c.Id">@c.Code  -  @c.Name</option>
+                                <option value="@c.Id">@c.Code</option>
                             }
                         }
                     </select>
@@ -47,7 +47,7 @@
 
     <div class="row pt-2">
         <div class="col-md-10">
-            <div class="form-group">
+            <div class="form-group hidden">
                 @Html.LabelFor(x => x.Name) :
                 @Html.TextBoxFor(x => x.Name, new { @class = "form-control" })
             </div>
@@ -76,16 +76,16 @@
                 @Html.CheckBoxFor(x => x.Critical)
             </div>
         </div>
-        <div class="col-md-2">
+        <div class="col-md-4">
             <div class="form-group">
-                @Html.LabelFor(x => x.Required) :
-                @Html.CheckBoxFor(x => x.Required)
+                @Html.LabelFor(x => x.CommonProgramPrerequiste) :
+                @Html.CheckBoxFor(x => x.CommonProgramPrerequiste)
             </div>
         </div>
         <div class="">
             <div class="form-group">
-                @Html.LabelFor(x => x.CommonProgramPrerequiste) :
-                @Html.CheckBoxFor(x => x.CommonProgramPrerequiste)
+                @Html.LabelFor(x => x.Required) :
+                @Html.CheckBoxFor(x => x.Required)
             </div>
         </div>
     </div>
