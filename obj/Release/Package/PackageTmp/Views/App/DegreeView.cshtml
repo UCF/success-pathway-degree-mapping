@@ -139,5 +139,27 @@
                 </ul>
             }
         }
+        else
+        {
+            <div>
+                <h3>List Item(s)</h3>
+                @Html.ActionLink("Add List Item", "NoteAdd", new { degreeId = Model.Id })
+            </div>
+            if (list_n.Count > 0)
+            {
+                <ul>
+                    @foreach (DegreeMapping.Models.Note n in list_n)
+                    {
+                        if (n.NoteType.Equals(DegreeMapping.Models.Note.NoteTypeValue.ListItem))
+                        { 
+                            <li>
+                                @Html.ActionLink(n.Name, "NoteView", new { id = n.Id })
+                            </li>
+                        }
+                    }
+                </ul>
+            }
+
+        }
     </div>
 </div>

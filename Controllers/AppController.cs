@@ -227,5 +227,16 @@ namespace DegreeMapping.Controllers
         }
         #endregion
 
+        #region Checklist
+
+        public ActionResult Checklist() 
+        {
+            List<Degree> list_d = Degree.List(null);
+            return View(list_d);
+        }
+
+
+        #endregion
+
     }
 }

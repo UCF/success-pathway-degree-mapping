@@ -29,7 +29,6 @@
                 let limitedAccess = this.getTrueFalse(data[x].LimitedAccess);
                 let restrictedAccess = this.getTrueFalse(data[x].RestrictedAccess);
                 let degreeTtitle = data[x].Degree + " " + data[x].DegreeType;
-                console.log(degreeTtitle);
                 $("#" + this.target.UCFGPA).html(gpa);
                 $("#" + this.target.UCFLimitedAccess).html(limitedAccess);
                 $("#" + this.target.UCFRestrictedAccess).html(restrictedAccess);
@@ -42,18 +41,11 @@
         let output = "";
         for (x = 0; x <= data.length - 1; x++) {
             if (this.ucfDegreeId == data[x].Id) {
-                if (data[x].Degrees.length > 0) {
-                    for (y = 0; y <= data[x].Degrees.length - 1; y++) {
-                        if (data[x].Degrees[y].Id == this.degreeId) {
-                            if (data[x].Degrees[y].Notes.length > 0) {
-                                for (z = 0; z <= data[x].Degrees[y].Notes.length - 1; z++) {
-                                    if (data[x].Degrees[y].Notes[z].NoteType == degreemap.noteType.additionalRequirement) {
-                                        output = data[x].Degrees[y].Notes[z].Content;
-                                        $("#" + this.target.AdditionalRequirements).html(output);
-                                        return;
-                                    }
-                                }
-                            }
+                if (data[x].Notes.length > 0) {
+                    for (y = 0; y <= data[x].Notes.length - 1; y++) {
+                        if (data[x].Notes[y].NoteType == this.noteType.additionalRequirement) {
+                            output = data[x].Notes[y].Content;
+                            $("#" + this.target.AdditionalRequirements).html(output);
                         }
                     }
                 }
@@ -64,23 +56,18 @@
         let output = "";
         for (x = 0; x <= data.length - 1; x++) {
             if (this.ucfDegreeId == data[x].Id) {
-                if (data[x].Degrees.length > 0) {
-                    for (y = 0; y <= data[x].Degrees.length - 1; y++) {
-                        if (data[x].Degrees[y].Id == this.degreeId) {
-                            if (data[x].Degrees[y].Notes.length > 0) {
-                                for (z = 0; z <= data[x].Degrees[y].Notes.length - 1; z++) {
-                                    if (data[x].Degrees[y].Notes[z].NoteType == degreemap.noteType.foreginLaguage) {
-                                        output = data[x].Degrees[y].Notes[z].Content;
-                                        $("#" + this.target.ForeignLanugage).html(output);
-                                        return;
-                                    }
-                                }
-                            }
+                if (data[x].Notes.length > 0) {
+                    for (y = 0; y <= data[x].Notes.length - 1; y++) {
+                        if (data[x].Notes[y].NoteType == this.noteType.foreginLaguage) {
+                            output = data[x].Notes[y].Content;
+                            $("#" + this.target.ForeignLanugage).html(output);
                         }
                     }
                 }
             }
         }
+
+
     },
     displayListItems: function (data) {
         let output = "";

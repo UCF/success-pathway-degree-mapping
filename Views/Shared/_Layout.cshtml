@@ -26,12 +26,13 @@
                 <div class="float-right">
                     @if (User.Identity.IsAuthenticated)
                     {
-                        <span class="px-3">@Html.ActionLink("Institutions", "Institutions", "App", null, new { @class="btn btn-primary btn-lg"})</span>
+                        <span class="px-3">@Html.ActionLink("Institutions", "Institutions", "App", null, new { @class = "btn btn-primary btn-lg" })</span>
+                        <span class="px-3">@Html.ActionLink("Checklist", "Checklist", "App", null, new { @class = "btn btn-primary btn-lg" })</span>
                         if (User.Identity.Name == "jgiron")
                         {
-                         <span class="px-3">@Html.ActionLink("View Users", "ViewUsers", "App", null, new { @class="btn btn-primary btn-lg" })</span>
+                            <span class="px-3">@Html.ActionLink("View Users", "ViewUsers", "App", null, new { @class = "btn btn-primary btn-lg" })</span>
                         }
-                        <span class="px-3">@Html.ActionLink("Sign Out", "SignOut", "Home", null, new { @class="btn btn-primary btn-lg" })</span>
+                        <span class="px-3">@Html.ActionLink("Sign Out", "SignOut", "Home", null, new { @class = "btn btn-primary btn-lg" })</span>
                     }
                 </div>
             </div>

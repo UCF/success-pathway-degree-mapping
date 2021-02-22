@@ -1,0 +1,48 @@
+﻿@model List<DegreeMapping.Models.Degree>
+@{
+    List<DegreeMapping.Models.Institution> list_i = DegreeMapping.Models.Institution.List();
+}
+
+<div class="container pt-5">
+    <div class="row">
+        <h1>Degree List</h1>
+        <div class="col-md-12">
+            <ul>
+                @foreach (DegreeMapping.Models.Degree d in Model.Where(x => x.InstitutionId == DegreeMapping.Models.Institution.UCFId))
+                {
+                    <li>
+                        <strong>@d.Name</strong>
+                        <ul>
+                            @foreach (DegreeMapping.Models.Institution i in list_i.OrderBy(x => x.Name).Where(x => x.Id != DegreeMapping.Models.Institution.UCFId))
+                            {
+                                <li>
+                                    <ul>
+                                        <li>
+                                            @Html.ActionLink(i.Name, "InstitutionView", new { id = i.Id })
+                                            @{
+                                                bool hasDegree = false;
+                                                foreach (DegreeMapping.Models.Degree d2 in Model.Where(x => x.InstitutionId != DegreeMapping.Models.Institution.UCFId))
+                                                {
+                                                    if (d.Id == d2.UCFDegreeId && i.Id == d2.InstitutionId)
+                                                    {
+                                                        hasDegree = true;
+                                                    }
+                                                }
+                                                if (!hasDegree)
+                                                {
+                                                    <span style="color:red">❌- missing degree</span>
+                                                }
+                                            }
+
+                                        </li>
+                                    </ul>
+                                </li>
+                            }
+                        </ul>
+                    </li>
+
+                }
+            </ul>
+        </div>
+    </div>
+</div>

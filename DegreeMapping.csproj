@@ -257,6 +257,7 @@
     <Content Include="Views\Home\DegreeList.cshtml" />
     <Content Include="Views\Home\DegreeGeneric.cshtml" />
     <Content Include="Views\Home\DegreeMap.cshtml" />
+    <Content Include="Views\App\Checklist.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
