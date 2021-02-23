@@ -3,9 +3,25 @@
     List<DegreeMapping.Models.Institution> list_i = DegreeMapping.Models.Institution.List();
 }
 
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h1>Notes</h1>
+            <ul>
+                <li>
+                    Valencia College
+                    <ul>
+                        <li>VC Business Economics BSBA.xlsx and VC Economics.xlsx have the degree name</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
 <div class="container pt-5">
     <div class="row">
-        <h1>Degree List</h1>
+        <h1>Checklist</h1>
         <div class="col-md-12">
             <ul>
                 @foreach (DegreeMapping.Models.Degree d in Model.Where(x => x.InstitutionId == DegreeMapping.Models.Institution.UCFId))

@@ -5,6 +5,7 @@ using System.Web;
 using System.Data;
 using System.Data.SqlClient;
 using System.Web.Mvc.Ajax;
+using System.ComponentModel;
 
 namespace DegreeMapping.Models
 {
@@ -19,6 +20,8 @@ namespace DegreeMapping.Models
         public DateTime AddDate { get; set; }
         public DateTime UpdateDate { get; set; }
         public string NID { get; set; }
+        [DisplayName("Issue")]
+        public string Description { get; set; }
 
         public Institution()
         {
@@ -40,6 +43,7 @@ namespace DegreeMapping.Models
                 cmd.Parameters.AddWithValue("@Active", i.Active);
                 cmd.Parameters.AddWithValue("@UpdateDate", DateTime.Now);
                 cmd.Parameters.AddWithValue("@NID", i.NID);
+                cmd.Parameters.AddWithValue("@Description", i.Description);
                 id = Convert.ToInt32(cmd.ExecuteScalar());
                 cn.Close();
             }
@@ -60,6 +64,7 @@ namespace DegreeMapping.Models
                 cmd.Parameters.AddWithValue("@Active", i.Active);
                 cmd.Parameters.AddWithValue("@UpdateDate", DateTime.Now);
                 cmd.Parameters.AddWithValue("@NID", i.NID);
+                cmd.Parameters.AddWithValue("@Description", i.Description);
                 cmd.ExecuteScalar();
                 cn.Close();
             }
@@ -111,6 +116,7 @@ namespace DegreeMapping.Models
                 i.AddDate = Convert.ToDateTime(dr["AddDate"].ToString());
                 i.UpdateDate = Convert.ToDateTime(dr["UpdateDate"].ToString());
                 i.NID = dr["NID"].ToString();
+                i.Description = dr["Description"].ToString();
             }
         }
     }

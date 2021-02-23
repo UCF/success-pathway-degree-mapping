@@ -18,6 +18,13 @@
                 @Html.LabelFor(x => x.Active) : @(Model.Active?"Yes":"No")
             </div>
         </div>
+
+        <div class="form-group">
+            <div class="col-md-10">
+                @Html.LabelFor(x => x.Description) : @Model.Description
+            </div>
+        </div>
+
         <div class="form-group">
             <div class="col-md-10">
                 @Html.ActionLink("Edit Institution", "InstitutionEdit", new { id = Model.Id })

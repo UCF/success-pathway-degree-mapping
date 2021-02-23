@@ -234,8 +234,14 @@ namespace DegreeMapping.Controllers
             List<Degree> list_d = Degree.List(null);
             return View(list_d);
         }
+        #endregion
 
-
+        #region Issues
+        public ActionResult Issues()
+        {
+            List<Issue> list_i = Issue.List(null);
+            return View();
+        }
         #endregion
 
     }

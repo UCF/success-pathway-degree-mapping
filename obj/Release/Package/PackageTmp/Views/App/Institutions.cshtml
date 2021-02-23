@@ -21,9 +21,19 @@
             <ul>
                 @foreach (DegreeMapping.Models.Institution i in Model.Where(x => x.Id != DegreeMapping.Models.Institution.UCFId && x.Id != DegreeMapping.Models.Institution.GenericId).OrderBy(x => x.Name))
                 {
-                    <li>
-                        @Html.ActionLink(i.Name, "InstitutionView", new { id = i.Id })
-                    </li>
+                    if (string.IsNullOrEmpty(i.Description))
+                    {
+                        <li>
+                            @Html.ActionLink(i.Name, "InstitutionView", new { id = i.Id })
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="alert alert-warning">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            @Html.ActionLink(i.Name, "InstitutionView", new { id = i.Id })
+                        </li>
+                    }
                 }
             </ul>
         </div>
