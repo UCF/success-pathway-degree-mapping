@@ -1,7 +1,8 @@
 ﻿@model DegreeMapping.Models.Degree
-@{ 
+@{
     List<DegreeMapping.Models.Course> list_c = DegreeMapping.Models.Course.List(Model.Id);
     List<DegreeMapping.Models.Note> list_n = DegreeMapping.Models.Note.List(Model.Id);
+    string cssClass = (string.IsNullOrEmpty(Model.Description)) ? "" : "alert alert-warning";
     bool noCourseMapped = true;
 }
 
@@ -45,7 +46,7 @@
         </div>
 
         <div class="form-group">
-            <div class="col-md-10">
+            <div class="col-md-10 @cssClass">
                 @Html.LabelFor(x => x.Description) : @Html.Raw(Model.Description)
             </div>
         </div>
@@ -75,7 +76,7 @@
             else
             {
                 <div>
-                   Degree is mapped to UCF @Model.UCFDegreeName
+                    Degree is mapped to UCF @Model.UCFDegreeName
                 </div>
             }
         </div>
@@ -88,33 +89,39 @@
         @if (list_c.Count > 0)
         {
             int semester = 0;
-    <ul>
-        @foreach (DegreeMapping.Models.Course c in list_c.OrderBy(x => x.Semester).ThenBy(x => x.Code))
+            <ul>
+                @foreach (DegreeMapping.Models.Course c in list_c.OrderBy(x => x.Semester).ThenBy(x => x.Code))
+                {
+                    if (Model.InstitutionId != DegreeMapping.Models.Institution.UCFId)
+                    {
+                        continue;
+                    }
+                    string warning = (string.IsNullOrEmpty(c.Description)) ? "" : "<i class=\"fas fa-exclamation-triangle\"></i>";
+                    cssClass = (string.IsNullOrEmpty(c.Description)) ? "" : "alert alert-warning";
+                    if (semester != c.Semester)
+                    {
+                        semester = c.Semester;
+                        <li style="list-style:none; margin-left:-20px"><strong>Semester @semester</strong></li>
+                    }
+                    if (c.UCFCourseId == null && c.InstitutionId != DegreeMapping.Models.Institution.UCFId)
+                    {
+                        noCourseMapped = false;
+                        <li class="@cssClass">
+                            @Html.Raw(warning) <span style="color:red">❌</span>
+                            @Html.ActionLink(c.Code, "CourseView", new { id = c.Id })
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="@cssClass">
+                            @Html.Raw(warning) @Html.ActionLink(c.Code, "CourseView", new { id = c.Id })
+                        </li>
+                    }
+                }
+            </ul>
+        }
+        @if (!noCourseMapped)
         {
-            if (semester != c.Semester)
-            {
-                semester = c.Semester;
-                <li style="list-style:none; margin-left:-20px"><strong>Semester @semester</strong></li>
-            }
-            if (c.UCFCourseId == null && c.InstitutionId != DegreeMapping.Models.Institution.UCFId)
-            {
-                noCourseMapped = false;
-                <li>
-                    <span style="color:red">❌</span>
-                    @Html.ActionLink(c.Code, "CourseView", new { id = c.Id })
-                </li>
-            }
-            else
-            {
-                <li>
-                    @Html.ActionLink(c.Code, "CourseView", new { id = c.Id })
-                </li>
-            }
-        }
-    </ul>
-        }
-        @if(!noCourseMapped)
-        { 
             <div>
                 <span style="color:red">❌</span> - Course is not mapped
             </div>
@@ -151,7 +158,7 @@
                     @foreach (DegreeMapping.Models.Note n in list_n)
                     {
                         if (n.NoteType.Equals(DegreeMapping.Models.Note.NoteTypeValue.ListItem))
-                        { 
+                        {
                             <li>
                                 @Html.ActionLink(n.Name, "NoteView", new { id = n.Id })
                             </li>
@@ -163,3 +170,53 @@
         }
     </div>
 </div>
+@if (Model.InstitutionId != DegreeMapping.Models.Institution.UCFId && list_c.Count > 0)
+{
+    <div class="row py-2 px-5">
+        <div class="col-md-12 px-5">
+            <h3>Course Output View</h3>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>&nbsp;</th>
+                        <th>UCF Course</th>
+                        <th>Units / Credits</th>
+                        <th>State College Course Prefix & Number</th>
+                        <th>Units / Credits</th>
+                        <th>Critical Course</th>
+                        <th>Common Program Prerequisite (CPP)</th>
+                        <th>Required Core Course</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        noCourseMapped = false;
+                    }
+                    @foreach (DegreeMapping.Models.Course c in list_c.OrderBy(x => x.UCFRelatedCourse))
+                    {
+                        if (string.IsNullOrEmpty(c.UCFRelatedCourse))
+                        {
+                            noCourseMapped = true;
+                        }
+                        cssClass = (string.IsNullOrEmpty(c.UCFRelatedCourse)) ? "alert alert-warning" : "";
+                        <tr class="@cssClass">
+                            <td>@Html.ActionLink("Edit", "CourseEdit", new { id = c.Id })</td>
+                            <td>@Html.Raw(c.UCFRelatedCourse)</td>
+                            <td>@c.UCFCourseCredits</td>
+                            <td>@c.Code</td>
+                            <td>@c.Credits</td>
+                            <td>@(c.Critical ? "Yes" : "No")</td>
+                            <td>@(c.CommonProgramPrerequiste ? "Yes" : "No")</td>
+                            <td>@(c.Required ? "Yes" : "No")</td>
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+            @if (noCourseMapped)
+            {
+                <div class="alert alert-warning fas fa-exclamation-triangle"> Course not mapped</div>
+            }
+        </div>
+    </div>
+}

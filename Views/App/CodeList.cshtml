@@ -1,0 +1,11 @@
+﻿@model List<DegreeMapping.Models.Course>
+
+
+
+@foreach (DegreeMapping.Models.Course c in Model.OrderBy(x => x.Code))
+{
+    using (Html.BeginForm("CourseSave", "App", FormMethod.Post, new { @Class = "form-horizontal" }))
+    {
+        
+    }
+}

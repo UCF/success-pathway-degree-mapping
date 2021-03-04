@@ -184,6 +184,7 @@
     <Compile Include="Models\DegreeList.cs" />
     <Compile Include="Models\DegreeMap.cs" />
     <Compile Include="Models\DegreeNote.cs" />
+    <Compile Include="Models\Generic.cs" />
     <Compile Include="Models\IdentityModel.cs" />
     <Compile Include="Models\Institution.cs" />
     <Compile Include="Models\Database.cs" />
@@ -210,6 +211,7 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
+    <Content Include="Scripts\DegreeMap2.js" />
     <Content Include="Scripts\fontawesome-free-5.15.2-web\less\brands.less" />
     <Content Include="Scripts\fontawesome-free-5.15.2-web\less\fontawesome.less" />
     <Content Include="Scripts\fontawesome-free-5.15.2-web\less\regular.less" />
@@ -1917,6 +1919,7 @@
     <Content Include="Scripts\fontawesome-free-5.15.2-web\webfonts\fa-brands-400.svg" />
     <Content Include="Scripts\fontawesome-free-5.15.2-web\webfonts\fa-regular-400.svg" />
     <Content Include="Scripts\fontawesome-free-5.15.2-web\webfonts\fa-solid-900.svg" />
+    <Content Include="Scripts\GenericList.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -1961,6 +1964,7 @@
     <Content Include="Views\Home\DegreeGeneric.cshtml" />
     <Content Include="Views\Home\DegreeMap.cshtml" />
     <Content Include="Views\App\Checklist.cshtml" />
+    <Content Include="Views\App\CodeList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

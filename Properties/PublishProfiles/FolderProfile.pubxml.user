@@ -16,10 +16,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/10/2013 16:29:20</publishTime>
     </File>
     <File Include="bin/DegreeMapping.dll">
-      <publishTime>02/23/2021 10:37:53</publishTime>
+      <publishTime>03/03/2021 13:39:12</publishTime>
     </File>
     <File Include="bin/DegreeMapping.pdb">
-      <publishTime>02/23/2021 10:37:53</publishTime>
+      <publishTime>03/03/2021 13:39:12</publishTime>
     </File>
     <File Include="bin/EntityFramework.dll">
       <publishTime>04/16/2020 20:38:42</publishTime>
@@ -163,10 +163,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>01/27/2021 08:59:22</publishTime>
     </File>
     <File Include="Scripts/degreelist.js">
-      <publishTime>02/04/2021 09:40:19</publishTime>
+      <publishTime>03/01/2021 16:42:00</publishTime>
     </File>
     <File Include="Scripts/DegreeMap.js">
-      <publishTime>02/19/2021 14:19:30</publishTime>
+      <publishTime>03/02/2021 10:16:14</publishTime>
+    </File>
+    <File Include="Scripts/DegreeMap2.js">
+      <publishTime>03/03/2021 11:04:08</publishTime>
     </File>
     <File Include="Scripts/degreemapping.js">
       <publishTime>01/28/2021 16:32:41</publishTime>
@@ -5277,6 +5280,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Scripts/fontawesome-free-5.15.2-web/webfonts/fa-solid-900.woff2">
       <publishTime>01/13/2021 17:58:06</publishTime>
     </File>
+    <File Include="Scripts/GenericList.js">
+      <publishTime>03/03/2021 13:03:05</publishTime>
+    </File>
     <File Include="Scripts/jquery.validate.js">
       <publishTime>12/07/2020 16:49:41</publishTime>
     </File>
@@ -5290,7 +5296,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>12/07/2020 16:49:41</publishTime>
     </File>
     <File Include="Views/App/Checklist.cshtml">
-      <publishTime>02/22/2021 16:24:59</publishTime>
+      <publishTime>02/23/2021 10:47:26</publishTime>
     </File>
     <File Include="Views/App/CourseAdd.cshtml">
       <publishTime>01/15/2021 10:18:25</publishTime>
@@ -5308,7 +5314,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>01/15/2021 10:15:28</publishTime>
     </File>
     <File Include="Views/App/DegreeView.cshtml">
-      <publishTime>02/19/2021 15:16:05</publishTime>
+      <publishTime>02/26/2021 09:29:51</publishTime>
     </File>
     <File Include="Views/App/Index.cshtml">
       <publishTime>12/09/2020 09:57:51</publishTime>
@@ -5323,7 +5329,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>02/23/2021 10:37:16</publishTime>
     </File>
     <File Include="Views/App/InstitutionView.cshtml">
-      <publishTime>02/23/2021 09:42:32</publishTime>
+      <publishTime>02/23/2021 11:44:18</publishTime>
     </File>
     <File Include="Views/App/NoteAdd.cshtml">
       <publishTime>01/15/2021 10:20:09</publishTime>
@@ -5344,7 +5350,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>12/09/2020 16:15:37</publishTime>
     </File>
     <File Include="Views/App/_Degree.cshtml">
-      <publishTime>02/18/2021 10:59:26</publishTime>
+      <publishTime>02/24/2021 14:37:58</publishTime>
     </File>
     <File Include="Views/App/_Institution.cshtml">
       <publishTime>02/23/2021 09:41:58</publishTime>
@@ -5362,10 +5368,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>01/26/2021 16:07:53</publishTime>
     </File>
     <File Include="Views/Home/DegreeList.cshtml">
-      <publishTime>01/26/2021 16:07:23</publishTime>
+      <publishTime>03/03/2021 11:21:59</publishTime>
     </File>
     <File Include="Views/Home/DegreeMap.cshtml">
-      <publishTime>02/05/2021 09:44:34</publishTime>
+      <publishTime>03/02/2021 11:09:13</publishTime>
     </File>
     <File Include="Views/Home/Example.cshtml">
       <publishTime>01/25/2021 14:00:20</publishTime>

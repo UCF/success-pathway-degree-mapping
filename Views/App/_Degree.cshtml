@@ -1,5 +1,5 @@
 ﻿@model DegreeMapping.Models.Degree
-@{ 
+@{
     List<DegreeMapping.Models.Degree> list_d = DegreeMapping.Models.Degree.List(null);
 }
 @using (Html.BeginForm("DegreeSave", "App", FormMethod.Post, new { @class = "form-horizontal" }))
@@ -7,70 +7,101 @@
     @Html.HiddenFor(x => x.Id);
     @Html.HiddenFor(x => x.InstitutionId)
     @Html.HiddenFor(x => x.DegreeType)
-    <div class="row">
-        <div class="col-md-6">
-            <div class="form-group">
-                @Html.LabelFor(x => x.Name) :
-                @Html.TextBoxFor(x => x.Name, new { @class = "form-control" })
-            </div>
-        </div>
-        @if (Model.InstitutionId != 1)
-        {
-            <div class="col-md-6">
-                <label for="UCFDegreeId">UCF Related Degree</label>
-                <select name="UCFDegreeId" id="UCFDegreeId" class="form-control">
-                    <option value="">Select UCF Degree: </option>
-                    @foreach (DegreeMapping.Models.Degree d in list_d.Where(x => x.InstitutionId == 1).OrderBy(x => x.Name))
-                    {
-                        if (Model.UCFDegreeId == d.Id)
-                        {
-                            <option value="@d.Id" selected>@d.Name</option>
-                        }
-                        else
-                        {
-                            <option value="@d.Id">@d.Name</option>
-                        }
-                    }
-                </select>
-            </div>
-        }
-    </div>
-  
-    <div class="row pt-2">
-        <div class="col-md-3">
-            <div class="form-group">
-                @Html.LabelFor(x => x.GPA) :
-                @Html.TextBoxFor(x => x.GPA, new { @class = "form-control" })
-            </div>
-        </div>
-    </div>
 
-    <div class="row pt-2">
-        <div class="col-md-2">
-            <div class="form-group">
-                @Html.LabelFor(x => x.Active) :
-                @Html.CheckBoxFor(x => x.Active)
+
+    if (Model.InstitutionId == DegreeMapping.Models.Institution.UCFId)
+    {
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(x => x.Name) :
+                    @Html.TextBoxFor(x => x.Name, new { @class = "form-control" })
+                </div>
             </div>
         </div>
-        <div class="col-md-2">
-            <div class="form-group">
-                @Html.LabelFor(x => x.LimitedAccess) :
-                @Html.CheckBoxFor(x => x.LimitedAccess)
+    }
+    else
+    {
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="UCFDegreeId">UCF Related Degree</label>
+                    <select name="UCFDegreeId" id="UCFDegreeId" class="form-control display-1">
+                        <option value="">Select UCF Degree: </option>
+                        @foreach (DegreeMapping.Models.Degree d in list_d.Where(x => x.InstitutionId == 1).OrderBy(x => x.Name))
+                        {
+                            if (Model.UCFDegreeId == d.Id)
+                            {
+                                <option value="@d.Id" selected>@d.Name</option>
+                            }
+                            else
+                            {
+                                <option value="@d.Id">@d.Name</option>
+                            }
+                        }
+                    </select>
+                </div>
             </div>
         </div>
-        <div class="col-md-2">
-            <div class="form-group">
-                @Html.LabelFor(x => x.RestrictedAccess) :
-                @Html.CheckBoxFor(x => x.RestrictedAccess)
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(x => x.Name) :
+                    @Html.TextBoxFor(x => x.Name, new { @class = "form-control", @readonly = "readonly" })
+                </div>
             </div>
         </div>
-    </div>
+    }
+
+    if (Model.InstitutionId == DegreeMapping.Models.Institution.UCFId)
+    {
+        <div class="row pt-2">
+            <div class="col-md-3">
+                <div class="form-group">
+                    @Html.LabelFor(x => x.GPA) :
+                    @Html.TextBoxFor(x => x.GPA, new { @class = "form-control" })
+                </div>
+            </div>
+        </div>
+        <div class="row pt-2">
+            <div class="col-md-2">
+                <div class="form-group">
+                    @Html.LabelFor(x => x.Active) :
+                    @Html.CheckBoxFor(x => x.Active)
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    @Html.LabelFor(x => x.LimitedAccess) :
+                    @Html.CheckBoxFor(x => x.LimitedAccess)
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    @Html.LabelFor(x => x.RestrictedAccess) :
+                    @Html.CheckBoxFor(x => x.RestrictedAccess)
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="row pt-2">
+            <div class="col-md-3">
+                <div class="form-group">
+                    @Html.LabelFor(x => x.Active) :
+                    @Html.CheckBoxFor(x => x.Active)
+                </div>
+            </div>
+        </div>
+    }
 
     <div class="row pt-2">
         <div class="col-md-10">
             <div class="form-group">
                 @Html.LabelFor(x => x.Description) :
-                @Html.TextAreaFor(x => x.Description, new { @class = "form-control", col = "5", rows = "4", maxlength="100" })
+                @Html.TextAreaFor(x => x.Description, new { @class = "form-control", col = "5", rows = "4", maxlength = "100" })
                 <span class="alert alert-warning">100 characters max</span>
             </div>
         </div>
@@ -100,4 +131,16 @@
             </div>
         </div>
     </div>
+}
+
+@if (Model.InstitutionId != DegreeMapping.Models.Institution.UCFId)
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#UCFDegreeId").on("change", function () {
+                let selected = $("#UCFDegreeId option:selected").text();
+                $("#Name").val(selected);
+            })
+        })
+    </script>
 }

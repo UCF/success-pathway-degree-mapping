@@ -16,12 +16,20 @@ namespace DegreeMapping.Controllers
     {
         [HttpGet]
         [MyCustomAttribute]
-        [Route("GetDegree")]
-        public DegreeMap GetDegree(int institutionId, int degreeId)
+        [Route("GetDegreeMap")]
+        public DegreeMap GetDegreeMap(int degreeId)
         {
-            DegreeMap dm = new DegreeMap(institutionId,degreeId);
+            DegreeMap dm = DegreeMap.Get(degreeId);
             return dm;
         }
+
+        [HttpGet]
+        [Route("GetGenericList")]
+        public List<Generic> GetGenericList()
+        {
+            return Generic.List();
+        }
+
 
         [HttpGet]
         [Route("GetDegreeList")]

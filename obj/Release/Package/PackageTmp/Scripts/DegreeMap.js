@@ -217,11 +217,13 @@
     getDegreeList: function () {
         $.get({
             //url: "https://portal.connect.ucf.edu/pathway/api/Degree/GetDegreeList",
-            url: "/api/degree/GetDegreeList",
+            url: "/api/degree/GetDegreeList?degreeId=10",
+            //data : "degreeId="4,
             type: "GET",
             headers: { "APIKey": "Th1sIsth3Way" },
             cache: false,
             success: function (data) {
+                console.log(data);
                 degreemap.data = data;
                 if (degreemap.ucfDegreeId == 0) {
                     degreemap.getUCFID(data);

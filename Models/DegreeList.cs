@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Data.Entity.Core.Metadata.Edm;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Web;
 using System.Xml.Linq;
 
@@ -20,10 +22,14 @@ namespace DegreeMapping.Models
         public List<DegreeList> Degrees {get; set; }
         public List<CourseList> Courses { get; set; }
         public List<NoteList> Notes { get; set; }
+        public List<Generic> Generic { get; set; }
 
         public DegreeList()
         {
             Degrees = new List<DegreeList>();
+            Notes = new List<NoteList>();
+            Courses = new List<CourseList>();
+            Generic = new List<Generic>();
         }
 
         public DegreeList(Degree d)
@@ -37,7 +43,9 @@ namespace DegreeMapping.Models
             this.LimitedAccess = d.LimitedAccess;
             this.RestrictedAccess = d.RestrictedAccess;
             Degrees = new List<DegreeList>();
+            Notes = new List<NoteList>();
             Courses = new List<CourseList>();
+            Generic = new List<Generic>();
         }
 
         public static List<DegreeList> List()
@@ -61,11 +69,11 @@ namespace DegreeMapping.Models
                     dl2.Courses = CourseList.List(dl2.Id);
                     dl2.Notes = NoteList.List(dl2.Id);
                     dl.Degrees.Add(dl2);
-                    
                 }
                 list_dl.Add(dl);
             }
             return list_dl;
         }
+
     }
 }

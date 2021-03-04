@@ -61,7 +61,7 @@ namespace DegreeMapping.Controllers
                 int id = Institution.Insert(i);
                 i.Id = id;
             }
-            return RedirectToAction("InstitutionView", new { id=i.Id });
+            return RedirectToAction("InstitutionView", new { id = i.Id });
         }
 
         public ActionResult _Institution(Institution model)
@@ -108,6 +108,28 @@ namespace DegreeMapping.Controllers
             return PartialView(model);
         }
         #endregion
+
+
+
+        #region Code
+        public ActionResult CodeList()
+        {
+            List<Course> list_c = Course.List(null);
+            return View(list_c);
+        }
+        public ActionResult _CodeEdit(Course c)
+        {
+            return View(c);
+        }
+
+        [HttpPost]
+        public ActionResult _CodeSave(Course c)
+        {
+            Course.Update(c);
+            return RedirectToAction("CodeList");
+        }
+        #endregion
+
 
         #region Courses
 

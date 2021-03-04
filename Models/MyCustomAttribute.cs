@@ -15,10 +15,10 @@ namespace DegreeMapping.Models
 
         public override void OnActionExecuting(HttpActionContext actionContext)
         {
-            if (actionContext.ActionArguments == null || !actionContext.ActionArguments.ContainsKey("institutionId"))
-            {
-                throw new Exception("Institution Id not present");
-            }
+            //if (actionContext.ActionArguments == null || !actionContext.ActionArguments.ContainsKey("institutionId"))
+            //{
+            //    throw new Exception("Institution Id not present");
+            //}
 
             if (actionContext.ActionArguments == null || !actionContext.ActionArguments.ContainsKey("degreeId"))
             {
