@@ -1,0 +1,51 @@
+﻿@model DegreeMapping.Models.CourseMapper
+@{
+    DegreeMapping.Models.Degree d = DegreeMapping.Models.Degree.Get(Model.DegreeId);
+    List<DegreeMapping.Models.Course> list_partnercourses = DegreeMapping.Models.Course.List(Model.DegreeId);
+    List<DegreeMapping.Models.Course> list_UCFCourses = new List<DegreeMapping.Models.Course>();
+    if (d.UCFDegreeId.HasValue)
+    {
+        list_UCFCourses = DegreeMapping.Models.Course.List(d.UCFDegreeId);
+    }
+    //*EDIT ONLY*
+}
+
+
+@using (Html.BeginForm("CourseMapperSave", "App", FormMethod.Post, new { @Class = "form-horizontal" }))
+{
+    @Html.HiddenFor(x=>x.DegreeId)
+    <div class="row pt-5">
+        <div class="col-md-4">
+            <h2>Partner Courses</h2>
+            <select name="PartnerCourseIds" multiple style="height:200px">
+                @foreach (DegreeMapping.Models.Course c in list_partnercourses.OrderBy(x => x.Code))
+                {
+                    <option value="@c.Id">@c.Code</option>
+                }
+            </select>
+        </div>
+        <div class="col-md-3">
+            <h2>Operand</h2>
+            <label for="operandAND">
+                AND
+                <input type="radio" name="OperandType" value="@DegreeMapping.Models.CourseMapper.Operand.AND" />
+            </label>
+            <label for="operandOR">
+                OR
+                <input type="radio" name="OperandType" value="@DegreeMapping.Models.CourseMapper.Operand.OR" />
+            </label>
+        </div>
+        <div class="col-md-4">
+            <h2>UCF Courses</h2>
+            <select name="UCFCourseIds" multiple style="height:200px">
+                @foreach (DegreeMapping.Models.Course c in list_UCFCourses.OrderBy(x => x.Code))
+                {
+                    <option value="@c.Id">@c.Code</option>
+                }
+            </select>
+        </div>
+        <div class="col-md-1">
+            <button type="submit" class="btn btn-success btn-lg">Save</button>
+        </div>"
+    </div>
+}

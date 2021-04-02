@@ -12,10 +12,12 @@
         InstitutionList: "InstitutionList",
         DegreemapRow: "DegreemapRow",
         DegreeTitle: "DegreeTitle",
+        UCFPathwaySection: "UCFPathwaySection",
     },
     degreeId: 0,
     institutionId: 0,
     ucfDegreeId: 0,
+    hasUCFSemesters : false,
     noteType: {
         additionalRequirement: 4,
         foreginLaguage: 3,
@@ -31,7 +33,6 @@
             } else {
                 template += "<a class=\"dropdown-item\" href=\"/degree-mapping?degreeid="+ data.Generic[y].Id + "\">" + data.Generic[y].Institution + "</a><br>";
             }
-            
         } 
         $("#" + this.target.InstitutionList).html(generic + template)
     },
@@ -40,6 +41,7 @@
         let gpa = data.GPA;
         let limitedAccess = this.getTrueFalse(data.LimitedAccess);
         let restrictedAccess = this.getTrueFalse(data.RestrictedAccess);
+        this.hasUCFSemesters = data.HasUCFSemesters;
         $("#" + this.target.UCFGPA).html(gpa);
         $("#" + this.target.UCFLimitedAccess).html(limitedAccess);
         $("#" + this.target.UCFRestrictedAccess).html(restrictedAccess);
@@ -147,16 +149,20 @@
             headers: { "APIKey": "Th1sIsth3Way" },
             cache: false,
             success: function (data) {
-                console.log(data);
+                //console.log(data);
                 degreemap.data = data;
                 degreemap.displayDefaultInfo(data);
                 degreemap.displayNotes(data);
                 degreemap.displayCourseTable(data);
-                degreemap.displayUCFSemesterCourse(data, 5);
-                degreemap.displayUCFSemesterCourse(data, 6);
-                degreemap.displayUCFSemesterCourse(data, 7);
-                degreemap.displayUCFSemesterCourse(data, 8);
-                degreemap.displayGeneric(data);
+                if (degreemap.hasUCFSemesters) {
+                    degreemap.displayUCFSemesterCourse(data, 5);
+                    degreemap.displayUCFSemesterCourse(data, 6);
+                    degreemap.displayUCFSemesterCourse(data, 7);
+                    degreemap.displayUCFSemesterCourse(data, 8);
+                    degreemap.displayGeneric(data);
+                } else {
+                    $("#" + degreemap.target.UCFPathwaySection).hide();
+                }
             }
         })
     },

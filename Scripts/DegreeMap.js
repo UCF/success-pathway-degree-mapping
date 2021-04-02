@@ -11,6 +11,7 @@
         InstitutionList: "InstitutionList",
         DegreemapRow: "DegreemapRow",
         DegreeTitle: "DegreeTitle",
+        UCFPathwaySection: " UCFPathwaySection",
     },
     degreeId: 0,
     institutionId: 0,
@@ -29,6 +30,7 @@
                 let limitedAccess = this.getTrueFalse(data[x].LimitedAccess);
                 let restrictedAccess = this.getTrueFalse(data[x].RestrictedAccess);
                 let degreeTtitle = data[x].Degree + " " + data[x].DegreeType;
+                let UCFPathwaySection
                 $("#" + this.target.UCFGPA).html(gpa);
                 $("#" + this.target.UCFLimitedAccess).html(limitedAccess);
                 $("#" + this.target.UCFRestrictedAccess).html(restrictedAccess);

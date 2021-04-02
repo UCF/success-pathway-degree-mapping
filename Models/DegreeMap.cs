@@ -16,6 +16,7 @@ namespace DegreeMapping.Models
         public string GPA { get; set; }
         public bool LimitedAccess { get; set; }
         public bool RestrictedAccess { get; set; }
+        public bool HasUCFSemesters { get; set; }
         public List<CourseList> Courses { get; set; }
         public List<NoteList> Notes { get; set; }
         public List<Generic> Generic { get; set; }
@@ -24,6 +25,7 @@ namespace DegreeMapping.Models
 
         public DegreeMap()
         {
+            HasUCFSemesters = false;
             Notes = new List<NoteList>();
             Courses = new List<CourseList>();
             Generic = new List<Generic>();
@@ -39,6 +41,7 @@ namespace DegreeMapping.Models
             this.GPA = d.GPA;
             this.LimitedAccess = d.LimitedAccess;
             this.RestrictedAccess = d.RestrictedAccess;
+            HasUCFSemesters = false;
             Notes = new List<NoteList>();
             Courses = new List<CourseList>();
             Generic = new List<Generic>();
@@ -68,8 +71,13 @@ namespace DegreeMapping.Models
                 dm.GPA = dm2.GPA;
                 dm.RestrictedAccess = dm2.RestrictedAccess;
                 dm.LimitedAccess = dm2.LimitedAccess;
-                dm.Courses.AddRange(CourseList.List(degree.UCFDegreeId.Value).Where(x => x.Semester > 1).ToList());
+                if (CourseList.List(degree.UCFDegreeId.Value).Where(x => x.Semester > 1).ToList().Count() > 0)
+                {
+                    dm.HasUCFSemesters = true;
+                    dm.Courses.AddRange(CourseList.List(degree.UCFDegreeId.Value).Where(x => x.Semester > 1).ToList());
+                }
                 dm.Notes.AddRange(NoteList.List(degree.UCFDegreeId.Value));
+
             }
             return dm;
         }

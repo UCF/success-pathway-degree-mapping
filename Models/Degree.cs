@@ -8,6 +8,7 @@ using System.Security.Permissions;
 using System.Web.UI.WebControls.WebParts;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
+using System.DirectoryServices.AccountManagement;
 
 namespace DegreeMapping.Models
 {
@@ -21,23 +22,25 @@ namespace DegreeMapping.Models
         public string DegreeType { get; set; }
         public string GPA { get; set; }
         [DisplayName("Limited Access")]
-        public bool LimitedAccess {get;set;}
+        public bool LimitedAccess { get; set; }
         [DisplayName("Restricted Access")]
         public bool RestrictedAccess { get; set; }
         public string Description { get; set; }
-
         [DisplayName("Catalog Year")]
         public string CatalogYear { get; set; }
         public bool Active { get; set; }
-
         public string Institution { get; set; }
         public DateTime AddDate { get; set; }
         public DateTime UpdateDate { get; set; }
         public string NID { get; set; }
-
         public int? UCFDegreeId { get; set; }
+        [DisplayName("UCF Degree Name")]
         public string UCFDegreeName { get; set; }
-
+        [DisplayName("College Name")]
+        public string CollegeName { get; set; }
+        public int CollegeId { get; set; }
+        [DisplayName("Degree URL")]
+        public string URL { get; set; }
 
         public Degree()
         {
@@ -81,6 +84,8 @@ namespace DegreeMapping.Models
                 cmd.Parameters.AddWithValue("@Description", d.Description);
                 cmd.Parameters.AddWithValue("@CatalogYear", d.CatalogYear);
                 cmd.Parameters.AddWithValue("@UpdateDate", DateTime.Now);
+                cmd.Parameters.AddWithValue("@CollegeId", d.CollegeId);
+                cmd.Parameters.AddWithValue("@Url", d.URL);
                 cmd.Parameters.AddWithValue("@NID", d.NID);
                 if (d.UCFDegreeId.HasValue)
                 {
@@ -112,6 +117,8 @@ namespace DegreeMapping.Models
                 cmd.Parameters.AddWithValue("@CatalogYear", d.CatalogYear);
                 cmd.Parameters.AddWithValue("@Active", d.Active);
                 cmd.Parameters.AddWithValue("@UpdateDate", DateTime.Now);
+                cmd.Parameters.AddWithValue("@CollegeId", d.CollegeId);
+                cmd.Parameters.AddWithValue("@Url", d.URL);
                 cmd.Parameters.AddWithValue("@NID", d.NID);
                 if (d.UCFDegreeId.HasValue)
                 {
@@ -192,6 +199,9 @@ namespace DegreeMapping.Models
                 d.InstitutionId = Convert.ToInt32(dr["InstitutionId"].ToString());
                 d.AddDate = Convert.ToDateTime(dr["AddDate"].ToString());
                 d.UpdateDate = Convert.ToDateTime(dr["UpdateDate"].ToString());
+                d.CollegeName = dr["CollegeName"].ToString();
+                d.CollegeId = (!string.IsNullOrEmpty(d.CollegeName)) ? Convert.ToInt32(dr["CollegeId"].ToString()) : 0;
+                d.URL = dr["Url"].ToString();
                 d.NID = dr["NID"].ToString();
                 int ucfDegreeId;
                 Int32.TryParse(dr["UCFDegreeId"].ToString(), out ucfDegreeId);

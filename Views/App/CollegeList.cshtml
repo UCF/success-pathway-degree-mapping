@@ -1,0 +1,14 @@
+﻿@model List<DegreeMapping.Models.College>
+
+<div class="row pt-5">
+    <div class="col-md-12">
+        <h1>College List</h1>
+    </div>
+</div>
+
+@Html.Action("_College", new { c = new DegreeMapping.Models.College() })
+
+@foreach (DegreeMapping.Models.College c in Model.OrderBy(x => x.CollegeName))
+{
+    @Html.Action("_College", new { c = c })
+}

@@ -12,10 +12,12 @@
         InstitutionList: "InstitutionList",
         DegreemapRow: "DegreemapRow",
         DegreeTitle: "DegreeTitle",
+        UCFPathwaySection: "UCFPathwaySection",
     },
     degreeId: 0,
     institutionId: 0,
     ucfDegreeId: 0,
+    hasUCFSemesters : false,
     noteType: {
         additionalRequirement: 4,
         foreginLaguage: 3,
@@ -31,43 +33,39 @@
             } else {
                 template += "<a class=\"dropdown-item\" href=\"/degree-mapping?degreeid="+ data.Generic[y].Id + "\">" + data.Generic[y].Institution + "</a><br>";
             }
-            
         } 
         $("#" + this.target.InstitutionList).html(generic + template)
     },
     displayDefaultInfo: function (data) {
         let output = "";
-        for (x = 0; x <= data.length - 1; x++) {
-            let gpa = data.GPA;
-            let limitedAccess = this.getTrueFalse(data.LimitedAccess);
-            let restrictedAccess = this.getTrueFalse(data.RestrictedAccess);
-            let degreeTtitle = data.Degree + " " + data.DegreeType;
-            $("#" + this.target.UCFGPA).html(gpa);
-            $("#" + this.target.UCFLimitedAccess).html(limitedAccess);
-            $("#" + this.target.UCFRestrictedAccess).html(restrictedAccess);
-            $("#" + this.target.DegreeTitle).html(degreeTtitle)
-            $("#" + this.target.Institution).html(data[0].Institution + " Pathway")
-            return;
-        }
+        let gpa = data.GPA;
+        let limitedAccess = this.getTrueFalse(data.LimitedAccess);
+        let restrictedAccess = this.getTrueFalse(data.RestrictedAccess);
+        this.hasUCFSemesters = data.HasUCFSemesters;
+        $("#" + this.target.UCFGPA).html(gpa);
+        $("#" + this.target.UCFLimitedAccess).html(limitedAccess);
+        $("#" + this.target.UCFRestrictedAccess).html(restrictedAccess);
+        $("#" + this.target.DegreeTitle).html(data.Degree);
+        $("#" + this.target.Institution).html(data.Institution + " Pathway")
     },
     displayNotes: function (data) {
         let output = "";
-            if (data.Notes.length > 0) {
-                for (y = 0; y <= data.Notes.length - 1; y++) {
-                    if (data.Notes[y].NoteType == this.noteType.additionalRequirement) {
-                        output = data.Notes[y].Content;
-                        $("#" + this.target.AdditionalRequirements).html(output);
-                    }
-                    if (data.Notes[y].NoteType == this.noteType.foreginLaguage) {
-                        output = data.Notes[y].Content;
-                        $("#" + this.target.ForeignLanugage).html(output);
-                    }
-                    if (data.Notes[y].NoteType == this.noteType.listItem) {
-                        output = data.Notes[y].Content;
-                        $("#" + this.target.ListItems).append(output);
-                    }
+        if (data.Notes.length > 0) {
+            for (y = 0; y <= data.Notes.length - 1; y++) {
+                if (data.Notes[y].NoteType == this.noteType.additionalRequirement) {
+                    output = data.Notes[y].Content;
+                    $("#" + this.target.AdditionalRequirements).html(output);
+                }
+                if (data.Notes[y].NoteType == this.noteType.foreginLaguage) {
+                    output = data.Notes[y].Content;
+                    $("#" + this.target.ForeignLanugage).html(output);
+                }
+                if (data.Notes[y].NoteType == this.noteType.listItem) {
+                    output = data.Notes[y].Content;
+                    $("#" + this.target.ListItems).append(output);
                 }
             }
+        }
     },
     displayUCFSemesterCourse(data, semester) {
         let output = '';
@@ -144,23 +142,27 @@
     },
     getDegreeList: function () {
         $.get({
-            //url: "https://portal.connect.ucf.edu/pathway/api/Degree/GetDegreeList",
-            url: "/api/degree/GetDegreeMap?degreeId=10",
+            //url: "https://portal.connect.ucf.edu/pathway/GetDegreeMap?degreeId="+degreemap.degreeId,
+            url: "/api/degree/GetDegreeMap?degreeId="+degreemap.degreeId,
             //data : "degreeId="4,
             type: "GET",
             headers: { "APIKey": "Th1sIsth3Way" },
             cache: false,
             success: function (data) {
-                console.log(data);
+                //console.log(data);
                 degreemap.data = data;
                 degreemap.displayDefaultInfo(data);
                 degreemap.displayNotes(data);
                 degreemap.displayCourseTable(data);
-                degreemap.displayUCFSemesterCourse(data, 5);
-                degreemap.displayUCFSemesterCourse(data, 6);
-                degreemap.displayUCFSemesterCourse(data, 7);
-                degreemap.displayUCFSemesterCourse(data, 8);
-                degreemap.displayGeneric(data);
+                if (!degreemap.hasUCFSemesters) {
+                    degreemap.displayUCFSemesterCourse(data, 5);
+                    degreemap.displayUCFSemesterCourse(data, 6);
+                    degreemap.displayUCFSemesterCourse(data, 7);
+                    degreemap.displayUCFSemesterCourse(data, 8);
+                    degreemap.displayGeneric(data);
+                } else {
+                    $("#" + degreemap.target.UCFPathwaySection).hide();
+                }
             }
         })
     },
@@ -180,7 +182,8 @@
     init: function () {
         this.degreeId = (this.getUrlVars()["degreeid"] > 0) ? this.getUrlVars()["degreeid"] : 0;
         this.institutionId = (this.getUrlVars()["institutionid"] > 0) ? this.getUrlVars()["institutionid"] : 0;
-        this.setHost();
+        //this.setHost();
+        console.log(this.degreeId);
         this.getDegreeList();
     }
 }

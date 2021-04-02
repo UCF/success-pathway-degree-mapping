@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.DirectoryServices.Protocols;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Security.Permissions;
 using System.Web;
 using System.Web.Mvc;
 using DegreeMapping.Models;
 using Microsoft.Ajax.Utilities;
 using Microsoft.Owin.Security.Provider;
+using Microsoft.Win32;
 
 namespace DegreeMapping.Controllers
 {
@@ -109,9 +112,7 @@ namespace DegreeMapping.Controllers
         }
         #endregion
 
-
-
-        #region Code
+        #region Code - Updates course code only
         public ActionResult CodeList()
         {
             List<Course> list_c = Course.List(null);
@@ -119,17 +120,16 @@ namespace DegreeMapping.Controllers
         }
         public ActionResult _CodeEdit(Course c)
         {
-            return View(c);
+            return PartialView(c);
         }
 
         [HttpPost]
         public ActionResult _CodeSave(Course c)
         {
-            Course.Update(c);
+            //Course.Update(c);
             return RedirectToAction("CodeList");
         }
         #endregion
-
 
         #region Courses
 
@@ -178,7 +178,6 @@ namespace DegreeMapping.Controllers
 
         #endregion
 
-
         #region Notes
         public ActionResult NoteView(int id)
         {
@@ -226,8 +225,6 @@ namespace DegreeMapping.Controllers
         }
         #endregion
 
-
-
         #region Users
         public ActionResult ViewUsers()
         {
@@ -264,6 +261,77 @@ namespace DegreeMapping.Controllers
             List<Issue> list_i = Issue.List(null);
             return View();
         }
+        #endregion
+
+        #region Colleges
+        public ActionResult CollegeList()
+        {
+            List<College> list_c = College.List(null);
+            return View(list_c);
+        }
+
+        public ActionResult _College(College c)
+        {
+            return PartialView(c);
+        }
+
+        public ActionResult CollegeSave(College c)
+        {
+            if (c.Id == 0)
+            {
+                College.Insert(c);
+            }
+            else
+            {
+                College.Update(c);
+            }
+            return RedirectToAction("CollegeList");
+        }
+        #endregion
+
+        #region CourseMapper
+        public ActionResult _CodeMapper(int degreeId)
+        {
+            CourseMapper cm = new CourseMapper(degreeId);
+            return PartialView(cm);
+        }
+
+        public ActionResult _CourseMapper(int degreeId)
+        {
+            CourseMapper cm = new CourseMapper(degreeId);
+            //List<CourseMapper> list_cm = CourseMapper.List(degreeId, null);
+            return PartialView(cm);
+        }
+
+        public ActionResult _CourseMapperList(int degreeId)
+        {
+            List<CourseMapper> list_cm = CourseMapper.List(degreeId, null);
+            return PartialView(list_cm);
+        }
+
+
+
+        public ActionResult _CourseMapperAdd(int degreeId)
+        {
+            CourseMapper cm = new CourseMapper(degreeId);
+            //List<CourseMapper> list_cm = CourseMapper.List(degreeId, null);
+            return PartialView(cm);
+        }
+        [HttpPost]
+        public ActionResult CourseMapperSave(CourseMapper cm)
+        {
+            if (cm.Id > 0)
+            {
+                //CourseMapper.Update(cm);
+            }
+            else
+            { 
+                int id = CourseMapper.Insert(cm);
+                cm.Id = id;
+            }
+            return RedirectToAction("DegreeView", new { id = cm.DegreeId } );
+        }
+
         #endregion
 
     }

@@ -1,0 +1,97 @@
+﻿@model DegreeMapping.Models.CourseMapper
+@{ 
+    DegreeMapping.Models.Degree d = DegreeMapping.Models.Degree.Get(Model.DegreeId);
+    List<DegreeMapping.Models.Course> list_partnercourses = DegreeMapping.Models.Course.List(Model.DegreeId);
+    List<DegreeMapping.Models.Course> list_UCFCourses = new List<DegreeMapping.Models.Course>();
+    if (d.UCFDegreeId.HasValue)
+    {
+        list_UCFCourses = DegreeMapping.Models.Course.List(d.UCFDegreeId);
+    }
+}
+
+    <div class="container">
+        <div class="row pb-5">
+            <div class="col-md-12">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>UCF Course</th>
+                            <th>Partner Course</th>
+                        </tr>
+                    </thead>
+                    <tbody id="coursemapperoutput">
+                        <tr>
+                            <td>cgs 1060 Intro to computers</td>
+                            <td>CGS 1080 Advance computers</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <hr />
+
+        <div class="row">
+            <div class="col-md-4">
+                Select Partner Institution Course(s)
+                <select multiple class="form-control" style="height:200px" id="partnerCourseList">
+                    @foreach (DegreeMapping.Models.Course c in list_partnercourses.OrderBy(x => x.Code))
+                    {
+                        <option value="@c.Id">@c.Code</option>
+                    }
+                </select>
+            </div>
+            <div class="col-md-3">
+                Select operand
+                <select class="form-control">
+                    <option>EQUAL</option>
+                    <option>AND</option>
+                    <option>OR</option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                Select UCF Course(s)
+                <select multiple class="form-control" style="height:200px" id="ucfCourseList">
+                    @foreach (DegreeMapping.Models.Course c in list_UCFCourses.OrderBy(x => x.Code))
+                    {
+                        <option value="@c.Id">@c.Code</option>
+                    }
+                </select>
+
+            </div>
+            <div class="col-md-1">
+                <button type="submit" class="btn btn-lg btn-success">Add</button>
+            </div>
+        </div>
+
+    </div>
+
+<script type="text/javascript">
+    
+    var codeMapper = {
+        init: function () {
+            $("#partnerCourseList").on("change", function () {
+                getPartnerCourseName();
+            })
+        },
+
+        getPartnerCourseName: function () {
+            var tr = "";
+            var td = "";
+            $("#partnerCourseList option:selected").each(function () {
+                var $this = $(this);
+
+                if ($this.length) {
+                    var selVal = $this.val();
+                    var selText = $this.text();
+                    //alert(selVal);
+                    //alert(selText);
+                    tr = "<td></td>";
+                }
+            })
+        }
+    }
+    
+    $(document).ready(function () {
+        codeMapper.init();
+    }
+</script>

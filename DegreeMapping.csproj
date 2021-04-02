@@ -178,9 +178,11 @@
     </Compile>
     <Compile Include="Models\APIKeyMessageHandler.cs" />
     <Compile Include="Models\Authentication.cs" />
+    <Compile Include="Models\College.cs" />
     <Compile Include="Models\Course.cs" />
     <Compile Include="Models\CourseList.cs" />
     <Compile Include="Models\CourseMap.cs" />
+    <Compile Include="Models\CourseMapper.cs" />
     <Compile Include="Models\DegreeList.cs" />
     <Compile Include="Models\DegreeMap.cs" />
     <Compile Include="Models\DegreeNote.cs" />
@@ -1965,6 +1967,13 @@
     <Content Include="Views\Home\DegreeMap.cshtml" />
     <Content Include="Views\App\Checklist.cshtml" />
     <Content Include="Views\App\CodeList.cshtml" />
+    <Content Include="Views\App\_CodeEdit.cshtml" />
+    <Content Include="Views\App\_CodeMapper.cshtml" />
+    <Content Include="Views\App\_CourseMapper.cshtml" />
+    <Content Include="Views\App\_CourseMapperAdd.cshtml" />
+    <Content Include="Views\App\CollegeList.cshtml" />
+    <Content Include="Views\App\_College.cshtml" />
+    <Content Include="Views\App\_CourseMapperList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
