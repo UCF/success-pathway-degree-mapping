@@ -167,6 +167,41 @@ namespace DegreeMapping.Controllers
 
         public ActionResult CourseDelete(int id, int degreeId)
         {
+            
+            List<CourseMapper> list_cm = CourseMapper.List(degreeId, null);
+            foreach (CourseMapper cm in list_cm)
+            {
+                List<int> new_course_ids = new List<int>();
+                #region remove Partner courses
+                foreach (int courseId in cm.PartnerCourseIds)
+                {
+                    if (courseId != id)
+                    {
+                        new_course_ids.Add(courseId);
+                    }
+                }
+                cm.PartnerCourseIds = new_course_ids;
+                #endregion
+
+                #region remove UCF Courses
+                new_course_ids = new List<int>();
+                foreach (int courseId in cm.UCFCourseIds)
+                {
+                    if (courseId != id)
+                    {
+                        new_course_ids.Add(courseId);
+                    }
+                }
+                cm.UCFCourseIds = new_course_ids;
+                #endregion
+                CourseMapper.Update(cm);
+            }
+            list_cm = CourseMapper.List(degreeId, null);
+            if (list_cm.Select(x=>x.PartnerCourseIds).Count() == 0 && list_cm.Select(x=>x.UCFCourseIds).Count()==0)
+            {
+                int courseMapperId = list_cm.Select(x => x.Id).FirstOrDefault();
+                CourseMapper.Delete(courseMapperId);
+            }
             Course.Delete(id);
             return RedirectToAction("DegreeView", new { id = degreeId });
         }
@@ -296,10 +331,8 @@ namespace DegreeMapping.Controllers
             return PartialView(cm);
         }
 
-        public ActionResult _CourseMapper(int degreeId)
+        public ActionResult _CourseMapper(CourseMapper cm)
         {
-            CourseMapper cm = new CourseMapper(degreeId);
-            //List<CourseMapper> list_cm = CourseMapper.List(degreeId, null);
             return PartialView(cm);
         }
 
@@ -309,27 +342,47 @@ namespace DegreeMapping.Controllers
             return PartialView(list_cm);
         }
 
+        public ActionResult CourseMapperEdit(int id)
+        {
+            CourseMapper cm = CourseMapper.Get(id);
+            return View(cm);
+        }
 
-
-        public ActionResult _CourseMapperAdd(int degreeId)
+        public ActionResult CourseMapperAdd(int degreeId)
         {
             CourseMapper cm = new CourseMapper(degreeId);
             //List<CourseMapper> list_cm = CourseMapper.List(degreeId, null);
-            return PartialView(cm);
+            return View(cm);
         }
+
+        public ActionResult CourseMapperUpdateOrderby(int id, int orderby, int degreeId)
+        {
+            CourseMapper.UpdateCourseMapperOrderby(id, orderby);
+            return RedirectToAction("DegreeView", new { id = degreeId });
+        }
+
         [HttpPost]
         public ActionResult CourseMapperSave(CourseMapper cm)
         {
             if (cm.Id > 0)
             {
-                //CourseMapper.Update(cm);
+                CourseMapper.Update(cm);
             }
             else
-            { 
+            {
+                List<CourseMapper> list_cm = CourseMapper.List(cm.DegreeId, null);
+                int orderby = list_cm.Max(x => x.OrderBy)+1;
+                cm.OrderBy = orderby;
                 int id = CourseMapper.Insert(cm);
                 cm.Id = id;
             }
             return RedirectToAction("DegreeView", new { id = cm.DegreeId } );
+        }
+
+        public ActionResult CourseMapperDelete(int id, int degreeId)
+        {
+            CourseMapper.Delete(id);
+            return RedirectToAction("DegreeView", new { id = degreeId });
         }
 
         #endregion

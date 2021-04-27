@@ -181,6 +181,7 @@
     <Compile Include="Models\College.cs" />
     <Compile Include="Models\Course.cs" />
     <Compile Include="Models\CourseList.cs" />
+    <Compile Include="Models\CourseList2.cs" />
     <Compile Include="Models\CourseMap.cs" />
     <Compile Include="Models\CourseMapper.cs" />
     <Compile Include="Models\DegreeList.cs" />
@@ -1970,10 +1971,11 @@
     <Content Include="Views\App\_CodeEdit.cshtml" />
     <Content Include="Views\App\_CodeMapper.cshtml" />
     <Content Include="Views\App\_CourseMapper.cshtml" />
-    <Content Include="Views\App\_CourseMapperAdd.cshtml" />
     <Content Include="Views\App\CollegeList.cshtml" />
     <Content Include="Views\App\_College.cshtml" />
     <Content Include="Views\App\_CourseMapperList.cshtml" />
+    <Content Include="Views\App\CourseMapperEdit.cshtml" />
+    <Content Include="Views\App\CourseMapperAdd.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

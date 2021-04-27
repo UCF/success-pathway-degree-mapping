@@ -1,0 +1,25 @@
+﻿@model DegreeMapping.Models.College
+
+
+<div class="row py-3">
+    <div class="col-md-12">
+        @using (Html.BeginForm("CollegeSave", "App", FormMethod.Post, new { @class = "form-inline" }))
+        {
+            @Html.HiddenFor(x => x.Id)
+            <div class="form-group col-lg-12">
+                @Html.LabelFor(x => x.CollegeName) &nbsp; : &nbsp; @Html.TextBoxFor(x => x.CollegeName, new { @class = "form-control input-md col-md-4 px-3", required="required" }) &nbsp;
+
+                @Html.LabelFor(x => x.Url) &nbsp; : &nbsp; @Html.TextBoxFor(x => x.Url, new { @class = "form-control input-md col-md-4 px-3" })
+
+                @if (Model.Id == 0)
+                {
+                    <span class="px-3"><button type="submit" class="btn btn-success btn-lg">Add</button></span>
+                }
+                else
+                {
+                    <span class="px-3"><button type="submit" class="btn btn-success btn-lg">Save</button></span>
+                }
+            </div>
+        }
+    </div>
+</div>

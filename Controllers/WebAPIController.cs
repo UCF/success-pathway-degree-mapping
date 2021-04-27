@@ -24,11 +24,22 @@ namespace DegreeMapping.Controllers
         }
 
         [HttpGet]
+        [MyCustomAttribute]
+        [Route("GetDegreeMap")]
+        public DegreeMap GetDegreeMapV2(int degreeId)
+        {
+            DegreeMap dm = DegreeMap.Get(degreeId);
+            return dm;
+        }
+
+        [HttpGet]
         [Route("GetGenericList")]
         public List<Generic> GetGenericList()
         {
             return Generic.List();
         }
+
+
 
 
         [HttpGet]

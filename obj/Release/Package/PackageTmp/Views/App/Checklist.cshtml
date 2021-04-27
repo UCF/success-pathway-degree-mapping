@@ -11,14 +11,22 @@
                 @foreach (DegreeMapping.Models.Degree d in Model.Where(x => x.InstitutionId == DegreeMapping.Models.Institution.UCFId))
                 {
                     <li>
-                        <strong>@d.Name</strong>
+                        <strong>@d.Name <small>@Html.ActionLink("Edit", "DegreeEdit", "App", new { id = d.Id }, null)</small></strong>
+                        @if (!string.IsNullOrEmpty(d.Description))
+                        { 
+                            <ul>
+                                <li class="alert alert-warning" style="list-style-type:none">
+                                    @Html.Raw(d.Description)
+                                </li>
+                            </ul>
+                        }
                         <ul>
                             @foreach (DegreeMapping.Models.Institution i in list_i.OrderBy(x => x.Name).Where(x => x.Id != DegreeMapping.Models.Institution.UCFId))
                             {
                                 <li>
                                     <ul>
                                         <li>
-                                            @Html.ActionLink(i.Name, "InstitutionView", new { id = i.Id })
+                                            @*@Html.ActionLink(i.Name, "InstitutionView", new { id = i.Id })*@
                                             @{
                                                 bool hasDegree = false;
                                                 foreach (DegreeMapping.Models.Degree d2 in Model.Where(x => x.InstitutionId != DegreeMapping.Models.Institution.UCFId))
@@ -26,11 +34,16 @@
                                                     if (d.Id == d2.UCFDegreeId && i.Id == d2.InstitutionId)
                                                     {
                                                         hasDegree = true;
+                                                        @*@Html.ActionLink(i.Name, "InstitutionView", new { id = i.Id })*@
+                                                        @Html.ActionLink(i.Name, "DegreeEdit", "App", new { id = d2.Id }, null)
                                                     }
                                                 }
                                                 if (!hasDegree)
                                                 {
-                                                    <span style="color:red">❌- missing degree</span>
+                                                    <span>@i.Name</span> 
+                                                    @*@Html.ActionLink(i.Name, "InstitutionView", "App", new { id = i.Id }, null)*@
+                                                    <span style="color:red">❌- missing spreadsheet</span>
+                                                    @Html.ActionLink("Add", "DegreeAdd", "App", new { institutionId = i.Id }, new { @class = "btn btn-success ml-5" })
                                                 }
                                             }
 

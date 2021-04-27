@@ -4,6 +4,13 @@
     List<DegreeMapping.Models.Note> list_n = DegreeMapping.Models.Note.List(Model.Id);
     string cssClass = (string.IsNullOrEmpty(Model.Description)) ? "" : "alert alert-warning";
     bool noCourseMapped = true;
+
+    if (Model.UCFDegreeId.HasValue)
+    {
+        DegreeMapping.Models.Degree ucfDegree = DegreeMapping.Models.Degree.Get(Model.UCFDegreeId.Value);
+        Model.URL = (!string.IsNullOrEmpty(Model.URL)) ? Model.URL : ucfDegree.URL;
+        Model.CollegeName = (!string.IsNullOrEmpty(Model.CollegeName)) ? Model.CollegeName : ucfDegree.CollegeName;
+    }
 }
 
 <div class="row pt-5">
@@ -18,6 +25,22 @@
         <div class="form-group">
             <div class="col-md-10">
                 @Html.LabelFor(x => x.Active) : @(Model.Active?"Yes":"No")
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-10">
+                @Html.LabelFor(x => x.CollegeName) : @Html.Raw(Model.CollegeName)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-10">
+                @Html.LabelFor(x => x.URL) :
+                @if (!string.IsNullOrEmpty(Model.URL))
+                {
+                    <a href="@Html.Raw(Model.URL)" target="_blank">@Html.Raw(Model.URL)</a>
+                }
             </div>
         </div>
 
@@ -51,6 +74,7 @@
             </div>
         </div>
 
+
         <div class="form-group hidden">
             <div class="col-md-10">
                 @Html.LabelFor(x => x.CatalogYear) : @Model.CatalogYear
@@ -59,7 +83,7 @@
 
         <div class="form-group">
             <div class="col-md-10">
-                @Html.ActionLink("Edit Degree", "DegreeEdit", new { id = Model.Id })
+                @Html.ActionLink("Edit Degree", "DegreeEdit", "App", new { id = Model.Id }, null )
             </div>
         </div>
     </div>
@@ -84,8 +108,6 @@
 </div>
 <div class="row py-3 px-5">
     <div class="col-md-6">
-        <h3>Courses</h3>
-        @Html.ActionLink("Add Course", "CourseAdd", new { degreeId = Model.Id })
         @if (list_c.Count > 0)
         {
             int semester = 0;
@@ -172,20 +194,22 @@
 </div>
 @if (Model.InstitutionId != DegreeMapping.Models.Institution.UCFId && list_c.Count > 0)
 {
-    <div class="row py-2 px-5">
+    <div class="row py-2">
         <div class="col-md-12 px-5">
-            <h3>Course Output View</h3>
+            <h3>Partner Courses</h3>
+            @Html.ActionLink("Add", "CourseAdd", "App", new { degreeId = Model.Id }, new { @Class="btn btn-primary btn-lg" })
             <table class="table">
                 <thead>
                     <tr>
                         <th>&nbsp;</th>
-                        <th>UCF Course</th>
-                        <th>Units / Credits</th>
+                        @*<th>UCF Course</th>*@
+                        @*<th>Units / Credits</th>*@
                         <th>State College Course Prefix & Number</th>
                         <th>Units / Credits</th>
                         <th>Critical Course</th>
                         <th>Common Program Prerequisite (CPP)</th>
                         <th>Required Core Course</th>
+                        <th>&nbsp;</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -201,13 +225,16 @@
                         cssClass = (string.IsNullOrEmpty(c.UCFRelatedCourse)) ? "alert alert-warning" : "";
                         <tr class="@cssClass">
                             <td>@Html.ActionLink("Edit", "CourseEdit", new { id = c.Id })</td>
-                            <td>@Html.Raw(c.UCFRelatedCourse)</td>
-                            <td>@c.UCFCourseCredits</td>
+                            @*<td>@Html.Raw(c.UCFRelatedCourse)</td>*@
+                            @*<td>@c.UCFCourseCredits</td>*@
                             <td>@c.Code</td>
                             <td>@c.Credits</td>
                             <td>@(c.Critical ? "Yes" : "No")</td>
                             <td>@(c.CommonProgramPrerequiste ? "Yes" : "No")</td>
                             <td>@(c.Required ? "Yes" : "No")</td>
+                            <td>
+                                @Html.ActionLink("Delete", "CourseDelete", "App", new { id = c.Id, degreeId = Model.Id}, new { @Class = "btn btn-danger btn-lg", onclick = "return confirm('Are you sure you wish to delete this course and course mappings?');" })
+                            </td>
                         </tr>
                     }
 
@@ -220,3 +247,4 @@
         </div>
     </div>
 }
+@*@Html.Action("_CourseMapperList", new { degreeId = Model.Id })*@

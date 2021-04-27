@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Permissions;
 using System.Web;
 
 namespace DegreeMapping.Models
@@ -53,5 +54,23 @@ namespace DegreeMapping.Models
             }
             return list_cl;
         }
+        //New logic for course mapping
+        //public static List<CourseList> List2(int degreeId)
+        //{
+        //    List<CourseMapper> list_cm = CourseMapper.List(degreeId, null);
+        //    foreach (CourseMapper cm in list_cm.OrderBy(x=>x.OrderBy))
+        //    {
+        //        CourseList cl = new CourseList();
+        //        foreach (Course c in cm.PartnerCourses.OrderBy(x=>x.Code))
+        //        {
+        //            cl.CourseName = c.Code;
+        //            cl.Credits = c.Credits;
+        //            cl.CommonProgramPrerequiste = c.CommonProgramPrerequiste;
+        //            cl.Required = c.Required;
+        //            cl.Critical = c.Critical;
+        //            list_cm.Add(cl);
+        //        }
+        //    }
+        //}
     }
 }

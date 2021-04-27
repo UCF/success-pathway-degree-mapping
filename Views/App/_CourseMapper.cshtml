@@ -13,18 +13,26 @@
 
 @using (Html.BeginForm("CourseMapperSave", "App", FormMethod.Post, new { @Class = "form-horizontal" }))
 {
+    @Html.HiddenFor(x=>x.Id)
     @Html.HiddenFor(x=>x.DegreeId)
     <div class="row pt-5">
         <div class="col-md-4">
-            <h2>Partner Courses</h2>
-            <select name="PartnerCourseIds" multiple style="height:200px">
-                @foreach (DegreeMapping.Models.Course c in list_partnercourses.OrderBy(x => x.Code))
+            <h2>UCF Courses</h2>
+            <select name="UCFCourseIds" multiple style="height:200px; max-width:400px">
+                @foreach (DegreeMapping.Models.Course c in list_UCFCourses.OrderBy(x => x.Code))
                 {
-                    <option value="@c.Id">@c.Code</option>
+                    if (Model.UCFCourseIds.Contains(c.Id))
+                    {
+                        <option selected value="@c.Id">@c.Code</option>
+                    }
+                    else
+                    {
+                        <option value="@c.Id">@c.Code</option>
+                    }
                 }
             </select>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-2">
             <h2>Operand</h2>
             <label for="operandAND">
                 AND
@@ -36,16 +44,24 @@
             </label>
         </div>
         <div class="col-md-4">
-            <h2>UCF Courses</h2>
-            <select name="UCFCourseIds" multiple style="height:200px">
-                @foreach (DegreeMapping.Models.Course c in list_UCFCourses.OrderBy(x => x.Code))
+            <h2>Partner Courses</h2>
+            <select name="PartnerCourseIds" multiple style="height:200px; max-width:400px">
+                @foreach (DegreeMapping.Models.Course c in list_partnercourses.OrderBy(x => x.Code))
                 {
-                    <option value="@c.Id">@c.Code</option>
+                    if (Model.PartnerCourseIds.Contains(c.Id))
+                    {
+                        <option selected value="@c.Id">@c.Code</option>
+                    }
+                    else
+                    {
+                        <option value="@c.Id">@c.Code</option>
+                    }
                 }
             </select>
         </div>
-        <div class="col-md-1">
+        <div class="col-md-2">
             <button type="submit" class="btn btn-success btn-lg">Save</button>
-        </div>"
+            @Html.ActionLink("Cancel","DegreeView","App", new { id = Model.DegreeId}, new { @class="btn btn-primary btn-lg"})
+        </div>
     </div>
 }

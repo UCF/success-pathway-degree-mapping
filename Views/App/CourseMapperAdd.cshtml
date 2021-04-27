@@ -1,0 +1,11 @@
+﻿@model DegreeMapping.Models.CourseMapper
+
+    <div class="row pt-5">
+        <div class="col-md-12">
+            <small>@Html.ActionLink("Institutions", "Institutions") <span class="glyphicon glyphicon-arrow-right"></span> @Html.ActionLink(Model.Institution, "InstitutionView", new { id = Model.InstitutionId }) <span class="glyphicon glyphicon-arrow-right"></span> @Html.ActionLink(Model.Degree, "DegreeView", new { id = Model.DegreeId })</small>
+            <h1>@Model.Institution</h1>
+            <h2>Add Course Map for @Html.ActionLink(Model.Degree, "DegreeView", new { id = Model.DegreeId })</h2>
+        </div>
+    </div>
+
+@Html.Action("_CourseMapper","App", new { cm = Model })

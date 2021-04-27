@@ -24,7 +24,7 @@ namespace DegreeMapping.Models
         public string Name { get; set; }
         public int Credits { get; set; }
         public bool Critical { get; set; }
-        [DisplayName("Common Program Prerequiste")]
+        [DisplayName("Common Program Prerequisite")]
         public bool CommonProgramPrerequiste { get; set; }
         public bool Required { get; set; }
         public string Description { get; set; }

@@ -9,6 +9,7 @@ namespace DegreeMapping.Models
     {
         #region Properties
         public int Id { get; set; }
+        public string CollegeName { get; set; }
         public string Degree { get; set; }
         public string DegreeType { get; set; }
         public int InstitutionId { get; set; }
@@ -36,6 +37,11 @@ namespace DegreeMapping.Models
             Id = d.Id;
             Degree = d.Name;
             DegreeType = d.DegreeType;
+            this.CollegeName = d.CollegeName;
+            //if (d.CollegeId > 0)
+            //{
+            //    this.CollegeName = College.Get(d.CollegeId).CollegeName;
+            //}
             this.InstitutionId = d.InstitutionId;
             this.Institution = d.Institution;
             this.GPA = d.GPA;

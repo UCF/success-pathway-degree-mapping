@@ -13,6 +13,7 @@
         DegreemapRow: "DegreemapRow",
         DegreeTitle: "DegreeTitle",
         UCFPathwaySection: "UCFPathwaySection",
+        CollegeName: "CollegeName"
     },
     degreeId: 0,
     institutionId: 0,
@@ -46,7 +47,8 @@
         $("#" + this.target.UCFLimitedAccess).html(limitedAccess);
         $("#" + this.target.UCFRestrictedAccess).html(restrictedAccess);
         $("#" + this.target.DegreeTitle).html(data.Degree);
-        $("#" + this.target.Institution).html(data.Institution + " Pathway")
+        $("#" + this.target.Institution).html(data.Institution + " Pathway");
+        $("." + this.target.CollegeName).html(data.CollegeName);
     },
     displayNotes: function (data) {
         let output = "";
@@ -149,7 +151,7 @@
             headers: { "APIKey": "Th1sIsth3Way" },
             cache: false,
             success: function (data) {
-                //console.log(data);
+                console.log(data);
                 degreemap.data = data;
                 degreemap.displayDefaultInfo(data);
                 degreemap.displayNotes(data);

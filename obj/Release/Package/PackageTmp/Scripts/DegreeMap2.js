@@ -154,7 +154,7 @@
                 degreemap.displayDefaultInfo(data);
                 degreemap.displayNotes(data);
                 degreemap.displayCourseTable(data);
-                if (!degreemap.hasUCFSemesters) {
+                if (degreemap.hasUCFSemesters) {
                     degreemap.displayUCFSemesterCourse(data, 5);
                     degreemap.displayUCFSemesterCourse(data, 6);
                     degreemap.displayUCFSemesterCourse(data, 7);
