@@ -81,5 +81,10 @@ namespace DegreeMapping.Controllers
 
             return View();
         }
+
+        public ActionResult Decisiontree()
+        {
+            return View();
+        }
     }
 }

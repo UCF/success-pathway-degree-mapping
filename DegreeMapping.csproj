@@ -201,6 +201,13 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Accessible-jQuery-Decision-Tree-Flowchart-Plugin-decisionTree\css\decisionTree.css" />
+    <Content Include="Content\Accessible-jQuery-Decision-Tree-Flowchart-Plugin-decisionTree\img\done.png" />
+    <Content Include="Content\Accessible-jQuery-Decision-Tree-Flowchart-Plugin-decisionTree\img\loading.gif" />
+    <Content Include="Content\Accessible-jQuery-Decision-Tree-Flowchart-Plugin-decisionTree\index.html" />
+    <Content Include="Content\Accessible-jQuery-Decision-Tree-Flowchart-Plugin-decisionTree\js\jquery-2.1.3.min.js" />
+    <Content Include="Content\Accessible-jQuery-Decision-Tree-Flowchart-Plugin-decisionTree\js\jquery.decisionTree.js" />
+    <Content Include="Content\Accessible-jQuery-Decision-Tree-Flowchart-Plugin-decisionTree\js\jquery.decisionTree.min.js" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -213,6 +220,15 @@
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Content\Accessible-jQuery-Decision-Tree-Flowchart-Plugin-decisionTree\anode1.json" />
+    <Content Include="Content\Accessible-jQuery-Decision-Tree-Flowchart-Plugin-decisionTree\anode2.json" />
+    <Content Include="Content\Accessible-jQuery-Decision-Tree-Flowchart-Plugin-decisionTree\dtn1.json" />
+    <Content Include="Content\Accessible-jQuery-Decision-Tree-Flowchart-Plugin-decisionTree\dtn2.json" />
+    <Content Include="Content\Accessible-jQuery-Decision-Tree-Flowchart-Plugin-decisionTree\dtn3.json" />
+    <Content Include="Content\Accessible-jQuery-Decision-Tree-Flowchart-Plugin-decisionTree\LICENSE" />
+    <Content Include="Content\Accessible-jQuery-Decision-Tree-Flowchart-Plugin-decisionTree\README.md" />
+    <Content Include="Content\Accessible-jQuery-Decision-Tree-Flowchart-Plugin-decisionTree\start.json" />
+    <Content Include="Content\Accessible-jQuery-Decision-Tree-Flowchart-Plugin-decisionTree\dtn4.json" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <Content Include="Scripts\DegreeMap2.js" />
     <Content Include="Scripts\fontawesome-free-5.15.2-web\less\brands.less" />
@@ -1976,6 +1992,7 @@
     <Content Include="Views\App\_CourseMapperList.cshtml" />
     <Content Include="Views\App\CourseMapperEdit.cshtml" />
     <Content Include="Views\App\CourseMapperAdd.cshtml" />
+    <Content Include="Views\Home\Decisiontree.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

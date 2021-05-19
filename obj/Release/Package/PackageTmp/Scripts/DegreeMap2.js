@@ -1,5 +1,5 @@
 ﻿var degreemap = {
-
+    version: "1.0.2",
     data: {},
     target: {
         UCFGPA: "UCFGPA",
@@ -13,6 +13,7 @@
         DegreemapRow: "DegreemapRow",
         DegreeTitle: "DegreeTitle",
         UCFPathwaySection: "UCFPathwaySection",
+        CollegeName: "CollegeName"
     },
     degreeId: 0,
     institutionId: 0,
@@ -45,8 +46,9 @@
         $("#" + this.target.UCFGPA).html(gpa);
         $("#" + this.target.UCFLimitedAccess).html(limitedAccess);
         $("#" + this.target.UCFRestrictedAccess).html(restrictedAccess);
-        $("#" + this.target.DegreeTitle).html(data.Degree);
-        $("#" + this.target.Institution).html(data.Institution + " Pathway")
+        $("." + this.target.DegreeTitle).html(data.Degree);
+        $("#" + this.target.Institution).html(data.Institution + " Pathway");
+        $("." + this.target.CollegeName).html(data.CollegeName);
     },
     displayNotes: function (data) {
         let output = "";
@@ -75,10 +77,10 @@
             for (y = 0; y <= data.Courses.length - 1; y++) {
                 if (data.Courses[y].Semester == semester) {
                     let coursecode = data.Courses[y].CourseCode;
-                    let coursename = data.Courses[y].CourseName;
+                    //let coursename = data.Courses[y].CourseName;
                     let credits = data.Courses[y].Credits;
                     totalcredits = 1 * totalcredits + 1 * credits;
-                    output += degreemap.semesterCourseTemplate(coursecode, coursename, credits);
+                    output += degreemap.semesterCourseTemplate(coursecode, credits);
                 }
             }
             $("#UCFSemester_" + semester + "_Total").html("Total " + totalcredits + " Units");
@@ -86,14 +88,14 @@
             return;
         }
     },
-    semesterCourseTemplate(coursecode, coursename, credits) {
+    semesterCourseTemplate(coursecode, credits) {
         let template = '';
         template += '<span id="UCFSemester_5">';
         template += '<p class="card-text">';
         template += '<strong>' + coursecode + '</strong>';
-        if (coursename.length > 0) {
-            template += '<br>' + coursename;
-        }
+        //if (coursename.length > 0) {
+        //    template += '<br>' + coursename;
+        //}
         template += '<br>' + credits + ' Units</p>';
         return template;
     },
@@ -149,7 +151,7 @@
             headers: { "APIKey": "Th1sIsth3Way" },
             cache: false,
             success: function (data) {
-                //console.log(data);
+                console.log(data);
                 degreemap.data = data;
                 degreemap.displayDefaultInfo(data);
                 degreemap.displayNotes(data);

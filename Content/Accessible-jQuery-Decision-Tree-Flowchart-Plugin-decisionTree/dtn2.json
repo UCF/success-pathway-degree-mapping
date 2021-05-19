@@ -1,0 +1,14 @@
+{
+	"id": "dtn2",
+	"question": "Are you currently attending any of the following colleges and going to high school at the same time? College of Central Florida, Daytona State College, Eastern Florida State College, Lake Sumter State College, Seminole State College, Valencia College",
+	"answers": [
+		{
+			"text": "Yes",
+			"target": "dtn3"
+		},
+		{
+			"text": "No",
+			"target": "anode2"
+		}
+	]
+}

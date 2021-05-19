@@ -7,7 +7,7 @@
 </div>
 
 @Html.Action("_College", new { c = new DegreeMapping.Models.College() })
-
+<hr/>
 @foreach (DegreeMapping.Models.College c in Model.OrderBy(x => x.CollegeName))
 {
     @Html.Action("_College", new { c = c })

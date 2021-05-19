@@ -25,7 +25,7 @@ namespace DegreeMapping.Controllers
 
         [HttpGet]
         [MyCustomAttribute]
-        [Route("GetDegreeMap")]
+        [Route("GetDegreeMapV2")]
         public DegreeMap GetDegreeMapV2(int degreeId)
         {
             DegreeMap dm = DegreeMap.Get(degreeId);
@@ -38,9 +38,6 @@ namespace DegreeMapping.Controllers
         {
             return Generic.List();
         }
-
-
-
 
         [HttpGet]
         [Route("GetDegreeList")]

@@ -1,0 +1,15 @@
+{
+	"id": "dtn4",
+	"question": "Do you plan to earn an AA or articulated AS before starting at UCF",
+	"answers": [
+
+		{
+			"text": "Yes",
+			"target": "anode1"
+		},
+		{
+			"text": "No",
+			"target": "anode2"
+		}
+	]
+}

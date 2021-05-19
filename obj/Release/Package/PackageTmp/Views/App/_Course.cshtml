@@ -55,10 +55,15 @@
     </div>
 
     <div class="row pt-2">
-        <div class="col-md-3">
-            <div class="form-group">
+        <div class="col-md-10">
+            <div class="form-group" id="credits">
                 @Html.LabelFor(x => x.Credits) :
-                @Html.TextBoxFor(x => x.Credits, new { @class = "form-control" })
+                @for (int i=0; i<10; i++)
+                {
+                    string classId = string.Format("creditId_{0}", i);
+                    string cssClass = (Model.Credits == i) ? "alert alert-success" : string.Empty;
+                    <span class="px-3 @classId @cssClass"><label>@i @Html.RadioButtonFor(x => x.Credits, i)</label></span>
+                }
             </div>
         </div>
     </div>
@@ -101,6 +106,8 @@
                     <div><label>Semester : @Html.RadioButtonFor(x => x.Semester, 6) 6</label></div>
                     <div><label>Semester : @Html.RadioButtonFor(x => x.Semester, 7) 7</label></div>
                     <div><label>Semester : @Html.RadioButtonFor(x => x.Semester, 8) 8</label></div>
+                    <div><label>Semester : @Html.RadioButtonFor(x => x.Semester, 9) 9</label></div>
+                    <div><label>Semester : @Html.RadioButtonFor(x => x.Semester, 10) 10</label></div>
                 </span>
                 }
                 else
@@ -145,3 +152,25 @@
         </div>
     </div>
 }
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#credits input:radio").on("click", function () {
+            let credit = $(this).val();
+            SetCredit(credit);
+        })
+
+        function SetCredit(credit) {
+            $("#credits input:radio").each(function () {
+                let id = $(this).val();
+                if (id == credit) {
+                    $(".creditId_" + id).addClass("alert");
+                    $(".creditId_" + id).addClass("alert-success");
+                } else {
+                    $(".creditId_" + id).removeClass("alert");
+                    $(".creditId_" + id).removeClass("alert-success");
+                }
+            })
+        }
+    })
+</script>
