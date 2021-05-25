@@ -1993,6 +1993,7 @@
     <Content Include="Views\App\CourseMapperEdit.cshtml" />
     <Content Include="Views\App\CourseMapperAdd.cshtml" />
     <Content Include="Views\Home\Decisiontree.cshtml" />
+    <Content Include="Views\App\CourseSearch.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

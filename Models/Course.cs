@@ -16,8 +16,17 @@ namespace DegreeMapping.Models
 {
     public class Course
     {
+        public struct CourseTerm
+        {
+            public static string Fall { get { return "Fall"; } }
+            public static string Spring { get { return "Spring"; } }
+            public static string Summer { get { return "Summer"; } }
+            public static string SummerA { get { return "Summer A"; } }
+            public static string SummerB { get { return "Summer B"; } }
+        }
+
         public int Id { get; set; }
-        [DisplayName("Degree Id")]
+        [DisplayName("Degree Id")] 
         public int DegreeId { get; set; }
         [DisplayName("Course Name")]
         public string Code { get; set; }
@@ -41,6 +50,7 @@ namespace DegreeMapping.Models
         [DisplayName("UCF Related Course")]
         public string UCFRelatedCourse { get; set; }
         public int UCFCourseCredits { get; set; }
+        public string Term { get; set; }
 
         public Course()
         {
@@ -51,7 +61,6 @@ namespace DegreeMapping.Models
             Credits = 3;
             NID = HttpContext.Current.User.Identity.Name;
             Semester = 1;
-
         }
         public Course(int degreeId)
         {
@@ -91,6 +100,7 @@ namespace DegreeMapping.Models
                 cmd.Parameters.AddWithValue("@UpdateDate", DateTime.Now);
                 cmd.Parameters.AddWithValue("@NID", c.NID);
                 cmd.Parameters.AddWithValue("@Semester", c.Semester);
+                cmd.Parameters.AddWithValue("@Term", c.Term);
                 if (c.UCFCourseId.HasValue)
                 {
                     cmd.Parameters.AddWithValue("@UCFCourseId", c.UCFCourseId);
@@ -123,6 +133,7 @@ namespace DegreeMapping.Models
                 cmd.Parameters.AddWithValue("@UpdateDate", DateTime.Now);
                 cmd.Parameters.AddWithValue("@NID", c.NID);
                 cmd.Parameters.AddWithValue("@Semester", c.Semester);
+                cmd.Parameters.AddWithValue("@Term", c.Term);
                 if (c.UCFCourseId.HasValue)
                 {
                     cmd.Parameters.AddWithValue("@UCFCourseId", c.UCFCourseId);
@@ -183,6 +194,32 @@ namespace DegreeMapping.Models
             return c;
         }
 
+
+        public static List<Course> Search(string keyword)
+        {
+            List<Course> list_c = new List<Course>();
+            using (SqlConnection cn = new SqlConnection(Database.DC_DegreeMapping))
+            {
+                cn.Open();
+                SqlCommand cmd = cn.CreateCommand();
+                cmd.CommandText = "SearchCourse";
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@keyword", keyword);
+                SqlDataReader dr = cmd.ExecuteReader();
+                if (dr.HasRows)
+                {
+                    while (dr.Read())
+                    {
+                        Course c = new Course();
+                        Set(dr, ref c);
+                        list_c.Add(c);
+                    }
+                }
+                cn.Close();
+            }
+            return list_c;
+        }
+
         private static void Set(SqlDataReader dr, ref Course c)
         {
             if (dr.HasRows)
@@ -205,6 +242,7 @@ namespace DegreeMapping.Models
                 c.UpdateDate = Convert.ToDateTime(dr["UpdateDate"].ToString());
                 c.NID = dr["NID"].ToString();
                 c.Semester = Convert.ToInt32(dr["Semester"].ToString());
+                c.Term = dr["Term"].ToString();
                 int ucfCourseId;
                 int ucfCourseCredits;
                 c.UCFRelatedCourse = dr["UCFRelatedCourse"].ToString();

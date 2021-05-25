@@ -11,7 +11,7 @@ namespace DegreeMapping.Models
 {
     public class CourseMapper
     {
-        public struct Operand
+        public struct OperandType2
         {
             public static int EQUAL { get { return 0; } }
             public static int AND { get { return 1; } }
@@ -26,9 +26,7 @@ namespace DegreeMapping.Models
         public List<int> PartnerCourseIds { get; set; }
         public List<Course> PartnerCourses { get; set; }
 
-        public string OperandType { get; set; }
-        public int OperandTypeId { get; set; }
-
+        public string Operand { get; set; }
 
         public List<int> UCFCourseIds { get; set; }
         public List<Course> UCFCourses { get; set; }
@@ -72,7 +70,7 @@ namespace DegreeMapping.Models
                 cmd.Parameters.AddWithValue("@DegreeId", cm.DegreeId);
                 cmd.Parameters.AddWithValue("@PartnerCourseIds", string.Join(",", cm.PartnerCourseIds));
                 cmd.Parameters.AddWithValue("@UCFCourseIds", string.Join(",", cm.UCFCourseIds));
-                cmd.Parameters.AddWithValue("@OperandType", cm.OperandTypeId);
+                cmd.Parameters.AddWithValue("@Operand", cm.Operand);
                 cmd.Parameters.AddWithValue("@OrderBy", cm.OrderBy);
                 id = Convert.ToInt32(cmd.ExecuteScalar());
                 cn.Close();
@@ -92,7 +90,7 @@ namespace DegreeMapping.Models
                 cmd.Parameters.AddWithValue("@DegreeId", cm.DegreeId);
                 cmd.Parameters.AddWithValue("@PartnerCourseIds", string.Join(",", cm.PartnerCourseIds));
                 cmd.Parameters.AddWithValue("@UCFCourseIds", string.Join(",", cm.UCFCourseIds));
-                cmd.Parameters.AddWithValue("@Operand", cm.OperandTypeId);
+                cmd.Parameters.AddWithValue("@Operand", cm.Operand);
                 cmd.Parameters.AddWithValue("@OrderBy", cm.OrderBy);
                 cmd.ExecuteScalar();
                 cn.Close();
@@ -158,7 +156,7 @@ namespace DegreeMapping.Models
             {
                 cm.Id = Convert.ToInt32(dr["Id"].ToString());
                 cm.DegreeId = Convert.ToInt32(dr["DegreeId"].ToString());
-
+                cm.Operand = dr["Operand"].ToString();
                 if (!string.IsNullOrEmpty(dr["PartnerCourseIds"].ToString()))
                 {
                     cm.PartnerCourseIds = dr["PartnerCourseIds"].ToString().Split(',').Select(Int32.Parse).ToList();
@@ -171,25 +169,8 @@ namespace DegreeMapping.Models
                 cm.DegreeId = Convert.ToInt32(dr["DegreeId"].ToString());
                 cm.Institution = dr["Institution"].ToString();
                 cm.InstitutionId = Convert.ToInt32(dr["InstitutionId"].ToString());
-                cm.OperandTypeId = Convert.ToInt32(dr["Operand"].ToString());
                 cm.OrderBy = (string.IsNullOrEmpty(dr["OrderBy"].ToString())) ? 999 : Convert.ToInt32(dr["OrderBy"].ToString());
                 SetCourse(ref cm);
-                SetOperand(ref cm);
-            }
-        }
-
-        private static void SetOperand(ref CourseMapper cm)
-        {
-            if (cm.OperandTypeId == Operand.OR)
-            {
-                cm.OperandType = "OR";
-            }
-            else if (cm.OperandTypeId == Operand.AND)
-            {
-                cm.OperandType = "AND";
-            }
-            else {
-                cm.OperandType = "EQUAL";
             }
         }
 

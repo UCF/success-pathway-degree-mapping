@@ -151,6 +151,23 @@ namespace DegreeMapping.Controllers
             return View(c);
         }
 
+        public ActionResult CourseList()
+        {
+            List<Course> list_course = Course.List(null);
+            return View(list_course);
+        }
+
+        public ActionResult CourseSearch(string keyword)
+        {
+            List<Course> list_c = new List<Course>();
+            if (!string.IsNullOrEmpty(keyword))
+            {
+                list_c = Course.Search(keyword);
+            }
+            ViewBag.Keyword = keyword;
+            return View(list_c);
+        }
+
         public ActionResult CourseSave(Course c)
         {
             if (c.Id > 0)

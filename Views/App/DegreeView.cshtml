@@ -15,7 +15,7 @@
 
 <div class="row pt-5">
     <div class="col-md-12">
-        <small>@Html.ActionLink("Institutions", "Institutions") <span class="glyphicon glyphicon-arrow-right"></span> @Html.ActionLink(Model.Institution, "InstitutionView", new { id = Model.InstitutionId })</small>
+        <small>@Html.ActionLink("Degree list", "Checklist", "App") <span class="glyphicon glyphicon-arrow-right"></span> @Html.ActionLink(Model.Institution, "InstitutionView", new { id = Model.InstitutionId })</small>
         <h1>@Model.Institution : @Html.Raw(Model.Name)</h1>
     </div>
 </div>
@@ -83,7 +83,7 @@
 
         <div class="form-group">
             <div class="col-md-10">
-                @Html.ActionLink("Edit Degree", "DegreeEdit", "App", new { id = Model.Id }, null )
+                @Html.ActionLink("Edit Degree", "DegreeEdit", "App", new { id = Model.Id }, null)
             </div>
         </div>
     </div>
@@ -115,8 +115,9 @@
         @if (list_c.Count > 0)
         {
             int semester = 0;
+            string fullSemester = string.Empty;
             <ul>
-                @foreach (DegreeMapping.Models.Course c in list_c.OrderBy(x => x.Semester).ThenBy(x => x.Code))
+                @foreach (DegreeMapping.Models.Course c in list_c.OrderBy(x => x.Semester).ThenBy(x=>x.Term).ThenBy(x => x.Code))
                 {
                     if (Model.InstitutionId != DegreeMapping.Models.Institution.UCFId)
                     {
@@ -124,10 +125,12 @@
                     }
                     string warning = (string.IsNullOrEmpty(c.Description)) ? "" : "<i class=\"fas fa-exclamation-triangle\"></i>";
                     cssClass = (string.IsNullOrEmpty(c.Description)) ? "" : "alert alert-warning";
-                    if (semester != c.Semester)
+                    //if (semester != c.Semester)
+                    if (fullSemester != string.Format("{0} {1}", c.Semester, c.Term))
                     {
-                        semester = c.Semester;
-                        <li style="list-style:none; margin-left:-20px"><strong>Semester @semester</strong></li>
+                        //semester = c.Semester;
+                        fullSemester = string.Format("{0} {1}", c.Semester, c.Term);
+                        <li style="list-style:none; margin-left:-20px"><strong>Semester @fullSemester</strong></li>
                     }
                     if (c.UCFCourseId == null && c.InstitutionId != DegreeMapping.Models.Institution.UCFId)
                     {
@@ -156,10 +159,10 @@
     <div class="col-md-6">
         @if (Model.InstitutionId == DegreeMapping.Models.Institution.UCFId)
         {
-        <div>
-            <h3>@Model.Institution Notes/Requirements</h3>
-            @Html.ActionLink("Add Note", "NoteAdd", new { degreeId = Model.Id })
-        </div>
+            <div>
+                <h3>@Model.Institution Notes/Requirements</h3>
+                @Html.ActionLink("Add Note", "NoteAdd", new { degreeId = Model.Id })
+            </div>
             if (list_n.Count > 0)
             {
                 <ul>
@@ -196,6 +199,7 @@
         }
     </div>
 </div>
+@*SECTION FOR PARTNER INSTITUTION*@
 @if (Model.InstitutionId != DegreeMapping.Models.Institution.UCFId && list_c.Count > 0)
 {
     <div class="row py-2">
@@ -236,7 +240,7 @@
                             <td>@(c.CommonProgramPrerequiste ? "Yes" : "No")</td>
                             <td>@(c.Required ? "Yes" : "No")</td>
                             <td>
-                                @Html.ActionLink("Delete", "CourseDelete", "App", new { id = c.Id, degreeId = Model.Id}, new { @Class = "btn btn-danger btn-lg", onclick = "return confirm('Are you sure you wish to delete this course and course mappings?');" })
+                                @Html.ActionLink("Delete", "CourseDelete", "App", new { id = c.Id, degreeId = Model.Id }, new { @Class = "btn btn-danger btn-lg", onclick = "return confirm('Are you sure you wish to delete this course and course mappings?');" })
                             </td>
                         </tr>
                     }
@@ -251,7 +255,8 @@
     </div>
 }
 
-@*
-    For version 2.0
+@*For version 3.0*@
+@*@if (Model.InstitutionId != DegreeMapping.Models.Institution.UCFId)
+{
     @Html.Action("_CourseMapperList", new { degreeId = Model.Id })
-*@
+}*@

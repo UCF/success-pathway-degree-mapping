@@ -15,7 +15,7 @@ namespace DegreeMapping.Controllers
         {
             if (User.Identity.IsAuthenticated)
             {
-                return RedirectToAction("Institutions", "App");
+                return RedirectToAction("Checklist", "App");
             }
             Models.User u = new Models.User();
             return View(u);
@@ -30,7 +30,7 @@ namespace DegreeMapping.Controllers
                 new Authentication(u.NID, u.Password, ref user);
                 if (user.Authenticated && user.Authorized)
                 {
-                    return RedirectToAction("Institutions", "App");
+                    return RedirectToAction("Checklist", "App");
                 }
                 else 
                 {
