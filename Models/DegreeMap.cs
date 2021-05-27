@@ -18,6 +18,7 @@ namespace DegreeMapping.Models
         public bool LimitedAccess { get; set; }
         public bool RestrictedAccess { get; set; }
         public bool HasUCFSemesters { get; set; }
+        public List<string> SemesterTerms { get; set; }
         public List<CourseList> Courses { get; set; }
         public List<NoteList> Notes { get; set; }
         public List<Generic> Generic { get; set; }
@@ -30,6 +31,7 @@ namespace DegreeMapping.Models
             Notes = new List<NoteList>();
             Courses = new List<CourseList>();
             Generic = new List<Generic>();
+            SemesterTerms = new List<string>();
         }
 
         public DegreeMap(Degree d)
@@ -51,6 +53,7 @@ namespace DegreeMapping.Models
             Notes = new List<NoteList>();
             Courses = new List<CourseList>();
             Generic = new List<Generic>();
+            SemesterTerms = new List<string>();
         }
 
         public static DegreeMap Get(int degreeId)
@@ -69,8 +72,13 @@ namespace DegreeMapping.Models
             }
             List<CourseList> list_cl = CourseList.List(degreeId);
             dm.Courses = list_cl;
+
+
+            
             if (degree.UCFDegreeId.HasValue)
             {
+
+
                 dm.Generic = DegreeMapping.Models.Generic.List(degree.UCFDegreeId.Value);
                 DegreeMapping.Models.Degree ucfDegree = DegreeMapping.Models.Degree.Get(degree.UCFDegreeId.Value);
                 DegreeMap dm2 = new DegreeMap(ucfDegree);
@@ -81,9 +89,9 @@ namespace DegreeMapping.Models
                 {
                     dm.HasUCFSemesters = true;
                     dm.Courses.AddRange(CourseList.List(degree.UCFDegreeId.Value).Where(x => x.Semester > 1).ToList());
+                    dm.SemesterTerms.AddRange(dm.Courses.Where(x => x.Semester > 1).OrderBy(x=>x.SemesterTerm).Select(x => x.SemesterTerm).Distinct().ToList());
                 }
                 dm.Notes.AddRange(NoteList.List(degree.UCFDegreeId.Value));
-
             }
             return dm;
         }

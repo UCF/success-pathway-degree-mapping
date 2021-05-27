@@ -16,6 +16,7 @@ namespace DegreeMapping.Models
         public bool CommonProgramPrerequiste { get; set; }
         public bool Required { get; set; }
         public int Semester { get; set; }
+        public string SemesterTerm { get; set; }
         public int UCFCourseId { get; set; }
         public string UCFCourseName { get; set; }
         public int UCFCourseCredits { get; set; }
@@ -35,6 +36,7 @@ namespace DegreeMapping.Models
             CommonProgramPrerequiste = c.CommonProgramPrerequiste;
             Required = c.Required;
             Semester = c.Semester;
+            SemesterTerm = string.Format("{0} {1}",c.Semester, c.Term).Trim();
             if (c.UCFCourseId.HasValue)
             {
                 UCFCourseId = c.UCFCourseId.Value;

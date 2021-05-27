@@ -1,16 +1,15 @@
 ﻿@model DegreeMapping.Models.Course
 @{ 
-    DegreeMapping.Models.Degree d = DegreeMapping.Models.Degree.Get(Model.DegreeId);
-
-
-    List<DegreeMapping.Models.Course> list_course = new List<DegreeMapping.Models.Course>();
-    if (d.UCFDegreeId.HasValue)
-    {
-        list_course = DegreeMapping.Models.Course.List(d.UCFDegreeId.Value).Where(x => x.Semester <= 1).ToList();
+        DegreeMapping.Models.Degree d = DegreeMapping.Models.Degree.Get(Model.DegreeId);
+        List<int> SemestersNotUsed = new List<int>() {2,3,4};
+        List<DegreeMapping.Models.Course> list_course = new List<DegreeMapping.Models.Course>();
+        if (d.UCFDegreeId.HasValue)
+        {
+            list_course = DegreeMapping.Models.Course.List(d.UCFDegreeId.Value).Where(x => x.Semester <= 1).ToList();
+        }
     }
-}
 
-@using (Html.BeginForm("CourseSave", "App", FormMethod.Post, new { @Class = "form-horizontal" }))
+    @using (Html.BeginForm("CourseSave", "App", FormMethod.Post, new { @Class = "form-horizontal" }))
 {
     @Html.HiddenFor(x => x.Id)
     @Html.HiddenFor(x => x.DegreeId)
@@ -73,19 +72,21 @@
             @if (Model.InstitutionId == DegreeMapping.Models.Institution.UCFId)
             {
                 <div class="form-group py-4 px-4" id="semesters" style="border:3px solid #fcf8e3">
-                    @Html.LabelFor(x => x.Semester) : 
-                    @for (int i = 0; i < 10; i++)
+                    @Html.LabelFor(x => x.Semester) :
+                    @for (int i = 1; i <= 10; i++)
                     {
-                        string semesterId = string.Format("semesterId_{0}", i);
-                        string cssClass = (Model.Semester == i) ? "alert alert-warning" : string.Empty;
-                        <span class="px-3 @semesterId @cssClass"><label>@i @Html.RadioButtonFor(x => x.Semester, i)</label></span>
+                        if (!SemestersNotUsed.Contains(i))
+                        {
+                            string semesterId = string.Format("semesterId_{0}", i);
+                            string cssClass = (Model.Semester == i) ? "alert alert-warning" : string.Empty;
+                            <span class="px-3 @semesterId @cssClass"><label>@i @Html.RadioButtonFor(x => x.Semester, i)</label></span>
+                        }
                     }
                 </div>
             }
             else
             {
                 <div class="form-group">
-                    @Html.LabelFor(x => x.Semester) : 
                     <span>
                         @Html.LabelFor(x => x.Semester) : @Model.Semester
                         @Html.HiddenFor(x => x.Semester)

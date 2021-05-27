@@ -404,5 +404,24 @@ namespace DegreeMapping.Controllers
 
         #endregion
 
+
+        #region Degree Map Test
+        //public ActionResult DegreeMapV2()
+        //{
+        //    DegreeMap dm = new DegreeMap();
+        //    ViewBag.DegreeList = DegreeMapping.Models.Degree.List(null);
+        //    return View(dm);
+        //}
+        public ActionResult DegreeMapV2(int? id)
+        {
+            DegreeMap dm = new DegreeMap();
+            if (id.HasValue)
+            {
+                dm = DegreeMapping.Models.DegreeMap.Get(id.Value);
+            }
+            ViewBag.DegreeList = DegreeMapping.Models.Degree.List(null);
+            return View(dm);
+        }
+        #endregion
     }
 }

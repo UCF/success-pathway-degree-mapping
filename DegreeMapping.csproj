@@ -230,6 +230,7 @@
     <Content Include="Content\Accessible-jQuery-Decision-Tree-Flowchart-Plugin-decisionTree\start.json" />
     <Content Include="Content\Accessible-jQuery-Decision-Tree-Flowchart-Plugin-decisionTree\dtn4.json" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
+    <Content Include="Scripts\DegreeMap3.js" />
     <Content Include="Scripts\DegreeMap2.js" />
     <Content Include="Scripts\fontawesome-free-5.15.2-web\less\brands.less" />
     <Content Include="Scripts\fontawesome-free-5.15.2-web\less\fontawesome.less" />
@@ -1994,6 +1995,7 @@
     <Content Include="Views\App\CourseMapperAdd.cshtml" />
     <Content Include="Views\Home\Decisiontree.cshtml" />
     <Content Include="Views\App\CourseSearch.cshtml" />
+    <Content Include="Views\App\DegreeMapV2.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
