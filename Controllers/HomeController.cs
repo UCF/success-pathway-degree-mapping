@@ -68,6 +68,18 @@ namespace DegreeMapping.Controllers
             return View();
         }
 
+        public ActionResult DegreeMapV2(int? degreeId)
+        {
+            ViewBag.degreeId = degreeId;
+            ViewBag.DegreeList = DegreeMapping.Models.Degree.List(null);
+            return View();
+        }
+
+        public ActionResult _DegreeMapV2WPTemplate()
+        {
+            return PartialView();
+        }
+
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";

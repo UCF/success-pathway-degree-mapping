@@ -13,12 +13,14 @@
         DegreemapRow: "DegreemapRow",
         DegreeTitle: "DegreeTitle",
         UCFPathwaySection: "UCFPathwaySection",
-        CollegeName: "CollegeName"
+        CollegeName: "CollegeName",
+        UCFCourseSection: "UCFCourseSection",
     },
     degreeId: 0,
     institutionId: 0,
     ucfDegreeId: 0,
-    hasUCFSemesters : false,
+    hasUCFSemesters: false,
+    ucfTerms: {},
     noteType: {
         additionalRequirement: 4,
         foreginLaguage: 3,
@@ -89,13 +91,11 @@
         }
     },
     semesterCourseTemplate(coursecode, credits) {
+        //DISPLAYS 1 COURSE INFORMATION IN COLUMN
         let template = '';
-        template += '<span id="UCFSemester_5">';
+        template += '<span>';
         template += '<p class="card-text">';
         template += '<strong>' + coursecode + '</strong>';
-        //if (coursename.length > 0) {
-        //    template += '<br>' + coursename;
-        //}
         template += '<br>' + credits + ' Units</p>';
         return template;
     },
@@ -119,6 +119,42 @@
             }
             $("#" + this.target.DegreemapRow).html(courseTable);
         }
+    },
+    template4Columns: function (data) {
+        let carddeck = '<div class="card-deck">';
+        let cardheader = '';//Semester heading and credits
+        for (var x = 0; x <= data.SemesterTerms.length - 1; x++) {
+            let currentTerm = data.SemesterTerms[x];
+            let credits = 0;
+            let cardBlock = '';
+            for (y = 0; y <= data.Courses.length-1; y++) {
+                if (data.Courses[y].SemesterTerm.toString() == currentTerm) {
+                    credits = credits + data.Courses[y].Credits;
+                    cardBlock += degreemap.setCardBlock(data.Courses[y].CourseCode, data.Courses[y].Credits);
+                }
+            }
+            cardHeader = degreemap.setCardHeader(data.SemesterTerms[x], credits);
+            carddeck += '<div class="card">' + cardHeader + cardBlock + '</div>';
+        }
+        carddeck += '</div>';
+        $("#" + degreemap.target.UCFCourseSection).html(carddeck);
+    },
+
+    setCardHeader: function (semesterTerm,credits) {
+        let header = '<div class="card-header card-inverse">';
+        header += '<h4>Semester ' + semesterTerm + '</h4>';
+        header += '<p class="card-text"><span>Total ' + credits + ' Units</span></p></div>';
+        return header;
+    },
+    setCardBlock: function (course, credit) {
+        return cardBlock = '<div class="card-block"><strong>' + course + '</strong>' + '<br/>' + credit + ' Units</div>';
+    },
+
+    template5Columns: function (data) {
+
+    },
+    template6Columns: function () {
+
     },
     courseDisplayTemplate(ucfCourse, ucfCredits, partnerCourse, partnerCredits, critical, cpp, required) {
         let output = "<tr>";
@@ -145,7 +181,7 @@
     getDegreeList: function () {
         $.get({
             //url: "https://portal.connect.ucf.edu/pathway/GetDegreeMap?degreeId="+degreemap.degreeId,
-            url: "/api/degree/GetDegreeMap?degreeId="+degreemap.degreeId,
+            url: "/api/degree/GetDegreeMapV2?degreeId="+degreemap.degreeId,
             //data : "degreeId="4,
             type: "GET",
             headers: { "APIKey": "Th1sIsth3Way" },
@@ -157,10 +193,21 @@
                 degreemap.displayNotes(data);
                 degreemap.displayCourseTable(data);
                 if (degreemap.hasUCFSemesters) {
-                    degreemap.displayUCFSemesterCourse(data, 5);
-                    degreemap.displayUCFSemesterCourse(data, 6);
-                    degreemap.displayUCFSemesterCourse(data, 7);
-                    degreemap.displayUCFSemesterCourse(data, 8);
+                    if (data.SemesterTerms.length == 4) {
+                        degreemap.template4Columns(data);
+                    }
+                    if (data.SemesterTerms.length == 5) {
+                        degreemap.template5Columns(data);
+                    }
+                    if (data.SemesterTerms.length == 6) {
+                        degreemap.template6Columns(data);
+                    }
+
+
+                    //degreemap.displayUCFSemesterCourse(data, 5);
+                    //degreemap.displayUCFSemesterCourse(data, 6);
+                    //degreemap.displayUCFSemesterCourse(data, 7);
+                    //degreemap.displayUCFSemesterCourse(data, 8);
                     degreemap.displayGeneric(data);
                 } else {
                     $("#" + degreemap.target.UCFPathwaySection).hide();
