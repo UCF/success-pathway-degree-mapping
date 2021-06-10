@@ -28,6 +28,7 @@ namespace DegreeMapping.Models
         public string Description { get; set; }
         [DisplayName("Catalog Year")]
         public string CatalogYear { get; set; }
+        public int CatalogId { get; set; } 
         public bool Active { get; set; }
         public string Institution { get; set; }
         public DateTime AddDate { get; set; }
@@ -40,23 +41,26 @@ namespace DegreeMapping.Models
         public string CollegeName { get; set; }
         public int CollegeId { get; set; }
         [DisplayName("Degree URL")]
-        public string URL { get; set; }
+        public string DegreeURL { get; set; }
+        [DisplayName("Catalog URL")]
+        public string CatalogUrl { get; set; }
 
-        public Degree()
+        public Degree(int? catalogId)
         {
             Active = true;
-            CatalogYear = string.Empty;
             LimitedAccess = false;
             RestrictedAccess = false;
             NID = HttpContext.Current.User.Identity.Name;
             GPA = "2.0";
             UCFDegreeId = null;
+
+            CatalogId = (catalogId.HasValue) ? catalogId.Value : 0;
+            CatalogYear = (catalogId.HasValue) ? Catalog.Get(catalogId.Value).Year : string.Empty;
         }
 
-        public Degree(int institutionId)
+        public Degree(int institutionId, int? catalogId)
         {
             Active = true;
-            CatalogYear = string.Empty;
             LimitedAccess = false;
             RestrictedAccess = false;
             InstitutionId = institutionId;
@@ -64,6 +68,8 @@ namespace DegreeMapping.Models
             NID = HttpContext.Current.User.Identity.Name;
             GPA = "2.0";
             UCFDegreeId = null;
+            CatalogId = (catalogId.HasValue) ? catalogId.Value : 0;
+            CatalogYear = (catalogId.HasValue) ? Catalog.Get(catalogId.Value).Year : string.Empty;
         }
 
         public static int Insert(Degree d)
@@ -82,10 +88,11 @@ namespace DegreeMapping.Models
                 cmd.Parameters.AddWithValue("@LimitedAccess", d.LimitedAccess);
                 cmd.Parameters.AddWithValue("@RestrictedAccess", d.RestrictedAccess);
                 cmd.Parameters.AddWithValue("@Description", d.Description);
-                cmd.Parameters.AddWithValue("@CatalogYear", d.CatalogYear);
+                cmd.Parameters.AddWithValue("@CatalogId", d.CatalogId);
                 cmd.Parameters.AddWithValue("@UpdateDate", DateTime.Now);
                 cmd.Parameters.AddWithValue("@CollegeId", d.CollegeId);
-                cmd.Parameters.AddWithValue("@Url", d.URL);
+                cmd.Parameters.AddWithValue("@DegreeUrl", d.DegreeURL);
+                cmd.Parameters.AddWithValue("@CatalogUrl", d.CatalogUrl);
                 cmd.Parameters.AddWithValue("@NID", d.NID);
                 if (d.UCFDegreeId.HasValue)
                 {
@@ -114,11 +121,12 @@ namespace DegreeMapping.Models
                 cmd.Parameters.AddWithValue("@LimitedAccess", d.LimitedAccess);
                 cmd.Parameters.AddWithValue("@RestrictedAccess", d.RestrictedAccess);
                 cmd.Parameters.AddWithValue("@Description", d.Description);
-                cmd.Parameters.AddWithValue("@CatalogYear", d.CatalogYear);
+                cmd.Parameters.AddWithValue("@CatalogId", d.CatalogId);
                 cmd.Parameters.AddWithValue("@Active", d.Active);
                 cmd.Parameters.AddWithValue("@UpdateDate", DateTime.Now);
                 cmd.Parameters.AddWithValue("@CollegeId", d.CollegeId);
-                cmd.Parameters.AddWithValue("@Url", d.URL);
+                cmd.Parameters.AddWithValue("@DegreeUrl", d.DegreeURL);
+                cmd.Parameters.AddWithValue("@CatalogUrl", d.CatalogUrl);
                 cmd.Parameters.AddWithValue("@NID", d.NID);
                 if (d.UCFDegreeId.HasValue)
                 {
@@ -148,7 +156,7 @@ namespace DegreeMapping.Models
                 {
                     while (dr.Read())
                     {
-                        Degree d = new Degree();
+                        Degree d = new Degree(null);
                         Set(dr, ref d);
                         list_d.Add(d);
                     }
@@ -160,7 +168,7 @@ namespace DegreeMapping.Models
 
         public static Degree Get(int id)
         {
-            Degree d = new Degree();
+            Degree d = new Degree(null);
             using (SqlConnection cn = new SqlConnection(Database.DC_DegreeMapping))
             {
                 cn.Open();
@@ -201,12 +209,15 @@ namespace DegreeMapping.Models
                 d.UpdateDate = Convert.ToDateTime(dr["UpdateDate"].ToString());
                 d.CollegeName = dr["CollegeName"].ToString();
                 d.CollegeId = (!string.IsNullOrEmpty(d.CollegeName)) ? Convert.ToInt32(dr["CollegeId"].ToString()) : 0;
-                d.URL = dr["Url"].ToString();
+                d.DegreeURL = dr["DegreeUrl"].ToString();
+                d.CatalogUrl = dr["CatalogUrl"].ToString();
+                d.CatalogId = Convert.ToInt32(dr["CatalogId"].ToString());
                 d.NID = dr["NID"].ToString();
                 int ucfDegreeId;
                 Int32.TryParse(dr["UCFDegreeId"].ToString(), out ucfDegreeId);
                 d.UCFDegreeId = ucfDegreeId;
                 d.UCFDegreeName = dr["UCFDegreeName"].ToString();
+                d.CatalogYear = Catalog.Get(d.CatalogId).Year;
             }
         }
     }

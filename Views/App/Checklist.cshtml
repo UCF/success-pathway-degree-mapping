@@ -5,7 +5,7 @@
 
 <div class="container pt-5">
     <div class="row">
-        <h1>UCF Degree List</h1>
+        <h1>Degree List</h1>
     </div>
     <div class="row">
         <div class="clearfix">
@@ -18,7 +18,7 @@
                 @foreach (DegreeMapping.Models.Degree d in Model.Where(x => x.InstitutionId == DegreeMapping.Models.Institution.UCFId))
                 {
                     <li>
-                        <strong>@d.Name <small>@Html.ActionLink("Edit", "DegreeView", "App", new { id = d.Id }, null)</small></strong>
+                        <strong>UCF @d.Name <small>@Html.ActionLink("Edit", "DegreeView", "App", new { id = d.Id }, null)</small></strong>
                         @if (!string.IsNullOrEmpty(d.Description))
                         { 
                             <ul>

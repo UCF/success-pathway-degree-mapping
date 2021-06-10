@@ -178,6 +178,7 @@
     </Compile>
     <Compile Include="Models\APIKeyMessageHandler.cs" />
     <Compile Include="Models\Authentication.cs" />
+    <Compile Include="Models\Catalog.cs" />
     <Compile Include="Models\College.cs" />
     <Compile Include="Models\Course.cs" />
     <Compile Include="Models\CourseList.cs" />

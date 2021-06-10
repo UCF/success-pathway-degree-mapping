@@ -1,4 +1,5 @@
-﻿var degreemap = {
+﻿//https://tulsa.okstate.edu/transfer
+var degreemap = {
     version: "1.1.0",
     data: {},
     target: {
@@ -120,6 +121,27 @@
             $("#" + this.target.DegreemapRow).html(courseTable);
         }
     },
+
+    UCFCourseDisplayTemplate: function (data) {
+        let carddeck = '<div class="card-deck">';
+        let cardheader = '';//Semester heading and credits
+        for (var x = 0; x <= data.SemesterTerms.length - 1; x++) {
+            let currentTerm = data.SemesterTerms[x];
+            let credits = 0;
+            let cardBlock = '';
+            for (y = 0; y <= data.Courses.length - 1; y++) {
+                if (data.Courses[y].SemesterTerm.toString() == currentTerm) {
+                    credits = credits + data.Courses[y].Credits;
+                    cardBlock += degreemap.setCardBlock(data.Courses[y].CourseCode, data.Courses[y].Credits);
+                }
+            }
+            cardHeader = degreemap.setCardHeader(data.SemesterTerms[x], credits);
+            carddeck += '<div class="card">' + cardHeader + cardBlock + '</div>';
+        }
+        carddeck += '</div>';
+        $("#" + degreemap.target.UCFCourseSection).html(carddeck);
+    },
+
     template4Columns: function (data) {
         let carddeck = '<div class="card-deck">';
         let cardheader = '';//Semester heading and credits
@@ -193,6 +215,7 @@
                 degreemap.displayNotes(data);
                 degreemap.displayCourseTable(data);
                 if (degreemap.hasUCFSemesters) {
+                    console.log(data.SemesterTerms.length)
                     if (data.SemesterTerms.length == 4) {
                         degreemap.template4Columns(data);
                     }
@@ -202,7 +225,16 @@
                     if (data.SemesterTerms.length == 6) {
                         degreemap.template6Columns(data);
                     }
+                    /*
+                     ******************************************
+                     * ******************************************
+                     
+                        1) work on importing css
+                        2) work on displaying columns 9 and 10
 
+                     ******************************************
+                     * ******************************************
+                     */
 
                     //degreemap.displayUCFSemesterCourse(data, 5);
                     //degreemap.displayUCFSemesterCourse(data, 6);

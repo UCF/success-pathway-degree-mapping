@@ -8,7 +8,7 @@
     if (Model.UCFDegreeId.HasValue)
     {
         DegreeMapping.Models.Degree ucfDegree = DegreeMapping.Models.Degree.Get(Model.UCFDegreeId.Value);
-        Model.URL = (!string.IsNullOrEmpty(Model.URL)) ? Model.URL : ucfDegree.URL;
+        Model.DegreeURL = (!string.IsNullOrEmpty(Model.DegreeURL)) ? Model.DegreeURL : ucfDegree.DegreeURL;
         Model.CollegeName = (!string.IsNullOrEmpty(Model.CollegeName)) ? Model.CollegeName : ucfDegree.CollegeName;
     }
 }
@@ -36,10 +36,10 @@
 
         <div class="form-group">
             <div class="col-md-10">
-                @Html.LabelFor(x => x.URL) :
-                @if (!string.IsNullOrEmpty(Model.URL))
+                @Html.LabelFor(x => x.DegreeURL) :
+                @if (!string.IsNullOrEmpty(Model.DegreeURL))
                 {
-                    <a href="@Html.Raw(Model.URL)" target="_blank">@Html.Raw(Model.URL)</a>
+                    <a href="@Html.Raw(Model.DegreeURL)" target="_blank">@Html.Raw(Model.DegreeURL)</a>
                 }
             </div>
         </div>
@@ -107,7 +107,7 @@
     }
 </div>
 <div class="row py-5 px-5">
-    <div class="col-md-6">
+    <div class="col-md-6" style="border:4px solid red">
         <div>
             <h3>@Model.Institution Courses</h3>
             @Html.ActionLink("Add Course", "CourseAdd", "App", new { degreeId = Model.Id }, null)
@@ -204,19 +204,21 @@
 {
     <div class="row py-2">
         <div class="col-md-12 px-5 py-5">
-            <h3>Course Mapper</h3>
+            <h2 class="heading-underline">Course List</h2>
             <table class="table">
                 <thead>
                     <tr>
                         <th>&nbsp;</th>
-                        <th>UCF Course</th>
+                        @*<th>UCF Course</th>*@
                         @*<th>Units / Credits</th>*@
-                        <th>State College Course Prefix & Number</th>
-                        <th>Units / Credits</th>
+                        <th>Partner Course</th>
+                        <th>Credits</th>
                         <th>Critical Course</th>
                         <th>Common Program Prerequisite (CPP)</th>
                         <th>Required Core Course</th>
-                        <th>&nbsp;</th>
+                        <th>
+                            @Html.ActionLink("Add Course", "CourseAdd", "App", new { degreeId = Model.Id }, new { @Class="btn btn-primary btn-lg"})
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -232,7 +234,7 @@
                         cssClass = (string.IsNullOrEmpty(c.UCFRelatedCourse)) ? "alert alert-warning" : "";
                         <tr class="@cssClass">
                             <td>@Html.ActionLink("Edit", "CourseEdit", new { id = c.Id })</td>
-                            <td>@Html.Raw(c.UCFRelatedCourse)</td>
+                            @*<td>@Html.Raw(c.UCFRelatedCourse)</td>*@
                             @*<td>@c.UCFCourseCredits</td>*@
                             <td>@c.Code</td>
                             <td>@c.Credits</td>
@@ -256,7 +258,7 @@
 }
 
 @*For version 3.0*@
-@*@if (Model.InstitutionId != DegreeMapping.Models.Institution.UCFId)
+@if (Model.InstitutionId != DegreeMapping.Models.Institution.UCFId)
 {
     @Html.Action("_CourseMapperList", new { degreeId = Model.Id })
-}*@
+}

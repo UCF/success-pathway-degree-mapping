@@ -76,7 +76,7 @@ namespace DegreeMapping.Controllers
         #region Degrees
         public ActionResult DegreeAdd(int institutionId)
         {
-            Degree d = new Degree(institutionId);
+            Degree d = new Degree(institutionId, null);
             return View(d);
         }
 
@@ -342,6 +342,11 @@ namespace DegreeMapping.Controllers
         #endregion
 
         #region CourseMapper
+        /// <summary>
+        /// NOT USED, DELETE
+        /// </summary>
+        /// <param name="degreeId"></param>
+        /// <returns></returns>
         public ActionResult _CodeMapper(int degreeId)
         {
             CourseMapper cm = new CourseMapper(degreeId);
@@ -355,6 +360,7 @@ namespace DegreeMapping.Controllers
 
         public ActionResult _CourseMapperList(int degreeId)
         {
+            ViewBag.degreeId = degreeId;
             List<CourseMapper> list_cm = CourseMapper.List(degreeId, null);
             return PartialView(list_cm);
         }
@@ -367,15 +373,10 @@ namespace DegreeMapping.Controllers
 
         public ActionResult CourseMapperAdd(int degreeId)
         {
+            ViewBag.degreeId = degreeId;
             CourseMapper cm = new CourseMapper(degreeId);
             //List<CourseMapper> list_cm = CourseMapper.List(degreeId, null);
             return View(cm);
-        }
-
-        public ActionResult CourseMapperUpdateOrderby(int id, int orderby, int degreeId)
-        {
-            CourseMapper.UpdateCourseMapperOrderby(id, orderby);
-            return RedirectToAction("DegreeView", new { id = degreeId });
         }
 
         [HttpPost]
@@ -385,13 +386,9 @@ namespace DegreeMapping.Controllers
             {
                 CourseMapper.Update(cm);
             }
-            else
+            else 
             {
-                List<CourseMapper> list_cm = CourseMapper.List(cm.DegreeId, null);
-                int orderby = list_cm.Max(x => x.OrderBy)+1;
-                cm.OrderBy = orderby;
-                int id = CourseMapper.Insert(cm);
-                cm.Id = id;
+                CourseMapper.Insert(cm);
             }
             return RedirectToAction("DegreeView", new { id = cm.DegreeId } );
         }
