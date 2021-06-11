@@ -45,6 +45,11 @@ namespace DegreeMapping.Models
         [DisplayName("Catalog URL")]
         public string CatalogUrl { get; set; }
 
+        public Degree()
+        { 
+        
+        }
+
         public Degree(int? catalogId)
         {
             Active = true;

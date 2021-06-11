@@ -12,21 +12,35 @@
     @Html.HiddenFor(x => x.DegreeId)
     <div class="row pt-5">
         <div class="col-md-6">
-            <h2>UCF Course</h2>
+            <h2 class="heading-underline">UCF Course</h2>
             <select name="UCFCourseIds" class="form-control form-control-lg" multiple="multiple" style="max-width:500px; height:200px">
                 @foreach (DegreeMapping.Models.Course c in list_ucfCourses.OrderBy(x => x.Code).Where(x => x.Semester == 1))
                 {
-                    <option value="@c.Id">@c.Code</option>
+                    if (Model.UCFCourseIds.Contains(c.Id))
+                    {
+                        <option value="@c.Id" selected>@c.Code</option>
+                    }
+                    else
+                    {
+                        <option value="@c.Id">@c.Code</option>
+                    }
                 }
             </select>
         </div>
 
         <div class="col-md-6">
-            <h2>Partner Course</h2>
+            <h2 class="heading-underline">Partner Course</h2>
             <select name="PartnerCourseIds" class="form-control form-control-lg" multiple="multiple" style="max-width:500px; height:200px">
                 @foreach (DegreeMapping.Models.Course c in list_partnerCourses.OrderBy(x => x.Code))
                 {
-                    <option value="@c.Id">@c.Code</option>
+                    if (Model.PartnerCourseIds.Contains(c.Id))
+                    {
+                        <option value="@c.Id" selected>@c.Code</option>
+                    }
+                    else
+                    {
+                        <option value="@c.Id">@c.Code</option>
+                    }
                 }
             </select>
         </div>
@@ -34,23 +48,37 @@
 
     <div class="row pt-5">
         <div class="col-md-6">
-            <h2>Alternate UCF Course</h2>
+            <h2 class="heading-underline">Alternate UCF Course</h2>
             <select name="AlternateUCFCourseIds" class="form-control form-control-lg" multiple="multiple" style="max-width:500px; height:200px">
                 <option>None</option>
                 @foreach (DegreeMapping.Models.Course c in list_ucfCourses.OrderBy(x => x.Code).Where(x => x.Semester == 1))
                 {
-                    <option value="@c.Id">@c.Code</option>
+                    if (Model.AlternateUCFCourseIds.Contains(c.Id))
+                    {
+                        <option value="@c.Id" selected>@c.Code</option>
+                    }
+                    else
+                    {
+                        <option value="@c.Id">@c.Code</option>
+                    }
                 }
             </select>
         </div>
 
         <div class="col-md-6">
-            <h2>Alternate Partner Course</h2>
+            <h2 class="heading-underline">Alternate Partner Course</h2>
             <select name="AlternatePartnerCourseIds" class="form-control form-control-lg" multiple="multiple" style="max-width:500px; height:200px">
                 <option>None</option>
                 @foreach (DegreeMapping.Models.Course c in list_partnerCourses.OrderBy(x => x.Code))
                 {
-                    <option value="@c.Id">@c.Code</option>
+                    if (Model.AlternatePartnerCourseIds.Contains(c.Id))
+                    {
+                        <option value="@c.Id" selected>@c.Code</option>
+                    }
+                    else
+                    {
+                        <option value="@c.Id">@c.Code</option>
+                    }
                 }
             </select>
         </div>

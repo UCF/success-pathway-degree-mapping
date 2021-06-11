@@ -4,6 +4,12 @@
     List<DegreeMapping.Models.Note> list_n = DegreeMapping.Models.Note.List(Model.Id);
     string cssClass = (string.IsNullOrEmpty(Model.Description)) ? "" : "alert alert-warning";
     bool noCourseMapped = true;
+    string collegeURL = string.Empty;
+    if (Model.CollegeId > 0)
+    {
+        collegeURL = DegreeMapping.Models.College.Get(Model.CollegeId).Url;
+    }
+
 
     if (Model.UCFDegreeId.HasValue)
     {
@@ -16,7 +22,8 @@
 <div class="row pt-5">
     <div class="col-md-12">
         <small>@Html.ActionLink("Degree list", "Checklist", "App") <span class="glyphicon glyphicon-arrow-right"></span> @Html.ActionLink(Model.Institution, "InstitutionView", new { id = Model.InstitutionId })</small>
-        <h1>@Model.Institution : @Html.Raw(Model.Name)</h1>
+        <h1>@Model.CatalogYear  @Html.Raw(Model.Name)</h1>
+        <h2>@Model.Institution</h2>
     </div>
 </div>
 
@@ -30,7 +37,17 @@
 
         <div class="form-group">
             <div class="col-md-10">
-                @Html.LabelFor(x => x.CollegeName) : @Html.Raw(Model.CollegeName)
+                @Html.LabelFor(x => x.CollegeName) : <a href="@collegeURL" target="_blank" title="@Model.CollegeName">@Model.CollegeName</a>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-10">
+                @Html.LabelFor(x => x.CatalogUrl) :
+                @if (!string.IsNullOrEmpty(Model.CatalogUrl))
+                {
+                    <a href="@Html.Raw(Model.CatalogUrl)" target="_blank">@Html.Raw(Model.CatalogUrl)</a>
+                }
             </div>
         </div>
 
@@ -74,7 +91,6 @@
             </div>
         </div>
 
-
         <div class="form-group hidden">
             <div class="col-md-10">
                 @Html.LabelFor(x => x.CatalogYear) : @Model.CatalogYear
@@ -106,64 +122,14 @@
         </div>
     }
 </div>
-<div class="row py-5 px-5">
-    <div class="col-md-6" style="border:4px solid red">
-        <div>
-            <h3>@Model.Institution Courses</h3>
-            @Html.ActionLink("Add Course", "CourseAdd", "App", new { degreeId = Model.Id }, null)
-        </div>
-        @if (list_c.Count > 0)
-        {
-            int semester = 0;
-            string fullSemester = string.Empty;
-            <ul>
-                @foreach (DegreeMapping.Models.Course c in list_c.OrderBy(x => x.Semester).ThenBy(x=>x.Term).ThenBy(x => x.Code))
-                {
-                    if (Model.InstitutionId != DegreeMapping.Models.Institution.UCFId)
-                    {
-                        continue;
-                    }
-                    string warning = (string.IsNullOrEmpty(c.Description)) ? "" : "<i class=\"fas fa-exclamation-triangle\"></i>";
-                    cssClass = (string.IsNullOrEmpty(c.Description)) ? "" : "alert alert-warning";
-                    //if (semester != c.Semester)
-                    if (fullSemester != string.Format("{0} {1}", c.Semester, c.Term))
-                    {
-                        //semester = c.Semester;
-                        fullSemester = string.Format("{0} {1}", c.Semester, c.Term);
-                        <li style="list-style:none; margin-left:-20px"><strong>Semester @fullSemester</strong></li>
-                    }
-                    if (c.UCFCourseId == null && c.InstitutionId != DegreeMapping.Models.Institution.UCFId)
-                    {
-                        noCourseMapped = false;
-                        <li class="@cssClass">
-                            @Html.Raw(warning) <span style="color:red">❌</span>
-                            @Html.ActionLink(c.Code, "CourseView", new { id = c.Id })
-                        </li>
-                    }
-                    else
-                    {
-                        <li class="@cssClass">
-                            @Html.Raw(warning) @Html.ActionLink(c.Code, "CourseView", new { id = c.Id })
-                        </li>
-                    }
-                }
-            </ul>
-        }
-        @if (!noCourseMapped)
-        {
-            <div>
-                <span style="color:red">❌</span> - Course is not mapped
-            </div>
-        }
-    </div>
-    <div class="col-md-6">
-        @if (Model.InstitutionId == DegreeMapping.Models.Institution.UCFId)
-        {
-            <div>
-                <h3>@Model.Institution Notes/Requirements</h3>
-                @Html.ActionLink("Add Note", "NoteAdd", new { degreeId = Model.Id })
-            </div>
-            if (list_n.Count > 0)
+
+<div class="row pt-5">
+    @if (Model.InstitutionId == DegreeMapping.Models.Institution.UCFId)
+    {
+        <h2>@Model.Institution Notes/Requirements</h2>
+        <div class="col-md-12">
+            @Html.ActionLink("Add Note", "NoteAdd", new { degreeId = Model.Id })
+            @if (list_n.Count > 0)
             {
                 <ul>
                     @foreach (DegreeMapping.Models.Note n in list_n)
@@ -174,14 +140,14 @@
                     }
                 </ul>
             }
-        }
-        else
-        {
-            <div>
-                <h3>@Model.Institution Notes/Requirements</h3>
-                @Html.ActionLink("Add Item", "NoteAdd", new { degreeId = Model.Id })
-            </div>
-            if (list_n.Count > 0)
+        </div>
+    }
+    else
+    {
+        <h2 class="heading-underline">Notes for @Model.Institution</h2>
+        <div class="col-md-12">
+            @Html.ActionLink("Add Item", "NoteAdd", new { degreeId = Model.Id }, new { @Class = "btn btn-primary btn-lg" })
+            @if (list_n.Count > 0)
             {
                 <ul>
                     @foreach (DegreeMapping.Models.Note n in list_n)
@@ -189,38 +155,38 @@
                         if (n.NoteType.Equals(DegreeMapping.Models.Note.NoteTypeValue.ListItem))
                         {
                             <li>
-                                @Html.ActionLink(n.Name, "NoteView", new { id = n.Id })
+                                @Html.ActionLink(n.Value, "NoteView", new { id = n.Id })
                             </li>
                         }
                     }
                 </ul>
             }
-
-        }
-    </div>
+        </div>
+    }
 </div>
 @*SECTION FOR PARTNER INSTITUTION*@
-@if (Model.InstitutionId != DegreeMapping.Models.Institution.UCFId && list_c.Count > 0)
-{
-    <div class="row py-2">
-        <div class="col-md-12 px-5 py-5">
-            <h2 class="heading-underline">Course List</h2>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>&nbsp;</th>
-                        @*<th>UCF Course</th>*@
-                        @*<th>Units / Credits</th>*@
-                        <th>Partner Course</th>
-                        <th>Credits</th>
-                        <th>Critical Course</th>
-                        <th>Common Program Prerequisite (CPP)</th>
-                        <th>Required Core Course</th>
-                        <th>
-                            @Html.ActionLink("Add Course", "CourseAdd", "App", new { degreeId = Model.Id }, new { @Class="btn btn-primary btn-lg"})
-                        </th>
-                    </tr>
-                </thead>
+<div class="row pt-3">
+    <h2 class="heading-underline">Course List</h2>
+    <div class="col-md-12">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>&nbsp;</th>
+                    @*<th>UCF Course</th>*@
+                    @*<th>Units / Credits</th>*@
+                    <th>Partner Course</th>
+                    <th>Credits</th>
+                    <th>Critical Course</th>
+                    <th>Common Program Prerequisite (CPP)</th>
+                    <th>Required Core Course</th>
+                    <th>
+                        @Html.ActionLink("Add Course", "CourseAdd", "App", new { degreeId = Model.Id }, new { @Class = "btn btn-primary btn-lg" })
+                    </th>
+                </tr>
+            </thead>
+
+            @if (Model.InstitutionId != DegreeMapping.Models.Institution.UCFId && list_c.Count > 0)
+            {
                 <tbody>
                     @{
                         noCourseMapped = false;
@@ -246,18 +212,17 @@
                             </td>
                         </tr>
                     }
-
                 </tbody>
-            </table>
-            @if (noCourseMapped)
-            {
-                <div class="alert alert-warning fas fa-exclamation-triangle"> Course not mapped</div>
             }
-        </div>
-    </div>
-}
+        </table>
 
-@*For version 3.0*@
+        @if (noCourseMapped)
+        {
+            <div class="alert alert-warning fas fa-exclamation-triangle"> Course not mapped</div>
+        }
+    </div>
+</div>
+
 @if (Model.InstitutionId != DegreeMapping.Models.Institution.UCFId)
 {
     @Html.Action("_CourseMapperList", new { degreeId = Model.Id })

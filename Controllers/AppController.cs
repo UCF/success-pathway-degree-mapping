@@ -390,7 +390,7 @@ namespace DegreeMapping.Controllers
             {
                 CourseMapper.Insert(cm);
             }
-            return RedirectToAction("DegreeView", new { id = cm.DegreeId } );
+            return RedirectToAction("DegreeView", new { id = cm.DegreeId });
         }
 
         public ActionResult CourseMapperDelete(int id, int degreeId)
