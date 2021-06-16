@@ -12,6 +12,7 @@ namespace DegreeMapping.Models
         public int Id { get; set; }
         public string Year { get; set; }
         public bool Active { get; set; }
+        public bool Current { get; set; }
 
         public Catalog()
         { 
@@ -63,6 +64,7 @@ namespace DegreeMapping.Models
                 c.Id = Convert.ToInt32(dr["Id"].ToString());
                 c.Year = dr["Year"].ToString();
                 c.Active = Convert.ToBoolean(dr["Active"].ToString());
+                c.Current = Convert.ToBoolean(dr["Current"].ToString());
             }
         }
     }

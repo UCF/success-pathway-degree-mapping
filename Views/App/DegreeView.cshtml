@@ -21,7 +21,9 @@
 
 <div class="row pt-5">
     <div class="col-md-12">
-        <small>@Html.ActionLink("Degree list", "Checklist", "App") <span class="glyphicon glyphicon-arrow-right"></span> @Html.ActionLink(Model.Institution, "InstitutionView", new { id = Model.InstitutionId })</small>
+        <small>
+            @Html.ActionLink(Model.Institution + " Degree List", "InstitutionView", new { id = Model.InstitutionId })
+        </small>
         <h1>@Model.CatalogYear  @Html.Raw(Model.Name)</h1>
         <h2>@Model.Institution</h2>
     </div>
@@ -126,7 +128,7 @@
 <div class="row pt-5">
     @if (Model.InstitutionId == DegreeMapping.Models.Institution.UCFId)
     {
-        <h2>@Model.Institution Notes/Requirements</h2>
+        <h2 class="heading-underline">@Model.Institution Notes/Requirements</h2>
         <div class="col-md-12">
             @Html.ActionLink("Add Note", "NoteAdd", new { degreeId = Model.Id })
             @if (list_n.Count > 0)
@@ -164,66 +166,128 @@
         </div>
     }
 </div>
-@*SECTION FOR PARTNER INSTITUTION*@
-<div class="row pt-3">
-    <h2 class="heading-underline">Course List</h2>
-    <div class="col-md-12">
-        <table class="table table-hover">
-            <thead>
-                <tr>
-                    <th>&nbsp;</th>
-                    @*<th>UCF Course</th>*@
-                    @*<th>Units / Credits</th>*@
-                    <th>Partner Course</th>
-                    <th>Credits</th>
-                    <th>Critical Course</th>
-                    <th>Common Program Prerequisite (CPP)</th>
-                    <th>Required Core Course</th>
-                    <th>
-                        @Html.ActionLink("Add Course", "CourseAdd", "App", new { degreeId = Model.Id }, new { @Class = "btn btn-primary btn-lg" })
-                    </th>
-                </tr>
-            </thead>
 
-            @if (Model.InstitutionId != DegreeMapping.Models.Institution.UCFId && list_c.Count > 0)
-            {
-                <tbody>
-                    @{
-                        noCourseMapped = false;
-                    }
-                    @foreach (DegreeMapping.Models.Course c in list_c.OrderBy(x => x.UCFRelatedCourse))
-                    {
-                        if (string.IsNullOrEmpty(c.UCFRelatedCourse))
-                        {
-                            noCourseMapped = true;
-                        }
-                        cssClass = (string.IsNullOrEmpty(c.UCFRelatedCourse)) ? "alert alert-warning" : "";
-                        <tr class="@cssClass">
-                            <td>@Html.ActionLink("Edit", "CourseEdit", new { id = c.Id })</td>
-                            @*<td>@Html.Raw(c.UCFRelatedCourse)</td>*@
-                            @*<td>@c.UCFCourseCredits</td>*@
-                            <td>@c.Code</td>
-                            <td>@c.Credits</td>
-                            <td>@(c.Critical ? "Yes" : "No")</td>
-                            <td>@(c.CommonProgramPrerequiste ? "Yes" : "No")</td>
-                            <td>@(c.Required ? "Yes" : "No")</td>
-                            <td>
-                                @Html.ActionLink("Delete", "CourseDelete", "App", new { id = c.Id, degreeId = Model.Id }, new { @Class = "btn btn-danger btn-lg", onclick = "return confirm('Are you sure you wish to delete this course and course mappings?');" })
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            }
-        </table>
-
-        @if (noCourseMapped)
-        {
-            <div class="alert alert-warning fas fa-exclamation-triangle"> Course not mapped</div>
-        }
-    </div>
-</div>
-
+<!-- #region SECTION FOR PARTNER INSTITUTION -->
 @if (Model.InstitutionId != DegreeMapping.Models.Institution.UCFId)
 {
-    @Html.Action("_CourseMapperList", new { degreeId = Model.Id })
+    <div class="row pt-5">
+        <h2 class="heading-underline">Course List</h2>
+        <div class="col-md-12">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>&nbsp;</th>
+                        @*<th>UCF Course</th>*@
+                        @*<th>Units / Credits</th>*@
+                        <th>Partner Course</th>
+                        <th>Credits</th>
+                        <th>Critical Course</th>
+                        <th>Common Program Prerequisite (CPP)</th>
+                        <th>Required Core Course</th>
+                        <th>
+                            @Html.ActionLink("Add Course", "CourseAdd", "App", new { degreeId = Model.Id }, new { @Class = "btn btn-primary btn-lg" })
+                        </th>
+                    </tr>
+                </thead>
+
+                @if (list_c.Count > 0)
+                {
+                    <tbody>
+                        @{
+                            noCourseMapped = false;
+                        }
+                        @foreach (DegreeMapping.Models.Course c in list_c.OrderBy(x => x.UCFRelatedCourse))
+                        {
+                            if (string.IsNullOrEmpty(c.UCFRelatedCourse))
+                            {
+                                noCourseMapped = true;
+                            }
+                            cssClass = (string.IsNullOrEmpty(c.UCFRelatedCourse)) ? "alert alert-warning" : "";
+                            <tr class="@cssClass">
+                                <td>@Html.ActionLink("Edit", "CourseEdit", new { id = c.Id })</td>
+                                @*<td>@Html.Raw(c.UCFRelatedCourse)</td>*@
+                                @*<td>@c.UCFCourseCredits</td>*@
+                                <td>@c.Code</td>
+                                <td>@c.Credits</td>
+                                <td>@(c.Critical ? "Yes" : "No")</td>
+                                <td>@(c.CommonProgramPrerequiste ? "Yes" : "No")</td>
+                                <td>@(c.Required ? "Yes" : "No")</td>
+                                <td>
+                                    @Html.ActionLink("Delete", "CourseDelete", "App", new { id = c.Id, degreeId = Model.Id }, new { @Class = "btn btn-danger btn-lg", onclick = "return confirm('Are you sure you wish to delete this course and course mappings?');" })
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                }
+            </table>
+
+            @if (noCourseMapped)
+            {
+                <div class="alert alert-warning fas fa-exclamation-triangle"> Course not mapped</div>
+            }
+        </div>
+    </div>
 }
+<!-- #endregion -->
+<!-- #region name -->
+@if (Model.InstitutionId == DegreeMapping.Models.Institution.UCFId)
+{
+    <div class="row pt-5">
+        <h2 class="heading-underline">@Model.Institution UCF Courses</h2>
+        <div class="col-md-12">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>&nbsp;</th>
+                        <th>Course</th>
+                        <th>Credits</th>
+                        <th>Critial Course</th>
+                        <th>Common Program Prerequisite (CPP)</th>
+                        <th>Required Core Course</th>
+                        <th>@Html.ActionLink("Add Course", "CourseAdd", "App", new { id = Model.Id }, new { @Class = "btn btn-primary btn-lg" })</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (list_c.Count > 0)
+                    {
+                        string semester = string.Empty;
+                        foreach (DegreeMapping.Models.Course c in list_c.OrderBy(x => x.SemesterTerm).ThenBy(x => x.Code))
+                        {
+                            if (semester != c.SemesterTerm)
+                            {
+                                semester = c.SemesterTerm;
+                                <tr>
+                                    <td colspan="7" class="alert alert-warning text-center h3">Semester @c.Semester @c.Term</td>
+                                </tr>
+                            }
+                            <tr>
+                                <td>@Html.ActionLink("Edit", "CourseEdit", "App", new { id = c.Id }, null)</td>
+                                <td>@c.Code</td>
+                                <td>@c.Credits</td>
+                                @if (c.Semester == 1)
+                                {
+                                    <td>@(c.Critical ? "Yes":"No")</td>
+                                    <td>@(c.CommonProgramPrerequiste ? "Yes":"No")</td>
+                                    <td>@(c.Required ? "Yes":"No")</td>
+                                }
+                                else
+                                {
+                                    <td>N/A</td>
+                                    <td>N/A</td>
+                                    <td>N/A</td>
+                                }
+                                <td>@Html.ActionLink("Delete", "CourseDelete", "App", new { id = c.Id, degreeId = Model.Id }, new { @Class = "btn btn-danger btn-lg", onclick = "return confirm('Are you sure you wish to delete this course and course mappings?');" })</td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+}
+<!-- #endregion -->
+
+    @if (Model.InstitutionId != DegreeMapping.Models.Institution.UCFId)
+    {
+        @Html.Action("_CourseMapperList", new { degreeId = Model.Id })
+    }

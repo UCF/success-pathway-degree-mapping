@@ -21,8 +21,6 @@ namespace DegreeMapping.Models
             public static string Fall { get { return "Fall"; } }
             public static string Spring { get { return "Spring"; } }
             public static string Summer { get { return "Summer"; } }
-            public static string SummerA { get { return "Summer A"; } }
-            public static string SummerB { get { return "Summer B"; } }
         }
 
         public int Id { get; set; }
@@ -46,11 +44,13 @@ namespace DegreeMapping.Models
         public DateTime UpdateDate { get; set; }
         public string NID { get; set; }
         public int Semester { get; set; }
+        public string Term { get; set; }
+        public string SemesterTerm { get { return (!string.IsNullOrEmpty(Term)) ? Semester.ToString() + " " + Term: Semester.ToString(); } }
         public int? UCFCourseId { get; set; }
         [DisplayName("UCF Related Course")]
         public string UCFRelatedCourse { get; set; }
         public int UCFCourseCredits { get; set; }
-        public string Term { get; set; }
+        
 
         public Course()
         {

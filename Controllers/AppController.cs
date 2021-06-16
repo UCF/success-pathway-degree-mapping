@@ -401,6 +401,30 @@ namespace DegreeMapping.Controllers
 
         #endregion
 
+        #region Catalog
+        public ActionResult Catalog(int? id, int? degreeId)
+        {
+            List<DegreeMapping.Models.Catalog> list_cy = DegreeMapping.Models.Catalog.List();
+            List<DegreeMapping.Models.Degree> list_d = new List<Degree>();
+            if (id.HasValue)
+            {
+                list_d = DegreeMapping.Models.Degree.List(DegreeMapping.Models.Institution.UCFId).Where(x=>x.CatalogId == id.Value).ToList();
+            }
+            ViewBag.catagoryId = (id.HasValue) ? id.Value : 0;
+            ViewBag.list_cy = list_cy;
+            return View(list_d);
+        }
+        #endregion
+
+
+
+
+        #region Bread Crumbs
+        public ActionResult _BreadCrumb(string startUrl, string institution, string degree)
+        {
+            return PartialView();
+        }
+        #endregion
 
         #region Degree Map Test
         //public ActionResult DegreeMapV2()

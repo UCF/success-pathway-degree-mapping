@@ -2,7 +2,7 @@
 
 <div class="row pt-5">
     <div class="col-md-12">
-        <small>@Html.ActionLink("Institutions", "Institutions", new { id = Model.InstitutionId }) <span class="glyphicon glyphicon-arrow-right"></span> @Html.ActionLink(Model.Institution, "InstitutionView", new { id = Model.InstitutionId }) <span class="glyphicon glyphicon-arrow-right"></span> @Html.ActionLink(Model.Degree, "DegreeView", new { id = Model.DegreeId })</small>
+        <small>@Html.ActionLink("Degree list", "Checklist", "App", new { id = Model.InstitutionId }) <span class="glyphicon glyphicon-arrow-right"></span> @Html.ActionLink(Model.Institution, "InstitutionView", new { id = Model.InstitutionId }) <span class="glyphicon glyphicon-arrow-right"></span> @Html.ActionLink(Model.Degree, "DegreeView", new { id = Model.DegreeId })</small>
         <h1>@Model.Institution : @Model.Degree</h1>
         <h2><i>@Html.Raw(Model.Code)</i></h2>
     </div>
@@ -49,7 +49,7 @@
 
         <div class="form-group">
             <div class="col-md-10">
-                @Html.LabelFor(x => x.Semester) : @Model.Semester
+                @Html.LabelFor(x => x.Semester) : @Model.Semester @Html.LabelFor(x => x.Term) : @Model.Term
             </div>
         </div>
 
@@ -68,8 +68,8 @@
 
         <div class="form-group">
             <div class="col-md-10 lg">
-                @Html.ActionLink("BACK", "DegreeView", new { id = Model.DegreeId }, new { @Class="btn btn-primary btn-lg" })
-                @Html.ActionLink("EDIT COURSE", "CourseEdit", new { id = Model.Id }, new { @Class="btn btn-info btn-lg"})
+                @Html.ActionLink("BACK", "DegreeView", new { id = Model.DegreeId }, new { @Class = "btn btn-primary btn-lg" })
+                @Html.ActionLink("EDIT COURSE", "CourseEdit", new { id = Model.Id }, new { @Class = "btn btn-info btn-lg" })
             </div>
         </div>
     </div>

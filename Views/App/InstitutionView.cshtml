@@ -36,8 +36,8 @@
 <div class="row px-5">
     <div class="col-md-12">
         <div>
-            <h2>Degrees</h2>
-            @Html.ActionLink("Add Degree", "DegreeAdd", new { institutionId = Model.Id })
+            <h2>2020-2021 Degrees</h2>
+            @Html.ActionLink("Add Degree", "DegreeAdd", new { institutionId = Model.Id }, new { @class = "btn btn-primary btn-lg"})
         </div>
         @if (list_d.Count > 0)
         {

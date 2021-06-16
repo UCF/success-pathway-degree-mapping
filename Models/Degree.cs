@@ -59,7 +59,7 @@ namespace DegreeMapping.Models
             GPA = "2.0";
             UCFDegreeId = null;
 
-            CatalogId = (catalogId.HasValue) ? catalogId.Value : 0;
+            CatalogId = (catalogId.HasValue) ? catalogId.Value : 1;
             CatalogYear = (catalogId.HasValue) ? Catalog.Get(catalogId.Value).Year : string.Empty;
         }
 
@@ -73,7 +73,7 @@ namespace DegreeMapping.Models
             NID = HttpContext.Current.User.Identity.Name;
             GPA = "2.0";
             UCFDegreeId = null;
-            CatalogId = (catalogId.HasValue) ? catalogId.Value : 0;
+            CatalogId = (catalogId.HasValue) ? catalogId.Value : 1;
             CatalogYear = (catalogId.HasValue) ? Catalog.Get(catalogId.Value).Year : string.Empty;
         }
 

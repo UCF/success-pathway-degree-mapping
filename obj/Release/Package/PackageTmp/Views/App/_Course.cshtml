@@ -1,31 +1,30 @@
 ﻿@model DegreeMapping.Models.Course
 @{ 
-    DegreeMapping.Models.Degree d = DegreeMapping.Models.Degree.Get(Model.DegreeId);
-
-
-    List<DegreeMapping.Models.Course> list_course = new List<DegreeMapping.Models.Course>();
-    if (d.UCFDegreeId.HasValue)
-    {
-        list_course = DegreeMapping.Models.Course.List(d.UCFDegreeId.Value).Where(x => x.Semester <= 1).ToList();
+        DegreeMapping.Models.Degree d = DegreeMapping.Models.Degree.Get(Model.DegreeId);
+        List<int> SemestersNotUsed = new List<int>() {2,3,4};
+        List<DegreeMapping.Models.Course> list_course = new List<DegreeMapping.Models.Course>();
+        if (d.UCFDegreeId.HasValue)
+        {
+            list_course = DegreeMapping.Models.Course.List(d.UCFDegreeId.Value).Where(x => x.Semester <= 1).ToList();
+        }
     }
-}
 
-@using (Html.BeginForm("CourseSave", "App", FormMethod.Post, new { @Class = "form-horizontal" }))
-{
+    @using (Html.BeginForm("CourseSave", "App", FormMethod.Post, new { @Class = "form-horizontal" }))
+    {
     @Html.HiddenFor(x => x.Id)
     @Html.HiddenFor(x => x.DegreeId)
-    <div class="row pt-2">
-        <div class="col-md-5">
-            <div class="form-group">
-                @Html.LabelFor(x => x.Code) :
-                @Html.TextBoxFor(x => x.Code, new { @class = "form-control", required = "required" })
-            </div>
-        </div>
-        @if (list_course.Count > 0)
-        {
-            <div class="col-md-5">
+        <div class="row pt-2">
+            <div class="col-md-6">
                 <div class="form-group">
-                    @Html.LabelFor(x=>x.UCFRelatedCourse) :
+                    @Html.LabelFor(x => x.Code) :
+                    @Html.TextBoxFor(x => x.Code, new { @class = "form-control", required = "required" })
+                </div>
+            </div>
+            @if (list_course.Count > 0)
+            {
+        <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(x => x.UCFRelatedCourse) :
                     <select name="UCFCourseId" class="form-control">
                         <option>Select UCF Course</option>
                         @foreach (DegreeMapping.Models.Course c in list_course.OrderBy(x => x.Code))
@@ -41,9 +40,16 @@
                         }
                     </select>
                 </div>
-            </div>
-        }
-    </div>
+
+                <div class="form-group">
+                    <select name="UCFCourseId" class="form-control">
+                        <option>Alternate UCF Course</option>
+                        <option value="4">some course</option>
+                    </select>
+                </div>
+        </div>
+            }
+        </div>
 
     <div class="row pt-2">
         <div class="col-md-10">
@@ -54,11 +60,11 @@
         </div>
     </div>
 
-    <div class="row pt-2">
+    <div class="row">
         <div class="col-md-10">
-            <div class="form-group" id="credits">
-                @Html.LabelFor(x => x.Credits) :
-                @for (int i=0; i<10; i++)
+            <div class="form-group py-4 px-4" id="credits" style="border:3px solid #dff0d8">
+                @Html.LabelFor(x => x.Credits) : 
+                @for (int i = 0; i < 10; i++)
                 {
                     string classId = string.Format("creditId_{0}", i);
                     string cssClass = (Model.Credits == i) ? "alert alert-success" : string.Empty;
@@ -68,6 +74,74 @@
         </div>
     </div>
 
+    <div class="row pt-2">
+        <div class="col-md-10">
+            @if (Model.InstitutionId == DegreeMapping.Models.Institution.UCFId)
+            {
+                <div class="form-group py-4 px-4" id="semesters" style="border:3px solid #fcf8e3">
+                    @Html.LabelFor(x => x.Semester) :
+                    @for (int i = 1; i <= 11; i++)
+                    {
+                        if (!SemestersNotUsed.Contains(i))
+                        {
+                            string semesterId = string.Format("semesterId_{0}", i);
+                            string cssClass = (Model.Semester == i) ? "alert alert-warning" : string.Empty;
+                            <span class="px-3 @semesterId @cssClass"><label>@i @Html.RadioButtonFor(x => x.Semester, i)</label></span>
+                        }
+                    }
+                </div>
+            }
+            else
+            {
+                <div class="form-group">
+                    <span>
+                        @Html.LabelFor(x => x.Semester) : @Model.Semester
+                        @Html.HiddenFor(x => x.Semester)
+                    </span>
+                </div>
+            }
+        </div>
+    </div>
+
+    if (Model.InstitutionId == DegreeMapping.Models.Institution.UCFId)
+    {
+        <div class="row">
+            <div class="col-md-10">
+                <div class="form-group py-4 px-4" id="terms" style="border:3px solid #d9edf7">
+                    @Html.LabelFor(x => x.Term) :
+                    <label id="term_None" class="px-5">Do not display <input type="radio" name="Term" checked="checked" value="" class="alert alert-info" /></label>
+                    @{
+                        if (Model.Term == DegreeMapping.Models.Course.CourseTerm.Fall)
+                        {
+                            <label id="term_@DegreeMapping.Models.Course.CourseTerm.Fall.Replace(" ", "_")" class="px-4 alert alert-info">@DegreeMapping.Models.Course.CourseTerm.Fall @Html.RadioButtonFor(x => x.Term, DegreeMapping.Models.Course.CourseTerm.Fall)</label>
+                        }
+                        else
+                        {
+                            <label id="term_@DegreeMapping.Models.Course.CourseTerm.Fall.Replace(" ", "_")" class="px-4">@DegreeMapping.Models.Course.CourseTerm.Fall @Html.RadioButtonFor(x => x.Term, DegreeMapping.Models.Course.CourseTerm.Fall)</label>
+                        }
+
+                        if (Model.Term == DegreeMapping.Models.Course.CourseTerm.Spring)
+                        {
+                            <label id="term_@DegreeMapping.Models.Course.CourseTerm.Spring.Replace(" ", "_")" class="px-4 alert alert-info">@DegreeMapping.Models.Course.CourseTerm.Spring @Html.RadioButtonFor(x => x.Term, DegreeMapping.Models.Course.CourseTerm.Spring)</label>
+                        }
+                        else
+                        {
+                            <label id="term_@DegreeMapping.Models.Course.CourseTerm.Spring.Replace(" ", "_")" class="px-4">@DegreeMapping.Models.Course.CourseTerm.Spring @Html.RadioButtonFor(x => x.Term, DegreeMapping.Models.Course.CourseTerm.Spring)</label>
+                        }
+
+                        if (Model.Term == DegreeMapping.Models.Course.CourseTerm.Summer)
+                        {
+                            <label id="term_@DegreeMapping.Models.Course.CourseTerm.Summer.Replace(" ", "_")" class="px-4 alert alert-info">@DegreeMapping.Models.Course.CourseTerm.Summer @Html.RadioButtonFor(x => x.Term, DegreeMapping.Models.Course.CourseTerm.Summer)</label>
+                        }
+                        else
+                        {
+                            <label id="term_@DegreeMapping.Models.Course.CourseTerm.Summer.Replace(" ", "_")" class="px-4">@DegreeMapping.Models.Course.CourseTerm.Summer @Html.RadioButtonFor(x => x.Term, DegreeMapping.Models.Course.CourseTerm.Summer)</label>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    }
     <div class="row pt-2">
         <div class="col-md-2">
             <div class="form-group">
@@ -91,32 +165,6 @@
             <div class="form-group">
                 @Html.LabelFor(x => x.Required) :
                 @Html.CheckBoxFor(x => x.Required)
-            </div>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-2">
-            <div class="form-group">
-                @if (Model.InstitutionId == DegreeMapping.Models.Institution.UCFId)
-                {
-                <span>
-                    <div><label>Semester : @Html.RadioButtonFor(x => x.Semester, 1) 1</label></div>
-                    <div><label>Semester : @Html.RadioButtonFor(x => x.Semester, 5) 5</label></div>
-                    <div><label>Semester : @Html.RadioButtonFor(x => x.Semester, 6) 6</label></div>
-                    <div><label>Semester : @Html.RadioButtonFor(x => x.Semester, 7) 7</label></div>
-                    <div><label>Semester : @Html.RadioButtonFor(x => x.Semester, 8) 8</label></div>
-                    <div><label>Semester : @Html.RadioButtonFor(x => x.Semester, 9) 9</label></div>
-                    <div><label>Semester : @Html.RadioButtonFor(x => x.Semester, 10) 10</label></div>
-                </span>
-                }
-                else
-                {
-                    <span>
-                        @Html.LabelFor(x => x.Semester) : @Model.Semester
-                        @Html.HiddenFor(x => x.Semester)
-                    </span>
-                }
             </div>
         </div>
     </div>
@@ -160,6 +208,16 @@
             SetCredit(credit);
         })
 
+        $("#semesters input:radio").on("click", function () {
+            let semester = $(this).val();
+            SetSemester(semester);
+        })
+
+        $("#terms input:radio").on("click", function () {
+            let term = $(this).val().replace(" ", "_");
+            SetTerm(term);
+        })
+
         function SetCredit(credit) {
             $("#credits input:radio").each(function () {
                 let id = $(this).val();
@@ -169,6 +227,32 @@
                 } else {
                     $(".creditId_" + id).removeClass("alert");
                     $(".creditId_" + id).removeClass("alert-success");
+                }
+            })
+        }
+
+        function SetSemester(semester) {
+            $("#semesters input:radio").each(function () {
+                let id = $(this).val();
+                if (id == semester) {
+                    $(".semesterId_" + id).addClass("alert");
+                    $(".semesterId_" + id).addClass("alert-warning");
+                } else {
+                    $(".semesterId_" + id).removeClass("alert");
+                    $(".semesterId_" + id).removeClass("alert-warning");
+                }
+            })
+        }
+
+        function SetTerm(term) {
+            $("#terms input:radio").each(function () {
+                let id = $(this).val().replace(" ", "_");
+                if (id == term) {
+                    $("#term_" + id).addClass("alert");
+                    $("#term_" + id).addClass("alert-info");
+                } else {
+                    $("#term_" + id).removeClass("alert");
+                    $("#term_" + id).removeClass("alert-info");
                 }
             })
         }

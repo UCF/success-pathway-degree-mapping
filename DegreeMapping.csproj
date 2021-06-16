@@ -178,6 +178,7 @@
     </Compile>
     <Compile Include="Models\APIKeyMessageHandler.cs" />
     <Compile Include="Models\Authentication.cs" />
+    <Compile Include="Models\BreadCrumb.cs" />
     <Compile Include="Models\Catalog.cs" />
     <Compile Include="Models\College.cs" />
     <Compile Include="Models\Course.cs" />
@@ -1984,7 +1985,6 @@
     <Content Include="Views\Home\DegreeGeneric.cshtml" />
     <Content Include="Views\Home\DegreeMap.cshtml" />
     <Content Include="Views\App\Checklist.cshtml" />
-    <Content Include="Views\App\CodeList.cshtml" />
     <Content Include="Views\App\_CodeEdit.cshtml" />
     <Content Include="Views\App\_CodeMapper.cshtml" />
     <Content Include="Views\App\_CourseMapper.cshtml" />
@@ -1999,6 +1999,8 @@
     <Content Include="Views\Home\DegreeMapV2.cshtml" />
     <Content Include="Views\Home\_DegreeMapV2WPTemplate.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
+    <Content Include="Views\App\_BreadCrumb.cshtml" />
+    <Content Include="Views\App\Catalog.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

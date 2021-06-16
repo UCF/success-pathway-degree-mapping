@@ -72,13 +72,9 @@ namespace DegreeMapping.Models
             }
             List<CourseList> list_cl = CourseList.List(degreeId);
             dm.Courses = list_cl;
-
-
             
             if (degree.UCFDegreeId.HasValue)
             {
-
-
                 dm.Generic = DegreeMapping.Models.Generic.List(degree.UCFDegreeId.Value);
                 DegreeMapping.Models.Degree ucfDegree = DegreeMapping.Models.Degree.Get(degree.UCFDegreeId.Value);
                 DegreeMap dm2 = new DegreeMap(ucfDegree);
