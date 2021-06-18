@@ -15,6 +15,7 @@
     @Html.HiddenFor(x => x.Id);
     @Html.HiddenFor(x => x.InstitutionId)
     @Html.HiddenFor(x => x.DegreeType)
+    @Html.HiddenFor(x => x.NID)
 
     if (Model.InstitutionId == DegreeMapping.Models.Institution.UCFId)
     {
@@ -30,13 +31,16 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
-                    @Html.LabelFor(x => x.CatalogYear) :
-                    <select name="CatalogId" class="form-control">
-                        @{ 
+                    @Html.LabelFor(x => x.CatalogYear) : @Model.CatalogYear
+                    @Html.HiddenFor(x=>x.CatalogId)
+                    @*UNCOMMENT TO CHANGE CATALOG YEAR*@
+                    @*<select name="CatalogId" class="form-control">
+                        @{
                             bool active = false;
                         }
-                        @foreach (DegreeMapping.Models.Catalog cy in list_cy.OrderByDescending(x => x.Active).ThenBy(x=>x.Year))
+                        @foreach (DegreeMapping.Models.Catalog cy in list_cy.OrderByDescending(x => x.Active).ThenBy(x => x.Year))
                         {
+                            string current = (cy.Current) ? "Current" : string.Empty;
                             if (active != cy.Active)
                             {
                                 active = cy.Active;
@@ -45,14 +49,14 @@
                             }
                             if (Model.CatalogId == cy.Id)
                             {
-                                <option selected value="@cy.Id">@cy.Year</option>
+                                <option selected value="@cy.Id">@cy.Year @current</option>
                             }
                             else
                             {
-                                <option value="@cy.Id">@cy.Year</option>
+                                <option value="@cy.Id">@cy.Year @current</option>
                             }
                         }
-                    </select>
+                    </select>*@
                 </div>
             </div>
         </div>
@@ -99,10 +103,12 @@
     }
     else
     {
+        @Html.HiddenFor(x=>x.CatalogId)
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
-                    @Html.LabelFor(x => x.CollegeName) : @Html.Raw(Model.CollegeName)
+                    @Html.LabelFor(x => x.Name) :
+                    @Html.TextBoxFor(x => x.Name, new { @class = "form-control d-inline" })
                 </div>
             </div>
         </div>
@@ -110,8 +116,8 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
-                    <label for="UCFDegreeId">UCF Related Degree</label>
-                    <select name="UCFDegreeId" id="UCFDegreeId" class="form-control display-1">
+                    <label for="UCFDegreeId">UCF Related Degree : </label>
+                    <select name="UCFDegreeId" id="UCFDegreeId" class="form-control d-inline">
                         <option value="">Select UCF Degree: </option>
                         @foreach (DegreeMapping.Models.Degree d in list_d.Where(x => x.InstitutionId == 1).OrderBy(x => x.Name))
                         {
@@ -132,6 +138,14 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
+                    @Html.LabelFor(x => x.CollegeName) : @Html.Raw(Model.CollegeName)
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
                     @Html.LabelFor(x => x.CatalogUrl) : <a href="@Html.Raw(Model.CatalogUrl)" target="">@Html.Raw(Model.CatalogUrl)</a>
                 </div>
             </div>
@@ -141,15 +155,6 @@
             <div class="col-md-6">
                 <div class="form-group">
                     @Html.LabelFor(x => x.DegreeURL) : <a href="@Html.Raw(Model.DegreeURL)" target="">@Html.Raw(Model.DegreeURL)</a>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-6">
-                <div class="form-group">
-                    @Html.LabelFor(x => x.Name) :
-                    @Html.TextBoxFor(x => x.Name, new { @class = "form-control", @readonly = "readonly" })
                 </div>
             </div>
         </div>
@@ -219,6 +224,7 @@
     <div class="row pt-2">
         <div class="col-md-10">
             <div class="form-group">
+                <button type="submit" class="btn btn-success">Save</button>
                 @if (Model.Id == 0)
                 {
                     @Html.ActionLink("Back", "InstitutionView", new { id = Model.InstitutionId }, new { @class = "btn btn-primary" })
@@ -227,7 +233,6 @@
                 {
                     @Html.ActionLink("Back", "DegreeView", new { id = Model.Id }, new { @class = "btn btn-primary" })
                 }
-                <button type="submit" class="btn btn-success">Save</button>
             </div>
         </div>
     </div>

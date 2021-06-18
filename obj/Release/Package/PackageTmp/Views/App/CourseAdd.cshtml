@@ -2,10 +2,18 @@
 
 <div class="row pt-5">
     <div class="col-md-12">
-        <small>@Html.ActionLink("Institutions", "Institutions") <span class="glyphicon glyphicon-arrow-right"></span> @Html.ActionLink(Model.Institution, "InstitutionView", new { id = Model.InstitutionId }) <span class="glyphicon glyphicon-arrow-right"></span> @Html.ActionLink(Model.Degree, "DegreeView", new { id = Model.DegreeId })</small>
+        <small>@Html.ActionLink("Degree list", "Checklist", "App") <span class="glyphicon glyphicon-arrow-right"></span> @Html.ActionLink(Model.Institution, "InstitutionView", new { id = Model.InstitutionId }) <span class="glyphicon glyphicon-arrow-right"></span> @Html.ActionLink(Model.Degree, "DegreeView", new { id = Model.DegreeId })</small>
+        <h1>@Model.CatalogYear @Model.Degree</h1>
+        <h2>@Model.Institution</h2>
+
+        @*<small>
+            @Html.ActionLink(Model.Institution, "InstitutionView", new { id = Model.InstitutionId })
+            <span class="glyphicon glyphicon-arrow-right"></span>
+            @Html.ActionLink(Model.Degree, "DegreeView", new { id = Model.DegreeId })
+        </small>
         <h1>@Model.Institution</h1>
         <h2>Add Course for @Html.ActionLink(Model.Degree, "DegreeView", new { id = Model.DegreeId })</h2>
-        <h2>@Html.Raw(Model.Name)</h2>
+        <h2>@Html.Raw(Model.Name)</h2>*@
     </div>
 </div>
 <div class="container px-5">

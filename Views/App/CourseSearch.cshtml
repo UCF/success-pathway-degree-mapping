@@ -12,7 +12,12 @@
         <div class="col-md-12">
             @using (Html.BeginForm("CourseSearch", "App", FormMethod.Post, new { @Class = "form-inline" }))
             {
-                
+                @*<div class="form-group">
+                    <select name="catalogId" class="form-control" style="height:34px;">
+                        <option>2021</option>
+                    </select>
+                </div>*@
+                <input type="hidden" name="catalogId" value="1" />
                 <div class="form-group">
                     <input type="text" class="form-control" name="keyword" value="@ViewBag.Keyword"/>
                     <button type="submit" name="submit" class="btn btn-primary btn-lg">Search</button>
@@ -29,22 +34,22 @@
             <thead>
                 <tr>
                     <th>&nbsp;</th>
+                    <th>&nbsp;</th>
                     <th>Course</th>
                     <th>Degree</th>
                     <th>Institution</th>
-                    <th>&nbsp;</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach (DegreeMapping.Models.Course c in Model.OrderBy(x => x.Code).ThenBy(x => x.Degree).ThenBy(x => x.Institution))
+                @foreach (DegreeMapping.Models.Course c in Model.OrderBy(x => x.CatalogYear).ThenBy(x=>x.Code).ThenBy(x => x.Degree).ThenBy(x => x.Institution))
                 {
                     count++;
                     <tr>
                         <td>@count</td>
+                        <td>@Html.ActionLink("Edit", "CourseEdit", new { id = c.Id })</td>
                         <td>@c.Code</td>
-                        <td>@c.Degree</td>
+                        <td>@c.CatalogYear @c.Degree</td>
                         <td>@c.Institution</td>
-                        <td>@Html.ActionLink("Edit", "CourseEdit", new { id = c.Id }, new { @class = "btn btn-primary btn-lg" })</td>
                     </tr>
                 }
             </tbody>

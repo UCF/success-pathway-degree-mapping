@@ -157,14 +157,15 @@ namespace DegreeMapping.Controllers
             return View(list_course);
         }
 
-        public ActionResult CourseSearch(string keyword)
+        public ActionResult CourseSearch(string keyword, int catalogId)
         {
             List<Course> list_c = new List<Course>();
             if (!string.IsNullOrEmpty(keyword))
             {
-                list_c = Course.Search(keyword);
+                list_c = Course.Search(keyword, catalogId);
             }
             ViewBag.Keyword = keyword;
+            ViewBag.CatalogId = catalogId;
             return View(list_c);
         }
 
@@ -416,9 +417,6 @@ namespace DegreeMapping.Controllers
         }
         #endregion
 
-
-
-
         #region Bread Crumbs
         public ActionResult _BreadCrumb(string startUrl, string institution, string degree)
         {
@@ -444,5 +442,6 @@ namespace DegreeMapping.Controllers
             return View(dm);
         }
         #endregion
+
     }
 }

@@ -3,7 +3,6 @@
     List<DegreeMapping.Models.Course> list_c = DegreeMapping.Models.Course.List(Model.Id);
     List<DegreeMapping.Models.Note> list_n = DegreeMapping.Models.Note.List(Model.Id);
     string cssClass = (string.IsNullOrEmpty(Model.Description)) ? "" : "alert alert-warning";
-    bool noCourseMapped = true;
     string collegeURL = string.Empty;
     if (Model.CollegeId > 0)
     {
@@ -193,25 +192,17 @@
                 @if (list_c.Count > 0)
                 {
                     <tbody>
-                        @{
-                            noCourseMapped = false;
-                        }
-                        @foreach (DegreeMapping.Models.Course c in list_c.OrderBy(x => x.UCFRelatedCourse))
+                        @foreach (DegreeMapping.Models.Course c in list_c.OrderBy(x => x.Code))
                         {
-                            if (string.IsNullOrEmpty(c.UCFRelatedCourse))
-                            {
-                                noCourseMapped = true;
-                            }
-                            cssClass = (string.IsNullOrEmpty(c.UCFRelatedCourse)) ? "alert alert-warning" : "";
-                            <tr class="@cssClass">
+                            <tr>
                                 <td>@Html.ActionLink("Edit", "CourseEdit", new { id = c.Id })</td>
                                 @*<td>@Html.Raw(c.UCFRelatedCourse)</td>*@
                                 @*<td>@c.UCFCourseCredits</td>*@
                                 <td>@c.Code</td>
                                 <td>@c.Credits</td>
-                                <td>@(c.Critical ? "Yes" : "No")</td>
-                                <td>@(c.CommonProgramPrerequiste ? "Yes" : "No")</td>
-                                <td>@(c.Required ? "Yes" : "No")</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
                                 <td>
                                     @Html.ActionLink("Delete", "CourseDelete", "App", new { id = c.Id, degreeId = Model.Id }, new { @Class = "btn btn-danger btn-lg", onclick = "return confirm('Are you sure you wish to delete this course and course mappings?');" })
                                 </td>
@@ -220,20 +211,15 @@
                     </tbody>
                 }
             </table>
-
-            @if (noCourseMapped)
-            {
-                <div class="alert alert-warning fas fa-exclamation-triangle"> Course not mapped</div>
-            }
         </div>
     </div>
 }
 <!-- #endregion -->
-<!-- #region name -->
+<!-- #region Sectopm for UCF -->
 @if (Model.InstitutionId == DegreeMapping.Models.Institution.UCFId)
 {
     <div class="row pt-5">
-        <h2 class="heading-underline">@Model.Institution UCF Courses</h2>
+        <h2 class="heading-underline">@Model.Institution Courses</h2>
         <div class="col-md-12">
             <table class="table table-hover">
                 <thead>
@@ -244,7 +230,7 @@
                         <th>Critial Course</th>
                         <th>Common Program Prerequisite (CPP)</th>
                         <th>Required Core Course</th>
-                        <th>@Html.ActionLink("Add Course", "CourseAdd", "App", new { id = Model.Id }, new { @Class = "btn btn-primary btn-lg" })</th>
+                        <th>@Html.ActionLink("Add Course", "CourseAdd", "App", new { degreeId = Model.Id }, new { @Class = "btn btn-primary btn-lg" })</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -261,7 +247,7 @@
                                 </tr>
                             }
                             <tr>
-                                <td>@Html.ActionLink("Edit", "CourseEdit", "App", new { id = c.Id }, null)</td>
+                                <td>@Html.ActionLink("Course Edit", "CourseEdit", "App", new { id = c.Id }, null)</td>
                                 <td>@c.Code</td>
                                 <td>@c.Credits</td>
                                 @if (c.Semester == 1)
@@ -272,9 +258,9 @@
                                 }
                                 else
                                 {
-                                    <td>N/A</td>
-                                    <td>N/A</td>
-                                    <td>N/A</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                    <td>-</td>
                                 }
                                 <td>@Html.ActionLink("Delete", "CourseDelete", "App", new { id = c.Id, degreeId = Model.Id }, new { @Class = "btn btn-danger btn-lg", onclick = "return confirm('Are you sure you wish to delete this course and course mappings?');" })</td>
                             </tr>

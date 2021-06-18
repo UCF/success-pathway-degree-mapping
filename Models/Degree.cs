@@ -58,9 +58,8 @@ namespace DegreeMapping.Models
             NID = HttpContext.Current.User.Identity.Name;
             GPA = "2.0";
             UCFDegreeId = null;
-
-            CatalogId = (catalogId.HasValue) ? catalogId.Value : 1;
-            CatalogYear = (catalogId.HasValue) ? Catalog.Get(catalogId.Value).Year : string.Empty;
+            CatalogId = (catalogId.HasValue) ? catalogId.Value : new Catalog(true).Id;
+            CatalogYear = (catalogId.HasValue) ? Catalog.Get(catalogId.Value).Year : new Catalog(true).Year;
         }
 
         public Degree(int institutionId, int? catalogId)
@@ -73,8 +72,8 @@ namespace DegreeMapping.Models
             NID = HttpContext.Current.User.Identity.Name;
             GPA = "2.0";
             UCFDegreeId = null;
-            CatalogId = (catalogId.HasValue) ? catalogId.Value : 1;
-            CatalogYear = (catalogId.HasValue) ? Catalog.Get(catalogId.Value).Year : string.Empty;
+            CatalogId = (catalogId.HasValue) ? catalogId.Value : new Catalog(true).Id;
+            CatalogYear = (catalogId.HasValue) ? Catalog.Get(catalogId.Value).Year : new Catalog(true).Year;
         }
 
         public static int Insert(Degree d)
@@ -192,7 +191,6 @@ namespace DegreeMapping.Models
                 cn.Close();
             }
             return d;
-
         }
 
         private static void Set(SqlDataReader dr, ref Degree d)

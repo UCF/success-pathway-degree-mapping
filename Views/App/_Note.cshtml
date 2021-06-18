@@ -2,11 +2,11 @@
 @{ 
     Model.NoteType = (Model.Id == 0) ? 2 : Model.NoteType;
 }
+
 @using (Html.BeginForm("NoteSave", "App", FormMethod.Post, new { @Class = "form-horizontal" }))
 {
     @Html.HiddenFor(x => x.Id)
     @Html.HiddenFor(x => x.DegreeId)
-
     <div class="row pt-2">
         <div class="col-md-10">
             <div class="form-group">

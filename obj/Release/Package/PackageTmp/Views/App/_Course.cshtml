@@ -20,35 +20,28 @@
                     @Html.TextBoxFor(x => x.Code, new { @class = "form-control", required = "required" })
                 </div>
             </div>
-            @if (list_course.Count > 0)
+            @*@if (list_course.Count > 0)
             {
-        <div class="col-md-6">
-                <div class="form-group">
-                    @Html.LabelFor(x => x.UCFRelatedCourse) :
-                    <select name="UCFCourseId" class="form-control">
-                        <option>Select UCF Course</option>
-                        @foreach (DegreeMapping.Models.Course c in list_course.OrderBy(x => x.Code))
-                        {
-                            if (Model.UCFCourseId == c.Id)
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.LabelFor(x => x.UCFRelatedCourse) :
+                        <select name="UCFCourseId" class="form-control">
+                            <option>Select UCF Course</option>
+                            @foreach (DegreeMapping.Models.Course c in list_course.OrderBy(x => x.Code))
                             {
-                                <option selected="selected" value="@c.Id">@c.Code</option>
+                                if (Model.UCFCourseId == c.Id)
+                                {
+                                    <option selected="selected" value="@c.Id">@c.Code</option>
+                                }
+                                else
+                                {
+                                    <option value="@c.Id">@c.Code</option>
+                                }
                             }
-                            else
-                            {
-                                <option value="@c.Id">@c.Code</option>
-                            }
-                        }
-                    </select>
+                        </select>
+                    </div>
                 </div>
-
-                <div class="form-group">
-                    <select name="UCFCourseId" class="form-control">
-                        <option>Alternate UCF Course</option>
-                        <option value="4">some course</option>
-                    </select>
-                </div>
-        </div>
-            }
+            }*@
         </div>
 
     <div class="row pt-2">

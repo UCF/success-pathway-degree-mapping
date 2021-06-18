@@ -8,6 +8,7 @@ using System.Data.SqlClient;
 using System.Web.UI.WebControls.WebParts;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Data.Entity.Infrastructure;
 
 namespace DegreeMapping.Models
 {
@@ -19,6 +20,19 @@ namespace DegreeMapping.Models
             public static int ListItem { get { return 2; } }
             public static int ForeignLanguageRequirement { get { return 3; } }
             public static int AdditionalRequirement { get { return 4; } }
+        }
+
+        public struct Message
+        {
+            public static string Get(string institution)
+            {
+                return (institution == "UCF") ? Note.Message.ForUCF : Note.Message.ForPartner(institution);
+            }
+            private static string ForUCF { get { return "Global note for all institutions for this degree."; } }
+            private static string ForPartner(string institution)
+            {
+                return "This note will only display for " + institution;
+            } 
         }
 
         public int Id { get; set; }
@@ -45,6 +59,9 @@ namespace DegreeMapping.Models
         public int Section { get; set; }
         [DisplayName("Note Type")]
         public int NoteType { get; set; }
+        public int CatalogyId { get; set; }
+        [DisplayName("Catalog Year")]
+        public string CatalogYear { get; set; }
 
 
         public Note()
@@ -74,6 +91,9 @@ namespace DegreeMapping.Models
             ShowName = false;
             OrderBy = 1;
             NoteType = Note.NoteTypeValue.Note;
+            CatalogYear = d.CatalogYear;
+            CatalogyId = d.CatalogId;
+
         }
 
         public static int Insert(Note n)
@@ -200,6 +220,8 @@ namespace DegreeMapping.Models
                 n.ForeignLanguageRequirement = Convert.ToBoolean(dr["ForeignLanguageRequirement"].ToString());
                 n.Section = Convert.ToInt32(dr["Section"].ToString());
                 n.NoteType = Convert.ToInt32(dr["NoteType"].ToString());
+                n.CatalogYear = dr["CatalogYear"].ToString();
+                n.CatalogyId = Convert.ToInt32(dr["CatalogId"].ToString());
             }
         }
 

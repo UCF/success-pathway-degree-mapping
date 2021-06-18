@@ -39,7 +39,6 @@ namespace DegreeMapping.Models
         public CourseMap(Course c)
         {
             CourseCode = c.Code;
-            CourseName = c.Name;
             Credits = c.Credits;
             Critical = c.Critical;
             CommonProgramPrerequiste = c.CommonProgramPrerequiste;
@@ -52,7 +51,6 @@ namespace DegreeMapping.Models
         public static void SetUCFCourseMap(ref CourseMap cm, Course c)
         {
             cm.UCFCourseCode = c.Code;
-            cm.UCFCourseName = c.Name;
             cm.UCFCredits = c.Credits;
             cm.UCFCritical = c.Critical;
             cm.UCFCommonProgramPrerequiste = c.CommonProgramPrerequiste;

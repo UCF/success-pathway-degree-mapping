@@ -30,7 +30,6 @@ namespace DegreeMapping.Models
         {
             Id = c.Id;
             CourseCode = c.Code;
-            CourseName = c.Name;
             Credits = c.Credits;
             Critical = c.Critical;
             CommonProgramPrerequiste = c.CommonProgramPrerequiste;

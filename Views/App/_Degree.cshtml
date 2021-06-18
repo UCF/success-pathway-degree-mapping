@@ -15,6 +15,7 @@
     @Html.HiddenFor(x => x.Id);
     @Html.HiddenFor(x => x.InstitutionId)
     @Html.HiddenFor(x => x.DegreeType)
+    @Html.HiddenFor(x => x.NID)
 
     if (Model.InstitutionId == DegreeMapping.Models.Institution.UCFId)
     {
@@ -30,13 +31,16 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
-                    @Html.LabelFor(x => x.CatalogYear) :
-                    <select name="CatalogId" class="form-control">
+                    @Html.LabelFor(x => x.CatalogYear) : @Model.CatalogYear
+                    @Html.HiddenFor(x=>x.CatalogId)
+                    @*UNCOMMENT TO CHANGE CATALOG YEAR*@
+                    @*<select name="CatalogId" class="form-control">
                         @{
                             bool active = false;
                         }
                         @foreach (DegreeMapping.Models.Catalog cy in list_cy.OrderByDescending(x => x.Active).ThenBy(x => x.Year))
                         {
+                            string current = (cy.Current) ? "Current" : string.Empty;
                             if (active != cy.Active)
                             {
                                 active = cy.Active;
@@ -45,14 +49,14 @@
                             }
                             if (Model.CatalogId == cy.Id)
                             {
-                                <option selected value="@cy.Id">@cy.Year</option>
+                                <option selected value="@cy.Id">@cy.Year @current</option>
                             }
                             else
                             {
-                                <option value="@cy.Id">@cy.Year</option>
+                                <option value="@cy.Id">@cy.Year @current</option>
                             }
                         }
-                    </select>
+                    </select>*@
                 </div>
             </div>
         </div>

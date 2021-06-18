@@ -16,6 +16,9 @@ namespace DegreeMapping.Models
         public int DegreeId { get; set; }
         public string Degree { get; set; }
 
+        public int CatalogyId { get; set; }
+        public string CatalogYear { get; set; }
+
         public List<int> UCFCourseIds { get; set; }
         public List<Course> UCFCourses { get; set; }
 
@@ -55,6 +58,9 @@ namespace DegreeMapping.Models
             Degree = d.Name;
             Institution = d.Institution;
             InstitutionId = d.InstitutionId;
+            CatalogYear = d.CatalogYear;
+            CatalogyId = d.CatalogId;
+
             PartnerCourseIds = new List<int>();
             PartnerCourses = new List<Course>();
 
@@ -176,6 +182,8 @@ namespace DegreeMapping.Models
                 cm.DegreeId = Convert.ToInt32(dr["DegreeId"].ToString());
                 cm.Institution = dr["Institution"].ToString();
                 cm.InstitutionId = Convert.ToInt32(dr["InstitutionId"].ToString());
+                cm.CatalogYear = dr["CatalogYear"].ToString();
+                cm.CatalogyId = Convert.ToInt32(dr["CatalogId"].ToString());
                 SetCourse(ref cm);
             }
         }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Data;
 using System.Data.SqlClient;
+using System.Data.Entity.Core.Objects;
 
 namespace DegreeMapping.Models
 {
@@ -15,8 +16,17 @@ namespace DegreeMapping.Models
         public bool Current { get; set; }
 
         public Catalog()
-        { 
-        
+        {
+
+        }
+
+        public Catalog(bool current)
+        {
+            Catalog c = Catalog.List().Where(x => x.Current).FirstOrDefault();
+            Id = c.Id;
+            Year = c.Year;
+            Active = c.Active;
+            Current = c.Current;
         }
 
         public static Catalog Get(int id)
