@@ -51,8 +51,8 @@ namespace DegreeMapping.Models
         public static List<DegreeList> List()
         {
             List<DegreeList> list_dl = new List<DegreeList>();
-            List<Degree> list_d = Models.Degree.List(DegreeMapping.Models.Institution.UCFId);
-            List<Degree> list_d2 = Models.Degree.List(null);
+            List<Degree> list_d = Models.Degree.List(DegreeMapping.Models.Institution.UCFId, null);
+            List<Degree> list_d2 = Models.Degree.List(null,null);
             foreach (Degree d in list_d.OrderBy(x => x.Name))
             {
                 DegreeList dl = new DegreeList(d);
@@ -74,6 +74,5 @@ namespace DegreeMapping.Models
             }
             return list_dl;
         }
-
     }
 }

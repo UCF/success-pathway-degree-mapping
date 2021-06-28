@@ -1,0 +1,51 @@
+﻿@{
+    List<DegreeMapping.Models.Catalog> list_cy = DegreeMapping.Models.Catalog.List();
+    List<DegreeMapping.Models.Catalog> list_emptyCy = DegreeMapping.Models.Catalog.GetEmptyCatalog();
+    DegreeMapping.Models.Catalog source = list_cy.Where(x => x.Id == ViewBag.sourceCatalogId).FirstOrDefault();
+    DegreeMapping.Models.Catalog target = list_cy.Where(x => x.Id == ViewBag.targerCatalogId).FirstOrDefault();
+    List<DegreeMapping.Models.Degree> list_targerDegrees = new List<DegreeMapping.Models.Degree>();
+    if (list_targerDegrees.Count > 0)
+    {
+        list_targerDegrees = DegreeMapping.Models.Degree.List(null, target.Id);
+    }
+}
+
+<div class="row">
+    <h1>Clone Catalog @source.Year</h1>
+</div>
+@using (Html.BeginForm("CloneCatalog", "App", FormMethod.Post, new { @class = "form-horizontal" }))
+{
+    <div class="row pt-5">
+        <div class="col-md-4">
+            <select name="sourceCatalogId" required="required" class="form-control">
+                <option>Select Source Catalog</option>
+                @foreach (DegreeMapping.Models.Catalog cy in list_cy.OrderByDescending(x=>x.Current).ThenBy(x=>x.Year))
+                {
+                    string current = (cy.Current) ? "current catalog" : string.Empty;
+                    if (source.Id == cy.Id)
+                    { 
+                        <option value="@cy.Id" selected>@cy.Year @current</option>
+                        continue;
+                    }
+                    <option value="@cy.Id">@cy.Year @current</option>
+                }
+            </select>
+        </div>
+        <div class="col-md-4">
+            @if (list_targerDegrees.Count > 0)
+            { 
+                <div class="alert alert-danger">Catalog already exists</div>
+            }
+            <select name="targetCatalogId" required="required" class="form-control">
+                <option>Select Targert Catalog</option>
+                @foreach (DegreeMapping.Models.Catalog cy in list_emptyCy.OrderBy(x=>x.Year))
+                { 
+                    <option value="@cy.Id">@cy.Year</option>
+                }
+            </select>
+        </div>
+        <div class="col-md-4">
+            <button type="submit" class="btn btn-success btn-lg">Clone</button>
+        </div>
+    </div>
+}

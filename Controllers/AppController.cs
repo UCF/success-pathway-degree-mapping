@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.DirectoryServices.Protocols;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Security.Permissions;
 using System.Web;
@@ -25,6 +26,17 @@ namespace DegreeMapping.Controllers
         public ActionResult _Dashboard()
         {
             return PartialView();
+        }
+
+        public ActionResult DegreeList(int? catalogId)
+        {
+            List<DegreeMapping.Models.Degree> list_d = new List<Degree>();
+            if (catalogId.HasValue)
+            {
+                list_d = DegreeMapping.Models.Degree.List(null, catalogId.Value);
+            }
+            ViewBag.CatalogId = (catalogId.HasValue) ? catalogId.Value : 0;
+            return View(list_d);
         }
 
         #region Institutions
@@ -74,9 +86,9 @@ namespace DegreeMapping.Controllers
         #endregion
 
         #region Degrees
-        public ActionResult DegreeAdd(int institutionId)
+        public ActionResult DegreeAdd(int institutionId, int catalogId)
         {
-            Degree d = new Degree(institutionId, null);
+            Degree d = new Degree(institutionId, catalogId);
             return View(d);
         }
 
@@ -157,12 +169,19 @@ namespace DegreeMapping.Controllers
             return View(list_course);
         }
 
-        public ActionResult CourseSearch(string keyword, int catalogId)
+        public ActionResult CourseSearch(string keyword, int? catalogId)
         {
             List<Course> list_c = new List<Course>();
             if (!string.IsNullOrEmpty(keyword))
             {
-                list_c = Course.Search(keyword, catalogId);
+                if (catalogId.HasValue) {
+                    list_c = Course.Search(keyword, catalogId.Value);
+                } 
+                else
+                {
+                    list_c = Course.Search(keyword, null);
+                }
+                
             }
             ViewBag.Keyword = keyword;
             ViewBag.CatalogId = catalogId;
@@ -303,7 +322,7 @@ namespace DegreeMapping.Controllers
 
         public ActionResult Checklist() 
         {
-            List<Degree> list_d = Degree.List(null);
+            List<Degree> list_d = Degree.List(null,null);
             return View(list_d);
         }
         #endregion
@@ -409,12 +428,31 @@ namespace DegreeMapping.Controllers
             List<DegreeMapping.Models.Degree> list_d = new List<Degree>();
             if (id.HasValue)
             {
-                list_d = DegreeMapping.Models.Degree.List(DegreeMapping.Models.Institution.UCFId).Where(x=>x.CatalogId == id.Value).ToList();
+                list_d = DegreeMapping.Models.Degree.List(DegreeMapping.Models.Institution.UCFId,null).Where(x=>x.CatalogId == id.Value).ToList();
             }
             ViewBag.catagoryId = (id.HasValue) ? id.Value : 0;
             ViewBag.list_cy = list_cy;
             return View(list_d);
         }
+
+        public ActionResult CatalogClone(int? catalogId, int? targertCatalogId)
+        {
+            ViewBag.sourceCatalogId = (catalogId.HasValue) ? catalogId.Value : 0;
+            ViewBag.targerCatalogId = (targertCatalogId.HasValue) ? targertCatalogId.Value : 0;
+            return View();
+        }
+        [HttpPost]
+        public ActionResult CatalogClone(int sourceCatalogId, int targetCatalogId)
+        {
+            /*
+             1) Clone degree Insert into Degree (values, "targetCatalogId") where (Select( values, "targetCatalogId") where catalogId = sourceCatalogId)
+             2) Clone Courses
+             3) Clone Course Mappings
+             4) Clone Notes
+            */
+            return View();
+        }
+
         #endregion
 
         #region Bread Crumbs
@@ -438,7 +476,7 @@ namespace DegreeMapping.Controllers
             {
                 dm = DegreeMapping.Models.DegreeMap.Get(id.Value);
             }
-            ViewBag.DegreeList = DegreeMapping.Models.Degree.List(null);
+            ViewBag.DegreeList = DegreeMapping.Models.Degree.List(null, null);
             return View(dm);
         }
         #endregion

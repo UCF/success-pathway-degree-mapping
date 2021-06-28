@@ -16,10 +16,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/10/2013 16:29:20</publishTime>
     </File>
     <File Include="bin/DegreeMapping.dll">
-      <publishTime>06/18/2021 14:20:46</publishTime>
+      <publishTime>06/21/2021 10:47:29</publishTime>
     </File>
     <File Include="bin/DegreeMapping.pdb">
-      <publishTime>06/18/2021 14:20:46</publishTime>
+      <publishTime>06/21/2021 10:47:29</publishTime>
     </File>
     <File Include="bin/EntityFramework.dll">
       <publishTime>04/16/2020 20:38:42</publishTime>
@@ -5371,7 +5371,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/05/2021 12:10:32</publishTime>
     </File>
     <File Include="Views/App/CourseSearch.cshtml">
-      <publishTime>06/16/2021 13:19:24</publishTime>
+      <publishTime>06/18/2021 16:17:44</publishTime>
     </File>
     <File Include="Views/App/CourseView.cshtml">
       <publishTime>05/27/2021 10:15:21</publishTime>
@@ -5386,7 +5386,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/27/2021 11:12:36</publishTime>
     </File>
     <File Include="Views/App/DegreeView.cshtml">
-      <publishTime>06/18/2021 14:09:33</publishTime>
+      <publishTime>06/18/2021 16:04:29</publishTime>
     </File>
     <File Include="Views/App/Index.cshtml">
       <publishTime>12/09/2020 09:57:51</publishTime>
@@ -5401,7 +5401,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>02/23/2021 10:37:16</publishTime>
     </File>
     <File Include="Views/App/InstitutionView.cshtml">
-      <publishTime>06/16/2021 15:15:15</publishTime>
+      <publishTime>06/21/2021 11:18:18</publishTime>
     </File>
     <File Include="Views/App/NoteAdd.cshtml">
       <publishTime>06/18/2021 14:02:08</publishTime>
@@ -5428,25 +5428,25 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/19/2021 16:37:04</publishTime>
     </File>
     <File Include="Views/App/_Course.cshtml">
-      <publishTime>06/18/2021 11:36:35</publishTime>
+      <publishTime>06/21/2021 10:43:26</publishTime>
     </File>
     <File Include="Views/App/_CourseMapper.cshtml">
       <publishTime>06/10/2021 11:59:54</publishTime>
     </File>
     <File Include="Views/App/_CourseMapperList.cshtml">
-      <publishTime>06/18/2021 11:48:17</publishTime>
+      <publishTime>06/21/2021 10:23:07</publishTime>
     </File>
     <File Include="Views/App/_Dashboard.cshtml">
       <publishTime>12/09/2020 16:15:37</publishTime>
     </File>
     <File Include="Views/App/_Degree.cshtml">
-      <publishTime>06/18/2021 09:37:41</publishTime>
+      <publishTime>06/21/2021 10:43:44</publishTime>
     </File>
     <File Include="Views/App/_Institution.cshtml">
       <publishTime>02/23/2021 09:41:58</publishTime>
     </File>
     <File Include="Views/App/_Note.cshtml">
-      <publishTime>06/18/2021 10:49:15</publishTime>
+      <publishTime>06/21/2021 09:46:10</publishTime>
     </File>
     <File Include="Views/Home/About.cshtml">
       <publishTime>05/27/2021 13:39:34</publishTime>

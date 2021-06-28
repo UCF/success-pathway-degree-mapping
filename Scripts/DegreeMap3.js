@@ -1,6 +1,6 @@
 ﻿//https://tulsa.okstate.edu/transfer
 var degreemap = {
-    version: "1.1.0",
+    version: "2.0.0",
     data: {},
     target: {
         UCFGPA: "UCFGPA",

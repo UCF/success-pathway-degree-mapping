@@ -71,7 +71,7 @@ namespace DegreeMapping.Controllers
         public ActionResult DegreeMapV2(int? degreeId)
         {
             ViewBag.degreeId = degreeId;
-            ViewBag.DegreeList = DegreeMapping.Models.Degree.List(null);
+            ViewBag.DegreeList = DegreeMapping.Models.Degree.List(null, null);
             return View();
         }
 

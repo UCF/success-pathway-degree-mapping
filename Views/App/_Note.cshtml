@@ -18,17 +18,16 @@
                     <div>
                         <label>Foreign Language Requirement : @Html.RadioButtonFor(x => x.NoteType, 3)</label>
                     </div>
-
                 }
                 <div>
                     <label>List Item : @Html.RadioButtonFor(x => x.NoteType, 2)</label>
                 </div>
-                @if (Model.InstitutionId == DegreeMapping.Models.Institution.UCFId)
+                @*@if (Model.InstitutionId == DegreeMapping.Models.Institution.UCFId)
                 {
                     <div>
                         <label>Note : @Html.RadioButtonFor(x => x.NoteType, 1)</label>
                     </div>
-                }
+                }*@
             </div>
         </div>
     </div>
@@ -56,8 +55,7 @@
     <div class="row pt-2">
         <div class="col-md-10">
             <div class="form-group">
-                @Html.LabelFor(x => x.OrderBy) :
-                @Html.TextBoxFor(x => x.OrderBy, new { @Class = "form-control", type = "Number", style = "width:75px" })
+                @Html.HiddenFor(x=>x.OrderBy)
             </div>
         </div>
     </div>
@@ -84,8 +82,7 @@
     <div class="row pt-2">
         <div class="col-md-3">
             <div class="form-group">
-                @Html.LabelFor(x => x.Active) :
-                @Html.CheckBoxFor(x => x.Active)
+                @Html.HiddenFor(x=>x.Active)
             </div>
         </div>
     </div>
@@ -93,12 +90,10 @@
     <div class="row pt-2">
         <div class="col-md-10">
             <div class="form-group text-right">
-
                 <button type="submit" class="btn btn-success btn-lg">Save</button>
                 @if (Model.Id > 0)
                 {
                     @Html.ActionLink("Back", "NoteView", new { id = Model.Id }, new { @Class = "btn btn-primary btn-lg" })
-
                 }
                 else
                 {

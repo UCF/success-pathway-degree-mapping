@@ -198,7 +198,7 @@ namespace DegreeMapping.Models
         }
 
 
-        public static List<Course> Search(string keyword, int catalogId)
+        public static List<Course> Search(string keyword, int? catalogId)
         {
             List<Course> list_c = new List<Course>();
             using (SqlConnection cn = new SqlConnection(Database.DC_DegreeMapping))
@@ -208,7 +208,10 @@ namespace DegreeMapping.Models
                 cmd.CommandText = "SearchCourse";
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@keyword", keyword);
-                cmd.Parameters.AddWithValue("@CatalogId", catalogId);
+                if (catalogId.HasValue)
+                {
+                    cmd.Parameters.AddWithValue("@CatalogId", catalogId);
+                }                
                 SqlDataReader dr = cmd.ExecuteReader();
                 if (dr.HasRows)
                 {

@@ -67,6 +67,34 @@ namespace DegreeMapping.Models
             return list_c;
         }
 
+        /// <summary>
+        /// Gets catalogs with no degrees
+        /// </summary>
+        /// <returns></returns>
+        public static List<Catalog> GetEmptyCatalog()
+        {
+            List<Catalog> list_c = new List<Catalog>();
+            using (SqlConnection cn = new SqlConnection(Database.DC_DegreeMapping))
+            {
+                cn.Open();
+                SqlCommand cmd = cn.CreateCommand();
+                cmd.CommandText = "GetEmptyCatalog";
+                cmd.CommandType = CommandType.StoredProcedure;
+                SqlDataReader dr = cmd.ExecuteReader();
+                if (dr.HasRows)
+                {
+                    while (dr.Read())
+                    {
+                        Catalog c = new Catalog();
+                        Set(dr, ref c);
+                        list_c.Add(c);
+                    }
+                }
+                cn.Close();
+            }
+            return list_c;
+        }
+
         private static void Set(SqlDataReader dr, ref Catalog c)
         {
             if (dr.HasRows)

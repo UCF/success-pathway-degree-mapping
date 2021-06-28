@@ -13,6 +13,7 @@
 {
     @Html.HiddenFor(x => x.Id)
     @Html.HiddenFor(x => x.DegreeId)
+    @Html.HiddenFor(x => x.Active)
     <div class="row pt-2">
         <div class="col-md-6">
             <div class="form-group">
@@ -138,43 +139,44 @@
         if (Model.InstitutionId == DegreeMapping.Models.Institution.UCFId)
         {
             <div class="row pt-2">
-            <div class="col-md-2">
-                <div class="form-group">
-                    @Html.LabelFor(x => x.Active) :
-                    @Html.CheckBoxFor(x => x.Active)
+                <div class="col-md-2">
+                    <div class="form-group">
+                        @Html.LabelFor(x => x.Critical) :
+                        @Html.CheckBoxFor(x => x.Critical)
+                    </div>
                 </div>
-            </div>
-
-            <div class="col-md-2">
-                <div class="form-group">
-                    @Html.LabelFor(x => x.Critical) :
-                    @Html.CheckBoxFor(x => x.Critical)
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.LabelFor(x => x.CommonProgramPrerequiste) :
+                        @Html.CheckBoxFor(x => x.CommonProgramPrerequiste)
+                    </div>
                 </div>
-            </div>
-            <div class="col-md-4">
-                <div class="form-group">
-                    @Html.LabelFor(x => x.CommonProgramPrerequiste) :
-                    @Html.CheckBoxFor(x => x.CommonProgramPrerequiste)
+                <div class="">
+                    <div class="form-group">
+                        @Html.LabelFor(x => x.Required) :
+                        @Html.CheckBoxFor(x => x.Required)
+                    </div>
                 </div>
-            </div>
-            <div class="">
-                <div class="form-group">
-                    @Html.LabelFor(x => x.Required) :
-                    @Html.CheckBoxFor(x => x.Required)
-                </div>
-            </div>
-            
         </div>
         }
-        <div class="row pt-2">
-            <div class="col-md-10">
-                <div class="form-group">
-                    @Html.LabelFor(x => x.Description) :
-                    @Html.TextAreaFor(x => x.Description, new { @class = "form-control", col = "10", rows = "4", maxlength = "100" })
-                    <span class="alert alert-warning">100 characters max</span>
+
+        if (User.Identity.Name == "jgiron")
+        {
+            <div class="row pt-2">
+                <div class="col-md-10">
+                    <div class="form-group">
+                        <h5>Admin only</h5>
+                        @Html.LabelFor(x => x.Description) :
+                        @Html.TextAreaFor(x => x.Description, new { @class = "form-control", col = "10", rows = "4", maxlength = "100" })
+                        <span class="alert alert-warning">100 characters max</span>
+                    </div>
                 </div>
             </div>
-        </div>
+        }
+        else
+        { 
+            @Html.HiddenFor(x=>x.Description)
+        }
 
         <div class="row pt-2">
             <div class="col-md-8">

@@ -187,6 +187,7 @@
     <Compile Include="Models\CourseMap.cs" />
     <Compile Include="Models\CourseMapper.cs" />
     <Compile Include="Models\DegreeList.cs" />
+    <Compile Include="Models\DegreeListv2.cs" />
     <Compile Include="Models\DegreeMap.cs" />
     <Compile Include="Models\DegreeNote.cs" />
     <Compile Include="Models\Generic.cs" />
@@ -2001,6 +2002,8 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\App\_BreadCrumb.cshtml" />
     <Content Include="Views\App\Catalog.cshtml" />
+    <Content Include="Views\App\DegreeList.cshtml" />
+    <Content Include="Views\App\CatalogClone.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

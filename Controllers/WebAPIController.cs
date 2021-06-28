@@ -4,14 +4,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Security.Cryptography.X509Certificates;
 using System.Web.Http;
 using System.Web.Http.Cors;
 
 namespace DegreeMapping.Controllers
 {
     [RoutePrefix("api/Degree")]
-    
-    [EnableCors(origins: "https://connectucncmsqa.smca.ucf.edu", headers: "APIKey", methods:"*")]
+
+    [EnableCors(origins: "https://connectucncmsqa.smca.ucf.edu", headers: "APIKey", methods: "*")]
     public class WebAPIController : ApiController
     {
         [HttpGet]
@@ -45,6 +46,45 @@ namespace DegreeMapping.Controllers
         {
             return DegreeList.List();
         }
+        #region APIv2
+        [HttpGet]
+        [Route("GetCatalogs")]
+        public List<Catalog> GetCatalogs()
+        {
+            return Catalog.List().Where(x=>x.Active==true).OrderByDescending(x=>x.Current).ThenBy(x=>x.Year).ToList();
+        }
+
+
+        [HttpGet]
+        [Route("GetDegreeListv2")]
+        public List<DegreeListv2> GetDegreeListv2(int? catalogId, int? collegeId, int? degreeId, int? institutionId)
+        {
+            if (degreeId.HasValue)
+            {
+                return DegreeListv2.List(catalogId.Value, null, null, null);
+            }
+            else if (collegeId.HasValue)
+            {
+                return DegreeListv2.List(null, collegeId.Value, null, null);
+            }
+            else if (degreeId.HasValue)
+            {
+                return DegreeListv2.List(null, null, degreeId.Value, null);
+            }
+            else if (institutionId.HasValue)
+            {
+                return DegreeListv2.List(null, null, null, institutionId.Value);
+            }
+            else 
+            {
+                return DegreeListv2.List(null, null, null, null);
+            }
+        }
+
+        #endregion
+
+
+
     }
 
 

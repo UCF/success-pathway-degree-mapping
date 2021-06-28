@@ -26,7 +26,7 @@ namespace DegreeMapping.Models
         public static List<Generic> List()
         {
             List<Generic> list_g = new List<Generic>();
-            List<Degree> list_d = Degree.List(DegreeMapping.Models.Institution.GenericId);
+            List<Degree> list_d = Degree.List(DegreeMapping.Models.Institution.GenericId,null);
             foreach (Degree d in list_d.Where(x=>x.Active).OrderBy(x=>x.Name))
             {
                 list_g.Add(new Generic(d));
@@ -37,7 +37,7 @@ namespace DegreeMapping.Models
         public static List<Generic> List(int UCFDegreeId)
         {
             List<Generic> list_g = new List<Generic>();
-            List<Degree> list_d = Degree.List(null);
+            List<Degree> list_d = Degree.List(null,null);
             foreach (Degree d in list_d.OrderBy(x=>x.Name).Where(x=>x.Active && x.UCFDegreeId == UCFDegreeId))
             {
                 list_g.Add(new Generic(d));

@@ -142,7 +142,7 @@ namespace DegreeMapping.Models
             return id;
         }
 
-        public static List<Degree> List(int? instiutionId)
+        public static List<Degree> List(int? instiutionId, int? catalogId)
         {
             List<Degree> list_d = new List<Degree>();
             using (SqlConnection cn = new SqlConnection(Database.DC_DegreeMapping))
@@ -154,6 +154,10 @@ namespace DegreeMapping.Models
                 if (instiutionId.HasValue)
                 {
                     cmd.Parameters.AddWithValue("@InstitutionId", instiutionId.Value);
+                }
+                if (catalogId.HasValue)
+                {
+                    cmd.Parameters.AddWithValue("@CatalogId", catalogId.Value);
                 }
                 SqlDataReader dr = cmd.ExecuteReader();
                 if (dr.HasRows)
