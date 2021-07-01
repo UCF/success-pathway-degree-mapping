@@ -21,13 +21,13 @@
 <div class="row pt-5">
     <div class="col-md-12">
         @Html.LabelFor(x => x.NoteType) : @NoteTypeValue
-        <br/>
+        <br />
         @Html.LabelFor(x => x.Active) : @(Model.Active?"Yes":"No")
         <br />
-        @Html.LabelFor(x => x.Value) : 
-    <div class="pl-3 py-3">
-        @Html.Raw(Model.Value)
-    </div>
+        @Html.LabelFor(x => x.Value) :
+        <div class="pl-3 py-3">
+            @Html.Raw(Model.Value)
+        </div>
 
         @*@Html.LabelFor(x => x.ForeignLanguageRequirement) : @(Model.ForeignLanguageRequirement?"Yes":"No")*@
         @*@Html.LabelFor(x => x.Required) : @(Model.Required?"Yes":"No")*@
@@ -36,5 +36,6 @@
         <br />
         @Html.ActionLink("Back", "DegreeView", new { id = Model.DegreeId }, new { @Class = "btn btn-primary btn-lg" })
         @Html.ActionLink("Edit Note", "NoteEdit", new { id = Model.Id }, new { @Class = "btn btn-info btn-lg" })
+        @Html.ActionLink("Delete", "NoteDelete", new { id = Model.Id, degreeId = Model.DegreeId }, new { @class = "btn btn-danger btn-lg", onclick = "return confirm('Are you sure you wish to delete this note?');" })
     </div>
 </div>

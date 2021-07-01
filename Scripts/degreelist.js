@@ -22,14 +22,14 @@
     },
     getDegreeList: function () {
         $.get({
-            url: "https://portal.connect.ucf.edu/pathway/api/Degree/GetDegreeList",
-            //url: "/api/degree/GetDegreeList",
+            //url: "https://portal.connect.ucf.edu/pathway/api/Degree/GetDegreeListv2",
+            url: "/api/degree/GetDegreeListv2",
             type: "GET",
             headers: { "APIKey": "Th1sIsth3Way" },
             cache: false,
             success: function (data) {
                 console.log(data);
-                degreeList.displayDegreeList(data);
+                //degreeList.displayDegreeList(data);
             }
         })
     },

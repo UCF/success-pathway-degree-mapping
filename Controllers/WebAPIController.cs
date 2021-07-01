@@ -57,34 +57,50 @@ namespace DegreeMapping.Controllers
 
         [HttpGet]
         [Route("GetDegreeListv2")]
-        public List<DegreeListv2> GetDegreeListv2(int? catalogId, int? collegeId, int? degreeId, int? institutionId)
+        public List<DegreeListv2> GetDegreeListv2()
         {
-            if (degreeId.HasValue)
-            {
-                return DegreeListv2.List(catalogId.Value, null, null, null);
-            }
-            else if (collegeId.HasValue)
-            {
-                return DegreeListv2.List(null, collegeId.Value, null, null);
-            }
-            else if (degreeId.HasValue)
-            {
-                return DegreeListv2.List(null, null, degreeId.Value, null);
-            }
-            else if (institutionId.HasValue)
-            {
-                return DegreeListv2.List(null, null, null, institutionId.Value);
-            }
-            else 
-            {
-                return DegreeListv2.List(null, null, null, null);
-            }
+            int currentCatalog = DegreeMapping.Models.Catalog.List().Where(x => x.Current).Select(x => x.Id).FirstOrDefault();
+            return DegreeListv2.List(currentCatalog, null, null, null,null);
         }
 
+        //[HttpGet]
+        //[Route("GetDegreeListv2")]
+        //public List<DegreeListv2> GetDegreeListv2(int? catalogId, int? collegeId, int? degreeId, int? institutionId, int? ucfDegreeId)
+        //{
+        //    if (degreeId.HasValue)
+        //    {
+        //        return DegreeListv2.List(catalogId.Value, null, null, null, null);
+        //    }
+        //    else if (collegeId.HasValue)
+        //    {
+        //        return DegreeListv2.List(null, collegeId.Value, null, null, null);
+        //    }
+        //    else if (degreeId.HasValue)
+        //    {
+        //        return DegreeListv2.List(null, null, degreeId.Value, null, null);
+        //    }
+        //    else if (institutionId.HasValue)
+        //    {
+        //        return DegreeListv2.List(null, null, null, institutionId.Value, null);
+        //    }
+        //    else if (ucfDegreeId.HasValue)
+        //    {
+        //        return DegreeListv2.List(null, null, null, null, ucfDegreeId.Value);
+        //    }
+        //    else
+        //    {
+        //        int currentCatalog = DegreeMapping.Models.Catalog.List().Where(x => x.Current).Select(x => x.Id).FirstOrDefault();
+        //        return DegreeListv2.List(currentCatalog, null, null, null,null);
+        //    }
+        //}
+
+        [HttpGet]
+        [Route("GetDegreeInfo")]
+        public DegreeInfo GetDegreeInfo(int degreeId)
+        {
+            return DegreeInfo.Get(degreeId);
+        }
         #endregion
-
-
-
     }
 
 

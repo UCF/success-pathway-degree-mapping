@@ -50,12 +50,14 @@ namespace DegreeMapping.Models
             {
                 di.Id = d.Id;
                 di.Degree = d.Name;
+                di.CatalogId = d.CatalogId;
                 di.CatalogYear = d.CatalogYear;
                 di.College = d.CollegeName;
                 di.CatalogUrl = d.CatalogUrl;
-                di.CollegeUrl = d.CollegeName;
+                //di.CollegeUrl = ;
                 di.DegreeUrl = d.DegreeURL;
                 di.Institution = d.Institution;
+                di.InstitutionId = d.InstitutionId;
                 di.RestrictedAccess = d.RestrictedAccess;
                 di.LimitedAccess = d.LimitedAccess;
                 if (d.UCFDegreeId.HasValue)
@@ -73,42 +75,42 @@ namespace DegreeMapping.Models
         private static void GetRequirement(ref DegreeInfo di)
         {
             int requirementId = DegreeMapping.Models.Note.NoteTypeValue.AdditionalRequirement;
-            string UCFRequirement = DegreeMapping.Models.Note.List(di.UCFDegreeId).Where(x => x.Id == requirementId).Select(x => x.Name).FirstOrDefault();
+            string UCFRequirement = DegreeMapping.Models.Note.List(di.UCFDegreeId).Where(x => x.NoteType == requirementId).Select(x => x.Value).FirstOrDefault();
             if (!string.IsNullOrEmpty(UCFRequirement))
             {
                 di.AdditionalRequirement = UCFRequirement;
             }
-            string partnerRequirement = DegreeMapping.Models.Note.List(di.Id).Where(x => x.Id == requirementId).Select(x => x.Name).FirstOrDefault();
+            string partnerRequirement = DegreeMapping.Models.Note.List(di.Id).Where(x => x.NoteType == requirementId).Select(x => x.Value).FirstOrDefault();
             if (!string.IsNullOrEmpty(partnerRequirement))
             {
-                di.AdditionalRequirement += string.Format("<div>{0}</div>", partnerRequirement);
+                di.AdditionalRequirement += string.Format("<div>{0}</div>",partnerRequirement);
             }
         }
 
         private static void GetForeignLanguageRequirement(ref DegreeInfo di)
         {
             int requirementId = DegreeMapping.Models.Note.NoteTypeValue.ForeignLanguageRequirement;
-            string UCFForeingLanguage = DegreeMapping.Models.Note.List(di.UCFDegreeId).Where(x => x.Id == requirementId).Select(x => x.Name).FirstOrDefault();
+            string UCFForeingLanguage = DegreeMapping.Models.Note.List(di.UCFDegreeId).Where(x => x.NoteType == requirementId).Select(x => x.Value).FirstOrDefault();
             if (!string.IsNullOrEmpty(UCFForeingLanguage))
             {
                 di.ForeignLanguageRequirement = UCFForeingLanguage;
             }
-            string partnerForeignLanguage = DegreeMapping.Models.Note.List(di.Id).Where(x => x.Id == requirementId).Select(x => x.Name).FirstOrDefault();
+            string partnerForeignLanguage = DegreeMapping.Models.Note.List(di.Id).Where(x => x.NoteType == requirementId).Select(x => x.Value).FirstOrDefault();
             if (!string.IsNullOrEmpty(partnerForeignLanguage))
             {
-                di.ForeignLanguageRequirement += string.Format("<div>{0}</div>", partnerForeignLanguage);
+                di.ForeignLanguageRequirement += string.Format("<div>{0}</div>",partnerForeignLanguage);
             }
         }
 
         private static void GetNotes(ref DegreeInfo di)
         {
             int noteId = DegreeMapping.Models.Note.NoteTypeValue.Note;
-            List<Note> UCFNote = DegreeMapping.Models.Note.List(di.UCFDegreeId).Where(x => x.Id == noteId).ToList();
+            List<Note> UCFNote = DegreeMapping.Models.Note.List(di.UCFDegreeId).Where(x => x.NoteType == noteId).OrderBy(x=>x.OrderBy).ToList();
             if (UCFNote.Count > 0)
             {
                 di.Notes = UCFNote;
             }
-            List<Note> partnerNote = DegreeMapping.Models.Note.List(di.Id).Where(x => x.Id == noteId).ToList();
+            List<Note> partnerNote = DegreeMapping.Models.Note.List(di.Id).Where(x => x.NoteType == noteId).OrderBy(x=>x.OrderBy).ToList();
             if (partnerNote.Count > 0)
             {
                 di.Notes.AddRange(partnerNote);

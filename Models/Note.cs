@@ -100,6 +100,7 @@ namespace DegreeMapping.Models
         {
             int id = 0;
             n.Name = (!string.IsNullOrEmpty(n.Name)) ? n.Name : "Note";
+            n.Value = (!string.IsNullOrEmpty(n.Value)) ? n.Value : "Empty";
             using (SqlConnection cn = new SqlConnection(Database.DC_DegreeMapping))
             {
                 cn.Open();
@@ -127,6 +128,7 @@ namespace DegreeMapping.Models
         public static void Update(Note n)
         {
             n.Name = (!string.IsNullOrEmpty(n.Name)) ? n.Name : "Note";
+            n.Value = (!string.IsNullOrEmpty(n.Value)) ? n.Value : "Empty";
             using (SqlConnection cn = new SqlConnection(Database.DC_DegreeMapping))
             {
                 cn.Open();

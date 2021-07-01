@@ -86,9 +86,11 @@ namespace DegreeMapping.Controllers
         #endregion
 
         #region Degrees
-        public ActionResult DegreeAdd(int institutionId, int catalogId)
+        public ActionResult DegreeAdd(int institutionId, int catalogId, int? collegeId, int? ucfDegreeId)
         {
             Degree d = new Degree(institutionId, catalogId);
+            d.CollegeId = (collegeId.HasValue) ? collegeId.Value : 0;
+            d.UCFDegreeId = (ucfDegreeId.HasValue) ? ucfDegreeId.Value : 0;
             return View(d);
         }
 

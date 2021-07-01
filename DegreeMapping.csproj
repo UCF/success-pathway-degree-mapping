@@ -186,6 +186,7 @@
     <Compile Include="Models\CourseList2.cs" />
     <Compile Include="Models\CourseMap.cs" />
     <Compile Include="Models\CourseMapper.cs" />
+    <Compile Include="Models\DegreeInfo.cs" />
     <Compile Include="Models\DegreeList.cs" />
     <Compile Include="Models\DegreeListv2.cs" />
     <Compile Include="Models\DegreeMap.cs" />

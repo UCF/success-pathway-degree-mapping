@@ -5,6 +5,7 @@ using System.Web;
 using System.Data.SqlClient;
 using System.Data;
 using System.DirectoryServices.AccountManagement;
+using System.Drawing.Design;
 
 namespace DegreeMapping.Models
 {
@@ -31,11 +32,12 @@ namespace DegreeMapping.Models
 
         }
 
-        public static List<DegreeListv2> List(int? catalogId, int? collegeId, int? degreeId, int? institutionId)
+        public static List<DegreeListv2> List(int? catalogId, int? collegeId, int? degreeId, int? institutionId, int? ucfDegreeId)
         {
             List<DegreeListv2> list_dl = new List<DegreeListv2>();
             using (SqlConnection cn = new SqlConnection(Database.DC_DegreeMapping))
             {
+                cn.Open();
                 SqlCommand cmd = cn.CreateCommand();
                 cmd.CommandText = "GetDegreeList";
                 cmd.CommandType = CommandType.StoredProcedure;
@@ -49,11 +51,15 @@ namespace DegreeMapping.Models
                 }
                 if (degreeId.HasValue)
                 {
-                    cmd.Parameters.AddWithValue("@CatalogId", degreeId.Value);
+                    cmd.Parameters.AddWithValue("@DegreeId", degreeId.Value);
                 }
                 if (institutionId.HasValue)
                 {
-                    cmd.Parameters.AddWithValue("@CatalogId", institutionId.Value);
+                    cmd.Parameters.AddWithValue("@InstitutionId", institutionId.Value);
+                }
+                if (ucfDegreeId.HasValue)
+                {
+                    cmd.Parameters.AddWithValue("@UCFDegreeId", ucfDegreeId.Value);
                 }
                 SqlDataReader dr = cmd.ExecuteReader();
                 if (dr.HasRows)
@@ -65,6 +71,7 @@ namespace DegreeMapping.Models
                         list_dl.Add(dl);
                     }
                 }
+                cn.Close();
             }
             return list_dl;
         }
@@ -78,7 +85,7 @@ namespace DegreeMapping.Models
                 dl.CatalogId = Convert.ToInt32(dr["CatalogId"].ToString());
                 dl.CatalogYear = dr["CatalogYear"].ToString();
                 dl.College = dr["College"].ToString();
-                dl.CollegeId = Convert.ToInt32(dr["CollegeId"].ToString());
+                dl.CollegeId = Convert.ToInt32(dr["CollegeId"].ToString());//throwing an error here
                 dl.Institution = dr["Institution"].ToString();
                 dl.InstitutionId = Convert.ToInt32(dr["InstitutionId"].ToString());
             }
