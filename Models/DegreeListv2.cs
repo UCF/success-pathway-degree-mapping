@@ -85,9 +85,10 @@ namespace DegreeMapping.Models
                 dl.CatalogId = Convert.ToInt32(dr["CatalogId"].ToString());
                 dl.CatalogYear = dr["CatalogYear"].ToString();
                 dl.College = dr["College"].ToString();
-                dl.CollegeId = Convert.ToInt32(dr["CollegeId"].ToString());//throwing an error here
+                dl.CollegeId = (string.IsNullOrEmpty(dr["CollegeId"].ToString())) ? 0 : Convert.ToInt32(dr["CollegeId"].ToString());
                 dl.Institution = dr["Institution"].ToString();
                 dl.InstitutionId = Convert.ToInt32(dr["InstitutionId"].ToString());
+                dl.UCFDegreeId = (string.IsNullOrEmpty(dr["UCFDegreeId"].ToString())) ? 0 : Convert.ToInt32(dr["UCFDegreeId"].ToString());
             }
         }
     }

@@ -1,34 +1,28 @@
 ﻿var degreeList = {
-    hostname : "",
+    hostname: "",
+    catalogId: 1,
+    catalogYear: "2020-2021",
+    institutionId: 1,
     displayDegreeList: function (data) {
+        $(".catalogYear").html(degreeList.catalogYear)
         let output = "";
         for (x = 0; x <= data.length - 1; x++) {
-            if (data[x].Degrees.length > 0) {
-                //console.log(data[x].Degrees);
-                for (y = 0; y <= data[x].Degrees.length - 1; y++) {
-                    if (data[x].Degrees[y].Institution.toLowerCase() == "generic") {
-                        let qrystring = '?degreeid=' + data[x].Degrees[y].Id;
-                        qrystring += "&institutionid=" + data[x].Degrees[y].InstitutionId;
-                        output += this.template("/degreemap" + qrystring, data[x].Degrees[y].Degree);
-                    }
-                }
-            }
+            output += '<li>' + data[x].Degree + ' ' + data[x].DegreeId + '</li>';
+            /*Figure out best way to display partner institutin that have this degree for this year*/
         }
-        $("#DegreeListOutput").html(output);
-    },
-    template: function (url, title) {
-        let template = '<div class="py-2"><a target="_blank" href="' + this.hostname + url + '" title="' + title + '">' + title + '</a></div>';
-        return template;
+        $("#DegreeListOutput").html("<ul>" + output + "</ul>");
     },
     getDegreeList: function () {
         $.get({
             //url: "https://portal.connect.ucf.edu/pathway/api/Degree/GetDegreeListv2",
-            url: "/api/degree/GetDegreeListv2",
+            url: "/api/degree/GetListByInstitution?institutionId=" + degreeList.institutionId+"&catalogId="+degreeList.catalogId,
             type: "GET",
             headers: { "APIKey": "Th1sIsth3Way" },
             cache: false,
             success: function (data) {
+                console.log('start');
                 console.log(data);
+                degreeList.displayDegreeList(data);
                 //degreeList.displayDegreeList(data);
             }
         })

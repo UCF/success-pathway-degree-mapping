@@ -54,14 +54,55 @@ namespace DegreeMapping.Controllers
             return Catalog.List().Where(x=>x.Active==true).OrderByDescending(x=>x.Current).ThenBy(x=>x.Year).ToList();
         }
 
-
         [HttpGet]
-        [Route("GetDegreeListv2")]
-        public List<DegreeListv2> GetDegreeListv2()
+        [Route("GetActiveCatalogs")]
+        public List<DegreeListv2> GetCurrentCatalog()
         {
             int currentCatalog = DegreeMapping.Models.Catalog.List().Where(x => x.Current).Select(x => x.Id).FirstOrDefault();
-            return DegreeListv2.List(currentCatalog, null, null, null,null);
+            return DegreeListv2.List(null, null, null, null, null);
         }
+
+        [HttpGet]
+        [Route("GetListByCatalog")]
+        public List<DegreeListv2> GetListByCatalog(int catalogId)
+        {
+            return DegreeListv2.List(catalogId, null, null, null, null);
+        }
+
+        [HttpGet]
+        [Route("GetListByCollege")]
+        public List<DegreeListv2> GetListByCollege(int collegeId)
+        {
+            return DegreeListv2.List(null, collegeId, null, null, null);
+        }
+
+        [HttpGet]
+        [Route("GetListByDegree")]
+        public List<DegreeListv2> GetListByDegree(int degreeId)
+        {
+            return DegreeListv2.List(null, null, degreeId, null, null);
+        }
+
+        [HttpGet]
+        [Route("GetListByInstitution")]
+        public List<DegreeListv2> GetListByInstitution(int institutionId, int catalogId)
+        {
+            return DegreeListv2.List(catalogId, null, null, institutionId, null);
+        }
+
+        [HttpGet]
+        [Route("GetListByUCFDegree")]
+        public List<DegreeListv2> GetListByUCFDegree(int ucfDegreeId)
+        {
+            return DegreeListv2.List(null, null, null, null, ucfDegreeId);
+        }
+
+
+
+
+
+
+
 
         //[HttpGet]
         //[Route("GetDegreeListv2")]

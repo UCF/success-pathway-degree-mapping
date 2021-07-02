@@ -18,10 +18,10 @@ var degreemap = {
         UCFCourseSection: "UCFCourseSection",
     },
 
-    degreeId: 0,
+    degreeId: 15,
     institutionId: 0,
-    collegeId: 0,
-    catalogId: 0,
+    collegeId: 1,
+    catalogId: 1,
     ucfDegreeId: 0,
     hasUCFSemesters: false,
 
@@ -33,6 +33,14 @@ var degreemap = {
         $("." + this.target.AdditionalRequirement).html(data.AdditionalRequirement);
         $("." + this.target.Degree).html(data.CatalogYear + ' ' + data.Degree);
         $("." + this.target.Institution).html(data.Institution);
+    },
+    displayInstitutionList: function (data) {
+        let output = '';
+        for (var x = 0; x <= data.length - 1; x++) {
+            //Need to select the degree for the new 
+            output += '<a class="dropdown-item" href="/degreemap?degreeId=' + data[x].DegreeId + '">' + data[x].Institution + '</a>';
+        }
+        $('#' + this.target.InstitutionList).html(output);
     },
     getUrlVars: function () {
         var vars = [], hash;
@@ -51,14 +59,39 @@ var degreemap = {
             //data : "degreeId="4,
             type: "GET",
             headers: { "APIKey": "Th1sIsth3Way" },
-            cache: false,
+            cache: true,
             success: function (data) {
                 console.log(data);
-                console.log('--> ' + data.Id);
+                //console.log('--> ' + data.Id);
                 degreemap.data = data;
                 degreemap.displayDegreeInfo(data);
+                degreemap.ucfDegreeId = data.UCFDegreeId;
+                degreemap.getListByUCFDegree();
             }
         })
+    },
+    getListByUCFDegree: function () {
+        $.get({
+            //url: "https://portal.connect.ucf.edu/pathway/GetListByUCFDegree?degreeId="+degreemap.degreeId,
+            url: "/api/degree/GetListByUCFDegree?ucfDegreeId=" + degreemap.ucfDegreeId + "&catalogId=" + degreemap.catalogId,
+            //data : "degreeId="4,
+            type: "GET",
+            headers: { "APIKey": "Th1sIsth3Way" },
+            cache: true,
+            success: function (data) {
+                console.log(data);
+                degreemap.displayInstitutionList(data);
+            }
+        })
+    },
+    getCritialCourseIcon() {
+        return "*";
+    },
+    getRequiredCourseIcon() {
+        return "~";
+    },
+    getCPPIcon() {
+        return "+";
     },
     getYesNo: function (val) {
         return (val) ? "Yes" : "No";
