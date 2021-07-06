@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Data;
 using System.Data.SqlClient;
+using System.Data.Entity.Migrations.Design;
 
 namespace DegreeMapping.Models
 {
@@ -22,7 +23,7 @@ namespace DegreeMapping.Models
 
         public UCFCourse(Course c)
         {
-            Course = c.Name;
+            Course = c.Code;
             Credit = c.Credits;
             Required = c.Required;
             CPP = c.CommonProgramPrerequiste;
@@ -42,14 +43,8 @@ namespace DegreeMapping.Models
 
         public PartnerCourse(Course c)
         {
-            Course = c.Name;
+            Course = c.Code;
             Credit = c.Credits;
-        }
-
-        public PartnerCourse(string course, int credit)
-        {
-            Course = course;
-            Credit = credit;
         }
     }
 
@@ -57,16 +52,20 @@ namespace DegreeMapping.Models
     {
         public List<UCFCourse> UCFCourses { get; set; }
         public List<PartnerCourse> ParterCourses { get; set; }
+        
+        public bool SelectOne { get; set; }
+        public List<UCFCourse> AlternateUCFCourse { get; set; }
+        public List<PartnerCourse> AlternatePartnerCourse { get; set; }
 
         public CourseMapperJSON()
         {
             UCFCourses = new List<UCFCourse>();
             ParterCourses = new List<PartnerCourse>();
+            AlternateUCFCourse = new List<UCFCourse>();
+            AlternatePartnerCourse = new List<PartnerCourse>();
+            SelectOne = false;
         }
 
-        /*
-            THINK ABOUT HOW TO ORGANIZE THE DATA
-        */
         public CourseMapperJSON(int degreeId)
         {
             UCFCourses = new List<UCFCourse>();
@@ -76,15 +75,62 @@ namespace DegreeMapping.Models
             {
                 foreach (Course c in cm.UCFCourses)
                 {
-                    UCFCourse ucfCourse = new UCFCourse(c);
-                    PartnerCourse pCourse = new PartnerCourse(c);
-                    UCFCourses.Add(ucfCourse);
-                    ParterCourses.Add(pCourse);
+                    UCFCourses.Add(new UCFCourse(c));
+                }
+                foreach (Course c in cm.PartnerCourses)
+                {
+                    ParterCourses.Add(new PartnerCourse(c));
+                }
+                if (cm.AlternateUCFCourses.Count > 0)
+                {
+                    foreach (Course c in cm.AlternateUCFCourses)
+                    {
+                        AlternateUCFCourse.Add(new UCFCourse(c));
+                    }
+                }
+                if (cm.AlternatePartnerCourses.Count > 0)
+                {
+                    foreach (Course c in cm.AlternatePartnerCourses)
+                    {
+                        AlternatePartnerCourse.Add(new PartnerCourse(c));
+                    }
                 }
             }
         }
 
-        
+        public static List<CourseMapperJSON> List(int degreeId)
+        {
+            List<CourseMapperJSON> list_cmj = new List<CourseMapperJSON>();
+            List<CourseMapper> list_cm = CourseMapper.List(degreeId, null);
 
+            foreach (CourseMapper cm in list_cm)
+            {
+                CourseMapperJSON cmj = new CourseMapperJSON();
+                foreach (Course c in cm.UCFCourses)
+                {
+                    cmj.UCFCourses.Add(new UCFCourse(c));
+                }
+                foreach (Course c in cm.PartnerCourses)
+                {
+                    cmj.ParterCourses.Add(new PartnerCourse(c));
+                }
+                if(cm.AlternateUCFCourses.Count > 0)
+                {
+                    foreach (Course c in cm.AlternateUCFCourses)
+                    {
+                        cmj.AlternateUCFCourse.Add(new UCFCourse(c));
+                    } 
+                }
+                if (cm.AlternatePartnerCourses.Count > 0)
+                {
+                    foreach (Course c in cm.AlternatePartnerCourses)
+                    {
+                        cmj.AlternatePartnerCourse.Add(new PartnerCourse(c));
+                    }
+                }
+                list_cmj.Add(cmj);
+            }
+            return list_cmj;
+        }
     }
 }
