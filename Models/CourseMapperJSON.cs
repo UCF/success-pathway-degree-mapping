@@ -51,35 +51,36 @@ namespace DegreeMapping.Models
     public class CourseMapperJSON
     {
         public List<UCFCourse> UCFCourses { get; set; }
-        public List<PartnerCourse> ParterCourses { get; set; }
+        public List<PartnerCourse> PartnerCourses { get; set; }
         
-        public bool SelectOne { get; set; }
+        public int DisplayValue { get; set; }
         public List<UCFCourse> AlternateUCFCourse { get; set; }
         public List<PartnerCourse> AlternatePartnerCourse { get; set; }
 
         public CourseMapperJSON()
         {
             UCFCourses = new List<UCFCourse>();
-            ParterCourses = new List<PartnerCourse>();
+            PartnerCourses = new List<PartnerCourse>();
             AlternateUCFCourse = new List<UCFCourse>();
             AlternatePartnerCourse = new List<PartnerCourse>();
-            SelectOne = false;
+            DisplayValue = 0;
         }
 
         public CourseMapperJSON(int degreeId)
         {
             UCFCourses = new List<UCFCourse>();
-            ParterCourses = new List<PartnerCourse>();
+            PartnerCourses = new List<PartnerCourse>();
             List<CourseMapper> list_cm = CourseMapper.List(degreeId, null);
             foreach (CourseMapper cm in list_cm)
             {
+                DisplayValue = cm.DisplayValue;
                 foreach (Course c in cm.UCFCourses)
                 {
                     UCFCourses.Add(new UCFCourse(c));
                 }
                 foreach (Course c in cm.PartnerCourses)
                 {
-                    ParterCourses.Add(new PartnerCourse(c));
+                    PartnerCourses.Add(new PartnerCourse(c));
                 }
                 if (cm.AlternateUCFCourses.Count > 0)
                 {
@@ -112,7 +113,7 @@ namespace DegreeMapping.Models
                 }
                 foreach (Course c in cm.PartnerCourses)
                 {
-                    cmj.ParterCourses.Add(new PartnerCourse(c));
+                    cmj.PartnerCourses.Add(new PartnerCourse(c));
                 }
                 if(cm.AlternateUCFCourses.Count > 0)
                 {

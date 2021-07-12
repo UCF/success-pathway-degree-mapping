@@ -1,15 +1,17 @@
 ﻿@model DegreeMapping.Models.Degree
 @{
-    List<DegreeMapping.Models.Degree> list_d = DegreeMapping.Models.Degree.List(null);
+    List<DegreeMapping.Models.Degree> list_d = DegreeMapping.Models.Degree.List(null,null);
     List<DegreeMapping.Models.College> list_c = DegreeMapping.Models.College.List(null);
     List<DegreeMapping.Models.Catalog> list_cy = DegreeMapping.Models.Catalog.List();
-    if (Model.UCFDegreeId.HasValue)
+    Model.CollegeName = list_c.Where(x => x.Id == Model.CollegeId).Select(x => x.CollegeName).FirstOrDefault();
+    if (Model.UCFDegreeId.HasValue && Model.UCFDegreeId > 0)
     {
         DegreeMapping.Models.Degree ucfDegree = DegreeMapping.Models.Degree.Get(Model.UCFDegreeId.Value);
         Model.DegreeURL = (!string.IsNullOrEmpty(Model.DegreeURL)) ? Model.DegreeURL : ucfDegree.DegreeURL;
         Model.CollegeName = (!string.IsNullOrEmpty(Model.CollegeName)) ? Model.CollegeName : ucfDegree.CollegeName;
     }
 }
+
 @using (Html.BeginForm("DegreeSave", "App", FormMethod.Post, new { @class = "form-horizontal" }))
 {
     @Html.HiddenFor(x => x.Id);
@@ -34,8 +36,8 @@
                 <div class="form-group">
                     @Html.LabelFor(x => x.CatalogYear) : @Model.CatalogYear
                     @Html.HiddenFor(x=>x.CatalogId)
-                    @*UNCOMMENT TO CHANGE CATALOG YEAR*@
-                    @*<select name="CatalogId" class="form-control">
+                    @*UNCOMMENT TO CHANGE CATALOG YEAR
+                    <select name="CatalogId" class="form-control">
                         @{
                             bool active = false;
                         }
@@ -57,7 +59,8 @@
                                 <option value="@cy.Id">@cy.Year @current</option>
                             }
                         }
-                    </select>*@
+                    </select>
+                    *@
                 </div>
             </div>
         </div>
@@ -188,7 +191,7 @@
     }
     if (User.Identity.Name == "jgiron")
     {
-        <div class="row pt-2">
+        <div class="row pt-2" style="display:none">
             <div class="col-md-10">
                 <div class="form-group">
                     <h5>Admin only</h5>

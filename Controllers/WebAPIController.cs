@@ -104,12 +104,18 @@ namespace DegreeMapping.Controllers
             return CourseMapperJSON.List(degreeId);
         }
 
-
         [HttpGet]
         [Route("GetDegreeInfo")]
         public DegreeInfo GetDegreeInfo(int degreeId)
         {
             return DegreeInfo.Get(degreeId);
+        }
+
+        [HttpGet]
+        [Route("GetUCFSemesterCourse")]
+        public List<SemesterCourse> GetUCFSemesterCourse(int degreeId)
+        {
+            return SemesterCourse.List(degreeId);
         }
         #endregion
     }

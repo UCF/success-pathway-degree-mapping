@@ -22,8 +22,8 @@
     },
     getDegreeList: function () {
         $.get({
-            url: "https://portal.connect.ucf.edu/pathway/api/Degree/GetDegreeList",
-            //url: "/api/degree/GetDegreeList",
+            //url: "https://portal.connect.ucf.edu/pathway/api/Degree/GetDegreeList",
+            url: "/api/degree/GetDegreeList",
             type: "GET",
             headers: { "APIKey": "Th1sIsth3Way" },
             cache: false,

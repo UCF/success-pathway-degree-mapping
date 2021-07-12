@@ -6,35 +6,12 @@
     <link href="https://connectucncmsqa.smca.ucf.edu/wp-content/themes/Colleges-Theme/static/css/style.min.css?ver=5.7.2" rel="stylesheet" />
     <link href="https://connectucncmsqa.smca.ucf.edu/wp-content/themes/UCF-Connect-Child-Theme/css/custom.css?9982&ver=1.0.0" rel="stylesheet" />
     <link href="https://connectucncmsqa.smca.ucf.edu/wp-includes/css/dist/block-library/style.min.css?ver=5.7.2" rel="stylesheet"/>
-}
-
-<div class="row pb-5">
-    <div class="col-md-12">
-        <h2>Select Degree</h2>
-        <form method="get" class="form-inline">
-            <div class="form-group input-group-lg">
-                <select name="degreeid" class="form-control">
-                    <option>Select</option>
-                    @foreach (DegreeMapping.Models.Degree d in list_d.OrderBy(x => x.Name))
-                    {
-                        if (d.UCFDegreeId.HasValue && d.UCFDegreeId == 0)
-                        {
-                            <optgroup label="@d.Name"></optgroup>
-                            continue;
-                        }
-                        <option value="@d.Id">&nbsp; &nbsp; @d.Institution</option>
-                    }
-                </select>
-                <button class="btn btn-primary btn-lg">Select</button>
-            </div>
-        </form>
-    </div>
-</div>
-<hr />
-@if (degreeid.HasValue)
+}@if (degreeid.HasValue)
 {
     @Html.Action("_DegreeMapV2WPTemplate")
-    @*<script src="~/Scripts/DegreeMap3.js"></script>
-    <script src="~/Scripts/DegreeList.js"></script>*@
+    <script src="~/Scripts/main.js"></script>
+    <script src="~/Scripts/DegreeMap3.js"></script>
+    @*<script src="~/Scripts/DegreeInfo.js"></script>*@
     <script src="~/Scripts/CourseMapper.js"></script>
+    <script src="~/Scripts/UCFCourseSemester.js"></script>
 }

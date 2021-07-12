@@ -1,6 +1,6 @@
 ﻿@model DegreeMapping.Models.Institution
 @{
-    List<DegreeMapping.Models.Degree> list_d = DegreeMapping.Models.Degree.List(Model.Id);
+    List<DegreeMapping.Models.Degree> list_d = DegreeMapping.Models.Degree.List(Model.Id, null);
     string cssClass = (string.IsNullOrEmpty(Model.Description)) ? "" : "alert alert-warning";
 }
 
@@ -41,24 +41,14 @@
         </div>
         @if (list_d.Count > 0)
         {
-    <ul>
-        @foreach (DegreeMapping.Models.Degree d in list_d.OrderBy(x => x.Name))
-        {
-            if (string.IsNullOrEmpty(d.Description))
-            {
-                <li>
-                    @Html.ActionLink(d.Name, "DegreeView", new { id = d.Id })
-                </li>
-            }
-            else
-            {
-                <li class="alert alert-warning">
-                    <i class="fas fa-exclamation-triangle"></i>
-                    @Html.ActionLink(d.Name, "DegreeView", new { id = d.Id })
-                </li>
-            }
-        }
-    </ul>
+            <ul>
+                @foreach (DegreeMapping.Models.Degree d in list_d.OrderBy(x => x.Name))
+                {
+                    <li>
+                        @Html.ActionLink(d.Name, "DegreeView", new { id = d.Id })
+                    </li>
+                }
+            </ul>
         }
     </div>
 </div>

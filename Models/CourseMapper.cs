@@ -6,11 +6,17 @@ using System.Web.Mvc.Ajax;
 using System.Data;
 using System.Data.SqlClient;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.Ajax.Utilities;
 
 namespace DegreeMapping.Models
 {
     public class CourseMapper
     {
+        public struct DisplayType 
+        { 
+            public static string Default { get { return "Default";  } }
+            public static string SelectOne { get { return "Select One"; } }
+        }
 
         public int Id { get; set; }
         public int DegreeId { get; set; }
@@ -31,6 +37,9 @@ namespace DegreeMapping.Models
         public List<int> AlternatePartnerCourseIds { get; set; }
         public List<Course> AlternatePartnerCourses { get; set; }
 
+        public int DisplayName { get; set; }
+        public int DisplayValue { get; set; }
+
 
 
         public int InstitutionId { get; set; }
@@ -49,6 +58,8 @@ namespace DegreeMapping.Models
 
             AlternateUCFCourseIds = new List<int>();
             AlternateUCFCourses = new List<Course>();
+
+            DisplayValue = 0;
         }
 
         public CourseMapper(int degreeId)
@@ -72,6 +83,8 @@ namespace DegreeMapping.Models
 
             AlternateUCFCourseIds = new List<int>();
             AlternateUCFCourses = new List<Course>();
+
+            DisplayValue = 0;
         }
 
         public static int Insert(CourseMapper cm)
@@ -88,6 +101,7 @@ namespace DegreeMapping.Models
                 cmd.Parameters.AddWithValue("@PartnerCourseIds", string.Join(",", cm.PartnerCourseIds));
                 cmd.Parameters.AddWithValue("@AlternateUCFCourseIds", string.Join(",", cm.AlternateUCFCourseIds));
                 cmd.Parameters.AddWithValue("@AlternatePartnerCourseIds", string.Join(",", cm.AlternatePartnerCourseIds));
+                cmd.Parameters.AddWithValue("@DisplayValue", string.Join(",", cm.DisplayValue));
                 id = Convert.ToInt32(cmd.ExecuteScalar());
                 cn.Close();
             }
@@ -108,6 +122,7 @@ namespace DegreeMapping.Models
                 cmd.Parameters.AddWithValue("@PartnerCourseIds", string.Join(",", cm.PartnerCourseIds));
                 cmd.Parameters.AddWithValue("@AlternateUCFCourseIds", string.Join(",", cm.AlternateUCFCourseIds));
                 cmd.Parameters.AddWithValue("@AlternatePartnerCourseIds", string.Join(",", cm.AlternatePartnerCourseIds));
+                cmd.Parameters.AddWithValue("@DisplayValue", string.Join(",", cm.DisplayValue));
                 cmd.ExecuteScalar();
                 cn.Close();
             }
@@ -184,7 +199,20 @@ namespace DegreeMapping.Models
                 cm.InstitutionId = Convert.ToInt32(dr["InstitutionId"].ToString());
                 cm.CatalogYear = dr["CatalogYear"].ToString();
                 cm.CatalogyId = Convert.ToInt32(dr["CatalogId"].ToString());
+                cm.DisplayValue = Convert.ToInt32(dr["DisplayValue"].ToString());
+                SetDisplayName(ref cm);
                 SetCourse(ref cm);
+            }
+        }
+
+        private static string SetDisplayName(ref CourseMapper cm)
+        {
+            if (cm.DisplayValue == 1) {
+                return CourseMapper.DisplayType.SelectOne;
+            }
+            else 
+            {
+                return CourseMapper.DisplayType.Default;
             }
         }
 

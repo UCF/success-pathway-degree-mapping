@@ -1,29 +1,35 @@
 ﻿var degreeList = {
-    hostname: "",
-    catalogId: 1,
-    catalogYear: "2020-2021",
-    institutionId: 1,
+    hostname : "",
     displayDegreeList: function (data) {
-        $(".catalogYear").html(degreeList.catalogYear)
         let output = "";
         for (x = 0; x <= data.length - 1; x++) {
-            output += '<li>' + data[x].Degree + ' ' + data[x].DegreeId + '</li>';
-            /*Figure out best way to display partner institutin that have this degree for this year*/
+            if (data[x].Degrees.length > 0) {
+                //console.log(data[x].Degrees);
+                for (y = 0; y <= data[x].Degrees.length - 1; y++) {
+                    if (data[x].Degrees[y].Institution.toLowerCase() == "generic") {
+                        let qrystring = '?degreeid=' + data[x].Degrees[y].Id;
+                        qrystring += "&institutionid=" + data[x].Degrees[y].InstitutionId;
+                        output += this.template("/degreemap" + qrystring, data[x].Degrees[y].Degree);
+                    }
+                }
+            }
         }
-        $("#DegreeListOutput").html("<ul>" + output + "</ul>");
+        $("#DegreeListOutput").html(output);
+    },
+    template: function (url, title) {
+        let template = '<div class="py-2"><a target="_blank" href="' + this.hostname + url + '" title="' + title + '">' + title + '</a></div>';
+        return template;
     },
     getDegreeList: function () {
         $.get({
-            //url: "https://portal.connect.ucf.edu/pathway/api/Degree/GetDegreeListv2",
-            url: "/api/degree/GetListByInstitution?institutionId=" + degreeList.institutionId+"&catalogId="+degreeList.catalogId,
+            //url: "https://portal.connect.ucf.edu/pathway/api/Degree/GetDegreeList",
+            url: "/api/degree/GetDegreeList",
             type: "GET",
             headers: { "APIKey": "Th1sIsth3Way" },
             cache: false,
             success: function (data) {
-                console.log('start');
                 console.log(data);
                 degreeList.displayDegreeList(data);
-                //degreeList.displayDegreeList(data);
             }
         })
     },

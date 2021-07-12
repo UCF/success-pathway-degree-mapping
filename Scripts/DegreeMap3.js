@@ -55,12 +55,13 @@ var degreemap = {
     getDegreeInfo: function () {
         $.get({
             //url: "https://portal.connect.ucf.edu/pathway/GetDegreeMap?degreeId="+degreemap.degreeId,
-            url: "/api/degree/GetDegreeInfo?degreeId="+degreemap.degreeId,
+            url: "/api/degree/GetDegreeInfo?degreeId=" + degreemap.degreeId,
             //data : "degreeId="4,
             type: "GET",
             headers: { "APIKey": "Th1sIsth3Way" },
             cache: true,
             success: function (data) {
+                console.log('degree map info');
                 console.log(data);
                 //console.log('--> ' + data.Id);
                 degreemap.data = data;
@@ -107,10 +108,9 @@ var degreemap = {
         this.hostname = host;
     },
     init: function () {
-        this.degreeId = (this.getUrlVars()["degreeId"] > 0) ? this.getUrlVars()["degreeId"] : 15;
-        this.institutionId = (this.getUrlVars()["institutionid"] > 0) ? this.getUrlVars()["institutionid"] : 0;
-        //this.setHost();
-        this.getDegreeInfo();
+        degreemap.degreeId = main.degreeId;
+        degreemap.institutionId = main.institutionId;
+        degreemap.getDegreeInfo();
     }
 }
 $(function () {

@@ -1,9 +1,10 @@
-﻿
-
-<style>
+﻿<style>
     .card-inverse {
         background-color: black;
     }
+    /*#DegreemapRow div {
+        border:1px solid green;
+    }*/
 </style>
 <div class="container" id="printme">
     <!--[print-me target="#printme" title=""]-->
@@ -23,19 +24,19 @@
                 <div class="card-deck">
                     <div class="card">
                         <div class="card-header card-inverse" style="background-color: black; color: white;">
-                            <h3 id="DegreeTitle" class="DegreeTitle"></h3>
+                            <h3 class="Degree"></h3>
                             <p class="card-text">Major Type and Requirements</p>
                         </div>
                         <div class="card-block">
                             <div class="row">
                                 <div class="col-md-6">
-                                    <p class="card-text"><strong>Required GPA : </strong><span id="UCFGPA"></span></p>
-                                    <p class="card-text"><strong>Limited Access : </strong><span id="UCFLimitedAccess"></span></p>
-                                    <p class="card-text"><strong>Restricted Access : </strong><span id="UCFRestrictedAccess"></span></p>
-                                    <div><strong>Foreign Language Requirements </strong></div><span id="ForeignLanugage"></span>
+                                    <p class="card-text"><strong>Required GPA : </strong><span class="GPA"></span></p>
+                                    <p class="card-text"><strong>Limited Access : </strong><span class="LimitedAccess"></span></p>
+                                    <p class="card-text"><strong>Restricted Access : </strong><span class="RestrictedAccess"></span></p>
+                                    <div><strong>Foreign Language Requirements </strong></div><span class="ForeignLanguageRequirement"></span>
                                     <p></p>
                                 </div>
-                                <div class="col-md-6"><div><strong>Additional Requirements</strong></div><span id="AdditionalRequirements"></span></div>
+                                <div class="col-md-6"><div><strong>Additional Requirements</strong></div><span class="AdditionalRequirement"></span></div>
                                 <p></p>
                             </div>
                             <p></p>
@@ -47,7 +48,7 @@
         </div>
         <p>&nbsp;</p>
         <p>&nbsp;</p>
-        <h3 class="heading-underline"><span class="DegreeTitle"></span> Success Pathway</h3>
+        <h3 class="heading-underline"><span class="Degree"></span> Success Pathway</h3>
         <p class="lead">Listed courses are to account for degree requirements, pre-requisites and critical courses to prepare students for admission to intended major at UCF. Courses should be completed before transfering to UCF.</p>
         <div class="btn-group">
             <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -63,27 +64,31 @@
             <p>&nbsp;</p>
         </div>
         <p>&nbsp;</p>
-        <h3>
-            <span class="badge badge-primary"><div class="px-3 py-3" id="Institution"></div></span>
-        </h3>
+        <div class="">
+            <h3><span class="badge badge-primary"><span class="Institution"></span> Pathway</span></h3>
+        </div>
+        
+
         <div class="row">
             <div class="col-md-12">
-                <table class="table table-sm table-bordered table-hover table-responsive">
+                <h1>Courses Table</h1>
+                <table class="table table-hover table-bordered" >
                     <thead class="thead-inverse">
                         <tr>
-                            <th style="width: 25%;">UCF Course Prefix &amp; Course Number</th>
-                            <th style="width: 10%;">Units / Credits</th>
-                            <th style="width: 25%;">State College Course Prefix &amp; Number</th>
-                            <th style="width: 10%;">Units / Credits</th>
-                            <th style="width: 10%;">Critical Course</th>
-                            <th style="width: 10%;">Common Program Prerequisite (CPP)</th>
-                            <th style="width: 10%;">Required Core Course</th>
+                            <th>Course</th>
+                            <th>Credit</th>
+                            <th>Critical</th>
+                            <th>Common Course Prerequiste</th>
+                            <th>Required</th>
+                            <th>Partner Course</th>
+                            <th>Partner Credit</th>
                         </tr>
                     </thead>
-                    <tbody id="DegreemapRow"></tbody>
+                    <tbody id="coursesTable"></tbody>
                 </table>
             </div>
         </div>
+        
 
         <div id="UCFPathwaySection">
             <p>&nbsp;</p>
@@ -92,7 +97,7 @@
                 Courses are suggested in a certain order taking into account degree requirements, pre-requisites and critical courses arranged by the semester in which you should complete them to be on track to graduation. We want you to
                 graduate on time by avoiding excess credits. This program will be offered by the College of <span class="CollegeName"></span>.
             </p>
-            <div id="UCFCourseSection"></div>
+            <div id="UCFCourseSection" sytle="border:2px solid red"></div>
         </div>
     </section>
 </div>
@@ -109,24 +114,16 @@ Success Pathways do not substitute for your advisor, degree planning tools, and 
 
 <section class="ucf-section ucf-section-success-pathway-resources " data-section-link-title="Resources" aria-label="Resources">
     <div class="container">
-
         <div class="row pb-0 mb-0 pt-5">
-
             <div class=" col-md-12">
-
                 <h3 class="heading-underline">Resources</h3>
             </div>
-
         </div>
-
     </div>
 
     <div class="container">
-
         <div class="row pb-0 mb-0">
-
             <div class="pt-5 col-md-4">
-
                 <div class="card">
                     <div class="card-block">
                         <h3 class="card-title">Equivalency Portal</h3>
@@ -137,12 +134,10 @@ Success Pathways do not substitute for your advisor, degree planning tools, and 
             </div>
 
             <div class=" col-md-4">
-
                 <img loading="lazy" class=" img-fluid alignnone wp-image-1362 size-full" src="https://connectucncmsqa.smca.ucf.edu/wp-content/uploads/sites/4/2020/10/Resources.png" alt="Student smiling with graduation cap on" height="353">
             </div>
 
             <div class="pt-5 col-md-4">
-
                 <div class="card">
                     <div class="card-block">
                         <h3 class="card-title">Transfer Connect</h3>
@@ -151,8 +146,6 @@ Success Pathways do not substitute for your advisor, degree planning tools, and 
                     </div>
                 </div>
             </div>
-
         </div>
-
     </div>
 </section>
