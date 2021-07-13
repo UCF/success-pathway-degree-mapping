@@ -186,6 +186,7 @@
     <Compile Include="Models\CourseList2.cs" />
     <Compile Include="Models\CourseMap.cs" />
     <Compile Include="Models\CourseMapper.cs" />
+    <Compile Include="Models\CourseMapperHtml.cs" />
     <Compile Include="Models\CourseMapperJSON.cs" />
     <Compile Include="Models\DegreeInfo.cs" />
     <Compile Include="Models\DegreeList.cs" />
@@ -2010,6 +2011,9 @@
     <Content Include="Views\App\Catalog.cshtml" />
     <Content Include="Views\App\DegreeList.cshtml" />
     <Content Include="Views\App\CatalogClone.cshtml" />
+    <Content Include="Views\App\_CourseMapperEdit.cshtml" />
+    <Content Include="Views\App\_CourseMapperHtml.cshtml" />
+    <Content Include="Views\App\_CourseMapperListView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

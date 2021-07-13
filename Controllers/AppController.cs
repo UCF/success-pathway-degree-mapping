@@ -380,11 +380,23 @@ namespace DegreeMapping.Controllers
             return PartialView(cm);
         }
 
+        public ActionResult _CourseMapperHtml(CourseMapperHtml cmh)
+        {
+            return PartialView(cmh);
+        }
+
         public ActionResult _CourseMapperList(int degreeId)
         {
             ViewBag.degreeId = degreeId;
             List<CourseMapper> list_cm = CourseMapper.List(degreeId, null);
             return PartialView(list_cm);
+        }
+
+        public ActionResult _CourseMapperListView(string title, List<Course> list_courses)
+        {
+            ViewBag.title = title;
+            ViewBag.list_courses = list_courses;
+            return PartialView();
         }
 
         public ActionResult CourseMapperEdit(int id)

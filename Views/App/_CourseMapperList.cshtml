@@ -21,36 +21,19 @@
                     @Html.ActionLink("Edit", "CourseMapperEdit", "App", new { id = cm.Id }, null)
                 </td>
                 <td>
-                    @foreach (DegreeMapping.Models.Course c in cm.UCFCourses.OrderBy(x => x.Code))
-                    {
-                        <div>@c.Code (@c.Credits credits) </div>
-                    }
-                    @if (cm.AlternateUCFCourseIds.Count > 0)
-                    {
-                        <div class="pt-2">
-                            <h4>Alternate UCF Courses</h4>
-                            @foreach (DegreeMapping.Models.Course c in cm.AlternateUCFCourses.OrderBy(x => x.Code))
-                            {
-                                <div>@c.Code (@c.Credits credits) </div>
-                            }
-                        </div>
-                    }
+                    @Html.Action("_CourseMapperListView", "App", new { title = cm.DisplayName, list_courses = cm.UCFCourses })
+                    @Html.Action("_CourseMapperListView", "App", new { title = cm.AlternateDisplayName, list_courses = cm.AlternateUCFCourses })
+                    @Html.Action("_CourseMapperListView", "App", new { title = cm.Alternate2DisplayName, list_courses = cm.Alternate2UCFCourses })
+                    @Html.Action("_CourseMapperListView", "App", new { title = cm.Alternate3DisplayName, list_courses = cm.Alternate3UCFCourses })
+                    @Html.Action("_CourseMapperListView", "App", new { title = cm.Alternate4DisplayName, list_courses = cm.Alternate4UCFCourses })
+
                 </td>
                 <td>
-                    @foreach (DegreeMapping.Models.Course c in cm.PartnerCourses.OrderBy(x => x.Code))
-                    {
-                        <div>@c.Code (@c.Credits credits) </div>
-                    }
-                    @if (cm.AlternatePartnerCourses.Count > 0)
-                    {
-                        <div class="pt-2">
-                            <h4>Alternate Partner Courses</h4>
-                            @foreach (DegreeMapping.Models.Course c in cm.AlternatePartnerCourses.OrderBy(x => x.Code))
-                            {
-                            <div>@c.Code (@c.Credits credits) </div>
-                            }
-                        </div>
-                    }
+                    @Html.Action("_CourseMapperListView", "App", new { title = cm.DisplayName, list_courses = cm.PartnerCourses })
+                    @Html.Action("_CourseMapperListView", "App", new { title = cm.AlternateDisplayName, list_courses = cm.AlternatePartnerCourses })
+                    @Html.Action("_CourseMapperListView", "App", new { title = cm.Alternate2DisplayName, list_courses = cm.Alternate2PartnerCourses })
+                    @Html.Action("_CourseMapperListView", "App", new { title = cm.Alternate3DisplayName, list_courses = cm.Alternate3PartnerCourses })
+                    @Html.Action("_CourseMapperListView", "App", new { title = cm.Alternate4DisplayName, list_courses = cm.Alternate4PartnerCourses })
                 </td>
                 <td>
                     @Html.ActionLink("Delete", "CourseMapperDelete", "App", new { id = cm.Id, degreeId=cm.DegreeId }, new { @Class = "btn btn-danger btn-lg", onclick = "return confirm('Are you sure you wish to delete this course map?');" })
