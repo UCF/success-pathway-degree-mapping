@@ -1,0 +1,67 @@
+﻿@model DegreeMapping.Models.CourseMapperHtml
+@{
+    DegreeMapping.Models.Degree partnerDegree = DegreeMapping.Models.Degree.Get(Model.DegreeId);
+    DegreeMapping.Models.Degree ucfDegree = DegreeMapping.Models.Degree.Get(partnerDegree.UCFDegreeId.Value);
+    List<DegreeMapping.Models.Course> list_partnerCourses = DegreeMapping.Models.Course.List(Model.DegreeId);
+    List<DegreeMapping.Models.Course> list_ucfCourses = DegreeMapping.Models.Course.List(ucfDegree.Id);
+}
+
+    <div class="containter pl-5">
+        <div class="row pl-3">
+            <div class="col-md-5 alert alert-warning">
+                @for (int i = 0; i <= 4; i++)
+                {
+                    <span class="pr-4">
+                        <label>
+                            @if (i == Model.DisplayValue)
+                            {
+                                <input type="radio" name="@Model.HTMLDisplayValue" value="@Model.DisplayValue" checked="checked" />
+                            }
+                            else
+                            {
+                                <input type="radio" name="@Model.HTMLDisplayValue" value="@i" />
+                            }
+                            @DegreeMapping.Models.CourseMapper.SetDisplayName(i)
+                        </label>
+                    </span>
+                }
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <h3 class="">UCF Course</h3>
+                <select name="@Model.HTMLUCFCourseIds" class="form-control form-control-lg" multiple="multiple" style="max-width:500px; height:200px">
+                    <option>None</option>
+                    @foreach (DegreeMapping.Models.Course c in list_ucfCourses.OrderBy(x => x.Code).Where(x => x.Semester == 1))
+                    {
+                        if (Model.List_UCFCourses != null && Model.List_UCFCourses.Count > 0 && Model.List_UCFCourses.Select(x => x.Id).Contains(c.Id))
+                        {
+                            <option value="@c.Id" selected>@c.Code</option>
+                        }
+                        else
+                        {
+                            <option value="@c.Id">@c.Code</option>
+                        }
+                    }
+                </select>
+            </div>
+
+            <div class="col-md-6">
+                <h3 class="">Partner Course</h3>
+                <select name="@Model.HTMLPartnerCourseIds" class="form-control form-control-lg" multiple="multiple" style="max-width:500px; height:200px">
+                    <option>None</option>
+                    @foreach (DegreeMapping.Models.Course c in list_partnerCourses.OrderBy(x => x.Code))
+                    {
+                        if (Model.List_PartnerCourses != null && Model.List_PartnerCourses.Count > 0 && Model.List_PartnerCourses.Select(x => x.Id).Contains(c.Id))
+                        {
+                            <option value="@c.Id" selected>@c.Code</option>
+                        }
+                        else
+                        {
+                            <option value="@c.Id">@c.Code</option>
+                        }
+                    }
+                </select>
+            </div>
+        </div>
+    </div>

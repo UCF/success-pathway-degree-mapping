@@ -16,10 +16,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/10/2013 16:29:20</publishTime>
     </File>
     <File Include="bin/DegreeMapping.dll">
-      <publishTime>07/12/2021 08:40:31</publishTime>
+      <publishTime>07/13/2021 16:13:33</publishTime>
     </File>
     <File Include="bin/DegreeMapping.pdb">
-      <publishTime>07/12/2021 08:40:31</publishTime>
+      <publishTime>07/13/2021 16:13:33</publishTime>
     </File>
     <File Include="bin/EntityFramework.dll">
       <publishTime>04/16/2020 20:38:42</publishTime>
@@ -175,7 +175,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/06/2020 11:07:13</publishTime>
     </File>
     <File Include="Content/site-override.css">
-      <publishTime>06/10/2021 10:51:51</publishTime>
+      <publishTime>07/13/2021 15:44:56</publishTime>
     </File>
     <File Include="Content/Site.css">
       <publishTime>06/10/2021 10:06:09</publishTime>
@@ -5446,10 +5446,19 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/01/2021 15:16:21</publishTime>
     </File>
     <File Include="Views/App/_CourseMapper.cshtml">
-      <publishTime>07/12/2021 08:39:07</publishTime>
+      <publishTime>07/13/2021 15:49:49</publishTime>
+    </File>
+    <File Include="Views/App/_CourseMapperEdit.cshtml">
+      <publishTime>07/12/2021 15:05:45</publishTime>
+    </File>
+    <File Include="Views/App/_CourseMapperHtml.cshtml">
+      <publishTime>07/13/2021 15:51:00</publishTime>
     </File>
     <File Include="Views/App/_CourseMapperList.cshtml">
-      <publishTime>06/21/2021 10:23:07</publishTime>
+      <publishTime>07/13/2021 15:14:21</publishTime>
+    </File>
+    <File Include="Views/App/_CourseMapperListView.cshtml">
+      <publishTime>07/13/2021 14:22:25</publishTime>
     </File>
     <File Include="Views/App/_Dashboard.cshtml">
       <publishTime>12/09/2020 16:15:37</publishTime>
@@ -5500,7 +5509,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>12/07/2020 16:49:17</publishTime>
     </File>
     <File Include="Views/Shared/_Layout.cshtml">
-      <publishTime>06/30/2021 09:15:49</publishTime>
+      <publishTime>07/13/2021 08:57:41</publishTime>
     </File>
     <File Include="Views/Web.config">
       <publishTime>12/11/2020 09:49:58</publishTime>

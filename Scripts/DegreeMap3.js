@@ -34,6 +34,15 @@ var degreemap = {
         $("." + this.target.Degree).html(data.CatalogYear + ' ' + data.Degree);
         $("." + this.target.Institution).html(data.Institution);
     },
+    displayListItems: function (data) {
+        if (data.Notes.length > 0) {
+            let item = '';
+            for (let x = 0; x <= data.Notes.length - 1; x++ ){
+                item += '<li>' + data.Notes[x] + '</li>';
+            }
+            $("#" + degreemap.target.ListItems).append(item);
+        }
+    },
     displayInstitutionList: function (data) {
         let output = '';
         for (var x = 0; x <= data.length - 1; x++) {
@@ -61,8 +70,8 @@ var degreemap = {
             headers: { "APIKey": "Th1sIsth3Way" },
             cache: true,
             success: function (data) {
-                console.log('degree map info');
-                console.log(data);
+                //console.log('degree map info');
+                //console.log(data);
                 //console.log('--> ' + data.Id);
                 degreemap.data = data;
                 degreemap.displayDegreeInfo(data);
@@ -80,7 +89,7 @@ var degreemap = {
             headers: { "APIKey": "Th1sIsth3Way" },
             cache: true,
             success: function (data) {
-                console.log(data);
+                //console.log(data);
                 degreemap.displayInstitutionList(data);
             }
         })

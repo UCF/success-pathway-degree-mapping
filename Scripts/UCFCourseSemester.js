@@ -52,7 +52,7 @@
             headers: { "APIKey": "Th1sIsth3Way" },
             cache: true,
             success: function (data) {
-                console.log(data);
+                //console.log(data);
                 ucfSemesterTerm.data = data;
                 ucfSemesterTerm.setSemesterTerms(data);
                 ucfSemesterTerm.displayUCFSemesterCourse(data);
