@@ -13,21 +13,22 @@ var courseMapper = {
     target: {
         coursesTable: "coursesTable"
     },
-
-    //courseMapper.data[0].UCFCourses[0].Course
     displayCourses: function (displayName, ucfCourses, partnerCourses) {
         let row = '';
-        let lastTd = '<td colspan="3">&nbsp;</td>';
-        if (displayName != '') {
-            heading = '<tr><td colspan="7" style="border-bottom:none">' + displayName + '</td></tr>';
-        }
+        let space = '';
+
         if (ucfCourses.length > 0) {
+            if (displayName.length > 0) {
+                space = '';
+            }
+            //displayName = (displayName.length > 0) ? displayName : "&nbsp;";
+            ucfCourse += (displayName.length > 0) ? '<div><strong>' + displayName + '</strong></div>' : '';
             for (let x = 0; x <= ucfCourses.length - 1; x++) {
                 ucfCourse += '<div>' + ucfCourses[x].Course + '</div>';
-                ucfCredit += '<div>' + ucfCourses[x].Credit + '</div>';
-                cpp += '<div>' + main.getYesNo(ucfCourses[x].CPP) + '</div>';
-                critical += '<div>' + main.getYesNo(ucfCourses[x].Critical) + '</div>';
-                required += '<div>' + main.getYesNo(ucfCourses[x].Required) + '</div>';
+                ucfCredit += space +  '<div>' + ucfCourses[x].Credit + '</div>';
+                cpp += space + '<div>' + main.getYesNo(ucfCourses[x].CPP) + '</div>';
+                critical += space + '<div>' + main.getYesNo(ucfCourses[x].Critical) + '</div>';
+                required += space + '<div>' + main.getYesNo(ucfCourses[x].Required) + '</div>';
             }
         } else {
             ucfCourse += '<div>&nbsp;</div>';
@@ -38,16 +39,16 @@ var courseMapper = {
         }
 
         if (partnerCourses.length > 0) {
+            //displayName = (displayName.length > 0) ? displayName : "&nbsp;";
+            pCourse += (displayName.length > 0) ? '<div><strong>' + displayName + '</strong></div>' : '';
             for (let x = 0; x <= partnerCourses.length - 1; x++) {
                 pCourse += '<div>' + partnerCourses[x].Course + '</div>';
-                pCredit += '<div>' + partnerCourses[x].Credit + '</div>';
+                pCredit += space + '<div>' + partnerCourses[x].Credit + '</div>';
             }
         } else {
             pCourse += '<div>&nbsp;</div>';
             pCredit += '<div>&nbsp;</div>';
         }
-        //tr = heading;
-        //$('#' + courseMapper.target.coursesTable).append(tr);
     },
     getTD: function (item) {
         return '<td>' + item + '</td>';
@@ -64,6 +65,7 @@ var courseMapper = {
                 //console.log(data);
                 courseMapper.data = data;
                 let tr = '';
+                console.log('start');
                 if (data != null && data.length > 0) {
                     for (let x = 0; x <= data.length - 1; x++) {
                         ucfCourse = '';
@@ -73,9 +75,11 @@ var courseMapper = {
                         required = '';
                         pCourse = '';
                         pCredit = '';
-                        tr = '';
+                        //tr = '';
+                        
                         if (data[x].UCFCourses.length > 0 || data[x].PartnerCourses.length > 0) {
                             courseMapper.displayCourses(data[x].DisplayName, data[x].UCFCourses, data[x].PartnerCourses);
+                            console.log('ucf Course' + ucfCourse);
                         }
                         if (data[x].AlternateUCFCourse.length > 0 || data[x].AlternatePartnerCourse.length > 0) {
                             courseMapper.displayCourses(data[x].AlternateDisplayName, data[x].AlternateUCFCourse, data[x].AlternatePartnerCourse);
@@ -93,6 +97,7 @@ var courseMapper = {
                     }
                     $("#" + courseMapper.target.coursesTable).append(tr);
                 }
+                $('#coursesTable div').css('height', '30px');
             }
         })
     },

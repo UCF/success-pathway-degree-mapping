@@ -218,6 +218,7 @@ namespace DegreeMapping.Models
             {
                 CourseMapperJSON cmj = new CourseMapperJSON();
                 #region Primary
+                cmj.DisplayName = (cm.DisplayName == CourseMapper.DisplayType.Default) ? string.Empty : cm.DisplayName;
                 foreach (Course c in cm.UCFCourses)
                 {
                     cmj.UCFCourses.Add(new UCFCourse(c));
@@ -228,6 +229,7 @@ namespace DegreeMapping.Models
                 }
                 #endregion
                 #region Alternate
+                cmj.AlternateDisplayName = (cm.AlternateDisplayName == CourseMapper.DisplayType.Default) ? string.Empty : cm.AlternateDisplayName;
                 if (cm.AlternateUCFCourses.Count > 0)
                 {
                     foreach (Course c in cm.AlternateUCFCourses)
@@ -244,6 +246,7 @@ namespace DegreeMapping.Models
                 }
                 #endregion
                 #region Alternate 2
+                cmj.Alternate2DisplayName = (cm.Alternate2DisplayName == CourseMapper.DisplayType.Default) ? string.Empty : cm.Alternate2DisplayName;
                 if (cm.Alternate2UCFCourses != null && cm.Alternate2UCFCourses.Count > 0)
                 {
                     foreach (Course c in cm.Alternate2UCFCourses)
@@ -260,6 +263,7 @@ namespace DegreeMapping.Models
                 }
                 #endregion
                 #region Alternate 3
+                cmj.Alternate3DisplayName = (cm.Alternate3DisplayName == CourseMapper.DisplayType.Default) ? string.Empty : cm.Alternate3DisplayName;
                 if (cm.Alternate3UCFCourses != null && cm.Alternate3UCFCourses.Count > 0)
                 {
                     foreach (Course c in cm.Alternate3UCFCourses)
@@ -276,6 +280,7 @@ namespace DegreeMapping.Models
                 }
                 #endregion
                 #region Alternate 4
+                cmj.Alternate4DisplayName = (cm.Alternate4DisplayName == CourseMapper.DisplayType.Default) ? string.Empty : cm.Alternate4DisplayName;
                 if (cm.Alternate4UCFCourses != null && cm.Alternate4UCFCourses.Count > 0)
                 {
                     foreach (Course c in cm.Alternate4UCFCourses)
