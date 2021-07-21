@@ -35,11 +35,11 @@ namespace DegreeMapping.Models
 
         public string ForeignLanguageRequirement { get; set; }
 
-        public List<Note> Notes { get; set; }
+        public List<string> Notes { get; set; }
 
         public DegreeInfo()
         {
-            Notes = new List<Note>();
+            Notes = new List<string>();
         }
 
         public static DegreeInfo Get(int id)
@@ -104,16 +104,23 @@ namespace DegreeMapping.Models
 
         private static void GetNotes(ref DegreeInfo di)
         {
-            int noteId = DegreeMapping.Models.Note.NoteTypeValue.Note;
-            List<Note> UCFNote = DegreeMapping.Models.Note.List(di.UCFDegreeId).Where(x => x.NoteType == noteId).OrderBy(x=>x.OrderBy).ToList();
-            if (UCFNote.Count > 0)
+            int listItemdId = DegreeMapping.Models.Note.NoteTypeValue.ListItem;
+            List<Note> list_ucfNotes = DegreeMapping.Models.Note.List(di.UCFDegreeId).Where(x => x.NoteType == listItemdId).OrderBy(x=>x.OrderBy).ToList();
+            if (list_ucfNotes.Count > 0)
             {
-                di.Notes = UCFNote;
+                foreach (Note n in list_ucfNotes.OrderBy(x=>x.OrderBy))
+                {
+                    di.Notes.Add(n.Value);
+                }
+                
             }
-            List<Note> partnerNote = DegreeMapping.Models.Note.List(di.Id).Where(x => x.NoteType == noteId).OrderBy(x=>x.OrderBy).ToList();
-            if (partnerNote.Count > 0)
+            List<Note> list_partnerNotes = DegreeMapping.Models.Note.List(di.Id).Where(x => x.NoteType == listItemdId).OrderBy(x=>x.OrderBy).ToList();
+            if (list_partnerNotes.Count > 0)
             {
-                di.Notes.AddRange(partnerNote);
+                foreach (Note n in list_partnerNotes.OrderBy(x=>x.OrderBy))
+                {
+                    di.Notes.Add(n.Value);
+                }
             }
         }
     }

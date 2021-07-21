@@ -16,10 +16,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/10/2013 16:29:20</publishTime>
     </File>
     <File Include="bin/DegreeMapping.dll">
-      <publishTime>07/13/2021 16:13:33</publishTime>
+      <publishTime>07/21/2021 11:32:45</publishTime>
     </File>
     <File Include="bin/DegreeMapping.pdb">
-      <publishTime>07/13/2021 16:13:33</publishTime>
+      <publishTime>07/21/2021 11:32:45</publishTime>
     </File>
     <File Include="bin/EntityFramework.dll">
       <publishTime>04/16/2020 20:38:42</publishTime>
@@ -208,7 +208,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>12/07/2020 16:49:29</publishTime>
     </File>
     <File Include="Scripts/CourseMapper.js">
-      <publishTime>07/09/2021 15:03:13</publishTime>
+      <publishTime>07/21/2021 11:15:26</publishTime>
     </File>
     <File Include="Scripts/degreeGeneric.js">
       <publishTime>01/27/2021 08:59:22</publishTime>
@@ -223,7 +223,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/19/2021 15:44:16</publishTime>
     </File>
     <File Include="Scripts/DegreeMap3.js">
-      <publishTime>07/09/2021 17:26:46</publishTime>
+      <publishTime>07/20/2021 14:44:32</publishTime>
     </File>
     <File Include="Scripts/degreemapping.js">
       <publishTime>01/28/2021 16:32:41</publishTime>
@@ -5350,10 +5350,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>12/07/2020 16:49:41</publishTime>
     </File>
     <File Include="Scripts/main.js">
-      <publishTime>07/09/2021 15:35:32</publishTime>
+      <publishTime>07/15/2021 14:26:43</publishTime>
     </File>
     <File Include="Scripts/UCFCourseSemester.js">
-      <publishTime>07/09/2021 15:00:24</publishTime>
+      <publishTime>07/20/2021 16:20:12</publishTime>
     </File>
     <File Include="Views/App/Catalog.cshtml">
       <publishTime>06/23/2021 13:58:16</publishTime>
@@ -5401,7 +5401,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/27/2021 11:12:36</publishTime>
     </File>
     <File Include="Views/App/DegreeView.cshtml">
-      <publishTime>07/01/2021 12:02:30</publishTime>
+      <publishTime>07/20/2021 15:01:04</publishTime>
     </File>
     <File Include="Views/App/Index.cshtml">
       <publishTime>12/09/2020 09:57:51</publishTime>
@@ -5443,7 +5443,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/19/2021 16:37:04</publishTime>
     </File>
     <File Include="Views/App/_Course.cshtml">
-      <publishTime>07/01/2021 15:16:21</publishTime>
+      <publishTime>07/21/2021 11:19:59</publishTime>
     </File>
     <File Include="Views/App/_CourseMapper.cshtml">
       <publishTime>07/13/2021 15:49:49</publishTime>
@@ -5491,7 +5491,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/20/2021 14:04:22</publishTime>
     </File>
     <File Include="Views/Home/DegreeMapV2.cshtml">
-      <publishTime>07/09/2021 15:30:47</publishTime>
+      <publishTime>07/20/2021 16:50:41</publishTime>
     </File>
     <File Include="Views/Home/Example.cshtml">
       <publishTime>01/25/2021 14:00:20</publishTime>
@@ -5503,13 +5503,19 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>12/11/2020 14:44:35</publishTime>
     </File>
     <File Include="Views/Home/_DegreeMapV2WPTemplate.cshtml">
-      <publishTime>07/08/2021 14:50:22</publishTime>
+      <publishTime>07/20/2021 17:00:29</publishTime>
     </File>
     <File Include="Views/Shared/Error.cshtml">
       <publishTime>12/07/2020 16:49:17</publishTime>
     </File>
     <File Include="Views/Shared/_Layout.cshtml">
-      <publishTime>07/13/2021 08:57:41</publishTime>
+      <publishTime>07/21/2021 11:32:11</publishTime>
+    </File>
+    <File Include="Views/Shared/_Pathway.cshtml">
+      <publishTime>07/21/2021 10:55:25</publishTime>
+    </File>
+    <File Include="Views/Shared/_Pathway_old.cshtml">
+      <publishTime>07/20/2021 16:32:51</publishTime>
     </File>
     <File Include="Views/Web.config">
       <publishTime>12/11/2020 09:49:58</publishTime>

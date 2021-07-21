@@ -1,116 +1,71 @@
 ﻿//https://tulsa.okstate.edu/transfer
+var ucfCourse = '';
+var ucfCredit = '';
+var cpp = '';
+var critical = '';
+var required = '';
+var pCourse = '';
+var pCredit = '';
+var heading = '';
 var courseMapper = {
     version: "1.0.0",
     data: {},
     target: {
-
+        coursesTable: "coursesTable"
     },
+    displayCourses: function (displayName, ucfCourses, partnerCourses) {
+        let row = '';
+        let space = '';
 
-    //courseMapper.data[0].UCFCourses[0].Course
-    displayCourses: function (data) {
-        let td1 = '';
-        let td2 = '';
-        let td3 = '';
-        let td4 = '';
-        let td5 = '';
-        let tr = '';
-        if (data.length > 0) {
-            let course = '';
-            let credit = '';
-            let critical = '';
-            let cpp = '';
-            let required = '';
-            let pcCourse = '';
-            let pcCredit = '';
-
-            //let hasUCFAlternateCourse = false;
-            let ucfaltCourse = '';
-            let ucfaltCredit = '';
-            let ucfaltCritical = '';
-            let ucfaltCPP = '';
-            let ucfaltRequired = '';
-
-            //let hasPartnerAlternateCourse = false;
-            let apCourse = '';
-            let apCredit = '';
-
-            for (let x = 0; x <= data.length - 1; x++) {
-                if (data[0].UCFCourses.length > 0) {
-                    for (let c = 0; c <= data[x].UCFCourses.length - 1; c++) {
-                        course += '<div>' + data[x].UCFCourses[c].Course + '</div>';
-                        credit += '<div>' + data[x].UCFCourses[c].Credit + '</div>';
-                        critical += '<div>' + courseMapper.getYesNo(data[x].UCFCourses[c].Critical) + '</div>';
-                        cpp += '<div>' + courseMapper.getYesNo(data[x].UCFCourses[c].CPP) + '</div>';
-                        required += '<div>' + courseMapper.getYesNo(data[x].UCFCourses[c].Required) + '</div>';
-                        //let selectOne = data[x].SelectOne;
-                    }
-                    for (let pc = 0; pc <= data[x].PartnerCourses.length - 1; pc++) {
-                        pcCourse += '<div>' + data[x].PartnerCourses[pc].Course + '</div>';
-                        pcCredit += '<div>' + data[x].PartnerCourses[pc].Credit + '</div>';
-                    }
-                    //courseMapper.data[5].AlternateUCFCourse[0]
-                    //console.log(x +'| data[x].AlternateUCFCourse.length: ' + data[x].AlternateUCFCourse.length);
-                    if (data[x].AlternateUCFCourse.length > 0) {
-                        //hasUCFAlternateCourse = true;
-                        //courseMapper.data[5].AlternateUCFCourse[0].Course
-                        for (let ucfalt = 0; ucfalt <= data[x].AlternateUCFCourse.length - 1; ucfalt++) {
-                            ucfaltCourse += '<div>' + data[x].AlternateUCFCourse[ucfalt].Course + '</div>';
-                            ucfaltCredit += '<div>' + data[x].AlternateUCFCourse[ucfalt].Credit + '</div>';
-                            ucfaltCritical += '<div>' + courseMapper.getYesNo(data[x].AlternateUCFCourse[ucfalt].Critical) + '</div>';
-                            ucfaltCPP += '<div>' + courseMapper.getYesNo(data[x].AlternateUCFCourse[ucfalt].CPP) + '</div>';
-                            ucfaltRequired += '<div>' + courseMapper.getYesNo(data[x].AlternateUCFCourse[ucfalt].Required) + '</div>';
-                            //console.log(ucfalt + ' ucfaltCourse: ' + ucfaltCourse);
-                        }
-                        course += '<div><strong>Alternate Course</strong></div>';
-                        course += ucfaltCourse;
-                        credit += '<div>&nbsp;</div>' + ucfaltCredit;
-                        critical += '<div>&nbsp;</div>' + ucfaltCritical;
-                        cpp += '<div>&nbsp;</div>' + ucfaltCPP;
-                        required += '<div>&nbsp</div>' + ucfaltRequired;
-                    }
-                    if (data[x].AlternatePartnerCourse.length > 0) {
-                        //hasPartnerAlternateCourse = true;
-                        for (let apc = 0; apc <= data[x].AlternatePartnerCourse.length - 1; apc++) {
-                            apCourse += '<div>' + data[x].AlternatePartnerCourse[apc].Course + '</div>';
-                            apCredit += '<div>' + data[x].AlternatePartnerCourse[apc].Credit + '</div>';
-                        }
-                        pcCourse += '<div><strong>Alternate Course</strong></div>';
-                        pcCourse += apCourse;
-                        pcCredit += '<div>&nbsp;</div>';
-                        pcCredit += apCredit;
-                    }
-                    if (data[x].DisplayValue == 1) {
-                        tr += '<tr><td colspan=7" class="text-center">Select One</td></tr>';
-                    }
-                    tr += '<tr><td>' + course + '</td><td>' + credit + '</td><td>' + critical + '</td><td>' + cpp + '</td><td>' + required + '</td><td>' + pcCourse + '</td><td>' + pcCredit + '</td></tr>';
-                    course = '';
-                    credit = '';
-                    critical = '';
-                    cpp = '';
-                    required = '';
-                    pcCourse = '';
-                    pcCredit = '';
-
-                    //hasUCFAlternateCourse = false;
-                    ucfaltCourse = '';
-                    ucfaltCredit = '';
-                    ucfaltCritical = '';
-                    ucfaltCPP = '';
-                    ucfaltRequired = '';
-
-                    //hasPartnerAlternateCourse = false;
-                    apCourse = '';
-                    apCredit = '';
+        if (ucfCourses.length > 0) {
+            if (displayName.length > 0) {
+                space = '';
+            }
+            //displayName = (displayName.length > 0) ? displayName : "&nbsp;";
+            space = (displayName.length > 0) ? '<div>&nbsp;</div>' : '';
+            for (let x = 0; x <= ucfCourses.length - 1; x++) {
+                ucfCourse += (displayName.length > 0) ? '<div><strong class="py-3">' + displayName + '</strong></div>' : '';
+                ucfCourse += '<div>' + ucfCourses[x].Course + '</div>';
+                if (displayName.length > 0) {
+                    ucfCredit += '<div>&nbsp;</div><div>' + ucfCourses[x].Credit + '</div>';
+                    cpp += '<div>&nbsp;</div><div>' + main.getYesNo(ucfCourses[x].CPP) + '</div>';
+                    critical += '<div>&nbsp;</div><div>' + main.getYesNo(ucfCourses[x].Critical) + '</div>';
+                    required += '<div>&nbsp;</div><div>' + main.getYesNo(ucfCourses[x].Required) + '</div>';
+                } else {
+                    ucfCredit += '<div>' + ucfCourses[x].Credit + '</div>';
+                    cpp += '<div>' + main.getYesNo(ucfCourses[x].CPP) + '</div>' + space;
+                    critical += '<div>' + main.getYesNo(ucfCourses[x].Critical) + '</div>' + space;
+                    required += '<div>' + main.getYesNo(ucfCourses[x].Required) + '</div>' + space;
                 }
             }
-            $('#coursesTable').html(tr);
+        } else {
+            ucfCourse += '<div>&nbsp;1</div>';
+            ucfCredit += '<div>&nbsp;2</div>';
+            cpp += '<div>&nbsp;3</div>';
+            critical += '<div>&nbsp;4</div>';
+            required += '<div>&nbsp;5</div>';
+        }
+
+        if (partnerCourses.length > 0) {
+            //displayName = (displayName.length > 0) ? displayName : "&nbsp;";
+            space = (displayName.length > 0) ? '<div>&nbsp;</div>' : '';
+            for (let x = 0; x <= partnerCourses.length - 1; x++) {
+                pCourse += (displayName.length > 0) ? '<div><strong>' + displayName + '</strong></div>' : '';
+                if (displayName.length > 0) {
+                    pCredit += '<div>&nbsp;</div><div>' + partnerCourses[x].Credit + '</div>';
+                } else {
+                    pCredit += '<div>' + partnerCourses[x].Credit + '</div>';
+                }
+                pCourse += '<div>' + partnerCourses[x].Course + '</div>';
+                space = '';
+            }
+        } else {
+            pCourse += '<div>&nbsp;</div>';
+            pCredit += '<div>&nbsp;</div>';
         }
     },
-    setDiv: function (val) {
-        return '<div>' + val + '</div>';
-    },
-    setTD : function (val) {
-        return '<td>' + val +'</td>';
+    getTD: function (item) {
+        return '<td>' + item + '</td>';
     },
     getCourseMapper: function () {
         $.get({
@@ -121,9 +76,40 @@ var courseMapper = {
             headers: { "APIKey": "Th1sIsth3Way" },
             cache: true,
             success: function (data) {
-                console.log(data);
                 courseMapper.data = data;
-                courseMapper.displayCourses(data);
+                let tr = '';
+                if (data != null && data.length > 0) {
+                    for (let x = 0; x <= data.length - 1; x++) {
+                        ucfCourse = '';
+                        ucfCredit = '';
+                        cpp = '';
+                        critical = '';
+                        required = '';
+                        pCourse = '';
+                        pCredit = '';
+                        //tr = '';
+                        
+                        if (data[x].UCFCourses.length > 0 || data[x].PartnerCourses.length > 0) {
+                            courseMapper.displayCourses(data[x].DisplayName, data[x].UCFCourses, data[x].PartnerCourses);
+                        }
+                        if (data[x].AlternateUCFCourse.length > 0 || data[x].AlternatePartnerCourse.length > 0) {
+                            courseMapper.displayCourses(data[x].AlternateDisplayName, data[x].AlternateUCFCourse, data[x].AlternatePartnerCourse);
+                        }
+                        if (data[x].Alternate2UCFCourse.length > 0 || data[x].Alternate2PartnerCourse.length > 0) {
+                            courseMapper.displayCourses(data[x].Alternate2DisplayName, data[x].Alternate2UCFCourse, data[x].Alternate2PartnerCourse);
+                        }
+                        if (data[x].Alternate3UCFCourse.length > 0 || data[x].Alternate3PartnerCourse.length > 0) {
+                            courseMapper.displayCourses(data[x].Alternate3DisplayName, data[x].Alternate3UCFCourse, data[x].Alternate3PartnerCourse);
+                        }
+                        if (data[x].Alternate4UCFCourse.length > 0 || data[x].Alternate4PartnerCourse.length > 0) {
+                            courseMapper.displayCourses(data[x].Alternate4DisplayName, data[x].Alternate4UCFCourse, data[x].Alternate4PartnerCourse);
+                        }
+                        tr += '<tr>' + courseMapper.getTD(ucfCourse) + courseMapper.getTD(ucfCredit) + courseMapper.getTD(pCourse) + courseMapper.getTD(pCredit) + courseMapper.getTD(critical) + courseMapper.getTD(cpp) + courseMapper.getTD(required) + '</tr>'
+                    }
+                    $("#" + courseMapper.target.coursesTable).append(tr);
+                }
+                //$('#coursesTable div').css('height', '30px');
+                $('#coursesTable div').addClass('py-2');
             }
         })
     },
@@ -135,9 +121,6 @@ var courseMapper = {
     },
     getCPPIcon() {
         return "+";
-    },
-    getYesNo: function (val) {
-        return (val) ? "Yes" : "No";
     },
     setHost: function () {
         let host = window.location.hostname.toLowerCase();
@@ -152,10 +135,6 @@ var courseMapper = {
     init: function () {
         courseMapper.degreeId = main.degreeId;
         courseMapper.institutionId = main.institutionId;
-        console.log('Course Mapper: ' + courseMapper.degreeId);
-        //this.degreeId = (this.getUrlVars()["degreeId"] > 0) ? this.getUrlVars()["degreeId"] : 0;
-        //this.institutionId = (this.getUrlVars()["institutionid"] > 0) ? this.getUrlVars()["institutionid"] : 0;
-        //this.setHost();
         this.getCourseMapper();
     }
 }

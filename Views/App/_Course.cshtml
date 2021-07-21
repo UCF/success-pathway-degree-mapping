@@ -36,7 +36,7 @@
         <div class="col-md-10">
             <div class="form-group py-4 px-4" id="credits" style="border:3px solid #dff0d8">
                 @Html.LabelFor(x => x.Credits) :
-                @for (int i = 0; i < 12; i++)
+                @for (int i = 0; i < 13; i++)
                 {
                     string classId = string.Format("creditId_{0}", i);
                     string cssClass = (Model.Credits == i) ? "alert alert-success" : string.Empty;

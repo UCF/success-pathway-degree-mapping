@@ -123,7 +123,7 @@
             else
             {
                 <div>
-                    Degree is mapped to UCF @Model.UCFDegreeName
+                    Degree is mapped to @Html.ActionLink("UCF " + Model.UCFDegreeName, "DegreeView", new { id = Model.UCFDegreeId}) 
                 </div>
             }
         </div>

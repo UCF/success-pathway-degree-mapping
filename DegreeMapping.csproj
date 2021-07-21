@@ -2014,6 +2014,8 @@
     <Content Include="Views\App\_CourseMapperEdit.cshtml" />
     <Content Include="Views\App\_CourseMapperHtml.cshtml" />
     <Content Include="Views\App\_CourseMapperListView.cshtml" />
+    <Content Include="Views\Shared\_Pathway_old.cshtml" />
+    <Content Include="Views\Shared\_Pathway.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

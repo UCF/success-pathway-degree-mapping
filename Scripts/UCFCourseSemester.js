@@ -28,7 +28,26 @@
     },
     displayUCFSemesterCourse: function (data) {
         let term = ucfSemesterTerm.semesterTerms;
+        let breakpoint = 3;
+        let emptyCard = '';
+
+        if (term.length == 4 || term.length == 8) {
+            breakpoint = 3;
+        } else if (term.length == 5) {
+            breakpoint = 4;
+        } else if (term.length == 6) {
+            breakpoint = 2;
+        } else if (term.length == 7) {
+            breakpoint = 3;
+            emptyCard = '<div class="card"><p>empty</p></div>';
+        }
+        console.log(breakpoint);
+        console.log(term.length);
+        console.log(term);
+
+
         let carddeck = '';
+        let carddeck2 = '';
         for (let x = 0; x <= term.length - 1; x++) {
             let total = 0;
             let cardblock = '';
@@ -38,9 +57,17 @@
                     cardblock += '<p class="card-text"><strong>' + data[y].Course + '</strong><br/>' + data[y].Credit + '</p>'
                 }
             }
-            carddeck += ucfSemesterTerm.setCard(term[x], total, cardblock);
-            $('#' + ucfSemesterTerm.target.UCFCourseSection).html('<div class="card-deck">' + carddeck + '</div>');
+            if (x <= breakpoint) {
+                carddeck += ucfSemesterTerm.setCard(term[x], total, cardblock);
+            } else {
+                carddeck2 += ucfSemesterTerm.setCard(term[x], total, cardblock);
+            }
+            //$('#' + ucfSemesterTerm.target.UCFCourseSection).html('<div class="card-deck">' + carddeck + '</div>');
+            $('#UCFCourseSection').html('<div class="card-deck">' + carddeck + '</div>');
+            $('#UCFCourseSection2').html('<div class="card-deck">' + carddeck2 + emptyCard + '</div>');
+            //console.log(breakpoint + "==" + ucfCourseSection);
         }
+        
         
     },
     getUCFSemesterCourse: function () {

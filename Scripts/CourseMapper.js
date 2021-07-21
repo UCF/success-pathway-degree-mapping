@@ -22,28 +22,42 @@ var courseMapper = {
                 space = '';
             }
             //displayName = (displayName.length > 0) ? displayName : "&nbsp;";
-            ucfCourse += (displayName.length > 0) ? '<div><strong>' + displayName + '</strong></div>' : '';
+            space = (displayName.length > 0) ? '<div>&nbsp;</div>' : '';
             for (let x = 0; x <= ucfCourses.length - 1; x++) {
+                ucfCourse += (displayName.length > 0) ? '<div><strong>' + displayName + '</strong></div>' : '';
                 ucfCourse += '<div>' + ucfCourses[x].Course + '</div>';
-                ucfCredit += space +  '<div>' + ucfCourses[x].Credit + '</div>';
-                cpp += space + '<div>' + main.getYesNo(ucfCourses[x].CPP) + '</div>';
-                critical += space + '<div>' + main.getYesNo(ucfCourses[x].Critical) + '</div>';
-                required += space + '<div>' + main.getYesNo(ucfCourses[x].Required) + '</div>';
+                if (displayName.length > 0) {
+                    ucfCredit += '<div>&nbsp;</div><div>' + ucfCourses[x].Credit + '</div>';
+                    cpp += '<div>&nbsp;</div><div>' + main.getYesNo(ucfCourses[x].CPP) + '</div>';
+                    critical += '<div>&nbsp;</div><div>' + main.getYesNo(ucfCourses[x].Critical) + '</div>';
+                    required += '<div>&nbsp;</div><div>' + main.getYesNo(ucfCourses[x].Required) + '</div>';
+                } else {
+                    ucfCredit += '<div>' + ucfCourses[x].Credit + '</div>';
+                    cpp += '<div>' + main.getYesNo(ucfCourses[x].CPP) + '</div>' + space;
+                    critical += '<div>' + main.getYesNo(ucfCourses[x].Critical) + '</div>' + space;
+                    required += '<div>' + main.getYesNo(ucfCourses[x].Required) + '</div>' + space;
+                }
             }
         } else {
-            ucfCourse += '<div>&nbsp;</div>';
-            ucfCredit += '<div>&nbsp;</div>';
-            cpp += '<div>&nbsp;</div>';
-            critical += '<div>&nbsp;</div>';
-            required += '<div>&nbsp;</div>';
+            ucfCourse += '<div>&nbsp;1</div>';
+            ucfCredit += '<div>&nbsp;2</div>';
+            cpp += '<div>&nbsp;3</div>';
+            critical += '<div>&nbsp;4</div>';
+            required += '<div>&nbsp;5</div>';
         }
 
         if (partnerCourses.length > 0) {
             //displayName = (displayName.length > 0) ? displayName : "&nbsp;";
-            pCourse += (displayName.length > 0) ? '<div><strong>' + displayName + '</strong></div>' : '';
+            space = (displayName.length > 0) ? '<div>&nbsp;</div>' : '';
             for (let x = 0; x <= partnerCourses.length - 1; x++) {
+                pCourse += (displayName.length > 0) ? '<div><strong>' + displayName + '</strong></div>' : '';
+                if (displayName.length > 0) {
+                    pCredit += '<div>&nbsp;</div><div>' + partnerCourses[x].Credit + '</div>';
+                } else {
+                    pCredit += '<div>' + partnerCourses[x].Credit + '</div>';
+                }
                 pCourse += '<div>' + partnerCourses[x].Course + '</div>';
-                pCredit += space + '<div>' + partnerCourses[x].Credit + '</div>';
+                space = '';
             }
         } else {
             pCourse += '<div>&nbsp;</div>';
@@ -62,10 +76,8 @@ var courseMapper = {
             headers: { "APIKey": "Th1sIsth3Way" },
             cache: true,
             success: function (data) {
-                //console.log(data);
                 courseMapper.data = data;
                 let tr = '';
-                console.log('start');
                 if (data != null && data.length > 0) {
                     for (let x = 0; x <= data.length - 1; x++) {
                         ucfCourse = '';
@@ -79,7 +91,6 @@ var courseMapper = {
                         
                         if (data[x].UCFCourses.length > 0 || data[x].PartnerCourses.length > 0) {
                             courseMapper.displayCourses(data[x].DisplayName, data[x].UCFCourses, data[x].PartnerCourses);
-                            console.log('ucf Course' + ucfCourse);
                         }
                         if (data[x].AlternateUCFCourse.length > 0 || data[x].AlternatePartnerCourse.length > 0) {
                             courseMapper.displayCourses(data[x].AlternateDisplayName, data[x].AlternateUCFCourse, data[x].AlternatePartnerCourse);
@@ -97,7 +108,8 @@ var courseMapper = {
                     }
                     $("#" + courseMapper.target.coursesTable).append(tr);
                 }
-                $('#coursesTable div').css('height', '30px');
+                //$('#coursesTable div').css('height', '30px');
+                $('#coursesTable div').addClass('py-2');
             }
         })
     },
@@ -109,9 +121,6 @@ var courseMapper = {
     },
     getCPPIcon() {
         return "+";
-    },
-    getYesNo: function (val) {
-        return (val) ? "Yes" : "No";
     },
     setHost: function () {
         let host = window.location.hostname.toLowerCase();
@@ -126,10 +135,6 @@ var courseMapper = {
     init: function () {
         courseMapper.degreeId = main.degreeId;
         courseMapper.institutionId = main.institutionId;
-        //console.log('Course Mapper: ' + courseMapper.degreeId);
-        //this.degreeId = (this.getUrlVars()["degreeId"] > 0) ? this.getUrlVars()["degreeId"] : 0;
-        //this.institutionId = (this.getUrlVars()["institutionid"] > 0) ? this.getUrlVars()["institutionid"] : 0;
-        //this.setHost();
         this.getCourseMapper();
     }
 }
