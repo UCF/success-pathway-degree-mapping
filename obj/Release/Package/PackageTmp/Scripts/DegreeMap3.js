@@ -27,8 +27,8 @@ var degreemap = {
 
     displayDegreeInfo(data) {
         $("." + this.target.GPA).html(data.GPA)
-        $("." + this.target.LimitedAccess).html(this.getYesNo(data.LimitedAccess));
-        $("." + this.target.RestrictedAccess).html(this.getYesNo(data.RestrictedAccess));
+        $("." + this.target.LimitedAccess).html(main.getYesNo(data.LimitedAccess));
+        $("." + this.target.RestrictedAccess).html(main.getYesNo(data.RestrictedAccess));
         $("." + this.target.ForeignLanguageRequirement).html(data.ForeignLanguageRequirement);
         $("." + this.target.AdditionalRequirement).html(data.AdditionalRequirement);
         $("." + this.target.Degree).html(data.CatalogYear + ' ' + data.Degree);
@@ -103,9 +103,6 @@ var degreemap = {
     },
     getCPPIcon() {
         return "+";
-    },
-    getYesNo: function (val) {
-        return (val) ? "Yes" : "No";
     },
     setHost: function () {
         let host = window.location.hostname.toLowerCase();

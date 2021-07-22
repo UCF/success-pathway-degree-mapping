@@ -24,7 +24,7 @@ var courseMapper = {
             //displayName = (displayName.length > 0) ? displayName : "&nbsp;";
             space = (displayName.length > 0) ? '<div>&nbsp;</div>' : '';
             for (let x = 0; x <= ucfCourses.length - 1; x++) {
-                ucfCourse += (displayName.length > 0) ? '<div><strong class="py-3">' + displayName + '</strong></div>' : '';
+                ucfCourse += (displayName.length > 0) ? '<div><strong>' + displayName + '</strong></div>' : '';
                 ucfCourse += '<div>' + ucfCourses[x].Course + '</div>';
                 if (displayName.length > 0) {
                     ucfCredit += '<div>&nbsp;</div><div>' + ucfCourses[x].Credit + '</div>';

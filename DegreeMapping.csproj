@@ -190,6 +190,7 @@
     <Compile Include="Models\CourseMapperJSON.cs" />
     <Compile Include="Models\DegreeInfo.cs" />
     <Compile Include="Models\DegreeList.cs" />
+    <Compile Include="Models\DegreeListJSON.cs" />
     <Compile Include="Models\DegreeListv2.cs" />
     <Compile Include="Models\DegreeMap.cs" />
     <Compile Include="Models\DegreeNote.cs" />

@@ -66,7 +66,7 @@ namespace DegreeMapping.Controllers
         [Route("GetListByCatalog")]
         public List<DegreeListv2> GetListByCatalog(int catalogId)
         {
-            return DegreeListv2.List(catalogId, null, null, null, null);
+            return DegreeListv2.List(catalogId, null, null, null, null).OrderBy(x=>x.Degree).ThenBy(x=>x.Institution).ToList();
         }
 
         [HttpGet]
