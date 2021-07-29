@@ -13,6 +13,15 @@ var courseMapper = {
     target: {
         coursesTable: "coursesTable"
     },
+    setDivHeight: function (text) {
+        if (text.length <= 15) {
+            return "20px";
+        } else if (text.length <= 50) {
+            return "60px";
+        } else {
+            return "70px";
+        }
+    },
     displayCourses: function (displayName, ucfCourses, partnerCourses) {
         let row = '';
         let space = '';
@@ -45,7 +54,6 @@ var courseMapper = {
             critical += '<div>&nbsp;4</div>';
             required += '<div>&nbsp;5</div>';
         }
-
         if (partnerCourses.length > 0) {
             //displayName = (displayName.length > 0) ? displayName : "&nbsp;";
             space = (displayName.length > 0) ? '<div>&nbsp;</div>' : '';
@@ -109,7 +117,7 @@ var courseMapper = {
                     $("#" + courseMapper.target.coursesTable).append(tr);
                 }
                 //$('#coursesTable div').css('height', '30px');
-                $('#coursesTable div').addClass('py-2');
+                //$('#coursesTable div').addClass('py-2');
             }
         })
     },

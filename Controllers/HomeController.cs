@@ -1,6 +1,7 @@
 ﻿using DegreeMapping.Models;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data.SqlTypes;
 using System.DirectoryServices.ActiveDirectory;
 using System.Linq;
@@ -70,8 +71,13 @@ namespace DegreeMapping.Controllers
 
         public ActionResult DegreeMapV2(int? degreeId)
         {
-            ViewBag.degreeId = degreeId;
-            ViewBag.DegreeList = DegreeMapping.Models.Degree.List(null, null);
+            //ViewBag.degreeId = degreeId;
+            //ViewBag.DegreeList = DegreeMapping.Models.Degree.List(null, null);
+            return View();
+        }
+
+        [ActionName("Degree-Mapping")]
+        public ActionResult DegreeMapping(int degreeId) {
             return View();
         }
 

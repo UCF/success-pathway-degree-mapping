@@ -41,11 +41,6 @@
             breakpoint = 3;
             emptyCard = '<div class="card"><p>empty</p></div>';
         }
-        console.log(breakpoint);
-        console.log(term.length);
-        console.log(term);
-
-
         let carddeck = '';
         let carddeck2 = '';
         for (let x = 0; x <= term.length - 1; x++) {
@@ -54,7 +49,7 @@
             for (y = 0; y <= data.length - 1; y++) {
                 if (data[y].SemesterTerm == term[x]) {
                     total = total + data[y].Credit;
-                    cardblock += '<p class="card-text"><strong>' + data[y].Course + '</strong><br/>' + data[y].Credit + '</p>'
+                    cardblock += '<p class="card-text"><strong>' + data[y].Course + '</strong><br/>' + data[y].Credit + ' credits</p>'
                 }
             }
             if (x <= breakpoint) {

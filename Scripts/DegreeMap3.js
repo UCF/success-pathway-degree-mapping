@@ -24,7 +24,6 @@ var degreemap = {
     catalogId: 1,
     ucfDegreeId: 0,
     hasUCFSemesters: false,
-
     displayDegreeInfo(data) {
         $("." + this.target.GPA).html(data.GPA)
         $("." + this.target.LimitedAccess).html(main.getYesNo(data.LimitedAccess));

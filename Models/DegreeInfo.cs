@@ -80,11 +80,15 @@ namespace DegreeMapping.Models
             {
                 di.AdditionalRequirement = UCFRequirement;
             }
-            string partnerRequirement = DegreeMapping.Models.Note.List(di.Id).Where(x => x.NoteType == requirementId).Select(x => x.Value).FirstOrDefault();
-            if (!string.IsNullOrEmpty(partnerRequirement))
-            {
-                di.AdditionalRequirement += string.Format("<div>{0}</div>",partnerRequirement);
-            }
+            /**
+              FOR PHASE 1 WE WILL NOT USE PARTNER REQUIREMENTS
+              PARTNER REQUIREMENTS IS NOT AVAILABLE
+            **/
+            //string partnerRequirement = DegreeMapping.Models.Note.List(di.Id).Where(x => x.NoteType == requirementId).Select(x => x.Value).FirstOrDefault();
+            //if (!string.IsNullOrEmpty(partnerRequirement))
+            //{
+            //    di.AdditionalRequirement += string.Format("<div>{0}</div>",partnerRequirement);
+            //}
         }
 
         private static void GetForeignLanguageRequirement(ref DegreeInfo di)

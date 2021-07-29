@@ -2,9 +2,25 @@
     data: {},
     ucfDegrees: [],
     partnerDegrees: [],
-    noPartnerColleges : [],
+    noPartnerColleges: [],
+    alphaCharList: [],
     target: {
-        DegreeListOutput: 'DegreeListOutput'
+        DegreeListOutput: 'DegreeListOutput',
+        DegreeAlphaList: 'degree-alpha-list'
+    },
+    addToAlphaCharList: function (letter) {
+        if (!this.alphaCharList.includes(letter)) {
+            this.alphaCharList.push(letter);
+        }
+    },
+    displayAlphaList: function () {
+        if (this.alphaCharList.length > 0) {
+            let list = '';
+            for (let x = 0; x <= this.alphaCharList.length - 1; x++) {
+                list += '<li style="display: table-cell;"><a class="pr-2" href="#' + this.alphaCharList[x] + '">' + this.alphaCharList[x] + '</a></li>';
+            }
+            $('#' + this.target.DegreeAlphaList).html('<ul class="h4 list-inline mx-auto justify-content-center">' + list + '</ul>');
+        }
     },
     filter: function (ucfList, pList) {
         for (x = 0; x <= ucfList.length - 1; x++) {
@@ -20,23 +36,36 @@
         }
     },
     displayByDegree: function (ucfList, pList) {
+        ucfList.sort(this.getSortOrder("Degree"));
+        pList.sort(this.getSortOrder("Institution"));
         let l1 = '';
         let l2 = '';
+        let addtoCharList = true;
+        if (degreeList.alphaCharList.length > 0) {
+            addtoCharList = false;
+        }
         for (x = 0; x <= ucfList.length - 1; x++) {
             if (this.noPartnerColleges.includes(ucfList[x].DegreeId)) {
                 continue;
             }
-            l1 += '<li><h2>' + ucfList[x].Degree + '</h2>';
+            let char = ucfList[x].Degree.substring(0, 1);
+            if (addtoCharList) {
+                degreeList.addToAlphaCharList(char);
+            }
+            l1 += '<li><a name="' + char + '"></a>' + ucfList[x].Degree;
             l2 = '';
             for (y = 0; y <= pList.length - 1; y++) {
                 if (ucfList[x].DegreeId == pList[y].UCFDegreeId) {
-                    let link = this.setHREF(pList[y].InstitutionId, pList[y].Institution)
+                    let link = this.setHREF(pList[y].DegreeId, ucfList[x].Degree, pList[y].Institution)
                     l2 += '<li>' + link + '</li>'
                 }
             }
             l1 += '<ul class="pb-3">' + l2 + '</ul></li>';
         }
-        $('#' + this.target.DegreeListOutput).html('<ul>' + l1 + '</ul>')
+        if (addtoCharList) {
+            this.displayAlphaList();
+        }
+        $('#' + this.target.DegreeListOutput).html('<ul class="lead">' + l1 + '</ul>')
     },
     clear: function () {
         $('#keyword').val('');
@@ -51,6 +80,8 @@
         let obj = [];
         keyword = keyword.toLowerCase()
         if (keyword.length >= 2) {
+            keyword = (keyword == 'babs') ? 'b.a.b.s.' : keyword;
+            keyword = (keyword == 'bsba') ? 'b.s.b.a.' : keyword;
             keyword = (keyword == 'ba') ? 'b.a.' : keyword;
             keyword = (keyword == 'bs') ? 'b.s.' : keyword;
             keyword = (keyword == 'ae') ? 'a.e.' : keyword;
@@ -69,8 +100,18 @@
             $('#' + this.target.DegreeListOutput).html('No degrees found')
         }
     },
-    setHREF(id, degree) {
-        return '<a href="/degree-mapping?degreeId=' + id + '&degree=' + degree + '" title="' + degree + '">' + degree + '</a>';
+    getSortOrder: function (prop) {
+        return function (a, b) {
+            if (a[prop] > b[prop]) {
+                return 1;
+            } else if (a[prop] < b[prop]) {
+                return -1;
+            }
+            return 0;
+        }
+    },
+    setHREF(id, degree, institution) {
+        return '<a href="/degree-mapping?degreeId=' + id + '" title="' + degree + ' for ' + institution + '">' + institution + '</a>';
     },
     getDegreeList: function () {
         $.get({
@@ -92,7 +133,6 @@
                     degreeList.filter(degreeList.ucfDegrees, degreeList.partnerDegrees);
                     degreeList.displayByDegree(degreeList.ucfDegrees, degreeList.partnerDegrees);
                 }
-                
             }
         })
     },

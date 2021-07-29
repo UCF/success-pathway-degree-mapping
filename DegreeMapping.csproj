@@ -2017,6 +2017,7 @@
     <Content Include="Views\App\_CourseMapperListView.cshtml" />
     <Content Include="Views\Shared\_Pathway_old.cshtml" />
     <Content Include="Views\Shared\_Pathway.cshtml" />
+    <Content Include="Views\Home\Degree-Mapping.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
