@@ -102,6 +102,72 @@ var courseMapper = {
             pCredit += '<div>&nbsp;</div><div class="">&nbsp;</div>';
         }
     },
+
+
+
+
+
+
+    displayCourses2: function (displayName, ucfCourses, partnerCourses) {
+        let row = '';
+        let displayNameOutput = (displayName.length > 0) ? '<table class="borderless" style="width:100%"><tr><td style="width:105px">&nbsp;</td><td>' + displayName + '</td></tr></table>' : '';
+        let displayNameCount = 0;
+        if (ucfCourses.length > 0) {
+            for (let x = 0; x <= ucfCourses.length - 1; x++) {
+                if (ucfCourses[x].Course == null) {
+                    continue;
+                }
+                displayNameCount = (displayName.length > 0) ? displayNameCount + 1 : displayNameCount;
+                //ucfCourse += (displayName.length > 0) ? displayNameOutput : '';
+
+                //let sybmolSpace = '<div class="float-left" style="width:80px">&nbsp;</div>';
+                let critical = courseMapper.getCritialCourseIcon(ucfCourses[x].Critical);
+                let required = courseMapper.getRequiredCourseIcon(ucfCourses[x].Required);
+                let cpp = courseMapper.getCPPIcon(ucfCourses[x].CPP);
+                ucfCourseSymbols = critical + required + cpp;
+                ucfCourse += '<div>' + ucfCourses[x].Course + '</div>'
+                ucfCourse += '<div>(' + ucfCourses[x].Credit + ' credits)</div>';
+                ucfCourse += '<div>' + ucfCourseSymbols + '</div>';
+            }
+        } else {
+            //ucfCourseSymbols = '<div class="d-lg-block d-xl-none pb-2">&nbsp;</div><div>3' + ucfCourseSymbols + '</div>';
+            ucfCourse += '<div>&nbsp;</div>';
+            ucfCredit += '<div>&nbsp;</div><div class="d-lg-block d-xl-none pb-2">&nbsp;</div>';
+        }
+
+        if (partnerCourses.length > 0) {
+            for (let x = 0; x <= partnerCourses.length - 1; x++) {
+                pCourse += (displayName.length > 0) ? '<table class="borderless"><tr><td>' + displayName + '</td></tr></table>' : '';
+                if (displayName.length > 0) {
+                    if (displayNameCount > 0) {
+                        pCredit += '<table class="borderless mt-5" style="width:100%"><tr><td class="text-center">' + partnerCourses[x].Credit + '</td></tr></table>';
+                    } else {
+                        //pCredit += '<div>&nbsp;</div><div class="d-lg-block d-xl-none pb-2">&nbsp;</div><div class="text-center">' + partnerCourses[x].Credit + '</div>';
+                        pCredit += '<table class="borderless" style="width:100%"><tr><td class="text-center">' + partnerCourses[x].Credit + '</td></tr></table>';
+                    }
+                } else {
+                    //pCredit += '<div class="text-center">' + partnerCourses[x].Credit + '</div>';
+                    pCredit += '<table class="borderless" style="width:100%"><tr><td class="text-center">' + partnerCourses[x].Credit + '</td></tr></table>';
+                }
+                //pCourse += '<div>' + partnerCourses[x].Course + '</div>';
+                pCourse += '<table class="borderless" style="width:100%"><tr><td>' + partnerCourses[x].Course + '</td></tr></table>';
+            }
+        } else {
+            pCourse += '<div>&nbsp;</div>';
+            pCredit += '<div>&nbsp;</div><div class="">&nbsp;</div>';
+        }
+    },
+
+
+
+
+
+
+
+
+
+
+
     getTD: function (item) {
         return '<td class="px-0">' + item + '</td>';
     },
@@ -126,22 +192,23 @@ var courseMapper = {
                         pCredit = '';
                         ucfCourseSymbols = '';
                         if (data[x].UCFCourses.length > 0 || data[x].PartnerCourses.length > 0) {
-                            courseMapper.displayCourses(data[x].DisplayName, data[x].UCFCourses, data[x].PartnerCourses);
+                            courseMapper.displayCourses2(data[x].DisplayName, data[x].UCFCourses, data[x].PartnerCourses);
                         }
                         if (data[x].AlternateUCFCourse.length > 0 || data[x].AlternatePartnerCourse.length > 0) {
-                            courseMapper.displayCourses(data[x].AlternateDisplayName, data[x].AlternateUCFCourse, data[x].AlternatePartnerCourse);
+                            courseMapper.displayCourses2(data[x].AlternateDisplayName, data[x].AlternateUCFCourse, data[x].AlternatePartnerCourse);
                         }
                         if (data[x].Alternate2UCFCourse.length > 0 || data[x].Alternate2PartnerCourse.length > 0) {
-                            courseMapper.displayCourses(data[x].Alternate2DisplayName, data[x].Alternate2UCFCourse, data[x].Alternate2PartnerCourse);
+                            courseMapper.displayCourses2(data[x].Alternate2DisplayName, data[x].Alternate2UCFCourse, data[x].Alternate2PartnerCourse);
                         }
                         if (data[x].Alternate3UCFCourse.length > 0 || data[x].Alternate3PartnerCourse.length > 0) {
-                            courseMapper.displayCourses(data[x].Alternate3DisplayName, data[x].Alternate3UCFCourse, data[x].Alternate3PartnerCourse);
+                            courseMapper.displayCourses2(data[x].Alternate3DisplayName, data[x].Alternate3UCFCourse, data[x].Alternate3PartnerCourse);
                         }
                         if (data[x].Alternate4UCFCourse.length > 0 || data[x].Alternate4PartnerCourse.length > 0) {
-                            courseMapper.displayCourses(data[x].Alternate4DisplayName, data[x].Alternate4UCFCourse, data[x].Alternate4PartnerCourse);
+                            courseMapper.displayCourses2(data[x].Alternate4DisplayName, data[x].Alternate4UCFCourse, data[x].Alternate4PartnerCourse);
                         }
                         //tr += '<tr>' + courseMapper.getTD(ucfCourse) + courseMapper.getTD(ucfCredit) + courseMapper.getTD(pCourse) + courseMapper.getTD(pCredit) + '</tr>'
-                        tr += '<tr>' + courseMapper.getTD(ucfCourse) + courseMapper.getTD(ucfCredit) + courseMapper.getTD(pCourse) + courseMapper.getTD(pCredit) + '</tr>'
+                        //tr += '<tr>' + courseMapper.getTD(ucfCourse) + courseMapper.getTD(ucfCredit) + courseMapper.getTD(pCourse) + courseMapper.getTD(pCredit) + '</tr>'
+                        tr += '<tr>' + courseMapper.getTD(ucfCourse) + courseMapper.getTD(pCourse) + '</tr>'
                     }
                     $("#" + courseMapper.target.coursesTable).append(tr);
                 }

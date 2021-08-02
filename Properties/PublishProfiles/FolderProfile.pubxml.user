@@ -16,10 +16,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/10/2013 16:29:20</publishTime>
     </File>
     <File Include="bin/DegreeMapping.dll">
-      <publishTime>07/29/2021 14:54:57</publishTime>
+      <publishTime>07/30/2021 10:50:24</publishTime>
     </File>
     <File Include="bin/DegreeMapping.pdb">
-      <publishTime>07/29/2021 14:54:57</publishTime>
+      <publishTime>07/30/2021 10:50:24</publishTime>
     </File>
     <File Include="bin/EntityFramework.dll">
       <publishTime>04/16/2020 20:38:42</publishTime>
@@ -217,7 +217,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/26/2021 16:47:56</publishTime>
     </File>
     <File Include="Scripts/DegreeMap.js">
-      <publishTime>07/29/2021 14:28:06</publishTime>
+      <publishTime>07/30/2021 10:48:13</publishTime>
     </File>
     <File Include="Scripts/DegreeMap2.js">
       <publishTime>05/19/2021 15:44:16</publishTime>

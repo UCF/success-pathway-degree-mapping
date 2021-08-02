@@ -99,11 +99,11 @@ namespace DegreeMapping.Models
             {
                 di.ForeignLanguageRequirement = UCFForeingLanguage;
             }
-            string partnerForeignLanguage = DegreeMapping.Models.Note.List(di.Id).Where(x => x.NoteType == requirementId).Select(x => x.Value).FirstOrDefault();
-            if (!string.IsNullOrEmpty(partnerForeignLanguage))
-            {
-                di.ForeignLanguageRequirement += string.Format("<div>{0}</div>",partnerForeignLanguage);
-            }
+            //string partnerForeignLanguage = DegreeMapping.Models.Note.List(di.Id).Where(x => x.NoteType == requirementId).Select(x => x.Value).FirstOrDefault();
+            //if (!string.IsNullOrEmpty(partnerForeignLanguage))
+            //{
+            //    di.ForeignLanguageRequirement += string.Format("<div>{0}</div>",partnerForeignLanguage);
+            //}
         }
 
         private static void GetNotes(ref DegreeInfo di)
