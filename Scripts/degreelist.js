@@ -52,7 +52,7 @@
             if (addtoCharList) {
                 degreeList.addToAlphaCharList(char);
             }
-            l1 += '<li><a name="' + char + '"></a>' + ucfList[x].Degree;
+            l1 += '<li class="degreeTitle" style="cursor:pointer" onclick="degreeList.displayPartners(' + ucfList[x].DegreeId + ')"><a name="' + char + '"></a>' + ucfList[x].Degree;
             l2 = '';
             for (y = 0; y <= pList.length - 1; y++) {
                 if (ucfList[x].DegreeId == pList[y].UCFDegreeId) {
@@ -60,7 +60,7 @@
                     l2 += '<li>' + link + '</li>'
                 }
             }
-            l1 += '<ul class="pb-3">' + l2 + '</ul></li>';
+            l1 += '<ul class="pb-3 ' + ucfList[x].DegreeId + '"' + 'style="display:none"' + '>' + l2 + '</ul></li>';
         }
         if (addtoCharList) {
             this.displayAlphaList();
@@ -70,6 +70,9 @@
     clear: function () {
         $('#keyword').val('');
         this.displayByDegree(this.ucfDegrees, this.partnerDegrees);
+    },
+    displayPartners(id) {
+        $('.' + id).toggle();
     },
     search: function (keyword) {
         //let keyword = $('#keyword').val();
@@ -87,7 +90,6 @@
             keyword = (keyword == 'ae') ? 'a.e.' : keyword;
             keyword = (keyword == 'ce') ? 'c.e.' : keyword;
             keyword = (keyword == 'bsw') ? 'b.s.w.' : keyword;
-            console.log(keyword);
             for (x = 0; x <= this.ucfDegrees.length - 1; x++) {
                 let ucfdegree = this.ucfDegrees[x].Degree.toLowerCase();
                 if (ucfdegree.search(keyword) >= 0) {

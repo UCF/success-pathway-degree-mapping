@@ -199,23 +199,4 @@
             </div>
         </div>
     </footer>
-
     <script src="~/Scripts/DegreeList.js"></script>
-    <script type="text/javascript">
-        function fixLinks() {
-            $('#DegreeListOutput a').each(function () {
-                let start = $(this).prop('href').indexOf('/degree-mapping')
-                let link = '';
-                if (start > 0 ) {
-                    link = '/home' + $(this).prop('href').substring(start);
-                    console.log(link);
-                    $(this).prop("href", link);
-                }
-            })
-        }
-        $(document).ready(function () {
-            setTimeout(function () {
-                fixLinks();
-            }, 3000 )
-        })
-    </script>
