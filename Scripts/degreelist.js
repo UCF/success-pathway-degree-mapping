@@ -52,12 +52,12 @@
             if (addtoCharList) {
                 degreeList.addToAlphaCharList(char);
             }
-            l1 += '<li class="degreeTitle" style="cursor:pointer" onclick="degreeList.displayPartners(' + ucfList[x].DegreeId + ')"><a name="' + char + '"></a>' + ucfList[x].Degree;
+            l1 += '<li class="degreeTitle showPlusSign" onclick="degreeList.displayPartners(this,' + ucfList[x].DegreeId + ')"><a name="' + char + '"></a> ' + ucfList[x].Degree;
             l2 = '';
             for (y = 0; y <= pList.length - 1; y++) {
                 if (ucfList[x].DegreeId == pList[y].UCFDegreeId) {
                     let link = this.setHREF(pList[y].DegreeId, ucfList[x].Degree, pList[y].Institution)
-                    l2 += '<li>' + link + '</li>'
+                    l2 += '<li style="list-style:disc;">' + link + '</li>'
                 }
             }
             l1 += '<ul class="pb-3 ' + ucfList[x].DegreeId + '"' + 'style="display:none"' + '>' + l2 + '</ul></li>';
@@ -71,8 +71,15 @@
         $('#keyword').val('');
         this.displayByDegree(this.ucfDegrees, this.partnerDegrees);
     },
-    displayPartners(id) {
+    displayPartners(obj,id) {
         $('.' + id).toggle();
+        if ($(obj).hasClass("showPlusSign")) {
+            $(obj).removeClass("showPlusSign");
+            $(obj).addClass("showMinusSign");
+        } else {
+            $(obj).addClass("showPlusSign");
+            $(obj).removeClass("showMinusSign");
+        }
     },
     search: function (keyword) {
         //let keyword = $('#keyword').val();

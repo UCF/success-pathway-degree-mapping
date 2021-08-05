@@ -1,6 +1,30 @@
 ﻿@{
     Layout = "~/Views/Shared/_Pathway.cshtml";
 }
+    <style type="text/css">
+        .showPlusSign:before {
+            content: "+";
+            margin-right: 4px;
+        }
+        .showMinusSign:before {
+            content:"-";
+            margin-right:4px;
+        }
+        #DegreeListOutput ul {
+            list-style: none;
+            cursor: pointer;
+            line-height: 40px;
+            display: table;
+        }
+            #DegreeListOutput ul > li {
+                display: table-row;
+
+            }
+                #DegreeListOutput ul > li::before {
+                    display: table-cell;
+                    text-align: right;
+                }
+    </style>
     <main id="main" class="site-main">
         <article class="publish post-list-item">
             <section class="ucf-section ucf-section-success-pathway-home " data-section-link-title="Welcome to UCF Success Pathways!" aria-label="Welcome to UCF Success Pathways!">
@@ -31,9 +55,7 @@
                                 &nbsp;
                             </div>
                         </div>
-
                         <div class="row">
-
                             <div class=" col-md-2">
                                 &nbsp;
                             </div>
@@ -49,7 +71,7 @@
                                             <p></p>
                                         </form>
                                         <p>
-                                            <span id="DegreeListOutput" aria-live="polite"></span>
+                                            <span id="DegreeListOutput" class="DegreeListOutput" aria-live="polite"></span>
                                         </p>
                                     </div>
                                 </div>
