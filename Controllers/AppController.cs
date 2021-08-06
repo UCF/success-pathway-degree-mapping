@@ -23,9 +23,20 @@ namespace DegreeMapping.Controllers
             return View();
         }
 
+        public ActionResult Dashboard()
+        {
+            return View();
+        }
+
         public ActionResult _Dashboard()
         {
             return PartialView();
+        }
+
+        public ActionResult _CatalogDashboard()
+        {
+            List<DegreeMapping.Models.Catalog> list_catalog = DegreeMapping.Models.Catalog.List();
+            return PartialView(list_catalog);
         }
 
         public ActionResult DegreeList(int? catalogId)
@@ -436,6 +447,20 @@ namespace DegreeMapping.Controllers
         #endregion
 
         #region Catalog
+        public ActionResult CatalogView(int id)
+        {
+            DegreeMapping.Models.Catalog c = DegreeMapping.Models.Catalog.Get(id);
+            return View(c);
+        }
+
+
+
+        /// <summary>
+        /// Not sure if I still need this action/view...perhaps delete
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="degreeId"></param>
+        /// <returns></returns>
         public ActionResult Catalog(int? id, int? degreeId)
         {
             List<DegreeMapping.Models.Catalog> list_cy = DegreeMapping.Models.Catalog.List();
@@ -465,6 +490,19 @@ namespace DegreeMapping.Controllers
              4) Clone Notes
             */
             return View();
+        }
+
+        /// <summary>
+        /// Clone Type 'Course','CourseMapper','Degree','Note'
+        /// </summary>
+        /// <param name="cloneId"></param>
+        /// <param name="cloneType"></param>
+        /// <returns></returns>
+        public ActionResult _DisplayCloneInfo(int? cloneId, string cloneType)
+        {
+            ViewBag.CloneId = cloneId;
+            ViewBag.CloneType = cloneType;
+            return PartialView();
         }
 
         #endregion

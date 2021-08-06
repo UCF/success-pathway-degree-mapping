@@ -48,9 +48,6 @@ namespace DegreeMapping.Models
         public string AlternateDisplayName { get; set; }
         public int AlternateDisplayValue { get; set; }
 
-
-
-
         public List<int> Alternate2PartnerCourseIds { get; set; }
         public List<int> Alternate2UCFCourseIds { get; set; }
         public List<Course> Alternate2PartnerCourses { get; set; }
@@ -75,6 +72,8 @@ namespace DegreeMapping.Models
 
         public int InstitutionId { get; set; }
         public string Institution { get; set; }
+
+        public int? CloneCourseMapperId { get; set; }
 
         public CourseMapper()
         {
@@ -257,6 +256,12 @@ namespace DegreeMapping.Models
                 }
                 cmd.Parameters.AddWithValue("@Alternate4DisplayValue", cm.Alternate4DisplayValue);
                 #endregion
+
+                if (cm.CloneCourseMapperId.HasValue)
+                {
+                    cmd.Parameters.AddWithValue("@CloneCourseMapperId", cm.CloneCourseMapperId.Value);
+                }
+
                 cmd.ExecuteScalar();
                 cn.Close();
             }

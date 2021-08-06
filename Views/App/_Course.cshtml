@@ -14,6 +14,7 @@
     @Html.HiddenFor(x => x.Id)
     @Html.HiddenFor(x => x.DegreeId)
     @Html.HiddenFor(x => x.Active)
+    @Html.HiddenFor(x => x.CloneCourseId)
     <div class="row pt-2">
         <div class="col-md-6">
             <div class="form-group">
@@ -114,124 +115,126 @@
             </div>
         </div>
     }
-        if (Model.InstitutionId == DegreeMapping.Models.Institution.UCFId)
-        {
-            <div class="row pt-2">
-                <div class="col-md-2">
-                    <div class="form-group">
-                        @Html.LabelFor(x => x.Critical) :
-                        @Html.CheckBoxFor(x => x.Critical)
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="form-group">
-                        @Html.LabelFor(x => x.CommonProgramPrerequiste) :
-                        @Html.CheckBoxFor(x => x.CommonProgramPrerequiste)
-                    </div>
-                </div>
-                <div class="">
-                    <div class="form-group">
-                        @Html.LabelFor(x => x.Required) :
-                        @Html.CheckBoxFor(x => x.Required)
-                    </div>
-                </div>
-        </div>
-        }
-
-        if (User.Identity.Name == "jgiron")
-        {
-            <div class="row pt-2" style="display:none">
-                <div class="col-md-10">
-                    <div class="form-group">
-                        <h5>Admin only</h5>
-                        @Html.LabelFor(x => x.Description) :
-                        @Html.TextAreaFor(x => x.Description, new { @class = "form-control", col = "10", rows = "4", maxlength = "100" })
-                        <span class="alert alert-warning">100 characters max</span>
-                    </div>
+    if (Model.InstitutionId == DegreeMapping.Models.Institution.UCFId)
+    {
+        <div class="row pt-2">
+            <div class="col-md-2">
+                <div class="form-group">
+                    @Html.LabelFor(x => x.Critical) :
+                    @Html.CheckBoxFor(x => x.Critical)
                 </div>
             </div>
-        }
-        else
-        { 
-            @Html.HiddenFor(x=>x.Description)
-        }
-
-        <div class="row pt-2">
-            <div class="col-md-8">
-                <div class="form-group text-right">
-                    <button type="submit" class="btn btn-success btn-lg">Save</button>
-                    @if (Model.Id > 0)
-                    {
-                        @Html.ActionLink("Cancel", "CourseView", new { id = Model.Id }, new { @Class = "btn btn-primary btn-lg" })
-                    }
-                    else
-                    {
-                        @Html.ActionLink("Cancel", "DegreeView", new { id = Model.DegreeId }, new { @Class = "btn btn-primary btn-lg" })
-                    }
-
-                    @if (Model.Id > 0)
-                    {
-                        @Html.ActionLink("Delete", "CourseDelete", new { id = Model.Id, degreeId = Model.DegreeId }, new { @class = "btn btn-danger btn-lg", onclick = "return confirm('Are you sure you wish to delete this course?');" })
-                    }
+            <div class="col-md-4">
+                <div class="form-group">
+                    @Html.LabelFor(x => x.CommonProgramPrerequiste) :
+                    @Html.CheckBoxFor(x => x.CommonProgramPrerequiste)
+                </div>
+            </div>
+            <div class="">
+                <div class="form-group">
+                    @Html.LabelFor(x => x.Required) :
+                    @Html.CheckBoxFor(x => x.Required)
                 </div>
             </div>
         </div>
     }
 
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $("#credits input:radio").on("click", function () {
-                let credit = $(this).val();
-                SetCredit(credit);
-            })
+    if (User.Identity.Name == "jgiron")
+    {
+        <div class="row pt-2" style="display:none">
+            <div class="col-md-10">
+                <div class="form-group">
+                    <h5>Admin only</h5>
+                    @Html.LabelFor(x => x.Description) :
+                    @Html.TextAreaFor(x => x.Description, new { @class = "form-control", col = "10", rows = "4", maxlength = "100" })
+                    <span class="alert alert-warning">100 characters max</span>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        @Html.HiddenFor(x => x.Description)
+    }
 
-            $("#semesters input:radio").on("click", function () {
-                let semester = $(this).val();
-                SetSemester(semester);
-            })
+    <div class="row pt-2">
+        <div class="col-md-8">
+            <div class="form-group text-right">
+                <button type="submit" class="btn btn-success btn-lg">Save</button>
+                @if (Model.Id > 0)
+                {
+                    @Html.ActionLink("Cancel", "CourseView", new { id = Model.Id }, new { @Class = "btn btn-primary btn-lg" })
+                }
+                else
+                {
+                    @Html.ActionLink("Cancel", "DegreeView", new { id = Model.DegreeId }, new { @Class = "btn btn-primary btn-lg" })
+                }
 
-            $("#terms input:radio").on("click", function () {
-                let term = $(this).val().replace(" ", "_");
-                SetTerm(term);
-            })
+                @if (Model.Id > 0)
+                {
+                    @Html.ActionLink("Delete", "CourseDelete", new { id = Model.Id, degreeId = Model.DegreeId }, new { @class = "btn btn-danger btn-lg", onclick = "return confirm('Are you sure you wish to delete this course?');" })
+                }
+            </div>
+        </div>
+    </div>
+}
 
-            function SetCredit(credit) {
-                $("#credits input:radio").each(function () {
-                    let id = $(this).val();
-                    if (id == credit) {
-                        $(".creditId_" + id).addClass("alert");
-                        $(".creditId_" + id).addClass("alert-success");
-                    } else {
-                        $(".creditId_" + id).removeClass("alert");
-                        $(".creditId_" + id).removeClass("alert-success");
-                    }
-                })
-            }
+@Html.Action("_DisplayCloneInfo", "App", new { CloneId = Model.CloneCourseId, CloneType = "Course" })
 
-            function SetSemester(semester) {
-                $("#semesters input:radio").each(function () {
-                    let id = $(this).val();
-                    if (id == semester) {
-                        $(".semesterId_" + id).addClass("alert");
-                        $(".semesterId_" + id).addClass("alert-warning");
-                    } else {
-                        $(".semesterId_" + id).removeClass("alert");
-                        $(".semesterId_" + id).removeClass("alert-warning");
-                    }
-                })
-            }
-
-            function SetTerm(term) {
-                $("#terms input:radio").each(function () {
-                    let id = $(this).val().replace(" ", "_");
-                    if (id == term) {
-                        $("#term_" + id).addClass("alert");
-                        $("#term_" + id).addClass("alert-info");
-                    } else {
-                        $("#term_" + id).removeClass("alert");
-                        $("#term_" + id).removeClass("alert-info");
-                    }
-                })
-            }
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#credits input:radio").on("click", function () {
+            let credit = $(this).val();
+            SetCredit(credit);
         })
-    </script>
+
+        $("#semesters input:radio").on("click", function () {
+            let semester = $(this).val();
+            SetSemester(semester);
+        })
+
+        $("#terms input:radio").on("click", function () {
+            let term = $(this).val().replace(" ", "_");
+            SetTerm(term);
+        })
+
+        function SetCredit(credit) {
+            $("#credits input:radio").each(function () {
+                let id = $(this).val();
+                if (id == credit) {
+                    $(".creditId_" + id).addClass("alert");
+                    $(".creditId_" + id).addClass("alert-success");
+                } else {
+                    $(".creditId_" + id).removeClass("alert");
+                    $(".creditId_" + id).removeClass("alert-success");
+                }
+            })
+        }
+
+        function SetSemester(semester) {
+            $("#semesters input:radio").each(function () {
+                let id = $(this).val();
+                if (id == semester) {
+                    $(".semesterId_" + id).addClass("alert");
+                    $(".semesterId_" + id).addClass("alert-warning");
+                } else {
+                    $(".semesterId_" + id).removeClass("alert");
+                    $(".semesterId_" + id).removeClass("alert-warning");
+                }
+            })
+        }
+
+        function SetTerm(term) {
+            $("#terms input:radio").each(function () {
+                let id = $(this).val().replace(" ", "_");
+                if (id == term) {
+                    $("#term_" + id).addClass("alert");
+                    $("#term_" + id).addClass("alert-info");
+                } else {
+                    $("#term_" + id).removeClass("alert");
+                    $("#term_" + id).removeClass("alert-info");
+                }
+            })
+        }
+    })
+</script>

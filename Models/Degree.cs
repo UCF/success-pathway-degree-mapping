@@ -44,6 +44,7 @@ namespace DegreeMapping.Models
         public string DegreeURL { get; set; }
         [DisplayName("Catalog URL")]
         public string CatalogUrl { get; set; }
+        public int? CloneDegreeId { get; set; }
 
         public Degree()
         { 
@@ -132,6 +133,10 @@ namespace DegreeMapping.Models
                 cmd.Parameters.AddWithValue("@DegreeUrl", d.DegreeURL);
                 cmd.Parameters.AddWithValue("@CatalogUrl", d.CatalogUrl);
                 cmd.Parameters.AddWithValue("@NID", d.NID);
+                if (d.CloneDegreeId.HasValue) 
+                {
+                    cmd.Parameters.AddWithValue("@CloneDegreeId", d.CloneDegreeId.Value);
+                }
                 if (d.UCFDegreeId.HasValue)
                 {
                     cmd.Parameters.AddWithValue("@UCFDegreeId", d.UCFDegreeId.Value);
@@ -225,6 +230,9 @@ namespace DegreeMapping.Models
                 d.UCFDegreeId = ucfDegreeId;
                 d.UCFDegreeName = dr["UCFDegreeName"].ToString();
                 d.CatalogYear = Catalog.Get(d.CatalogId).Year;
+                int clonedegreeId;
+                Int32.TryParse(dr["CloneDegreeId"].ToString(), out clonedegreeId);
+                d.CloneDegreeId = clonedegreeId;
             }
         }
     }

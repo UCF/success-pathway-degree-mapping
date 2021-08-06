@@ -50,10 +50,10 @@ namespace DegreeMapping.Models
         [DisplayName("UCF Related Course")]
         public string UCFRelatedCourse { get; set; }
         public int UCFCourseCredits { get; set; }
-
         public int CatalogyId { get; set; }
         [DisplayName("Catalog Year")]
         public string CatalogYear { get; set; }
+        public int? CloneCourseId { get; set; }
 
 
         public Course()
@@ -141,6 +141,10 @@ namespace DegreeMapping.Models
                 {
                     cmd.Parameters.AddWithValue("@UCFCourseId", c.UCFCourseId);
                 }
+                if (c.CloneCourseId.HasValue)
+                {
+                    cmd.Parameters.AddWithValue("@CloneCourseId", c.CloneCourseId);
+                }
                 cmd.ExecuteScalar();
                 cn.Close();
             }
@@ -197,7 +201,6 @@ namespace DegreeMapping.Models
             return c;
         }
 
-
         public static List<Course> Search(string keyword, int? catalogId)
         {
             List<Course> list_c = new List<Course>();
@@ -211,7 +214,7 @@ namespace DegreeMapping.Models
                 if (catalogId.HasValue)
                 {
                     cmd.Parameters.AddWithValue("@CatalogId", catalogId);
-                }                
+                }
                 SqlDataReader dr = cmd.ExecuteReader();
                 if (dr.HasRows)
                 {
@@ -264,6 +267,8 @@ namespace DegreeMapping.Models
                 {
                     c.UCFCourseCredits = Convert.ToInt32(dr["UCFCourseCredits"].ToString());
                 }
+                int cloneCourseId;
+                Int32.TryParse(dr["CloneCourseId"].ToString(), out cloneCourseId);
             }
         }
 

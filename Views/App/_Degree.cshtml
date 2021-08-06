@@ -19,7 +19,7 @@
     @Html.HiddenFor(x => x.DegreeType)
     @Html.HiddenFor(x => x.NID)
     @Html.HiddenFor(x => x.Active)
-
+    @Html.HiddenFor(x => x.CloneDegreeId)
     if (Model.InstitutionId == DegreeMapping.Models.Institution.UCFId)
     {
         <div class="row">
@@ -230,6 +230,8 @@
             </div>
         </div>
     </div>
+
+    @Html.Action("_DisplayCloneInfo", "App", new { CloneId = Model.CloneDegreeId, CloneType = "Degree" })
 }
 
 @if (Model.InstitutionId != DegreeMapping.Models.Institution.UCFId)

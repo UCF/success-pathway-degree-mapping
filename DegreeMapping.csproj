@@ -2018,6 +2018,10 @@
     <Content Include="Views\Shared\_Pathway_old.cshtml" />
     <Content Include="Views\Shared\_Pathway.cshtml" />
     <Content Include="Views\Home\Degree-Mapping.cshtml" />
+    <Content Include="Views\App\_DisplayCloneInfo.cshtml" />
+    <Content Include="Views\App\Dashboard.cshtml" />
+    <Content Include="Views\App\_CatalogDashboard.cshtml" />
+    <Content Include="Views\App\CatalogView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

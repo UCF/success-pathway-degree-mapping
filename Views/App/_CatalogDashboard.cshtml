@@ -1,0 +1,26 @@
+﻿@model List<DegreeMapping.Models.Catalog>
+
+<div class="row">
+    @foreach (DegreeMapping.Models.Catalog cl in Model.OrderBy(x => x.Year))
+    {
+        List<DegreeMapping.Models.Degree> list_d = DegreeMapping.Models.Degree.List(null, cl.Id).Where(x => x.Institution.ToLower() == "ucf").ToList();
+        if (list_d != null && list_d.Count > 0)
+        {
+            string currentCss = (cl.Current) ? "alert alert-success" : "alert alert-warning";
+            <div class="col-md-4">
+                <div class="card text-center @currentCss">
+                    <h2 class="card-title h1">@cl.Year</h2>
+                    <h3 class="card-subtitle">@list_d.Count degrees</h3>
+                    <div class="card-text">
+                        <p class="pt-2"><span class="fa fa-calendar fa-4x"></span>&nbsp;</p>
+                        @Html.ActionLink("View Catalog", "CatalogView", "App", new { id = cl.Id}, new { @Class = "btn btn-primary"})
+                        @if (cl.Current) 
+                        { 
+                            <a href="#" class="btn btn-success">Clone Catalog</a>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+    }
+</div>
