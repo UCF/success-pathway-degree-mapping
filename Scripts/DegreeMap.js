@@ -47,6 +47,7 @@ var courseMapper = {
         let displayNameOutput = (displayName.length > 0) ? '<div class="row"><div class="col-md-2 col-md-2 d-none d-md-block d-lg-block">&nbsp;</div><div class="col-md-10">' + displayName + '</div></div>' : '';
         let displayNameCount = 0;
         if (ucfCourses.length > 0) {
+            ucfCourse += displayNameOutput;
             for (let x = 0; x <= ucfCourses.length - 1; x++) {
                 if (ucfCourses[x].Course == null) {
                     continue;
@@ -58,7 +59,8 @@ var courseMapper = {
                 ucfCourseSymbolsMobile = '<div class="d-block d-sm-block d-md-none">' + critical + required + cpp + '</div>';
                 let course1 = '<div class="col-md-7">' + ucfCourses[x].Course + '</div>'
                 let course2 = '<div class="col-md-3">' + ucfCourses[x].Credit + ' credits</div>';
-                ucfCourse += displayNameOutput;
+                //ucfCourse += displayNameOutput;
+                console.log('ucf - ' + ucfCourses[x].Course);
                 ucfCourse += '<div class="row">' + ucfCourseSymbolsDesktop + course1 + course2 + '</div>' + ucfCourseSymbolsMobile;
             }
         } else {
@@ -66,14 +68,15 @@ var courseMapper = {
             ucfCredit += '<div>&nbsp;</div><div class="d-lg-block d-xl-none pb-2">&nbsp;</div>';
         }
         if (partnerCourses.length > 0) {
+            displayNameOutput = (displayName.length > 0) ? '<div class="row"><div class="col-md-12">' + displayName + '</div></div>' : '';
+            pCourse += displayNameOutput;
             for (let x = 0; x <= partnerCourses.length - 1; x++) {
                 if (partnerCourses[x].Course == null) {
                     continue;
                 }
-                displayNameOutput = (displayName.length > 0) ? '<div class="row"><div class="col-md-12">' + displayName + '</div></div>' : '';
+                console.log('partner - ' + partnerCourses[x].Course);
                 let pcourse1 = '<div class="col-md-8">' + partnerCourses[x].Course + '</div>'
                 let pcourse2 = '<div class="col-md-4">' + partnerCourses[x].Credit + ' credits</div>';
-                pCourse += displayNameOutput;
                 pCourse += '<div class="row">' + pcourse1 + pcourse2 + '</div>';
             }
         } else {
