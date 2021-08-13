@@ -11,6 +11,7 @@ using DegreeMapping.Models;
 using Microsoft.Ajax.Utilities;
 using Microsoft.Owin.Security.Provider;
 using Microsoft.Win32;
+using System.Web.Script.Serialization;
 
 namespace DegreeMapping.Controllers
 {
@@ -39,14 +40,12 @@ namespace DegreeMapping.Controllers
             return PartialView(list_catalog);
         }
 
-        public ActionResult DegreeList(int? catalogId)
+        public ActionResult DegreeList(int id, string keyword)
         {
-            List<DegreeMapping.Models.Degree> list_d = new List<Degree>();
-            if (catalogId.HasValue)
-            {
-                list_d = DegreeMapping.Models.Degree.List(null, catalogId.Value);
-            }
-            ViewBag.CatalogId = (catalogId.HasValue) ? catalogId.Value : 0;
+            List<DegreeMapping.Models.Degree> list_d = DegreeMapping.Models.Degree.List(null, id);
+            ViewBag.Keyword = string.Empty;
+            JavaScriptSerializer jss = new JavaScriptSerializer();
+            ViewBag.JSONDegreeList = jss.Serialize(list_d);
             return View(list_d);
         }
 

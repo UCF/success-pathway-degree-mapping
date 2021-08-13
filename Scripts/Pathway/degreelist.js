@@ -4,6 +4,7 @@
     partnerDegrees: [],
     noPartnerColleges: [],
     alphaCharList: [],
+    groupByInstitutionList: [],
     target: {
         DegreeListOutput: 'DegreeListOutput',
         DegreeAlphaList: 'degree-alpha-list'
@@ -35,6 +36,7 @@
             }
         }
     },
+
     displayByDegree: function (ucfList, pList) {
         ucfList.sort(this.getSortOrder("Degree"));
         pList.sort(this.getSortOrder("Institution"));
@@ -108,6 +110,16 @@
         if (obj.length == 0) {
             $('#' + this.target.DegreeListOutput).html('No degrees found')
         }
+    },
+    groupByInsititution: function (institutionId) {
+        let obj = [];
+        for (x = 0; x <= this.data.length - 1; x++) {
+            if (this.data[x].InstitutionId == institutionId) {
+                console.log(this.data[x].InstitutionId + this.data[x].Institution + ' ' +  this.data[x].Degree);
+                obj.push(this.data[x]);
+            }
+        }
+        degreeList.displayByDegree(this.ucfDegrees, obj);
     },
     getSortOrder: function (prop) {
         return function (a, b) {

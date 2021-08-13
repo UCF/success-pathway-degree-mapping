@@ -86,7 +86,7 @@ namespace DegreeMapping.Models
                 SqlCommand cmd = cn.CreateCommand();
                 cmd.CommandText = "InsertDegree";
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@Name", d.Name);
+                cmd.Parameters.AddWithValue("@Name", d.Name.Trim());
                 cmd.Parameters.AddWithValue("@GPA", d.GPA);
                 cmd.Parameters.AddWithValue("@InstitutionId", d.InstitutionId);
                 cmd.Parameters.AddWithValue("@DegreeType", d.DegreeType);
@@ -119,7 +119,7 @@ namespace DegreeMapping.Models
                 cmd.CommandText = "UpdateDegree";
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@Id", d.Id);
-                cmd.Parameters.AddWithValue("@Name", d.Name);
+                cmd.Parameters.AddWithValue("@Name", d.Name.Trim());
                 cmd.Parameters.AddWithValue("@GPA", d.GPA);
                 cmd.Parameters.AddWithValue("@InstitutionId", d.InstitutionId);
                 cmd.Parameters.AddWithValue("@DegreeType", d.DegreeType);
@@ -133,10 +133,10 @@ namespace DegreeMapping.Models
                 cmd.Parameters.AddWithValue("@DegreeUrl", d.DegreeURL);
                 cmd.Parameters.AddWithValue("@CatalogUrl", d.CatalogUrl);
                 cmd.Parameters.AddWithValue("@NID", d.NID);
-                if (d.CloneDegreeId.HasValue) 
-                {
-                    cmd.Parameters.AddWithValue("@CloneDegreeId", d.CloneDegreeId.Value);
-                }
+                //if (d.CloneDegreeId.HasValue) 
+                //{
+                //    cmd.Parameters.AddWithValue("@CloneDegreeId", d.CloneDegreeId.Value);
+                //}
                 if (d.UCFDegreeId.HasValue)
                 {
                     cmd.Parameters.AddWithValue("@UCFDegreeId", d.UCFDegreeId.Value);
@@ -230,9 +230,9 @@ namespace DegreeMapping.Models
                 d.UCFDegreeId = ucfDegreeId;
                 d.UCFDegreeName = dr["UCFDegreeName"].ToString();
                 d.CatalogYear = Catalog.Get(d.CatalogId).Year;
-                int clonedegreeId;
-                Int32.TryParse(dr["CloneDegreeId"].ToString(), out clonedegreeId);
-                d.CloneDegreeId = clonedegreeId;
+                //int clonedegreeId;
+                //Int32.TryParse(dr["CloneDegreeId"].ToString(), out clonedegreeId);
+                //d.CloneDegreeId = clonedegreeId;
             }
         }
     }

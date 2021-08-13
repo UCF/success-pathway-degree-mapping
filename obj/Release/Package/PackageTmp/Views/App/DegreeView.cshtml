@@ -123,7 +123,7 @@
             else
             {
                 <div>
-                    Degree is mapped to @Html.ActionLink("UCF " + Model.UCFDegreeName, "DegreeView", new { id = Model.UCFDegreeId}) 
+                    Degree is mapped to @Html.ActionLink("UCF " + Model.UCFDegreeName, "DegreeView", new { id = Model.UCFDegreeId })
                 </div>
             }
         </div>
@@ -156,24 +156,24 @@
             <!--UCF NOTES HERE-->
 
             <div><h3>UCF Notes</h3></div>
-                @if (list_ucfNotes.Where(x => x.NoteType.Equals(DegreeMapping.Models.Note.NoteTypeValue.ListItem)).ToList().Count > 0)
-                {
+            @if (list_ucfNotes.Where(x => x.NoteType.Equals(DegreeMapping.Models.Note.NoteTypeValue.ListItem)).ToList().Count > 0)
+            {
 
-                    <ul>
-                        @foreach (DegreeMapping.Models.Note n in list_ucfNotes.Where(x => !string.IsNullOrEmpty(x.Value)).OrderBy(x => x.OrderBy))
+                <ul>
+                    @foreach (DegreeMapping.Models.Note n in list_ucfNotes.Where(x => !string.IsNullOrEmpty(x.Value)).OrderBy(x => x.OrderBy))
+                    {
+                        if (n.NoteType.Equals(DegreeMapping.Models.Note.NoteTypeValue.ListItem))
                         {
-                            if (n.NoteType.Equals(DegreeMapping.Models.Note.NoteTypeValue.ListItem))
-                            {
-                                <li>@Html.Raw(n.Value)</li>
-                            }
+                            <li>@Html.Raw(n.Value)</li>
                         }
+                    }
 
-                    </ul>
-                }
-                else 
-                { 
-                    <div><em>--No notes found</em></div>
-                }
+                </ul>
+            }
+            else
+            {
+                <div><em>--No notes found</em></div>
+            }
             <div><h3>@Model.Institution Notes</h3></div>
             @if (list_n.Count > 0)
             {
@@ -265,7 +265,7 @@
                     @if (list_c.Count > 0)
                     {
                         string semester = string.Empty;
-                        foreach (DegreeMapping.Models.Course c in list_c.OrderBy(x => x.Semester).ThenBy(x=>x.Term).ThenBy(x => x.Code))
+                        foreach (DegreeMapping.Models.Course c in list_c.OrderBy(x => x.Semester).ThenBy(x => x.Term).ThenBy(x => x.Code))
                         {
                             if (semester != c.SemesterTerm)
                             {
@@ -301,7 +301,9 @@
 }
 <!-- #endregion -->
 
-    @if (Model.InstitutionId != DegreeMapping.Models.Institution.UCFId)
-    {
-        @Html.Action("_CourseMapperList", new { degreeId = Model.Id })
-    }
+@if (Model.InstitutionId != DegreeMapping.Models.Institution.UCFId)
+{
+    @Html.Action("_CourseMapperList", new { degreeId = Model.Id })
+}
+
+@Html.Action("_DisplayCloneInfo", "App", new { CloneId = Model.CloneDegreeId, CloneType = "Degree" })

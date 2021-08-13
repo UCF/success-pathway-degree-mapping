@@ -1,6 +1,11 @@
 ﻿@model List<DegreeMapping.Models.Catalog>
 
 <div class="row pt-5">
+    <div class="col-md-12">
+        <h1 class="heading-underline">UCF Pathway Catalogs</h1>
+    </div>
+</div>
+<div class="row pt-5">
     @foreach (DegreeMapping.Models.Catalog cy in Model.OrderBy(x => x.Year))
     {
         List<DegreeMapping.Models.Degree> list_d = DegreeMapping.Models.Degree.List(null, cy.Id).Where(x => x.Institution.ToLower() == "ucf").ToList();

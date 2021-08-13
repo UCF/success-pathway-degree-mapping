@@ -1,7 +1,7 @@
 ﻿@model DegreeMapping.Models.Note
 @{
     string NoteTypeValue = DegreeMapping.Models.Note.GetNoteTypeValue(Model.NoteType);
- }
+}
 
 <div class="row pt-5">
     <div class="col-md-12">
@@ -39,3 +39,4 @@
         @Html.ActionLink("Delete", "NoteDelete", new { id = Model.Id, degreeId = Model.DegreeId }, new { @class = "btn btn-danger btn-lg", onclick = "return confirm('Are you sure you wish to delete this note?');" })
     </div>
 </div>
+@Html.Action("_DisplayCloneInfo", "App", new { CloneId = Model.CloneNoteId, CloneType = "Note" })

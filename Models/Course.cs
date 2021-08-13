@@ -141,10 +141,10 @@ namespace DegreeMapping.Models
                 {
                     cmd.Parameters.AddWithValue("@UCFCourseId", c.UCFCourseId);
                 }
-                if (c.CloneCourseId.HasValue)
-                {
-                    cmd.Parameters.AddWithValue("@CloneCourseId", c.CloneCourseId);
-                }
+                //if (c.CloneCourseId.HasValue)
+                //{
+                //    cmd.Parameters.AddWithValue("@CloneCourseId", c.CloneCourseId);
+                //}
                 cmd.ExecuteScalar();
                 cn.Close();
             }
@@ -267,8 +267,8 @@ namespace DegreeMapping.Models
                 {
                     c.UCFCourseCredits = Convert.ToInt32(dr["UCFCourseCredits"].ToString());
                 }
-                int cloneCourseId;
-                Int32.TryParse(dr["CloneCourseId"].ToString(), out cloneCourseId);
+                //int cloneCourseId;
+                //Int32.TryParse(dr["CloneCourseId"].ToString(), out cloneCourseId);
             }
         }
 

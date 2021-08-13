@@ -1,5 +1,5 @@
 ﻿@model DegreeMapping.Models.Note
-@{ 
+@{
     Model.NoteType = (Model.Id == 0) ? 2 : Model.NoteType;
 }
 
@@ -7,6 +7,7 @@
 {
     @Html.HiddenFor(x => x.Id)
     @Html.HiddenFor(x => x.DegreeId)
+    @Html.HiddenFor(x => x.CloneNoteId)
     <div class="row pt-2">
         <div class="col-md-10">
             <div class="form-group">
@@ -23,11 +24,11 @@
                     <label>List Item : @Html.RadioButtonFor(x => x.NoteType, 2)</label>
                 </div>
                 @*@if (Model.InstitutionId == DegreeMapping.Models.Institution.UCFId)
-                {
-                    <div>
-                        <label>Note : @Html.RadioButtonFor(x => x.NoteType, 1)</label>
-                    </div>
-                }*@
+                    {
+                        <div>
+                            <label>Note : @Html.RadioButtonFor(x => x.NoteType, 1)</label>
+                        </div>
+                    }*@
             </div>
         </div>
     </div>
@@ -36,7 +37,7 @@
         <div class="col-md-10">
             <div class="form-group">
                 @Html.LabelFor(x => x.Name) :
-                @Html.TextBoxFor(x => x.Name, new { @class = "form-control", required ="required" })
+                @Html.TextBoxFor(x => x.Name, new { @class = "form-control", required = "required" })
                 <span class="hidden">@Html.LabelFor(x => x.ShowName) : @Html.CheckBoxFor(x => x.ShowName)</span>
             </div>
         </div>
@@ -46,7 +47,7 @@
         <div class="col-md-10">
             <div class="form-group">
                 @Html.LabelFor(x => x.Value) :
-                @Html.TextAreaFor(x => x.Value, new { @class = "form-control", required="required", cols = "80", rows = "20" })
+                @Html.TextAreaFor(x => x.Value, new { @class = "form-control", required = "required", cols = "80", rows = "20" })
                 <span class="alert alert-warning">2000 characters max</span>
             </div>
         </div>
@@ -55,7 +56,7 @@
     <div class="row pt-2">
         <div class="col-md-10">
             <div class="form-group">
-                @Html.HiddenFor(x=>x.OrderBy)
+                @Html.HiddenFor(x => x.OrderBy)
             </div>
         </div>
     </div>
@@ -82,7 +83,7 @@
     <div class="row pt-2">
         <div class="col-md-3">
             <div class="form-group">
-                @Html.HiddenFor(x=>x.Active)
+                @Html.HiddenFor(x => x.Active)
             </div>
         </div>
     </div>
@@ -107,6 +108,7 @@
         </div>
     </div>
 }
+@Html.Action("_DisplayCloneInfo", "App", new { CloneId = Model.CloneNoteId, CloneType = "Note" })
 
 <script type="text/javascript">
     function SetNoteType(val) {

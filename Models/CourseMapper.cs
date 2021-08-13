@@ -19,6 +19,7 @@ namespace DegreeMapping.Models
             public static string Default { get { return "Default";  } }
             public static string Alternate { get { return "Alternate"; } }
             public static string SelectOne { get { return "Select One"; } }
+            public static string SelectTwo { get { return "Select Two"; } }
             public static string OR { get { return "OR";  } }
             public static string AND { get { return "AND"; } }
         }
@@ -257,10 +258,10 @@ namespace DegreeMapping.Models
                 cmd.Parameters.AddWithValue("@Alternate4DisplayValue", cm.Alternate4DisplayValue);
                 #endregion
 
-                if (cm.CloneCourseMapperId.HasValue)
-                {
-                    cmd.Parameters.AddWithValue("@CloneCourseMapperId", cm.CloneCourseMapperId.Value);
-                }
+                //if (cm.CloneCourseMapperId.HasValue)
+                //{
+                //    cmd.Parameters.AddWithValue("@CloneCourseMapperId", cm.CloneCourseMapperId.Value);
+                //}
 
                 cmd.ExecuteScalar();
                 cn.Close();
@@ -404,6 +405,7 @@ namespace DegreeMapping.Models
         {
             switch(value)
             {
+                case 5: return CourseMapper.DisplayType.SelectTwo;
                 case 4: return CourseMapper.DisplayType.SelectOne;
                 case 3: return CourseMapper.DisplayType.OR;
                 case 2: return CourseMapper.DisplayType.AND;

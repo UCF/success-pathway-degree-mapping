@@ -148,9 +148,9 @@ namespace DegreeMapping.Models
                 cmd.Parameters.AddWithValue("@ForeignLanguageRequirement", n.ForeignLanguageRequirement);
                 cmd.Parameters.AddWithValue("@Section", n.Section);
                 cmd.Parameters.AddWithValue("@NoteType", n.NoteType);
-                if (n.CloneNoteId.HasValue) {
-                    cmd.Parameters.AddWithValue("@CloneNoteId", n.CloneNoteId.Value);
-                }
+                //if (n.CloneNoteId.HasValue) {
+                //    cmd.Parameters.AddWithValue("@CloneNoteId", n.CloneNoteId.Value);
+                //}
                 cmd.ExecuteScalar();
                 cn.Close();
             }
@@ -227,9 +227,9 @@ namespace DegreeMapping.Models
                 n.NoteType = Convert.ToInt32(dr["NoteType"].ToString());
                 n.CatalogYear = dr["CatalogYear"].ToString();
                 n.CatalogyId = Convert.ToInt32(dr["CatalogId"].ToString());
-                int cloneNoteId;
-                Int32.TryParse(dr["CloneNoteId"].ToString(), out cloneNoteId);
-                n.CloneNoteId = cloneNoteId;
+                //int cloneNoteId;
+                //Int32.TryParse(dr["CloneNoteId"].ToString(), out cloneNoteId);
+                //n.CloneNoteId = cloneNoteId;
             }
         }
 

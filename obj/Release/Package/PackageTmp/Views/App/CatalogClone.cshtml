@@ -1,51 +1,70 @@
 ﻿@{
+    //List all catalogs
     List<DegreeMapping.Models.Catalog> list_cy = DegreeMapping.Models.Catalog.List();
+
+    //Catalogs that do not contain degrees
     List<DegreeMapping.Models.Catalog> list_emptyCy = DegreeMapping.Models.Catalog.GetEmptyCatalog();
-    DegreeMapping.Models.Catalog source = list_cy.Where(x => x.Id == ViewBag.sourceCatalogId).FirstOrDefault();
-    DegreeMapping.Models.Catalog target = list_cy.Where(x => x.Id == ViewBag.targerCatalogId).FirstOrDefault();
-    List<DegreeMapping.Models.Degree> list_targerDegrees = new List<DegreeMapping.Models.Degree>();
-    if (list_targerDegrees.Count > 0)
-    {
-        list_targerDegrees = DegreeMapping.Models.Degree.List(null, target.Id);
-    }
+    DegreeMapping.Models.Catalog nextCatalog = list_emptyCy.OrderBy(x => x.Id).FirstOrDefault();
+
+    DegreeMapping.Models.Catalog cy = list_cy.Where(x => x.Current).FirstOrDefault();
+    int degreeCount = DegreeMapping.Models.Degree.List(DegreeMapping.Models.Institution.UCFId, cy.Id).Count();
+
+
+    int nextCatalogId = cy.Id + 1;
 }
 
-<div class="row">
-    <h1>Clone Catalog @source.Year</h1>
-</div>
-@using (Html.BeginForm("CloneCatalog", "App", FormMethod.Post, new { @class = "form-horizontal" }))
-{
-    <div class="row pt-5">
-        <div class="col-md-4">
-            <select name="sourceCatalogId" required="required" class="form-control">
-                <option>Select Source Catalog</option>
-                @foreach (DegreeMapping.Models.Catalog cy in list_cy.OrderByDescending(x=>x.Current).ThenBy(x=>x.Year))
-                {
-                    string current = (cy.Current) ? "current catalog" : string.Empty;
-                    if (source.Id == cy.Id)
-                    { 
-                        <option value="@cy.Id" selected>@cy.Year @current</option>
-                        continue;
-                    }
-                    <option value="@cy.Id">@cy.Year @current</option>
-                }
-            </select>
-        </div>
-        <div class="col-md-4">
-            @if (list_targerDegrees.Count > 0)
-            { 
-                <div class="alert alert-danger">Catalog already exists</div>
-            }
-            <select name="targetCatalogId" required="required" class="form-control">
-                <option>Select Targert Catalog</option>
-                @foreach (DegreeMapping.Models.Catalog cy in list_emptyCy.OrderBy(x=>x.Year))
-                { 
-                    <option value="@cy.Id">@cy.Year</option>
-                }
-            </select>
-        </div>
-        <div class="col-md-4">
-            <button type="submit" class="btn btn-success btn-lg">Clone</button>
+
+@section JumbotronMain {
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1 class="heading-underline">Clone Catalog</h1>
+                </div>
+            </div>
         </div>
     </div>
 }
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="alert alert-warning">
+            <h2>Rules</h2>
+            <ul>
+                <li>You can only clone the current catalog.</li>
+                <li>You can only clone to the next catalog.</li>
+                <li>Catalogs are independent from each other.</li>
+                <li>Cloning will copy all degrees, courses, course mappings, notes and requirements for all institutions.</li>
+                <li>Once a new catalog has been created it cannot be deleted.</li>
+                <li>You cannot overwrite an existing catalog</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="row pt-5">
+    <div class="col-md-3">
+        <h2>Source Catalog</h2>
+        <div>
+            <h3>Patway Catalog @cy.Year</h3>
+            <h4>@degreeCount degress</h4>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <span class="fa fa-arrow-right fa-4x"></span>
+    </div>
+    <div class="col-md-3">
+        <div class="form-group">
+            <div>
+                <h2>Target Catalog</h2>
+                <div>
+                    @nextCatalog.Year
+                    <input type="hidden" name="nextCatalogId" value="@nextCatalog.Id" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 text-center">
+        <button type="submit" name="submit" class="btn btn-success btn-lg">Clone</button>
+    </div>
+</div>

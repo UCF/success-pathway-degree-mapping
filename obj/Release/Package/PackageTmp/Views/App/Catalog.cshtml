@@ -3,7 +3,6 @@
     int catagoryId = ViewBag.catagoryId;
     List<DegreeMapping.Models.Catalog> list_cy = ViewBag.list_cy;
     string catalogYear = list_cy.Where(x => x.Id == catagoryId).Select(x => x.Year).FirstOrDefault();
-
 }
 
 <div class="row pt-5">
