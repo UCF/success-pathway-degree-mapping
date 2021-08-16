@@ -1,6 +1,6 @@
 ﻿@model DegreeMapping.Models.Degree
 @{
-    List<DegreeMapping.Models.Degree> list_d = DegreeMapping.Models.Degree.List(null,null);
+    List<DegreeMapping.Models.Degree> list_d = DegreeMapping.Models.Degree.List(null, null);
     List<DegreeMapping.Models.College> list_c = DegreeMapping.Models.College.List(null);
     List<DegreeMapping.Models.Catalog> list_cy = DegreeMapping.Models.Catalog.List();
     Model.CollegeName = list_c.Where(x => x.Id == Model.CollegeId).Select(x => x.CollegeName).FirstOrDefault();
@@ -11,15 +11,22 @@
         Model.CollegeName = (!string.IsNullOrEmpty(Model.CollegeName)) ? Model.CollegeName : ucfDegree.CollegeName;
     }
 }
-
 @using (Html.BeginForm("DegreeSave", "App", FormMethod.Post, new { @class = "form-horizontal" }))
 {
     @Html.HiddenFor(x => x.Id);
     @Html.HiddenFor(x => x.InstitutionId)
     @Html.HiddenFor(x => x.DegreeType)
     @Html.HiddenFor(x => x.NID)
-    @Html.HiddenFor(x => x.Active)
     @Html.HiddenFor(x => x.CloneDegreeId)
+    
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                @Html.LabelFor(x => x.Active) :
+                @Html.CheckBoxFor(x => x.Active, new { @class = "" })
+            </div>
+        </div>
+    </div>
     if (Model.InstitutionId == DegreeMapping.Models.Institution.UCFId)
     {
         <div class="row">
@@ -35,31 +42,31 @@
             <div class="col-md-6">
                 <div class="form-group">
                     @Html.LabelFor(x => x.CatalogYear) : @Model.CatalogYear
-                    @Html.HiddenFor(x=>x.CatalogId)
+                    @Html.HiddenFor(x => x.CatalogId)
                     @*UNCOMMENT TO CHANGE CATALOG YEAR
-                    <select name="CatalogId" class="form-control">
-                        @{
-                            bool active = false;
-                        }
-                        @foreach (DegreeMapping.Models.Catalog cy in list_cy.OrderByDescending(x => x.Active).ThenBy(x => x.Year))
-                        {
-                            string current = (cy.Current) ? "Current" : string.Empty;
-                            if (active != cy.Active)
-                            {
-                                active = cy.Active;
-                                string label = (cy.Active) ? "Active Catalogs" : "Inactive Catalogs";
-                                <optgroup label="@label">@label</optgroup>
+                        <select name="CatalogId" class="form-control">
+                            @{
+                                bool active = false;
                             }
-                            if (Model.CatalogId == cy.Id)
+                            @foreach (DegreeMapping.Models.Catalog cy in list_cy.OrderByDescending(x => x.Active).ThenBy(x => x.Year))
                             {
-                                <option selected value="@cy.Id">@cy.Year @current</option>
+                                string current = (cy.Current) ? "Current" : string.Empty;
+                                if (active != cy.Active)
+                                {
+                                    active = cy.Active;
+                                    string label = (cy.Active) ? "Active Catalogs" : "Inactive Catalogs";
+                                    <optgroup label="@label">@label</optgroup>
+                                }
+                                if (Model.CatalogId == cy.Id)
+                                {
+                                    <option selected value="@cy.Id">@cy.Year @current</option>
+                                }
+                                else
+                                {
+                                    <option value="@cy.Id">@cy.Year @current</option>
+                                }
                             }
-                            else
-                            {
-                                <option value="@cy.Id">@cy.Year @current</option>
-                            }
-                        }
-                    </select>
+                        </select>
                     *@
                 </div>
             </div>
@@ -107,7 +114,7 @@
     }
     else
     {
-        @Html.HiddenFor(x=>x.CatalogId)
+        @Html.HiddenFor(x => x.CatalogId)
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
@@ -203,8 +210,8 @@
         </div>
     }
     else
-    { 
-        @Html.HiddenFor(x=>x.Description)
+    {
+        @Html.HiddenFor(x => x.Description)
     }
     <div class="row pt-2">
         <div class="col-md-10">

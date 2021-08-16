@@ -67,8 +67,13 @@ namespace DegreeMapping.Models
                     while(dr.Read())
                     {
                         DegreeListv2 dl = new DegreeListv2();
-                        Set(dr, ref dl);
-                        list_dl.Add(dl);
+                        bool active = true;
+                        active = Convert.ToBoolean(dr["Active"].ToString());
+                        if (active)
+                        {
+                            Set(dr, ref dl);
+                            list_dl.Add(dl);
+                        }
                     }
                 }
                 cn.Close();

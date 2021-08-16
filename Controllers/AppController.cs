@@ -12,6 +12,7 @@ using Microsoft.Ajax.Utilities;
 using Microsoft.Owin.Security.Provider;
 using Microsoft.Win32;
 using System.Web.Script.Serialization;
+using System.Web.Configuration;
 
 namespace DegreeMapping.Controllers
 {
@@ -118,8 +119,9 @@ namespace DegreeMapping.Controllers
         [HttpPost]
         public ActionResult DegreeSave(Degree d)
         {
+            d.Active = (d.Active) ? d.Active : false;
             if (d.Id > 0)
-            {
+            { 
                 Degree.Update(d);
             }
             else
