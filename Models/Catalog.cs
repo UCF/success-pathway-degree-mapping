@@ -5,6 +5,9 @@ using System.Web;
 using System.Data;
 using System.Data.SqlClient;
 using System.Data.Entity.Core.Objects;
+using System.Web.Mvc.Ajax;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace DegreeMapping.Models
 {
@@ -14,6 +17,8 @@ namespace DegreeMapping.Models
         public string Year { get; set; }
         public bool Active { get; set; }
         public bool Current { get; set; }
+        [DisplayName("Undergraduate Catalog")]
+        public string UndergraduateCatalogURL { get; set; }
 
         public Catalog()
         {
@@ -27,6 +32,7 @@ namespace DegreeMapping.Models
             Year = c.Year;
             Active = c.Active;
             Current = c.Current;
+            UndergraduateCatalogURL = c.UndergraduateCatalogURL;
         }
 
         public static Catalog Get(int id)
@@ -95,6 +101,44 @@ namespace DegreeMapping.Models
             return list_c;
         }
 
+
+        public static int Insert(Catalog cy)
+        {
+            int id = 0;
+            using (SqlConnection cn = new SqlConnection(Database.DC_DegreeMapping))
+            {
+                cn.Open();
+                SqlCommand cmd = cn.CreateCommand();
+                cmd.CommandText = "UpdateCatalog";
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@Active", cy.Active);
+                cmd.Parameters.AddWithValue("@Current", cy.Current);
+                cmd.Parameters.AddWithValue("@Year", cy.Year);
+                cmd.Parameters.AddWithValue("@UndergraduateCatalogURL", cy.UndergraduateCatalogURL);
+                id = Convert.ToInt32(cmd.ExecuteScalar());
+                cn.Close();
+            }
+            return id;
+        }
+
+        public static void Update(Catalog cy)
+        {
+            using (SqlConnection cn = new SqlConnection(Database.DC_DegreeMapping))
+            {
+                cn.Open();
+                SqlCommand cmd = cn.CreateCommand();
+                cmd.CommandText = "UpdateCatalog";
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@Id", cy.Id);
+                cmd.Parameters.AddWithValue("@Active", cy.Active);
+                cmd.Parameters.AddWithValue("@Current", cy.Current);
+                cmd.Parameters.AddWithValue("@Year", cy.Year);
+                cmd.Parameters.AddWithValue("@UndergraduateCatalogURL", cy.UndergraduateCatalogURL);
+                cmd.ExecuteScalar();
+                cn.Close();
+            }
+        }
+
         private static void Set(SqlDataReader dr, ref Catalog c)
         {
             if (dr.HasRows)
@@ -103,6 +147,7 @@ namespace DegreeMapping.Models
                 c.Year = dr["Year"].ToString();
                 c.Active = Convert.ToBoolean(dr["Active"].ToString());
                 c.Current = Convert.ToBoolean(dr["Current"].ToString());
+                c.UndergraduateCatalogURL = dr["UndergraduateCatalogURL"].ToString();
             }
         }
     }

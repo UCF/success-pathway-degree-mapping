@@ -1,0 +1,24 @@
+﻿@{
+    string toolbar = "undo redo bold italic underline link alignleft aligncenter alignright alignjustify bullist numlist indent outdent ";
+    string plugins = "advcode a11ychecker link advlist lists anchor autolink fullscreen preview print table visualblocks visualchars wordcount";
+}
+
+<script src="~/Scripts/tinymce/tinymce.min.js"></script>
+<script type="text/javascript">
+    tinymce.init(
+            {
+                branding: false,
+                selector: 'textarea',
+                plugins: '@Html.Raw(plugins)',
+                menubar: false,
+                toolbar: '@Html.Raw(toolbar)',
+                //advlist_bullet_styles: "circle",
+                //mode: "specific_textareas",
+                //editor_selector: "useWysiwyg",
+                //selector: "useWysiwyg",
+                //menubar: 'file, edit, insert',
+                menubar : '',
+                height : 300,
+            }
+        );
+</script>

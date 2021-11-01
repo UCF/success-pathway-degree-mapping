@@ -63,7 +63,7 @@ namespace DegreeMapping.Models
         public static List<CourseMap> List(int degreeId)
         {
             List<CourseMap> list_courseMap = new List<CourseMap>();
-            List<Course> list_course = Course.List(degreeId);
+            List<Course> list_course = Course.List(degreeId, null);
             foreach (Course c in list_course)
             {
                 CourseMap cm = new CourseMap(c);
@@ -81,7 +81,7 @@ namespace DegreeMapping.Models
         public static List<CourseMap> UCFList(int UCFdegreeId)
         {
             List<CourseMap> list_courseMap = new List<CourseMap>();
-            List<Course> list_c = DegreeMapping.Models.Course.List(UCFdegreeId);
+            List<Course> list_c = DegreeMapping.Models.Course.List(UCFdegreeId, null);
             foreach (DegreeMapping.Models.Course c in list_c.Where(x=>x.Semester >= 5).OrderBy(x=>x.Semester).ThenBy(x=>x.Code))
             {
                 CourseMap cm = new CourseMap();

@@ -1,12 +1,22 @@
 ﻿@model DegreeMapping.Models.Course
+@{
+    int catalogId = Model.CatalogId;
+}
 
-<div class="row py-5">
-    <div class="col-md-12">
-        <small>@Html.ActionLink("Degree list", "Checklist", "App") <span class="glyphicon glyphicon-arrow-right"></span> @Html.ActionLink(Model.Institution, "InstitutionView", new { id = Model.InstitutionId }) <span class="glyphicon glyphicon-arrow-right"></span> @Html.ActionLink(Model.Degree, "DegreeView", new { id = Model.DegreeId })</small>
-        <h1>@Model.CatalogYear @Model.Degree</h1>
-        <h2>@Model.Institution</h2>
+@section JumbotronMain {
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="h3">@Html.ActionLink("Degree List", "DegreeList", "App", null, new { id = Model.CatalogId }) <span class="glyphicon glyphicon-arrow-right"></span> @Html.ActionLink(Model.Institution, "InstitutionView", new { id = Model.InstitutionId }) <span class="glyphicon glyphicon-arrow-right"></span> @Html.ActionLink(Model.Degree, "DegreeView", new { id = Model.DegreeId })</div>
+                    <h1 class="heading-underline">@Model.CatalogYear @Model.Degree</h1>
+                    <h2>@Model.Institution</h2>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
+}
+
 <div class="container px-5">
     @Html.Action("_Course", "App", new { model = Model })
 </div>

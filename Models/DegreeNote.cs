@@ -48,7 +48,7 @@ namespace DegreeMapping.Models
         public static List<DegreeNote> List(int degreeId)
         {
             List<DegreeNote> list_dn = new List<DegreeNote>();
-            List<DegreeMapping.Models.Note> list_n = DegreeMapping.Models.Note.List(degreeId).Where(x => x.Active).ToList();
+            List<DegreeMapping.Models.Note> list_n = DegreeMapping.Models.Note.List(degreeId, null).Where(x => x.Active).ToList();
             foreach(DegreeMapping.Models.Note n in list_n.OrderBy(x=>x.OrderBy).ThenBy(x=>x.Name)) 
             {
                 DegreeNote dn = new DegreeNote(n);

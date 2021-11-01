@@ -21,20 +21,14 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    @if (cy.Current)
+                    @*@if (cy.Current)
                     {
                         <div class="pt-3">
                             <h3>Current Catalog</h3>
                         </div>
-                    }
-                    <h1 class="heading-underline">@cy.Year Pathway Catalog</h1>
+                    }*@
+                    <h1 class="heading-underline">Pathway Catalog @cy.Year</h1>
                     <h2>@degreeCount degrees</h2>
-                    @if (cy.Current)
-                    {
-                        <div class="pt-3">
-                            @Html.ActionLink("Clone Catalog", "CatalogClone", "App", new { catalogId = catalogId }, new { @Class = "btn btn-primary btn-lg" })
-                        </div>
-                    }
                 </div>
             </div>
         </div>
@@ -46,8 +40,9 @@
         @using (Html.BeginForm("DegreeList", "App", FormMethod.Post, new { @Class = "form-inline" }))
         {
             <div class="form-group">
-                <input type="text" class="form-control" name="keyword" id="keyword" value="" placeholder="Keyword" style="width:500px" />
+                <input type="text" placeholder="Search degrees" style="width:500px" class="form-control" name="keyword" id="keyword" autocomplete="true" aria-autocomplete="list" aria-haspopup="false" autocapitalize="off" autocorrect="off" title="Degree Search" aria-label="Degree Search">
                 <button type="submit" class="btn btn-primary btn-lg">Search</button>
+                <button type="button" class="btn btn-info btn-lg" onclick="portalDegreeList.clear();">Clear</button>
             </div>
         }
     </div>
@@ -62,12 +57,11 @@
 
         <div class="row">
             <div class="col-md-12">
-                <h2>Degree list</h2>
                 <div id="degreeListOutput" style="font-size:22px"></div>
             </div>
         </div>
 
-        <div class="row pt-5">
+        <div class="row pt-5" style="display:none">
             <div class="col-md-12">
                 <ul>
                     @foreach (DegreeMapping.Models.Degree d in Model.Where(x => x.InstitutionId == DegreeMapping.Models.Institution.UCFId))
@@ -128,20 +122,39 @@
             ucfDegreeList: @Html.Raw(JSONUCFDegreeList),
             partnerDegreeList: @Html.Raw(JSONPartnerDegreeList),
             institutionList : @Html.Raw(JSONInstitutionList),
-            displayDegreeList: function () {
+            displayDegreeList: function (degreelist) {
+                let stopCounter = 0;
                 let output = '';
-                for (let x = 0; x <= this.ucfDegreeList.length - 1; x++) {
-                    output += '<li><strong>' + this.ucfDegreeList[x].Name + '</strong></li>'
+                let notActiveHtml = '<span class="px-3 h5" style="color:red">Not Active</span>';
+                for (let x = 0; x <= degreelist.length - 1; x++) {
+                    if (degreelist[x].Active) {
+                        output += '<li><strong>' + degreelist[x].Name + '</strong><a href="@path/App/DegreeView/' + degreelist[x].Id + '">Edit</a></li>'
+                    } else {
+                        output += '<li><strong>' + degreelist[x].Name + '</strong><a href="@path/App/DegreeView/' + degreelist[x].Id + '">Edit</a>' + notActiveHtml + '</li>'
+                    }
                     for (let y = 0; y <= this.institutionList.length - 1; y++) {
                         if (this.institutionList[y].Id != 1) {
                             let hasDegree = false;
                             let partnerLi = '';
                             let partnerLiNoInfo = '';
                             for (let z = 0; z <= this.partnerDegreeList.length - 1; z++) {
-                                //d.Id == d2.UCFDegreeId && i.Id == d2.InstitutionId
-                                if (this.ucfDegreeList[x].Id == this.partnerDegreeList[z].UCFDegreeId && this.institutionList[y].Id == this.partnerDegreeList[z].InstitutionId) {
+
+                                if (stopCounter < 10) {
+                                    //d.Id == d2.UCFDegreeId && i.Id == d2.InstitutionId
+                                    console.log('degreelist[x].Id: ' + degreelist[x].Id);
+                                    console.log('this.partnerDegreeList[z].UCFDegreeId: ' + this.partnerDegreeList[z].UCFDegreeId);
+                                    console.log('this.institutionList[y].Id: ' + this.institutionList[y].Id);
+                                    console.log('this.partnerDegreeList[z].InstitutionId: ' + this.partnerDegreeList[z].InstitutionId);
+                                    console.log('---');
+                                }
+                                stopCounter++;
+                                if (degreelist[x].Id == this.partnerDegreeList[z].UCFDegreeId && this.institutionList[y].Id == this.partnerDegreeList[z].InstitutionId) {
                                     hasDegree = true;
-                                    partnerLi = '<li><a href="@path/App/DegreeView/' + this.partnerDegreeList[z].Id + '">' + this.institutionList[y].Name + '</a></li>';
+                                    if (this.partnerDegreeList[z].Active) {
+                                        partnerLi = '<li><a href="@path/App/DegreeView/' + this.partnerDegreeList[z].Id + '">' + this.institutionList[y].Name + '</a></li>';
+                                    } else {
+                                        partnerLi = '<li><a href="@path/App/DegreeView/' + this.partnerDegreeList[z].Id + '">' + this.institutionList[y].Name + '</a>' + notActiveHtml + '</li>';
+                                    }
                                 }
                             }
                             if (!hasDegree) {
@@ -159,13 +172,50 @@
                 $('#' + this.target.degreeListOutput).html(output);
             },
             search: function (keyword) {
-                //need to modify displayDegreeList to pass in UCFDegrees funtion(UCFDegreeList)
-                //So that we can pass custom ucfdegreelist from search
+                //let keyword = $('#keyword').val();
+                if (keyword.length < 1) {
+                    this.displayDegreeList(this.ucfDegreeList);
+                    return;
+                }
+                let obj = [];
+                keyword = keyword.toLowerCase()
+                if (keyword.length >= 2) {
+                    keyword = (keyword == 'babs') ? 'b.a.b.s.' : keyword;
+                    keyword = (keyword == 'bsba') ? 'b.s.b.a.' : keyword;
+                    keyword = (keyword == 'ba') ? 'b.a.' : keyword;
+                    keyword = (keyword == 'bs') ? 'b.s.' : keyword;
+                    keyword = (keyword == 'ae') ? 'a.e.' : keyword;
+                    keyword = (keyword == 'ce') ? 'c.e.' : keyword;
+                    keyword = (keyword == 'bsw') ? 'b.s.w.' : keyword;
+                    for (x = 0; x <= this.ucfDegreeList.length - 1; x++) {
+                        let ucfdegree = this.ucfDegreeList[x].Name.toLowerCase();
+                        if (ucfdegree.search(keyword) >= 0) {
+                            obj.push(this.ucfDegreeList[x]);
+                        }
+                    }
+                    this.displayDegreeList(obj);
+                }
+                if (obj.length == 0) {
+                    $('#' + this.target.degreeListOutput).html('No degrees found')
+                }
+            },
+            clear: function () {
+                this.displayDegreeList(this.ucfDegreeList);
+                $('#keyword').val('');
             },
             init: function () {
-                console.log(this.degreeList);
-                //this.setDegreeList();
-                this.displayDegreeList();
+                this.displayDegreeList(this.ucfDegreeList);
             }
         }
+        $(document).ready(function () {
+            portalDegreeList.init();
+            $("#keyword").on('keyup', function () {
+                if ($(this).val().length >= 2) {
+                    portalDegreeList.search($(this).val());
+                }
+                if ($(this).val().length == 0) {
+                    portalDegreeList.clear();
+                }
+            })
+        })
     </script>

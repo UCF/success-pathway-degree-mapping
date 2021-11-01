@@ -1,0 +1,124 @@
+﻿@{
+    Layout = "~/Views/Shared/_Pathway.cshtml";
+}
+
+    <section class="ucf-section ucf-section-success-pathway-home " data-section-link-title="Welcome to UCF Success Pathways!" aria-label="Welcome to UCF Success Pathways!">
+        <div class="container">
+
+            <div class="row mb-0 pt-5 pb-3">
+
+                <div class=" col-md-12">
+
+                    <h3 class="heading-underline">Welcome to UCF Success Pathways!</h3>
+                    <p class="lead">Are you earning an A.A. at a state college and planning to transfer to UCF? UCF Success Pathways outlines required lower-level courses and academic milestones aligned with your anticipated UCF major. We encourage you to use pathways in consultation with your current academic advisor.</p>
+                    <p class="lead">To determine your earned college credits based on the courses you’ve already taken visit <a title="UCF Transfer Equivalency System (TES) site." href="https://tes.collegesource.com/publicview/TES_publicview01.aspx?rid=5a34a0a1-3ab8-48c4-b347-2b967c317c7c&amp;aid=df6222b3-1b52-4cc4-9221-db71813d2086" target="_blank" rel="noopener">UCF Transfer Equivalency System (TES) site.</a></p>
+                    <p class="lead">Search for your intended UCF major below. Select your state college under the major or “Generic” if not listed.</p>
+                </div>
+                <br>
+            </div>
+
+        </div>
+    </section>
+
+
+    <section>
+        <div class="container">
+            <div class="card-deck" id="catalogList">
+                <div class="card text-center">
+                    <div class="card-header card-primary">
+                        <a href="#" class="text-secondary">
+                            <h1>2020-2021 <br />Pathway Catalog</h1>
+                            <div><i class="fa fa-book fa-4x"></i></div>
+                        </a>
+                    </div>
+                </div>
+                <div class="card text-center">
+                    <div class="card-header card-primary">
+                        <a href="#" class="text-secondary">
+                            <h1>2021-2022 <br />Pathway Catalog</h1>
+                            <div><i class="fa fa-book fa-4x"></i></div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+@Html.Action("_PathwayDegreeFooter")
+
+<script type="text/javascript">
+    var pathwayCatalog = {
+        catalogData: [],
+
+        targetId: {
+            catalogList: "catalogList"
+        },
+
+        populateCatalogList: function () {
+            if (this.catalogData.length > 0) {
+                for (let x = 0; x <= this.catalogData.length - 1; x++) {
+                    $('#' + this.targetId.catalogData).append($('<option>', {
+                        value: this.catalogData[x].Id,
+                        text: this.catalogData[x].Year
+                    }));
+                }
+            }
+        },
+        displayCatalogList: function () {
+            let card = '';
+            for (let x = 0; x <= this.catalogData.length - 1; x++) {
+                let url = this.getURL(this.catalogData[x].Id);
+                card += this.cardTemplate(this.catalogData[x].Year, url);
+            }
+            $('#' + this.targetId.catalogList).html(card);
+        },
+        getURL: function (id) {
+            switch (id) {
+                case 1: return "Catalog2020_2021";
+                    break;
+                case 2: return "Catalog2021_2022";
+                    break;
+                case 3: return "Catalog2022_2023";
+                    break;
+                case 4: return "Catalog2023_2024"
+                    break;
+                case 5: return "Catalog2024_2025";
+                    break;
+                default: return "Catalog2020_2021";
+            }
+        },
+        cardTemplate: function (year, url,) {
+            let template = '<div class="card text-center">';
+            template += '<div class="card-header card-primary">';
+            template += '<a href="/DegreeMap2/' + url + '" class="text-secondary">';
+            template += '<h1>Pathway Catalog<br />' + year + '</h1>';
+            template += '<div><i class="fa fa-book fa-4x"></i></div>';
+            template += '</a>';
+            template += '</div>';
+            template += '</div>';
+            return template;
+        },
+        
+        getCatalogList: function () {
+            $.get({
+                //url: "https://portal.connect.ucf.edu/pathway/api/Degree/GetListByCatalog",
+                url: "/api/v2/DegreeMap/GetCatalogs",
+                type: "GET",
+                headers: { "APIKey": "Th1sIsth3Way" },
+                cache: false,
+                success: function (data) {
+                    console.log(data);
+                    pathwayCatalog.catalogData = data;
+                    pathwayCatalog.displayCatalogList();
+                }
+            })
+        },
+        init: function () {
+            this.populateCatalogList();
+        }
+    }
+    $(document).ready(function () {
+        pathwayCatalog.getCatalogList();
+        pathwayCatalog.init();
+    })
+</script>

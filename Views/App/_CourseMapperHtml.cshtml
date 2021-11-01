@@ -2,8 +2,8 @@
 @{
     DegreeMapping.Models.Degree partnerDegree = DegreeMapping.Models.Degree.Get(Model.DegreeId);
     DegreeMapping.Models.Degree ucfDegree = DegreeMapping.Models.Degree.Get(partnerDegree.UCFDegreeId.Value);
-    List<DegreeMapping.Models.Course> list_partnerCourses = DegreeMapping.Models.Course.List(Model.DegreeId);
-    List<DegreeMapping.Models.Course> list_ucfCourses = DegreeMapping.Models.Course.List(ucfDegree.Id);
+    List<DegreeMapping.Models.Course> list_partnerCourses = DegreeMapping.Models.Course.List(Model.DegreeId, null);
+    List<DegreeMapping.Models.Course> list_ucfCourses = DegreeMapping.Models.Course.List(ucfDegree.Id, null);
 }
 
     <div class="containter pl-5">

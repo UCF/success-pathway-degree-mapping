@@ -28,7 +28,7 @@ namespace DegreeMapping.Models
         public int DegreeId { get; set; }
         public string Degree { get; set; }
 
-        public int CatalogyId { get; set; }
+        public int CatalogId { get; set; }
         public string CatalogYear { get; set; }
 
         public List<int> UCFCourseIds { get; set; }
@@ -71,6 +71,14 @@ namespace DegreeMapping.Models
         public int Alternate4DisplayValue { get; set; }
 
 
+        public List<int> Alternate5PartnerCourseIds { get; set; }
+        public List<int> Alternate5UCFCourseIds { get; set; }
+        public List<Course> Alternate5PartnerCourses { get; set; }
+        public List<Course> Alternate5UCFCourses { get; set; }
+        public string Alternate5DisplayName { get; set; }
+        public int Alternate5DisplayValue { get; set; }
+
+
         public int InstitutionId { get; set; }
         public string Institution { get; set; }
 
@@ -101,7 +109,7 @@ namespace DegreeMapping.Models
             Institution = d.Institution;
             InstitutionId = d.InstitutionId;
             CatalogYear = d.CatalogYear;
-            CatalogyId = d.CatalogId;
+            CatalogId = d.CatalogId;
 
             #region primary
             PartnerCourseIds = new List<int>();
@@ -198,6 +206,21 @@ namespace DegreeMapping.Models
                 }
                 cmd.Parameters.AddWithValue("@Alternate4DisplayValue", cm.Alternate4DisplayValue);
                 #endregion
+                #region Alternate 5
+                if (cm.Alternate5UCFCourseIds != null)
+                {
+                    cmd.Parameters.AddWithValue("@Alternate5UCFCourseIds", string.Join(",", cm.Alternate5UCFCourseIds));
+                }
+                if (cm.Alternate5PartnerCourseIds != null)
+                {
+                    cmd.Parameters.AddWithValue("@Alternate5PartnerCourseIds", string.Join(",", cm.Alternate5PartnerCourseIds));
+                }
+                cmd.Parameters.AddWithValue("@Alternate5DisplayValue", cm.Alternate5DisplayValue);
+                #endregion
+                if (cm.CloneCourseMapperId.HasValue) 
+                {
+                    cmd.Parameters.AddWithValue("@CloneCourseMapperId", cm.CloneCourseMapperId.Value);
+                }
                 id = Convert.ToInt32(cmd.ExecuteScalar());
                 cn.Close();
             }
@@ -257,18 +280,27 @@ namespace DegreeMapping.Models
                 }
                 cmd.Parameters.AddWithValue("@Alternate4DisplayValue", cm.Alternate4DisplayValue);
                 #endregion
-
-                //if (cm.CloneCourseMapperId.HasValue)
-                //{
-                //    cmd.Parameters.AddWithValue("@CloneCourseMapperId", cm.CloneCourseMapperId.Value);
-                //}
-
+                #region Alternate 5
+                if (cm.Alternate5UCFCourseIds != null)
+                {
+                    cmd.Parameters.AddWithValue("@Alternate5UCFCourseIds", string.Join(",", cm.Alternate5UCFCourseIds));
+                }
+                if (cm.Alternate5PartnerCourseIds != null)
+                {
+                    cmd.Parameters.AddWithValue("@Alternate5PartnerCourseIds", string.Join(",", cm.Alternate5PartnerCourseIds));
+                }
+                cmd.Parameters.AddWithValue("@Alternate5DisplayValue", cm.Alternate5DisplayValue);
+                #endregion
+                if (cm.CloneCourseMapperId.HasValue)
+                {
+                    cmd.Parameters.AddWithValue("@CloneCourseMapperId", cm.CloneCourseMapperId.Value);
+                }
                 cmd.ExecuteScalar();
                 cn.Close();
             }
         }
 
-        public static List<CourseMapper> List(int? degreeId, int? id)
+        public static List<CourseMapper> List(int? degreeId, int? id, int? catalogId)
         {
             List<CourseMapper> list_cm = new List<CourseMapper>();
             using (SqlConnection cn = new SqlConnection(Database.DC_DegreeMapping))
@@ -284,6 +316,10 @@ namespace DegreeMapping.Models
                 if (id.HasValue)
                 {
                     cmd.Parameters.AddWithValue("@Id", id.Value);
+                }
+                if (catalogId.HasValue)
+                {
+                    cmd.Parameters.AddWithValue("@CatalogId", catalogId.Value);
                 }
                 SqlDataReader dr = cmd.ExecuteReader();
                 if (dr.HasRows)
@@ -302,7 +338,7 @@ namespace DegreeMapping.Models
 
         public static CourseMapper Get(int id)
         {
-            CourseMapper cm = List(null, id).FirstOrDefault();
+            CourseMapper cm = List(null, id, null).FirstOrDefault();
             return cm;
         }
 
@@ -372,6 +408,7 @@ namespace DegreeMapping.Models
                     cm.Alternate3UCFCourses = SetCourse(cm.Alternate3UCFCourseIds);
                 }
                 #endregion
+
                 #region Alternate 4
                 cm.Alternate4DisplayValue = Convert.ToInt32(dr["Alternate4DisplayValue"].ToString());
                 cm.Alternate4DisplayName = SetDisplayName(cm.Alternate4DisplayValue);
@@ -386,15 +423,33 @@ namespace DegreeMapping.Models
                     cm.Alternate4UCFCourseIds = dr["Alternate4UCFCourseIds"].ToString().Split(',').Select(Int32.Parse).ToList();
                     cm.Alternate4UCFCourses = SetCourse(cm.Alternate4UCFCourseIds);
                 }
+                #endregion
 
+                #region Alternate 5
+                string alternate5DisplayValue = dr["Alternate5DisplayValue"].ToString();
+                cm.Alternate5DisplayValue = (!string.IsNullOrEmpty(alternate5DisplayValue)) ? Convert.ToInt32(dr["Alternate5DisplayValue"].ToString()) : 0;
+                cm.Alternate5DisplayName = SetDisplayName(cm.Alternate5DisplayValue);
+                if (!string.IsNullOrEmpty(dr["Alternate5PartnerCourseIds"].ToString()))
+                {
+                    cm.Alternate5PartnerCourseIds = dr["Alternate5PartnerCourseIds"].ToString().Split(',').Select(Int32.Parse).ToList();
+                    cm.Alternate5PartnerCourses = SetCourse(cm.Alternate5PartnerCourseIds);
+                }
 
+                if (!string.IsNullOrEmpty(dr["Alternate5UCFCourseIds"].ToString()))
+                {
+                    cm.Alternate5UCFCourseIds = dr["Alternate5UCFCourseIds"].ToString().Split(',').Select(Int32.Parse).ToList();
+                    cm.Alternate5UCFCourses = SetCourse(cm.Alternate5UCFCourseIds);
+                }
                 #endregion
                 cm.Degree = dr["Degree"].ToString();
                 cm.DegreeId = Convert.ToInt32(dr["DegreeId"].ToString());
                 cm.Institution = dr["Institution"].ToString();
                 cm.InstitutionId = Convert.ToInt32(dr["InstitutionId"].ToString());
                 cm.CatalogYear = dr["CatalogYear"].ToString();
-                cm.CatalogyId = Convert.ToInt32(dr["CatalogId"].ToString());
+                cm.CatalogId = Convert.ToInt32(dr["CatalogId"].ToString());
+                int cloneCourseMapperId;
+                Int32.TryParse(dr["CloneCourseMapperId"].ToString(), out cloneCourseMapperId);
+                cm.CloneCourseMapperId = cloneCourseMapperId;
                 //cm.DisplayValue = Convert.ToInt32(dr["DisplayValue"].ToString());
                 //SetDisplayName(ref cm);
                 //SetCourse(ref cm);

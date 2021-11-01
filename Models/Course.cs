@@ -30,6 +30,7 @@ namespace DegreeMapping.Models
         public string Code { get; set; }
         public string Name { get; set; }
         public int Credits { get; set; }
+        public string CreditText { get; set; }
         public bool Critical { get; set; }
         [DisplayName("Common Program Prerequisite")]
         public bool CommonProgramPrerequiste { get; set; }
@@ -50,7 +51,7 @@ namespace DegreeMapping.Models
         [DisplayName("UCF Related Course")]
         public string UCFRelatedCourse { get; set; }
         public int UCFCourseCredits { get; set; }
-        public int CatalogyId { get; set; }
+        public int CatalogId { get; set; }
         [DisplayName("Catalog Year")]
         public string CatalogYear { get; set; }
         public int? CloneCourseId { get; set; }
@@ -63,6 +64,7 @@ namespace DegreeMapping.Models
             Required = true;
             Active = true;
             Credits = 3;
+            CreditText = string.Empty;
             NID = HttpContext.Current.User.Identity.Name;
             Semester = 1;
         }
@@ -72,6 +74,7 @@ namespace DegreeMapping.Models
             Required = true;
             Active = true;
             Credits = 3;
+            CreditText = string.Empty;
             Critical = true;
             DegreeId = degreeId;
             DegreeMapping.Models.Degree d = DegreeMapping.Models.Degree.Get(degreeId);
@@ -80,7 +83,7 @@ namespace DegreeMapping.Models
             Institution = d.Institution;
             InstitutionId = d.InstitutionId;
             CatalogYear = d.CatalogYear;
-            CatalogyId = d.CatalogId;
+            CatalogId = d.CatalogId;
             NID = HttpContext.Current.User.Identity.Name;
             Semester = 1;
         }
@@ -97,6 +100,7 @@ namespace DegreeMapping.Models
                 cmd.Parameters.AddWithValue("@DegreeId", c.DegreeId);
                 cmd.Parameters.AddWithValue("@Code", c.Code.Trim());
                 cmd.Parameters.AddWithValue("@Credits", c.Credits);
+                cmd.Parameters.AddWithValue("@CreditText", c.CreditText);
                 cmd.Parameters.AddWithValue("@Critical", c.Critical);
                 cmd.Parameters.AddWithValue("@CommonProgramPrerequiste", c.CommonProgramPrerequiste);
                 cmd.Parameters.AddWithValue("@Required", c.Required);
@@ -109,6 +113,10 @@ namespace DegreeMapping.Models
                 if (c.UCFCourseId.HasValue)
                 {
                     cmd.Parameters.AddWithValue("@UCFCourseId", c.UCFCourseId);
+                }
+                if (c.CloneCourseId.HasValue)
+                {
+                    cmd.Parameters.AddWithValue("@CloneCourseId", c.CloneCourseId.Value);
                 }
                 id = Convert.ToInt32(cmd.ExecuteScalar());
                 cn.Close();
@@ -128,6 +136,7 @@ namespace DegreeMapping.Models
                 cmd.Parameters.AddWithValue("@DegreeId", c.DegreeId);
                 cmd.Parameters.AddWithValue("@Code", c.Code.Trim());
                 cmd.Parameters.AddWithValue("@Credits", c.Credits);
+                cmd.Parameters.AddWithValue("@CreditText", c.CreditText);
                 cmd.Parameters.AddWithValue("@Critical", c.Critical);
                 cmd.Parameters.AddWithValue("@CommonProgramPrerequiste", c.CommonProgramPrerequiste);
                 cmd.Parameters.AddWithValue("@Required", c.Required);
@@ -141,16 +150,16 @@ namespace DegreeMapping.Models
                 {
                     cmd.Parameters.AddWithValue("@UCFCourseId", c.UCFCourseId);
                 }
-                //if (c.CloneCourseId.HasValue)
-                //{
-                //    cmd.Parameters.AddWithValue("@CloneCourseId", c.CloneCourseId);
-                //}
+                if (c.CloneCourseId.HasValue)
+                {
+                    cmd.Parameters.AddWithValue("@CloneCourseId", c.CloneCourseId.Value);
+                }
                 cmd.ExecuteScalar();
                 cn.Close();
             }
         }
 
-        public static List<Course> List(int? degreeId)
+        public static List<Course> List(int? degreeId, int? catalogId)
         {
             List<Course> list_c = new List<Course>();
             using (SqlConnection cn = new SqlConnection(Database.DC_DegreeMapping))
@@ -161,7 +170,11 @@ namespace DegreeMapping.Models
                 cmd.CommandType = CommandType.StoredProcedure;
                 if (degreeId.HasValue)
                 {
-                    cmd.Parameters.AddWithValue("@DegreeId", degreeId);
+                    cmd.Parameters.AddWithValue("@DegreeId", degreeId.Value);
+                }
+                if (catalogId.HasValue)
+                {
+                    cmd.Parameters.AddWithValue("@CatalogId", catalogId.Value);
                 }
                 SqlDataReader dr = cmd.ExecuteReader();
                 if (dr.HasRows)
@@ -188,6 +201,29 @@ namespace DegreeMapping.Models
                 cmd.CommandText = "GetCourse";
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@Id", id);
+                SqlDataReader dr = cmd.ExecuteReader();
+                if (dr.HasRows)
+                {
+                    while (dr.Read())
+                    {
+                        Set(dr, ref c);
+                    }
+                }
+                cn.Close();
+            }
+            return c;
+        }
+
+        public static Course GetClonedCourse(int clonedCourseId)
+        {
+            Course c = new Course();
+            using (SqlConnection cn = new SqlConnection(Database.DC_DegreeMapping))
+            {
+                cn.Open();
+                SqlCommand cmd = cn.CreateCommand();
+                cmd.CommandText = "GetClonedCourse";
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@ClonedCourseId", clonedCourseId);
                 SqlDataReader dr = cmd.ExecuteReader();
                 if (dr.HasRows)
                 {
@@ -238,6 +274,7 @@ namespace DegreeMapping.Models
                 c.DegreeId = Convert.ToInt32(dr["DegreeId"].ToString().ToUpper());
                 c.Code = dr["Code"].ToString();
                 c.Credits = Convert.ToInt32(dr["Credits"].ToString());
+                c.CreditText = dr["CreditText"].ToString();
                 c.Critical = Convert.ToBoolean(dr["Critical"].ToString());
                 c.CommonProgramPrerequiste = Convert.ToBoolean(dr["CommonProgramPrerequiste"].ToString());
                 c.Required = Convert.ToBoolean(dr["Required"].ToString());
@@ -253,7 +290,7 @@ namespace DegreeMapping.Models
                 c.Semester = Convert.ToInt32(dr["Semester"].ToString());
                 c.Term = dr["Term"].ToString();
                 c.CatalogYear = dr["CatalogYear"].ToString();
-                c.CatalogyId = Convert.ToInt32(dr["CatalogId"].ToString());
+                c.CatalogId = Convert.ToInt32(dr["CatalogId"].ToString());
                 int ucfCourseId;
                 int ucfCourseCredits;
                 c.UCFRelatedCourse = dr["UCFRelatedCourse"].ToString();
@@ -267,8 +304,8 @@ namespace DegreeMapping.Models
                 {
                     c.UCFCourseCredits = Convert.ToInt32(dr["UCFCourseCredits"].ToString());
                 }
-                //int cloneCourseId;
-                //Int32.TryParse(dr["CloneCourseId"].ToString(), out cloneCourseId);
+                int cloneCourseId;
+                Int32.TryParse(dr["CloneCourseId"].ToString(), out cloneCourseId);
             }
         }
 

@@ -103,6 +103,7 @@ namespace DegreeMapping.Models
                 {
                     cmd.Parameters.AddWithValue("@UCFDegreeId", d.UCFDegreeId.Value);
                 }
+                //Only in the CloneUCFDegree method is the CloneDegreeId inserted, not on a new Degree
                 id = Convert.ToInt32(cmd.ExecuteScalar());
                 cn.Close();
             }
@@ -133,10 +134,10 @@ namespace DegreeMapping.Models
                 cmd.Parameters.AddWithValue("@DegreeUrl", d.DegreeURL);
                 cmd.Parameters.AddWithValue("@CatalogUrl", d.CatalogUrl);
                 cmd.Parameters.AddWithValue("@NID", d.NID);
-                //if (d.CloneDegreeId.HasValue) 
-                //{
-                //    cmd.Parameters.AddWithValue("@CloneDegreeId", d.CloneDegreeId.Value);
-                //}
+                if (d.CloneDegreeId.HasValue)
+                {
+                    cmd.Parameters.AddWithValue("@CloneDegreeId", d.CloneDegreeId.Value);
+                }
                 if (d.UCFDegreeId.HasValue)
                 {
                     cmd.Parameters.AddWithValue("@UCFDegreeId", d.UCFDegreeId.Value);
@@ -202,6 +203,74 @@ namespace DegreeMapping.Models
             return d;
         }
 
+        public static Degree GetClonedDegree(int cloneDegreeId)
+        {
+            Degree d = new Degree();
+            using (SqlConnection cn = new SqlConnection(Database.DC_DegreeMapping))
+            {
+                cn.Open();
+                SqlCommand cmd = cn.CreateCommand();
+                cmd.CommandText = "GetClonedDegree";
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@CloneDegreeId", cloneDegreeId);
+                SqlDataReader dr = cmd.ExecuteReader();
+                if (dr.HasRows)
+                {
+                    while (dr.Read())
+                    {
+                        Set(dr, ref d);
+                    }
+                }
+                cn.Close();
+            }
+            return d;
+        }
+
+
+        /// <summary>
+        /// returns partner institutions only
+        /// institutionId != 1
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="catalogId"></param>
+        /// <param name="institutionId"></param>
+        /// <returns></returns>
+        public static List<Degree> GetPartnerDegrees(int? id, int? catalogId, int? institutionId)
+        {
+            List<Degree> list_degrees = new List<Degree>();
+            using (SqlConnection cn = new SqlConnection(Database.DC_DegreeMapping))
+            {
+                cn.Open();
+                SqlCommand cmd = cn.CreateCommand();
+                cmd.CommandText = "GetPartnerDegree";
+                cmd.CommandType = CommandType.StoredProcedure;
+                if (id.HasValue)
+                {
+                    cmd.Parameters.AddWithValue("@Id", id.Value);
+                }
+                if (catalogId.HasValue)
+                {
+                    cmd.Parameters.AddWithValue("@CatalogId", catalogId.Value);
+                }
+                if (institutionId.HasValue)
+                {
+                    cmd.Parameters.AddWithValue("@InstitutionId", institutionId.Value);
+                }
+                SqlDataReader dr = cmd.ExecuteReader();
+                if (dr.HasRows)
+                {
+                    while (dr.Read())
+                    {
+                        Degree d = new Degree();
+                        Set(dr, ref d);
+                        list_degrees.Add(d);
+                    }
+                }
+                cn.Close();
+            }
+            return list_degrees;
+        }
+
         private static void Set(SqlDataReader dr, ref Degree d)
         {
             if (dr.HasRows)
@@ -230,9 +299,9 @@ namespace DegreeMapping.Models
                 d.UCFDegreeId = ucfDegreeId;
                 d.UCFDegreeName = dr["UCFDegreeName"].ToString();
                 d.CatalogYear = Catalog.Get(d.CatalogId).Year;
-                //int clonedegreeId;
-                //Int32.TryParse(dr["CloneDegreeId"].ToString(), out clonedegreeId);
-                //d.CloneDegreeId = clonedegreeId;
+                int clonedegreeId;
+                Int32.TryParse(dr["CloneDegreeId"].ToString(), out clonedegreeId);
+                d.CloneDegreeId = clonedegreeId;
             }
         }
     }

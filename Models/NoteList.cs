@@ -27,7 +27,7 @@ namespace DegreeMapping.Models
 
         public static List<NoteList> List(int degreeId)
         {
-            List<Note> list_n = Note.List(degreeId);
+            List<Note> list_n = Note.List(degreeId, null);
             List<NoteList> list_nl = new List<NoteList>();
             foreach (Note n in list_n.Where(x=>x.Active))
             {

@@ -13,6 +13,7 @@ using Microsoft.Owin.Security.Provider;
 using Microsoft.Win32;
 using System.Web.Script.Serialization;
 using System.Web.Configuration;
+using System.ComponentModel.DataAnnotations;
 
 namespace DegreeMapping.Controllers
 {
@@ -141,7 +142,7 @@ namespace DegreeMapping.Controllers
         #region Code - Updates course code only
         public ActionResult CodeList()
         {
-            List<Course> list_c = Course.List(null);
+            List<Course> list_c = Course.List(null, null);
             return View(list_c);
         }
         public ActionResult _CodeEdit(Course c)
@@ -179,7 +180,7 @@ namespace DegreeMapping.Controllers
 
         public ActionResult CourseList()
         {
-            List<Course> list_course = Course.List(null);
+            List<Course> list_course = Course.List(null, null);
             return View(list_course);
         }
 
@@ -219,7 +220,7 @@ namespace DegreeMapping.Controllers
         public ActionResult CourseDelete(int id, int degreeId)
         {
             
-            List<CourseMapper> list_cm = CourseMapper.List(degreeId, null);
+            List<CourseMapper> list_cm = CourseMapper.List(degreeId, null, null);
             foreach (CourseMapper cm in list_cm)
             {
                 List<int> new_course_ids = new List<int>();
@@ -247,7 +248,7 @@ namespace DegreeMapping.Controllers
                 #endregion
                 CourseMapper.Update(cm);
             }
-            list_cm = CourseMapper.List(degreeId, null);
+            list_cm = CourseMapper.List(degreeId, null, null);
             if (list_cm.Select(x=>x.PartnerCourseIds).Count() == 0 && list_cm.Select(x=>x.UCFCourseIds).Count()==0)
             {
                 int courseMapperId = list_cm.Select(x => x.Id).FirstOrDefault();
@@ -341,14 +342,6 @@ namespace DegreeMapping.Controllers
         }
         #endregion
 
-        #region Issues
-        public ActionResult Issues()
-        {
-            List<Issue> list_i = Issue.List(null);
-            return View();
-        }
-        #endregion
-
         #region Colleges
         public ActionResult CollegeList()
         {
@@ -400,7 +393,7 @@ namespace DegreeMapping.Controllers
         public ActionResult _CourseMapperList(int degreeId)
         {
             ViewBag.degreeId = degreeId;
-            List<CourseMapper> list_cm = CourseMapper.List(degreeId, null);
+            List<CourseMapper> list_cm = CourseMapper.List(degreeId, null, null);
             return PartialView(list_cm);
         }
 
@@ -454,8 +447,6 @@ namespace DegreeMapping.Controllers
             return View(c);
         }
 
-
-
         /// <summary>
         /// Not sure if I still need this action/view...perhaps delete
         /// </summary>
@@ -475,22 +466,75 @@ namespace DegreeMapping.Controllers
             return View(list_d);
         }
 
-        public ActionResult CatalogClone(int? catalogId, int? targertCatalogId)
+        public ActionResult CatalogSave(Catalog cy)
         {
-            ViewBag.sourceCatalogId = (catalogId.HasValue) ? catalogId.Value : 0;
-            ViewBag.targerCatalogId = (targertCatalogId.HasValue) ? targertCatalogId.Value : 0;
+            if (cy.Id > 0)
+            {
+                DegreeMapping.Models.Catalog.Update(cy);
+            }
+            else
+            {
+                DegreeMapping.Models.Catalog.Insert(cy);
+            }
+            return RedirectToAction("Catalog");
+        }
+        #endregion
+
+        #region Cloning at Kamino
+        public ActionResult CatalogClone()
+        {
             return View();
         }
-        [HttpPost]
-        public ActionResult CatalogClone(int sourceCatalogId, int targetCatalogId)
+
+        public ActionResult CloneDegrees(int sourceCatalogId, int targetCatalogId) 
         {
-            /*
-             1) Clone degree Insert into Degree (values, "targetCatalogId") where (Select( values, "targetCatalogId") where catalogId = sourceCatalogId)
-             2) Clone Courses
-             3) Clone Course Mappings
-             4) Clone Notes
-            */
-            return View();
+            //Step 1: Clone UCF Degrees 
+            Clone.CloneUCFDegrees(sourceCatalogId, targetCatalogId);
+            //Step 2: Clone Degrees
+            Clone.ClonePartnerDegrees(sourceCatalogId, targetCatalogId);
+            //Step 3: Update UCFDegreeId
+            List<Degree> list_degress = Degree.GetPartnerDegrees(null, targetCatalogId, null);
+            foreach (Degree d in list_degress)
+            {
+                Clone.UpdateUCFDegreeId(d.Id);
+            }
+            return Json(new { status = 1, message = "this is the message" }, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult CloneCourse(int sourceCatalogId, int targetCatalogId)
+        {
+            //Step 1: Clone Courses of source catalog
+            Clone.CloneCourses(sourceCatalogId);
+            //Step 2: Update DegreeId of source Catalog (this is done in the 1st stored procedure)
+            //Clone.UpdateCourseDegreeId(sourceCatalogId, targetCatalogId);
+            //Step 3: Update UCFCourseId
+            Clone.UpdateUCFCourseId(targetCatalogId);
+
+            return Json(new { status = 1, message = "this is the message" }, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult CloneCourseMapping(int sourceCatalogId)
+        {
+            Clone.CloneCourseMapping(sourceCatalogId);
+            return Json(new { status = 1, message = "this is the message" }, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult CloneNotes(int sourceCatalogId)
+        {
+            Clone.CloneNote(sourceCatalogId);
+            return Json(new { status = 1, message = "this is the message" }, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult CloneCustomCourseSemester(int sourceCatalogId)
+        {
+            Clone.CloneCustomCourseSemester(sourceCatalogId);
+            return Json(new { status = 1, message = "this is the message" }, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult CloneCustomCourseMapper(int sourceCatalogId)
+        {
+            Clone.CloneCustomCourseMapper(sourceCatalogId);
+            return Json(new { status = 1, message = "this is the message" }, JsonRequestBehavior.AllowGet);
         }
 
         /// <summary>
@@ -506,6 +550,97 @@ namespace DegreeMapping.Controllers
             return PartialView();
         }
 
+        #endregion
+
+        #region Custom Course Mapper
+        public ActionResult _CustomCourseMapperView(int degreeId)
+        {
+            CustomCourseMapper ccm = CustomCourseMapper.Get(degreeId);
+            return PartialView(ccm);
+        }
+
+        public ActionResult CustomCourseMapperEdit(int degreeId)
+        {
+            CustomCourseMapper ccm = CustomCourseMapper.Get(degreeId);
+            return PartialView(ccm);
+        }
+        [HttpPost]
+        public ActionResult CustomCourseMapperSave(int degreeId, bool hasRecord, List<int> courseId)
+        {
+            CustomCourseMapper ccm = new CustomCourseMapper(degreeId);
+            ccm.HasRecord = hasRecord;
+            ccm.List_CourseIds = courseId;
+            if (ccm.HasRecord)
+            {
+                CustomCourseMapper.Update(ccm);
+            }
+            else
+            {
+                CustomCourseMapper.Insert(ccm);
+            }
+            CustomCourseMapper.Update(ccm);
+            return RedirectToAction("DegreeView", new { id = ccm.DegreeId });
+        }
+
+        #endregion
+
+        #region Custom Course Semester
+        public ActionResult _CustomCourseSemsterView(int degreeId)
+        {
+            List<CustomCourseSemester> list_ccs = CustomCourseSemester.List(degreeId, null);
+            ViewBag.DegreeId = degreeId;
+            return PartialView(list_ccs);
+        }
+        
+        public ActionResult _CustomCourseSemester(CustomCourseSemester ccs)
+        {
+            return PartialView(ccs);
+        }
+
+        public ActionResult CustomCourseSemesterAdd(int degreeId)
+        {
+            CustomCourseSemester ccs = new CustomCourseSemester(degreeId);
+            return View(ccs);
+        }
+
+        public ActionResult CustomCourseSemesterEdit(int id)
+        {
+            CustomCourseSemester ccs = CustomCourseSemester.Get(id);
+            return View(ccs);
+        }
+
+        public ActionResult CustomCourseSemesterDelete(int id, int degreeId)
+        {
+            CustomCourseSemester.Delete(id);
+            return RedirectToAction("DegreeView", new { Id = degreeId });
+        }
+
+
+        [HttpPost]
+        [ValidateInput(false)]
+        public ActionResult CustomCourseSemesterSave(CustomCourseSemester ccs)
+        {
+            if (ccs.Id == 0)
+            {
+                CustomCourseSemester.Insert(ccs);
+            }
+            else
+            {
+                CustomCourseSemester.Update(ccs);
+            }
+            return RedirectToAction("DegreeView", new { id = ccs.DegreeId });
+        }
+
+
+
+
+        #endregion
+
+        #region TinyMCE
+        public ActionResult _TinyMCE()
+        {
+            return PartialView();
+        }
         #endregion
 
         #region Bread Crumbs

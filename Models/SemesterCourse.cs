@@ -29,7 +29,7 @@ namespace DegreeMapping.Models
             List<SemesterCourse> list_semcourses = new List<SemesterCourse>();
             Degree d = Degree.Get(degreeId);
             if (d.UCFDegreeId.HasValue) {
-                List<Course> list_c = DegreeMapping.Models.Course.List(d.UCFDegreeId.Value);
+                List<Course> list_c = DegreeMapping.Models.Course.List(d.UCFDegreeId.Value, null);
                 foreach (Course c in list_c.Where(x=>x.Semester > 1).OrderBy(x=>x.Semester).ThenBy(x=>x.Term))
                 {
                     list_semcourses.Add(new SemesterCourse(c));

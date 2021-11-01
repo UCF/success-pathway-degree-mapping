@@ -61,7 +61,7 @@ namespace DegreeMapping.Models
             DegreeMapping.Models.Degree degree = DegreeMapping.Models.Degree.Get(degreeId);
             DegreeMap dm = new DegreeMap(degree);
             List<NoteList> list_nl = new List<NoteList>();
-            List<Note> list_n = Note.List(degreeId);
+            List<Note> list_n = Note.List(degreeId, null);
             if (list_n.Count > 0)
             {
                 foreach (Note n in list_n.Where(x => x.NoteType == Note.NoteTypeValue.ListItem))

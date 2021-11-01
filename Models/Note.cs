@@ -119,6 +119,10 @@ namespace DegreeMapping.Models
                 cmd.Parameters.AddWithValue("@ForeignLanguageRequirement", n.ForeignLanguageRequirement);
                 cmd.Parameters.AddWithValue("@Section", n.Section);
                 cmd.Parameters.AddWithValue("@NoteType", n.NoteType);
+                if (n.CloneNoteId.HasValue)
+                {
+                    cmd.Parameters.AddWithValue("@CloneNoteId", n.CloneNoteId.Value);
+                }
                 id = Convert.ToInt32(cmd.ExecuteScalar());
                 cn.Close();
             }
@@ -148,15 +152,16 @@ namespace DegreeMapping.Models
                 cmd.Parameters.AddWithValue("@ForeignLanguageRequirement", n.ForeignLanguageRequirement);
                 cmd.Parameters.AddWithValue("@Section", n.Section);
                 cmd.Parameters.AddWithValue("@NoteType", n.NoteType);
-                //if (n.CloneNoteId.HasValue) {
-                //    cmd.Parameters.AddWithValue("@CloneNoteId", n.CloneNoteId.Value);
-                //}
+                if (n.CloneNoteId.HasValue)
+                {
+                    cmd.Parameters.AddWithValue("@CloneNoteId", n.CloneNoteId.Value);
+                }
                 cmd.ExecuteScalar();
                 cn.Close();
             }
         }
 
-        public static List<Note> List(int degreeId)
+        public static List<Note> List(int? degreeId, int? catalogId)
         {
             List<Note> list_n = new List<Note>();
             using (SqlConnection cn = new SqlConnection(Database.DC_DegreeMapping))
@@ -165,7 +170,14 @@ namespace DegreeMapping.Models
                 SqlCommand cmd = cn.CreateCommand();
                 cmd.CommandText = "GetNote";
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@DegreeId", degreeId);
+                if (catalogId.HasValue)
+                {
+                    cmd.Parameters.AddWithValue("@CatalogId", catalogId.Value);
+                }
+                if (degreeId.HasValue)
+                {
+                    cmd.Parameters.AddWithValue("@DegreeId", degreeId.Value);
+                }
                 SqlDataReader dr = cmd.ExecuteReader();
                 if (dr.HasRows)
                 {
@@ -204,6 +216,29 @@ namespace DegreeMapping.Models
             return n;
         }
 
+        public static Note GetClonedNote(int clonedNoteId)
+        {
+            Note n = new Note();
+            using (SqlConnection cn = new SqlConnection(Database.DC_DegreeMapping))
+            {
+                cn.Open();
+                SqlCommand cmd = cn.CreateCommand();
+                cmd.CommandText = "GetNote";
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@ClonedNoteId", clonedNoteId);
+                SqlDataReader dr = cmd.ExecuteReader();
+                if (dr.HasRows)
+                {
+                    while (dr.Read())
+                    {
+                        Set(dr, ref n);
+                    }
+                }
+                cn.Close();
+            }
+            return n;
+        }
+
         private static void Set(SqlDataReader dr, ref Note n)
         {
             if (dr.HasRows)
@@ -227,9 +262,9 @@ namespace DegreeMapping.Models
                 n.NoteType = Convert.ToInt32(dr["NoteType"].ToString());
                 n.CatalogYear = dr["CatalogYear"].ToString();
                 n.CatalogyId = Convert.ToInt32(dr["CatalogId"].ToString());
-                //int cloneNoteId;
-                //Int32.TryParse(dr["CloneNoteId"].ToString(), out cloneNoteId);
-                //n.CloneNoteId = cloneNoteId;
+                int cloneNoteId;
+                Int32.TryParse(dr["CloneNoteId"].ToString(), out cloneNoteId);
+                n.CloneNoteId = cloneNoteId;
             }
         }
 

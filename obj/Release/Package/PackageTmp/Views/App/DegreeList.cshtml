@@ -1,10 +1,19 @@
 ﻿@model List<DegreeMapping.Models.Degree>
 @{
+    string path = string.Empty;
     int catalogId = Model.Select(x => x.CatalogId).FirstOrDefault();
     int degreeCount = Model.Where(x => x.InstitutionId == DegreeMapping.Models.Institution.UCFId).Count();
     DegreeMapping.Models.Catalog cy = DegreeMapping.Models.Catalog.Get(catalogId);
     List<DegreeMapping.Models.Catalog> list_cy = DegreeMapping.Models.Catalog.List();
     List<DegreeMapping.Models.Institution> list_i = DegreeMapping.Models.Institution.List();
+    List<DegreeMapping.Models.Degree> list_UCFDegrees = Model.Where(x => x.InstitutionId == DegreeMapping.Models.Institution.UCFId).ToList();
+    List<DegreeMapping.Models.Degree> list_parnterDegrees = Model.Where(x => x.InstitutionId != DegreeMapping.Models.Institution.UCFId).ToList();
+
+
+    System.Web.Script.Serialization.JavaScriptSerializer jss = new System.Web.Script.Serialization.JavaScriptSerializer();
+    string JSONInstitutionList = jss.Serialize(list_i);
+    string JSONUCFDegreeList = jss.Serialize(list_UCFDegrees);
+    string JSONPartnerDegreeList = jss.Serialize(list_parnterDegrees);
     string title = (catalogId > 0) ? list_cy.Where(x => x.Id == catalogId).Select(x => x.Year).FirstOrDefault() + " Degree List" : "Select Catalog Year";
 }
 @section JumbotronMain {
@@ -32,62 +41,131 @@
     </div>
 }
 
-<div class="container pt-5">
-    <div class="row">
-        <div class="clearfix">
-            @Html.ActionLink("New Degree", "DegreeAdd", "App", new { institutionId = DegreeMapping.Models.Institution.UCFId, catalogId = catalogId }, new { @class = "btn btn-primary btn-lg" })
-        </div>
-    </div>
-
-    <div class="row pt-5">
-        <div class="col-md-12">
-            <ul>
-                @foreach (DegreeMapping.Models.Degree d in Model.Where(x => x.InstitutionId == DegreeMapping.Models.Institution.UCFId))
-                {
-                    <li>
-                        <strong>UCF @d.Name <small>@Html.ActionLink("Edit", "DegreeView", "App", new { id = d.Id }, null)</small></strong>
-                        <ul>
-                            @foreach (DegreeMapping.Models.Institution i in list_i.OrderBy(x => x.Name).Where(x => x.Id != DegreeMapping.Models.Institution.UCFId))
-                            {
-                                <li style="list-style-type:none">
-                                    <ul>
-                                        <li class="pt-2">
-                                            @*@Html.ActionLink(i.Name, "InstitutionView", new { id = i.Id })*@
-                                            @{
-                                                bool hasDegree = false;
-                                                foreach (DegreeMapping.Models.Degree d2 in Model.Where(x => x.InstitutionId != DegreeMapping.Models.Institution.UCFId))
-                                                {
-                                                    if (d.Id == d2.UCFDegreeId && i.Id == d2.InstitutionId)
-                                                    {
-                                                        hasDegree = true;
-                                                        @*@Html.ActionLink(i.Name, "InstitutionView", new { id = i.Id })*@
-                                                        @Html.ActionLink(i.Name, "DegreeView", "App", new { id = d2.Id }, null)
-                                                    }
-                                                }
-                                                if (!hasDegree)
-                                                {
-                                                    <span>@i.Name</span>
-                                                    <span style="color:red" class="px-2">no information</span>
-                                                    @Html.ActionLink("Add", "DegreeAdd", "App", new { institutionId = i.Id }, new { @class = "btn btn-primary btn-lg ml-5" })
-                                                }
-                                            }
-                                        </li>
-                                    </ul>
-                                </li>
-                            }
-                        </ul>
-                    </li>
-                }
-            </ul>
-        </div>
+<div class="row">
+    <div class="col-md-12">
+        @using (Html.BeginForm("DegreeList", "App", FormMethod.Post, new { @Class = "form-inline" }))
+        {
+            <div class="form-group">
+                <input type="text" class="form-control" name="keyword" id="keyword" value="" placeholder="Keyword" style="width:500px" />
+                <button type="submit" class="btn btn-primary btn-lg">Search</button>
+            </div>
+        }
     </div>
 </div>
 
-<script type="text/javascript">
+    <div class="container pt-5">
+        <div class="row">
+            <div class="clearfix">
+                @Html.ActionLink("New Degree", "DegreeAdd", "App", new { institutionId = DegreeMapping.Models.Institution.UCFId, catalogId = catalogId }, new { @class = "btn btn-primary btn-lg" })
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <h2>Degree list</h2>
+                <div id="degreeListOutput" style="font-size:22px"></div>
+            </div>
+        </div>
+
+        <div class="row pt-5">
+            <div class="col-md-12">
+                <ul>
+                    @foreach (DegreeMapping.Models.Degree d in Model.Where(x => x.InstitutionId == DegreeMapping.Models.Institution.UCFId))
+                    {
+                        <li>
+                            <strong>UCF @d.Name <small>@Html.ActionLink("Edit", "DegreeView", "App", new { id = d.Id }, null)</small></strong>
+                            <ul>
+                                @foreach (DegreeMapping.Models.Institution i in list_i.OrderBy(x => x.Name).Where(x => x.Id != DegreeMapping.Models.Institution.UCFId))
+                                {
+                                    <li style="list-style-type:none">
+                                        <ul>
+                                            <li class="pt-2">
+                                                @*@Html.ActionLink(i.Name, "InstitutionView", new { id = i.Id })*@
+                                                @{
+                                                    bool hasDegree = false;
+                                                    foreach (DegreeMapping.Models.Degree d2 in Model.Where(x => x.InstitutionId != DegreeMapping.Models.Institution.UCFId))
+                                                    {
+                                                        if (d.Id == d2.UCFDegreeId && i.Id == d2.InstitutionId)
+                                                        {
+                                                            hasDegree = true;
+                                                            @*@Html.ActionLink(i.Name, "InstitutionView", new { id = i.Id })*@
+                                                            @Html.ActionLink(i.Name, "DegreeView", "App", new { id = d2.Id }, null)
+                                                        }
+                                                    }
+                                                    if (!hasDegree)
+                                                    {
+                                                        <span>@i.Name</span>
+                                                        <span style="color:red" class="px-2">no information</span>
+                                                        @Html.ActionLink("Add", "DegreeAdd", "App", new { institutionId = i.Id }, new { @class = "btn btn-primary btn-lg ml-5" })
+                                                    }
+                                                }
+                                            </li>
+                                        </ul>
+                                    </li>
+                                }
+                            </ul>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+
     $(document).ready(function () {
         $("#catalogId").on("change", function () {
             let id = $(this).val();
             window.location.href = '?catalogId=' + id;
         })
     })
-</script>
+
+        var portalDegreeList = {
+            target: {
+                degreeListOutput: "degreeListOutput",
+            },
+            ucfInstitutionId: 1,
+            ucfDegreeList: @Html.Raw(JSONUCFDegreeList),
+            partnerDegreeList: @Html.Raw(JSONPartnerDegreeList),
+            institutionList : @Html.Raw(JSONInstitutionList),
+            displayDegreeList: function () {
+                let output = '';
+                for (let x = 0; x <= this.ucfDegreeList.length - 1; x++) {
+                    output += '<li><strong>' + this.ucfDegreeList[x].Name + '</strong></li>'
+                    for (let y = 0; y <= this.institutionList.length - 1; y++) {
+                        if (this.institutionList[y].Id != 1) {
+                            let hasDegree = false;
+                            let partnerLi = '';
+                            let partnerLiNoInfo = '';
+                            for (let z = 0; z <= this.partnerDegreeList.length - 1; z++) {
+                                //d.Id == d2.UCFDegreeId && i.Id == d2.InstitutionId
+                                if (this.ucfDegreeList[x].Id == this.partnerDegreeList[z].UCFDegreeId && this.institutionList[y].Id == this.partnerDegreeList[z].InstitutionId) {
+                                    hasDegree = true;
+                                    partnerLi = '<li><a href="@path/App/DegreeView/' + this.partnerDegreeList[z].Id + '">' + this.institutionList[y].Name + '</a></li>';
+                                }
+                            }
+                            if (!hasDegree) {
+                                partnerLiNoInfo += this.institutionList[y].Name;
+                                partnerLiNoInfo += '<span style="color:red" class="px-2">no information</span>';
+                                partnerLiNoInfo += '<a href="@path/App/DegreeAdd/?institutionId=' + this.institutionList[y].Id + '&catalogid=' + @catalogId + '">Add</a>';
+                                partnerLiNoInfo = '<li>' + partnerLiNoInfo + '</li>';
+                            }
+                            output += '<ul>' + partnerLi + partnerLiNoInfo + '</ul>';
+                        }
+                    }
+
+                }
+                output = '<ul>' + output + '</ul>';
+                $('#' + this.target.degreeListOutput).html(output);
+            },
+            search: function (keyword) {
+                //need to modify displayDegreeList to pass in UCFDegrees funtion(UCFDegreeList)
+                //So that we can pass custom ucfdegreelist from search
+            },
+            init: function () {
+                console.log(this.degreeList);
+                //this.setDegreeList();
+                this.displayDegreeList();
+            }
+        }
+    </script>

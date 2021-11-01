@@ -72,6 +72,10 @@ namespace DegreeMapping.Models
         public List<UCFCourse> Alternate4UCFCourse { get; set; }
         public List<PartnerCourse> Alternate4PartnerCourse { get; set; }
 
+        public string Alternate5DisplayName { get; set; }
+        public List<UCFCourse> Alternate5UCFCourse { get; set; }
+        public List<PartnerCourse> Alternate5PartnerCourse { get; set; }
+
 
         public CourseMapperJSON()
         {
@@ -94,6 +98,10 @@ namespace DegreeMapping.Models
             Alternate4DisplayName = string.Empty;
             Alternate4UCFCourse = new List<UCFCourse>();
             Alternate4PartnerCourse = new List<PartnerCourse>();
+
+            Alternate5DisplayName = string.Empty;
+            Alternate5UCFCourse = new List<UCFCourse>();
+            Alternate5PartnerCourse = new List<PartnerCourse>();
         }
 
         public CourseMapperJSON(int degreeId)
@@ -118,7 +126,12 @@ namespace DegreeMapping.Models
             Alternate4UCFCourse = new List<UCFCourse>();
             Alternate4PartnerCourse = new List<PartnerCourse>();
 
-            List<CourseMapper> list_cm = CourseMapper.List(degreeId, null);
+            Alternate5DisplayName = string.Empty;
+            Alternate5UCFCourse = new List<UCFCourse>();
+            Alternate5PartnerCourse = new List<PartnerCourse>();
+
+
+            List<CourseMapper> list_cm = CourseMapper.List(degreeId, null, null);
             foreach (CourseMapper cm in list_cm)
             {
                 #region Primary
@@ -193,7 +206,7 @@ namespace DegreeMapping.Models
                     Alternate4DisplayName = cm.Alternate4DisplayName;
                     foreach (Course c in cm.Alternate4UCFCourses)
                     {
-                        Alternate3UCFCourse.Add(new UCFCourse(c));
+                        Alternate4UCFCourse.Add(new UCFCourse(c));
                     }
                 }
 
@@ -206,13 +219,32 @@ namespace DegreeMapping.Models
                     }
                 }
                 #endregion
+                #region Alternate 5
+                if (cm.Alternate5UCFCourses.Count > 0)
+                {
+                    Alternate5DisplayName = cm.Alternate5DisplayName;
+                    foreach (Course c in cm.Alternate5UCFCourses)
+                    {
+                        Alternate5UCFCourse.Add(new UCFCourse(c));
+                    }
+                }
+
+                if (cm.Alternate5PartnerCourses.Count > 0)
+                {
+                    Alternate5DisplayName = cm.Alternate5DisplayName;
+                    foreach (Course c in cm.Alternate5PartnerCourses)
+                    {
+                        Alternate5PartnerCourse.Add(new PartnerCourse(c));
+                    }
+                }
+                #endregion
             }
         }
 
         public static List<CourseMapperJSON> List(int degreeId)
         {
             List<CourseMapperJSON> list_cmj = new List<CourseMapperJSON>();
-            List<CourseMapper> list_cm = CourseMapper.List(degreeId, null);
+            List<CourseMapper> list_cm = CourseMapper.List(degreeId, null, null);
 
             foreach (CourseMapper cm in list_cm)
             {
@@ -293,6 +325,23 @@ namespace DegreeMapping.Models
                     foreach (Course c in cm.Alternate4PartnerCourses)
                     {
                         cmj.Alternate4PartnerCourse.Add(new PartnerCourse(c));
+                    }
+                }
+                #endregion
+                #region Alternate 5
+                cmj.Alternate5DisplayName = (cm.Alternate5DisplayName == CourseMapper.DisplayType.Default) ? string.Empty : cm.Alternate5DisplayName;
+                if (cm.Alternate5UCFCourses != null && cm.Alternate5UCFCourses.Count > 0)
+                {
+                    foreach (Course c in cm.Alternate5UCFCourses)
+                    {
+                        cmj.Alternate5UCFCourse.Add(new UCFCourse(c));
+                    }
+                }
+                if (cm.Alternate5PartnerCourses != null && cm.Alternate5PartnerCourses.Count > 0)
+                {
+                    foreach (Course c in cm.Alternate5PartnerCourses)
+                    {
+                        cmj.Alternate5PartnerCourse.Add(new PartnerCourse(c));
                     }
                 }
                 #endregion

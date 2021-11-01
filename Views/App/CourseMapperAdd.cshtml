@@ -1,11 +1,32 @@
 ﻿@model DegreeMapping.Models.CourseMapper
 
-    <div class="row pt-5">
-        <div class="col-md-12">
-            <small>@Html.ActionLink("Institutions", "Institutions") <span class="glyphicon glyphicon-arrow-right"></span> @Html.ActionLink(Model.Institution, "InstitutionView", new { id = Model.InstitutionId }) <span class="glyphicon glyphicon-arrow-right"></span> @Html.ActionLink(Model.Degree, "DegreeView", new { id = Model.DegreeId })</small>
-            <h1>@Model.Institution</h1>
-            <h2>Add Course Map for @Html.ActionLink(Model.Degree, "DegreeView", new { id = Model.DegreeId })</h2>
+
+@section JumbotronMain {
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="h3">@Html.ActionLink("Back to Degree List", "DegreeList", "App", new { Id = Model.CatalogId }, null)</div>
+                    <h1 class="heading-underline">@Model.CatalogYear @Model.Degree</h1>
+                    <h2>Add Course Map for @Model.Institution</h2>
+                </div>
+            </div>
         </div>
     </div>
+}
 
-@Html.Action("_CourseMapper","App", new { cm = Model })
+@*@section JumbotronMain {
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="h3">@Html.ActionLink("Institutions", "Institutions") <span class="glyphicon glyphicon-arrow-right"></span> @Html.ActionLink(Model.Institution, "InstitutionView", new { id = Model.InstitutionId }) <span class="glyphicon glyphicon-arrow-right"></span> @Html.ActionLink(Model.Degree, "DegreeView", new { id = Model.DegreeId })</div>
+                    <h1 class="heading-underline">@Model.Institution</h1>
+                    <h2>Add Course Map for @Html.ActionLink(Model.Degree, "DegreeView", new { id = Model.DegreeId })</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+}*@
+
+@Html.Action("_CourseMapper", "App", new { cm = Model })

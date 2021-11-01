@@ -12,7 +12,7 @@ namespace DegreeMapping.Controllers
 {
     [RoutePrefix("api/Degree")]
 
-    [EnableCors(origins: "https://connectucncmsqa.smca.ucf.edu, https://connectucncmsdev.smca.ucf.edu", headers: "APIKey", methods: "*")]
+    [EnableCors(origins: "https://connectucncmsqa.smca.ucf.edu, https://connectucncmsdev.smca.ucf.edu, https://connect.ucf.edu", headers: "APIKey", methods: "*")]
     public class WebAPIController : ApiController
     {
         [HttpGet]

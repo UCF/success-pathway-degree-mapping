@@ -1,0 +1,47 @@
+﻿@model DegreeMapping.Models.CustomCourseMapper
+@{
+    string semesterTerm = string.Empty;
+    DegreeMapping.Models.Degree d = DegreeMapping.Models.Degree.Get(Model.DegreeId);
+    List<DegreeMapping.Models.Course> list_courses = new List<DegreeMapping.Models.Course>();
+    if (d.UCFDegreeId.HasValue)
+    {
+        list_courses = DegreeMapping.Models.Course.List(d.UCFDegreeId.Value, null);
+    }
+}
+
+<div class="container py-5">
+    <a name="customcoursemapper"></a>
+    <div class="row">
+        <div class="col-md-12">
+            <h2 class="heading-underline">Custom Course Mapper for @Model.Institution</h2>
+            <div><span class="fa fa-check" style="color:green"></span> Will be displayed</div>
+            <div><span class="fa fa-times" style="color:red"></span> Will <i>not</i> be displayed</div>
+            @Html.ActionLink("Edit", "CustomCourseMapperEdit", "App", new { degreeId = Model.DegreeId }, null)
+            <table class="table table-hover">
+                @foreach (DegreeMapping.Models.Course c in list_courses.OrderBy(x => x.Semester).ThenBy(x => x.Term).ThenBy(x => x.Code).Where(x => x.Semester >= 4))
+                {
+                    if (string.IsNullOrEmpty(semesterTerm) || semesterTerm != c.SemesterTerm)
+                    {
+                        semesterTerm = c.SemesterTerm;
+                        <tr>
+                            <td class="text-center alert alert-warning h3">Semester @c.Semester @c.Term</td>
+                        </tr>
+                    }
+                    <tr>
+                        <td>
+                            @if (Model.List_CourseIds.Contains(c.Id))
+                            {
+                                <span class="fa fa-check" style="color:green"></span>
+                            }
+                            else
+                            {
+                                <span class="fa fa-times" style="color:red"></span>
+                            }
+                            @c.Code (@c.Credits credits)
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+</div>

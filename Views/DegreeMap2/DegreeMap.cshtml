@@ -1,0 +1,115 @@
+﻿@{
+    Layout = "~/Views/Shared/_Pathway.cshtml";
+}
+
+<div class="container" id="printme">
+    <a href="/pathway-degree-list" title="Pathway Degree List"><span class="fa fa-arrow-left"></span>Pathway Degree List</a>
+    <!--[print-me target="#printme" title=""]-->
+    <div><span class="fa fa-print fa-3x"></span></div>
+    <h2><span class="Institution"></span> Pathway<br /><span class="Degree"></span></h2>
+    <section class="ucf-section ucf-section-success-pathway-semesters" data-section-link-title="Communication Sciences &amp; Disorders (B.A. or B.S)" aria-label="Communication Sciences &amp; Disorders (B.A. or B.S)">
+        <!--<p class="lead">UCF Success Pathways are intended to guide students who want to earn an A.A. at the state college and transfer to UCF to earn a baccalaureate degree. Each Success Pathway outlines critical, required, and/or common program prerequisites courses students should complete while earning their A.A. The goal of the Success Pathways is to ensure that transfer students matriculate to UCF will all their lower-level requirements completed or "junior ready".</p>-->
+        <p class="lead">UCF Success Coaches are available to provide comprehensive support to prospective and current transfer students, from first contact all the way through graduation at UCF.</p>
+        <!--[button href="https://directconnect.ucf.edu/success-coaches/" new_window="true"]Connect with a Success Coach[/button]-->
+        <div class=""><button class="btn btn-primary py-3 px-3" type="button">Connect with a Success Coach</button></div>
+        &nbsp;
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card-deck">
+                    <div class="card">
+                        <div class="card-header card-inverse" style="background-color: black; color: white;">
+                            <h3 class="Degree"></h3>
+                            <p class="card-text">Major Type and Requirements</p>
+                        </div>
+                        <div class="card-block">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <p class="card-text"><strong>Required GPA : </strong><span class="GPA"></span></p>
+                                    <p class="card-text"><strong>Limited Access : </strong><span class="LimitedAccess"></span></p>
+                                    <p class="card-text"><strong>Restricted Access : </strong><span class="RestrictedAccess"></span></p>
+                                    <div><strong>Foreign Language Requirements </strong></div>
+                                    <span class="ForeignLanguageRequirement"></span>
+                                </div>
+                                <div class="col-md-6">
+                                    <div><strong>Additional Requirements</strong></div>
+                                    <span class="AdditionalRequirement"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        &nbsp;
+
+        &nbsp;
+        <h3 class="heading-underline"><span class="Degree"></span> Success Pathway</h3>
+        <p class="lead">Listed courses are to account for degree requirements, pre-requisites and critical courses to prepare students for admission to intended major at UCF. Courses should be completed before transfering to UCF.</p>
+
+        <div class="btn-group">
+            <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                State College Plan
+            </button>
+            <div class="dropdown-menu" id="InstitutionList">
+                <a class="dropdown-item" href="#">General</a>
+                <a class="dropdown-item" href="#">Daytona State College</a>
+                <a class="dropdown-item" href="#">Valencia College</a>
+            </div>
+            &nbsp;
+
+        </div>
+        &nbsp;
+        <div class="">
+            <h3><span class="badge badge-primary"><span class="Institution"></span> Pathway</span></h3>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table table-hover table-bordered">
+                    <caption>UCF course mapping for partner institution</caption>
+                    <thead class="thead-inverse">
+                        <tr>
+                            <th>UCF Course Prefix &amp; Course Number</th>
+                            <th>State College Course Prefix &amp; Number</th>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <div><span class="badge badge-secondary p-1">C</span> Critical Course Requirements</div>
+                                <div><span class="badge badge-danger p-1">R</span> Required Course</div>
+                                <div><span class="badge badge-primary p-1">CPP</span> Common Course Prerequisite</div>
+                            </td>
+                        </tr>
+                    </thead>
+                    <tbody id="coursesTable"></tbody>
+                    <tfoot id="footerDegreeMapLegend" class="d-none">
+                        <tr>
+                            <td colspan="2">
+                                <div><span class="badge badge-secondary p-1">C</span> Critical Course Requirements</div>
+                                <div><span class="badge badge-danger p-1">R</span> Required Course</div>
+                                <div><span class="badge badge-primary p-1">CPP</span> Common Course Prerequisite</div>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+        <div id="UCFPathwaySection">
+            &nbsp;
+            <h3 class="heading-underline">UCF Pathway</h3>
+            <p class="lead">The semester curriculum suggested below assumes that the student: a) has earned an A.A., b) has completed required lower-level courses and academic milestones, c) will be enrolled full-time at UCF. Upon matriculation to UCF, the student is strongly encouraged to consult their major advisor at UCF and utilize the academic planning tools such as Pegasus Path, myKnight Audit, and mySchedule Builder for any of their academic planning needs.</p>
+
+            <div id="UCFCourseSection"></div>
+            <div id="UCFCourseSection2" class="pt-3"></div>
+        </div>
+    </section>
+</div>
+<div class="container" id="NotesSection">
+    <p class="lead pt-5">Notes:</p>
+    <ul id="ListItems"></ul>
+    <p class="lead pt-3">Disclaimer</p>
+    Success Pathways do not substitute for your advisor, degree planning tools, and degree audits. Once you enroll at UCF, Pegasus Path (degree planning) and myKnight Audit (degree audit) are the official tools at UCF. Please choose your major of choice early and follow Success Pathways in consultation with your advisor. Actual degree requirements at each institution are based on the undergraduate catalog year in which you first enrolled in the institution.
+</div>
+@Html.Action("_PathwayDegreeFooter")
+
+
+<script src="~/Scripts/v2/main.js"></script>
+<script src="~/Scripts/v2/DegreeMap.js"></script>

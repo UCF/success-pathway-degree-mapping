@@ -46,7 +46,7 @@ namespace DegreeMapping.Models
 
         public static List<CourseList> List(int degreeId)
         {
-            List<Course> list_c = Course.List(degreeId);
+            List<Course> list_c = Course.List(degreeId, null);
             List<CourseList> list_cl = new List<CourseList>();
             foreach (Course c in list_c.Where(x=>x.Active).OrderBy(x=>x.Code))
             {

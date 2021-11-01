@@ -1,0 +1,121 @@
+﻿@model DegreeMapping.Models.CustomCourseSemester
+
+
+@using (Html.BeginForm("CustomCourseSemesterSave", "App", FormMethod.Post, new { @Class = "form-horizontal" }))
+{
+    @Html.HiddenFor(x=>x.Id)
+    @Html.HiddenFor(x=>x.DegreeId)
+    <div class="row pt-5">
+        <div class="col-md-12">
+            <div>
+                @if (Model.Id > 0)
+                {
+                    <h2>Edit Custom Semester Content</h2>
+                }
+                else 
+                { 
+                    <h2>Add Custom Semester Content</h2>
+                }
+            </div>
+            <div class="form-group py-4 px-4" id="semesters" style="border:3px solid #fcf8e3">
+                @Html.LabelFor(x => x.Semester) :
+                @for (int i = 4; i <= 11; i++)
+                {
+                    string semesterId = string.Format("semesterId_{0}", i);
+                    string cssClass = (Model.Semester == i) ? "alert alert-warning" : string.Empty;
+                    <span class="px-3 @semesterId @cssClass"><label>@i @Html.RadioButtonFor(x => x.Semester, i)</label></span>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="row pt-5">
+        <div class="col-md-12">
+            <div class="form-group py-4 px-4" id="terms" style="border:3px solid #d9edf7">
+                @Html.LabelFor(x => x.Term) :
+                <label id="term_None" class="px-5">Do not display <input type="radio" name="Term" checked="checked" value="" class="alert alert-info" /></label>
+                @{
+                    if (Model.Term == DegreeMapping.Models.Course.CourseTerm.Fall)
+                    {
+                        <label id="term_@DegreeMapping.Models.Course.CourseTerm.Fall.Replace(" ", "_")" class="px-4 alert alert-info">@DegreeMapping.Models.Course.CourseTerm.Fall @Html.RadioButtonFor(x => x.Term, DegreeMapping.Models.Course.CourseTerm.Fall)</label>
+                    }
+                    else
+                    {
+                        <label id="term_@DegreeMapping.Models.Course.CourseTerm.Fall.Replace(" ", "_")" class="px-4">@DegreeMapping.Models.Course.CourseTerm.Fall @Html.RadioButtonFor(x => x.Term, DegreeMapping.Models.Course.CourseTerm.Fall)</label>
+                    }
+
+                    if (Model.Term == DegreeMapping.Models.Course.CourseTerm.Spring)
+                    {
+                        <label id="term_@DegreeMapping.Models.Course.CourseTerm.Spring.Replace(" ", "_")" class="px-4 alert alert-info">@DegreeMapping.Models.Course.CourseTerm.Spring @Html.RadioButtonFor(x => x.Term, DegreeMapping.Models.Course.CourseTerm.Spring)</label>
+                    }
+                    else
+                    {
+                        <label id="term_@DegreeMapping.Models.Course.CourseTerm.Spring.Replace(" ", "_")" class="px-4">@DegreeMapping.Models.Course.CourseTerm.Spring @Html.RadioButtonFor(x => x.Term, DegreeMapping.Models.Course.CourseTerm.Spring)</label>
+                    }
+
+                    if (Model.Term == DegreeMapping.Models.Course.CourseTerm.Summer)
+                    {
+                        <label id="term_@DegreeMapping.Models.Course.CourseTerm.Summer.Replace(" ", "_")" class="px-4 alert alert-info">@DegreeMapping.Models.Course.CourseTerm.Summer @Html.RadioButtonFor(x => x.Term, DegreeMapping.Models.Course.CourseTerm.Summer)</label>
+                    }
+                    else
+                    {
+                        <label id="term_@DegreeMapping.Models.Course.CourseTerm.Summer.Replace(" ", "_")" class="px-4">@DegreeMapping.Models.Course.CourseTerm.Summer @Html.RadioButtonFor(x => x.Term, DegreeMapping.Models.Course.CourseTerm.Summer)</label>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+
+    <div class="row pt-5">
+        <div class="col-md-12">
+            <label for="note">Note : </label>
+            @Html.TextAreaFor(x=>x.Note)
+
+        </div>
+    </div>
+    <div class="row pt-5">
+        <div class="col-md-12 text-right">
+            <button type="submit" class="btn btn-success btn-lg">Save</button>
+            @Html.ActionLink("Cancel", "DegreeView", "App", new { Id = Model.DegreeId}, new { @Class="btn btn-primary btn-lg"})
+        </div>
+    </div>
+}
+@Html.Action("_TinyMCE")
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#semesters input:radio").on("click", function () {
+            let semester = $(this).val();
+            SetSemester(semester);
+        })
+
+        $("#terms input:radio").on("click", function () {
+            let term = $(this).val().replace(" ", "_");
+            SetTerm(term);
+        })
+
+        function SetSemester(semester) {
+            $("#semesters input:radio").each(function () {
+                let id = $(this).val();
+                if (id == semester) {
+                    $(".semesterId_" + id).addClass("alert");
+                    $(".semesterId_" + id).addClass("alert-warning");
+                } else {
+                    $(".semesterId_" + id).removeClass("alert");
+                    $(".semesterId_" + id).removeClass("alert-warning");
+                }
+            })
+        }
+
+        function SetTerm(term) {
+            $("#terms input:radio").each(function () {
+                let id = $(this).val().replace(" ", "_");
+                if (id == term) {
+                    $("#term_" + id).addClass("alert");
+                    $("#term_" + id).addClass("alert-info");
+                } else {
+                    $("#term_" + id).removeClass("alert");
+                    $("#term_" + id).removeClass("alert-info");
+                }
+            })
+        }
+    })
+</script>

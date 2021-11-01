@@ -2,6 +2,7 @@ C:\wwwroot\DegreeMapping\DegreeMapping\bin\DegreeMapping.dll.config
 C:\wwwroot\DegreeMapping\DegreeMapping\bin\DegreeMapping.dll
 C:\wwwroot\DegreeMapping\DegreeMapping\bin\DegreeMapping.pdb
 C:\wwwroot\DegreeMapping\DegreeMapping\bin\Antlr3.Runtime.dll
+C:\wwwroot\DegreeMapping\DegreeMapping\bin\DegreeMapper.dll
 C:\wwwroot\DegreeMapping\DegreeMapping\bin\EntityFramework.dll
 C:\wwwroot\DegreeMapping\DegreeMapping\bin\EntityFramework.SqlServer.dll
 C:\wwwroot\DegreeMapping\DegreeMapping\bin\Microsoft.AspNet.Identity.Core.dll
@@ -28,6 +29,7 @@ C:\wwwroot\DegreeMapping\DegreeMapping\bin\System.Web.WebPages.Deployment.dll
 C:\wwwroot\DegreeMapping\DegreeMapping\bin\System.Web.WebPages.dll
 C:\wwwroot\DegreeMapping\DegreeMapping\bin\System.Web.WebPages.Razor.dll
 C:\wwwroot\DegreeMapping\DegreeMapping\bin\WebGrease.dll
+C:\wwwroot\DegreeMapping\DegreeMapping\bin\DegreeMapper.pdb
 C:\wwwroot\DegreeMapping\DegreeMapping\bin\EntityFramework.xml
 C:\wwwroot\DegreeMapping\DegreeMapping\bin\EntityFramework.SqlServer.xml
 C:\wwwroot\DegreeMapping\DegreeMapping\bin\Microsoft.AspNet.Identity.Core.xml

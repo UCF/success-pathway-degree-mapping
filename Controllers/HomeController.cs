@@ -1,12 +1,13 @@
-﻿using DegreeMapping.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data.SqlTypes;
-using System.DirectoryServices.ActiveDirectory;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Routing;
+using DegreeMapping.Models;
+using System.ComponentModel;
+//using System.Data.SqlTypes;
+using System.DirectoryServices.ActiveDirectory;
 
 namespace DegreeMapping.Controllers
 {
@@ -16,7 +17,7 @@ namespace DegreeMapping.Controllers
         {
             if (User.Identity.IsAuthenticated)
             {
-                return RedirectToAction("Checklist", "App");
+                return RedirectToAction("Catalog", "App");
             }
             Models.User u = new Models.User();
             return View(u);
@@ -31,7 +32,7 @@ namespace DegreeMapping.Controllers
                 new Authentication(u.NID, u.Password, ref user);
                 if (user.Authenticated && user.Authorized)
                 {
-                    return RedirectToAction("Checklist", "App");
+                    return RedirectToAction("Catalog", "App");
                 }
                 else 
                 {

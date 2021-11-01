@@ -1,13 +1,16 @@
 ﻿@model List<string>
 
-
-
-<div class="row py-5">
-    <div class="col-md-12">
-        <small>@Html.ActionLink("Institutions", "Institutions")</small>
-        <h1>Manage Users</h1>
+@section JumbotronMain {
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1>Manage Users</h1>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
+}
 
 <div class="container pt-3 px-5">
     <div class="row">
@@ -27,7 +30,7 @@
                     </div>
                 </div>
             }
-            </div>
+        </div>
     </div>
     <div class="row pt-5">
         <div class="col-md-12">
