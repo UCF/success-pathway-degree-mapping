@@ -56,3 +56,5 @@ C:\wwwroot\DegreeMapping\DegreeMapping\bin\System.Web.Http.WebHost.xml
 C:\wwwroot\DegreeMapping\DegreeMapping\bin\System.Web.Cors.dll
 C:\wwwroot\DegreeMapping\DegreeMapping\bin\System.Web.Http.Cors.dll
 C:\wwwroot\DegreeMapping\DegreeMapping\bin\System.Web.Http.Cors.xml
+C:\wwwroot\DegreeMapping\DegreeMapping\bin\DegreeMapper.dll
+C:\wwwroot\DegreeMapping\DegreeMapping\bin\DegreeMapper.pdb

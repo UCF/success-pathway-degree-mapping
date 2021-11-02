@@ -1,8 +1,9 @@
 ﻿@model DegreeMapping.Models.Note
 @{
     Model.NoteType = (Model.Id == 0) ? 2 : Model.NoteType;
+    Model.Value = HttpUtility.HtmlDecode(Model.Value);
 }
-
+@Html.Action("_TinyMCE")
 @using (Html.BeginForm("NoteSave", "App", FormMethod.Post, new { @Class = "form-horizontal" }))
 {
     @Html.HiddenFor(x => x.Id)
@@ -47,7 +48,7 @@
         <div class="col-md-10">
             <div class="form-group">
                 @Html.LabelFor(x => x.Value) :
-                @Html.TextAreaFor(x => x.Value, new { @class = "form-control", required = "required", cols = "80", rows = "20" })
+                @Html.TextAreaFor(x => x.Value, new { @class = "form-control", cols = "80", rows = "20" })
                 <span class="alert alert-warning">2000 characters max</span>
             </div>
         </div>
@@ -94,7 +95,7 @@
                 <button type="submit" class="btn btn-success btn-lg">Save</button>
                 @if (Model.Id > 0)
                 {
-                    @Html.ActionLink("Back", "NoteView", new { id = Model.Id }, new { @Class = "btn btn-primary btn-lg" })
+                    @Html.ActionLink("Back", "DegreeView", new { id = Model.Id }, new { @Class = "btn btn-primary btn-lg" })
                 }
                 else
                 {

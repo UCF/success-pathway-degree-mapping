@@ -1,12 +1,19 @@
 ﻿@model DegreeMapping.Models.Note
 
-<div class="row pt-5">
-    <div class="col-md-12">
-        <small>@Html.ActionLink(Model.Institution, "InstitutionView", new { id = Model.InstitutionId }) <span class="glyphicon glyphicon-arrow-right"></span> @Html.ActionLink(Model.Degree, "DegreeView", new { id = Model.DegreeId })</small>
-        <h1>@Model.CatalogYear @Model.Degree <em>New Note</em></h1>
-        <h2>@Model.Institution</h2>
+@section JumbotronMain {
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="h3">@Html.ActionLink(Model.Institution, "InstitutionView", new { id = Model.InstitutionId }) <span class="glyphicon glyphicon-arrow-right"></span> @Html.ActionLink(Model.Degree, "DegreeView", new { id = Model.DegreeId })</div>
+                    <h1 class="heading-underline">@Model.CatalogYear @Model.Degree</h1>
+                    <div class="h2">New Note</div>
+                    <h2>@Model.Institution</h2>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
+}
 
 <div class="row">
     <div class="col-md-4 alert alert-warning mx-0 my-0 h5">

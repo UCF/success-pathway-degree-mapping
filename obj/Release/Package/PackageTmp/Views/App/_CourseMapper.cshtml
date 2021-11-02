@@ -5,6 +5,7 @@
     DegreeMapping.Models.CourseMapperHtml alternate2 = new DegreeMapping.Models.CourseMapperHtml(Model.DegreeId, Model.Alternate2DisplayValue, Model.Alternate2UCFCourses, Model.Alternate2PartnerCourses, "Alternate2DisplayValue", "Alternate2UCFCourseIds", "Alternate2PartnerCourseIds");
     DegreeMapping.Models.CourseMapperHtml alternate3 = new DegreeMapping.Models.CourseMapperHtml(Model.DegreeId, Model.Alternate3DisplayValue, Model.Alternate3UCFCourses, Model.Alternate3PartnerCourses, "Alternate3DisplayValue", "Alternate3UCFCourseIds", "Alternate3PartnerCourseIds");
     DegreeMapping.Models.CourseMapperHtml alternate4 = new DegreeMapping.Models.CourseMapperHtml(Model.DegreeId, Model.Alternate4DisplayValue, Model.Alternate4UCFCourses, Model.Alternate4PartnerCourses, "Alternate4DisplayValue", "Alternate4UCFCourseIds", "Alternate4PartnerCourseIds");
+    DegreeMapping.Models.CourseMapperHtml alternate5 = new DegreeMapping.Models.CourseMapperHtml(Model.DegreeId, Model.Alternate5DisplayValue, Model.Alternate5UCFCourses, Model.Alternate5PartnerCourses, "Alternate5DisplayValue", "Alternate5UCFCourseIds", "Alternate5PartnerCourseIds");
 }
 
 
@@ -41,6 +42,10 @@
     <section class="py-5 my-5 box-shadown-sm-right">
         <h1 class="heading-underline pl-2">Alternate 4</h1>
         @Html.Action("_CourseMapperHtml", new { cmh = alternate4 })
+    </section>
+    <section class="py-5 my-5 box-shadown-sm-right">
+        <h1 class="heading-underline pl-2">Alternate 5</h1>
+        @Html.Action("_CourseMapperHtml", new { cmh = alternate5 })
     </section>
 
     <div class="pt-5">

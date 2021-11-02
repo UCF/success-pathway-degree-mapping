@@ -1,6 +1,6 @@
 ﻿@model List<DegreeMapping.Models.Degree>
 @{
-    string path = string.Empty;
+    string path = "/pathway";
     int catalogId = Model.Select(x => x.CatalogId).FirstOrDefault();
     int degreeCount = Model.Where(x => x.InstitutionId == DegreeMapping.Models.Institution.UCFId).Count();
     DegreeMapping.Models.Catalog cy = DegreeMapping.Models.Catalog.Get(catalogId);

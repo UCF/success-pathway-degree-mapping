@@ -1,25 +1,35 @@
 ﻿@model  List<DegreeMapping.Models.Course>
+@{
+    List<DegreeMapping.Models.Catalog> list_cy = DegreeMapping.Models.Catalog.List();
 
-
-<div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <h1>Search Course</h1>
+}
+@section JumbotronMain {
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1>Search Courses</h1>
+                </div>
+            </div>
         </div>
     </div>
+}
 
+<div class="container">
     <div class="row py-5">
         <div class="col-md-12">
             @using (Html.BeginForm("CourseSearch", "App", FormMethod.Post, new { @Class = "form-inline" }))
             {
-                @*<div class="form-group">
-                    <select name="catalogId" class="form-control" style="height:34px;">
-                        <option>2021</option>
-                    </select>
-                </div>*@
-                <input type="hidden" name="catalogId" value="1" />
                 <div class="form-group">
-                    <input type="text" class="form-control" name="keyword" value="@ViewBag.Keyword"/>
+                    <input type="text" class="" name="keyword" value="@ViewBag.Keyword" style="width:300px" />
+                    <div class="form-group">
+                        <select name="catalogId" class="" style="height:30px">
+                            @foreach (DegreeMapping.Models.Catalog cy in list_cy.Where(x => x.Active).OrderByDescending(x => x.Year))
+                            {
+                                <option value="@cy.Id">@cy.Year</option>
+                            }
+                        </select>
+                    </div>
                     <button type="submit" name="submit" class="btn btn-primary btn-lg">Search</button>
                 </div>
             }
@@ -41,7 +51,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (DegreeMapping.Models.Course c in Model.OrderBy(x => x.CatalogYear).ThenBy(x=>x.Code).ThenBy(x => x.Degree).ThenBy(x => x.Institution))
+                @foreach (DegreeMapping.Models.Course c in Model.OrderBy(x => x.CatalogYear).ThenBy(x => x.Code).ThenBy(x => x.Degree).ThenBy(x => x.Institution))
                 {
                     count++;
                     <tr>

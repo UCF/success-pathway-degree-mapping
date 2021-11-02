@@ -4,13 +4,15 @@
 }
 @if (list_courses != null && list_courses.Count > 0)
 {   
-        @Html.Raw(ViewBag.title)
+    @Html.Raw(ViewBag.title)
         foreach (DegreeMapping.Models.Course c in list_courses.OrderBy(x => x.Code))
         {
-            if (!string.IsNullOrEmpty(c.Code)) { 
-                <div class="pt-2">
-                    <div>@c.Code (@c.Credits credits) </div>
-                </div>
+            string credit = (!string.IsNullOrEmpty(c.CreditText)) ? c.CreditText : c.Credits.ToString();
+            if (!string.IsNullOrEmpty(c.Code)) 
+            {
+            <div class="pt-2">
+                <div>@c.Code (@credit credits) </div>
+            </div>
             }
         }
 }

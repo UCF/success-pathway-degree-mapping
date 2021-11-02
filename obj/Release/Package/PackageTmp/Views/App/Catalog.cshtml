@@ -1,26 +1,67 @@
-﻿@model List<DegreeMapping.Models.Degree> 
-@{ 
+﻿@model List<DegreeMapping.Models.Degree>
+@{
     int catagoryId = ViewBag.catagoryId;
     List<DegreeMapping.Models.Catalog> list_cy = ViewBag.list_cy;
     string catalogYear = list_cy.Where(x => x.Id == catagoryId).Select(x => x.Year).FirstOrDefault();
 }
 
-<div class="row pt-5">
-    <h1>Catalog Year @catalogYear</h1>
-    <div class="col-md-12">
-        <div class="form-group">
-            <select id="catalogId" name="id" class="form-control">
-                <option value="0">Select Catalog Year</option>
-                @foreach (DegreeMapping.Models.Catalog cy in list_cy.OrderByDescending(x => x.Current).ThenByDescending(x => x.Active).ThenBy(x => x.Year))
-                {
-                    string select = (catagoryId == cy.Id) ? "selected" : string.Empty;
-                    if (cy.Current)
+@section JumbotronMain {
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="h1">Pathway Catalogs</div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<div class="container">
+    <div class="row">
+        <div class="card-deck">
+            @foreach (DegreeMapping.Models.Catalog cy in list_cy.OrderByDescending(x => x.Current).ThenBy(x => x.Year).Where(x=>x.Active))
+            {
+                string cssClassCurrent = string.Empty;//(cy.Current) ? "bg-success" : string.Empty;
+                <div class="card mt-5 mb-5">
+                    <div class="py-5 card-header text-center @cssClassCurrent">
+                        <h2 class="h1"> @cy.Year</h2>
+                        @*@if (cy.Current)
+                        {
+                            <div>Current</div>
+                        }
+                        else 
+                        { 
+                            <div>&nbsp;</div>
+                        }*@
+                    </div>
+                    @using (Html.BeginForm("CatalogSave", "App", FormMethod.Post, new { @Class = "form-horizontal" }))
                     {
-                        <option value="@cy.Id" @select>@cy.Year - Current Catalog</option>
+                        @Html.HiddenFor(x=>cy.Id)
+                        @Html.HiddenFor(x=>cy.Year)
+                        @Html.HiddenFor(x=>cy.Active)
+                        @Html.HiddenFor(x=>cy.Current)
+                        <div class="card-block">
+                            <div>@Html.LabelFor(c=>cy.UndergraduateCatalogURL)</div> 
+                            <div>
+                                @Html.TextBoxFor(x => cy.UndergraduateCatalogURL, new { Style="width:400px" })
+                                @if (!string.IsNullOrEmpty(cy.UndergraduateCatalogURL))
+                                {
+                                    <p><a href="@cy.UndergraduateCatalogURL" title="@cy.UndergraduateCatalogURL" target="_blank">View undergraduate catalog</a></p>
+                                }
+                                else 
+                                { 
+                                    <p>&nbsp;</p>
+                                }
+                            </div>
+                        </div>
+                        <div class="card-footer pt-5">
+                            @Html.ActionLink("View Catalog", "DegreeList", "App", new { id = cy.Id }, new { @Class = "btn btn-primary btn-block btn-lg" })
+                            <button type="submit" class="btn btn-success btn-block btn-lg">Save</button>
+                        </div>
                     }
-                    <option value="@cy.Id" @select>@cy.Year</option>
-                }
-            </select>
+                </div>
+            }
         </div>
     </div>
 </div>

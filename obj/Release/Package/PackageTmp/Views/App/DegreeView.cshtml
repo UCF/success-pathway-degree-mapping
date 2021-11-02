@@ -1,11 +1,12 @@
 ﻿@model DegreeMapping.Models.Degree
 @{
-    List<DegreeMapping.Models.Course> list_c = DegreeMapping.Models.Course.List(Model.Id);
-    List<DegreeMapping.Models.Note> list_n = DegreeMapping.Models.Note.List(Model.Id);
+    List<DegreeMapping.Models.Course> list_c = DegreeMapping.Models.Course.List(Model.Id, null);
+    List<DegreeMapping.Models.Note> list_n = DegreeMapping.Models.Note.List(Model.Id, null);
     List<DegreeMapping.Models.Note> list_ucfNotes = new List<DegreeMapping.Models.Note>();
+    string credit = string.Empty;
     if (Model.UCFDegreeId.HasValue)
     {
-        list_ucfNotes = DegreeMapping.Models.Note.List(Model.UCFDegreeId.Value);
+        list_ucfNotes = DegreeMapping.Models.Note.List(Model.UCFDegreeId.Value, null);
     }
     string cssClass = (string.IsNullOrEmpty(Model.Description)) ? "" : "alert alert-warning";
     string collegeURL = string.Empty;
@@ -24,15 +25,20 @@
     }
 }
 
-<div class="row pt-5">
-    <div class="col-md-12">
-        <small>
-            @Html.ActionLink(Model.Institution + " Degree List", "InstitutionView", new { id = Model.InstitutionId })
-        </small>
-        <h1>@Model.CatalogYear  @Html.Raw(Model.Name)</h1>
-        <h2>@Model.Institution</h2>
+@section JumbotronMain {
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="h3">@Html.ActionLink("Back to Degree List", "DegreeList", "App", new { Id = Model.CatalogId }, null)</div>
+                    <h1 class="heading-underline">@Model.CatalogYear @Model.Name</h1>
+                    <h2>@Model.Institution</h2>
+
+                </div>
+            </div>
+        </div>
     </div>
-</div>
+}
 
 <div class="row pt-5">
     <div class="col-md-6">
@@ -154,7 +160,6 @@
         <h2 class="heading-underline">Notes for @Model.Institution</h2>
         <div class="col-md-12">
             <!--UCF NOTES HERE-->
-
             <div><h3>UCF Notes</h3></div>
             @if (list_ucfNotes.Where(x => x.NoteType.Equals(DegreeMapping.Models.Note.NoteTypeValue.ListItem)).ToList().Count > 0)
             {
@@ -182,9 +187,15 @@
                     {
                         if (n.NoteType.Equals(DegreeMapping.Models.Note.NoteTypeValue.ListItem))
                         {
-                            <li>
-                                @Html.ActionLink(n.Value, "NoteEdit", new { id = n.Id })
-                            </li>
+                        <li>
+                            @Html.ActionLink("Edit", "NoteEdit", new { id = n.Id })
+                            <blockquote>
+                                @Html.Raw(n.Value)
+                            </blockquote>
+
+                            @*<a href="@Url.Action("NoteEdit", new {Id = n.Id})">@Html.Raw(n.Value)</a>*@
+                            @*@Html.ActionLink(Html.Raw(n.Value).ToHtmlString(), "NoteEdit", new { id = n.Id })*@
+                        </li>
                         }
                     }
                 </ul>
@@ -197,8 +208,9 @@
 <!-- #region SECTION FOR PARTNER INSTITUTION -->
 @if (Model.InstitutionId != DegreeMapping.Models.Institution.UCFId)
 {
+    <a name="courselist"></a>
     <div class="row pt-5">
-        <h2 class="heading-underline">Course List</h2>
+        <h2 class="heading-underline">Course List for @Model.Institution</h2>
         <div class="col-md-12">
             <table class="table table-hover">
                 <thead>
@@ -222,12 +234,13 @@
                     <tbody>
                         @foreach (DegreeMapping.Models.Course c in list_c.OrderBy(x => x.Code))
                         {
+                            credit = (!string.IsNullOrEmpty(c.CreditText)) ? c.CreditText : c.Credits.ToString();
                             <tr>
                                 <td>@Html.ActionLink("Edit", "CourseEdit", new { id = c.Id })</td>
                                 @*<td>@Html.Raw(c.UCFRelatedCourse)</td>*@
                                 @*<td>@c.UCFCourseCredits</td>*@
                                 <td>@c.Code</td>
-                                <td>@c.Credits</td>
+                                <td>@credit</td>
                                 <td>-</td>
                                 <td>-</td>
                                 <td>-</td>
@@ -243,11 +256,11 @@
     </div>
 }
 <!-- #endregion -->
-<!-- #region Sectopm for UCF -->
+<!-- #region Section for UCF -->
 @if (Model.InstitutionId == DegreeMapping.Models.Institution.UCFId)
 {
     <div class="row pt-5">
-        <h2 class="heading-underline">@Model.Institution Courses</h2>
+        <h2 class="heading-underline">@Model.Institution Courses for @Model.Institution</h2>
         <div class="col-md-12">
             <table class="table table-hover">
                 <thead>
@@ -267,6 +280,7 @@
                         string semester = string.Empty;
                         foreach (DegreeMapping.Models.Course c in list_c.OrderBy(x => x.Semester).ThenBy(x => x.Term).ThenBy(x => x.Code))
                         {
+                            credit = (!string.IsNullOrEmpty(c.CreditText)) ? c.CreditText : c.Credits.ToString();
                             if (semester != c.SemesterTerm)
                             {
                                 semester = c.SemesterTerm;
@@ -277,7 +291,7 @@
                             <tr>
                                 <td>@Html.ActionLink("Course Edit", "CourseEdit", "App", new { id = c.Id }, null)</td>
                                 <td>@c.Code</td>
-                                <td>@c.Credits</td>
+                                <td>@credit</td>
                                 @if (c.Semester == 1)
                                 {
                                     <td>@(c.Critical ? "Yes":"No")</td>
@@ -303,7 +317,15 @@
 
 @if (Model.InstitutionId != DegreeMapping.Models.Institution.UCFId)
 {
+    @*Maps Partner Courses with UCF Courses for Semester 1 only *@
     @Html.Action("_CourseMapperList", new { degreeId = Model.Id })
-}
 
-@Html.Action("_DisplayCloneInfo", "App", new { CloneId = Model.CloneDegreeId, CloneType = "Degree" })
+    @*Displays UCF Courses for Semester 5+*@
+    @Html.Action("_CustomCourseMapperView", "App", new { degreeId = Model.Id })
+
+    @*Display Custom information for Semester 5+*@
+    @Html.Action("_CustomCourseSemsterView", "App", new { degreeId = Model.Id })
+
+    @*I don't remeber why I did this*@
+    @Html.Action("_DisplayCloneInfo", "App", new { CloneId = Model.CloneDegreeId, CloneType = "Degree" })
+}
