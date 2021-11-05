@@ -1,4 +1,26 @@
-﻿$(function () {
+﻿var main = {
+    catalogId: 0,
+    degreeId: 0,
+    institutionId: 0,
+    getUrlVars: function () {
+        var vars = [], hash;
+        var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+        for (var i = 0; i < hashes.length; i++) {
+            hash = hashes[i].toLowerCase().split('=');
+            vars.push(hash[0]);
+            vars[hash[0]] = hash[1];
+        }
+        return vars;
+    },
+    getYesNo: function (val) {
+        return (val) ? "Yes" : "No";
+    },
+    init: function () {
+        main.degreeId = (this.getUrlVars()["degreeid"] > 0) ? this.getUrlVars()["degreeid"] : 0;
+        main.institutionId = (this.getUrlVars()["institutionid"] > 0) ? this.getUrlVars()["institutionid"] : 0;
+    }
+}
+$(function () {
     main.init();
 })
 var ucfCourse = '';
@@ -35,7 +57,6 @@ var courseMapper = {
                 ucfCourseSymbolsMobile = '<div class="d-block d-sm-block d-md-none">' + critical + required + cpp + '</div>';
                 let course1 = '<div class="col-md-7">' + ucfCourses[x].Course + '</div>'
                 let course2 = '<div class="col-md-3">' + ucfCourses[x].Credit + ' credits</div>';
-                //ucfCourse += displayNameOutput;
                 ucfCourse += '<div class="row">' + ucfCourseSymbolsDesktop + course1 + course2 + '</div>' + ucfCourseSymbolsMobile;
             }
         } else {
@@ -63,8 +84,8 @@ var courseMapper = {
     },
     getCourseMapper: function () {
         $.get({
-            //url: "https://portal.connect.ucf.edu/pathway/api/degree/GetCourseMapper?degreeId=" + main.degreeId,
-            url: "/api/v2/DegreeMap/GetCourseMapper?degreeId=" + courseMapper.degreeId,
+            url: "https://portal.connect.ucf.edu/pathway/api/v2/DegreeMap/GetCourseMapper?degreeId=" + courseMapper.degreeId,
+            //url: "/api/v2/DegreeMap/GetCourseMapper?degreeId=" + courseMapper.degreeId,
             type: "GET",
             headers: { "APIKey": "Th1sIsth3Way" },
             cache: true,
@@ -137,32 +158,26 @@ var customCourseSemester = {
     data: {},
     getCustomCourseSemester: function () {
         $.get({
-            //url: "https://portal.connect.ucf.edu/pathway/api/degree/GetCourseMapper?degreeId=" + main.degreeId,
-            url: "/api/v2/DegreeMap/GetCustomCourseSemester?degreeId=" + main.degreeId,
+            url: "https://portal.connect.ucf.edu/pathway/api/v2/DegreeMap/GetCustomCourseSemester?degreeId=" + main.degreeId,
+            //url: "/api/v2/DegreeMap/GetCustomCourseSemester?degreeId=" + main.degreeId,
             type: "GET",
             headers: { "APIKey": "Th1sIsth3Way" },
             cache: true,
             async:false
         }).done(function (data) {
             customCourseSemester.data = data;
-            console.log('getCustomCourseSemester');
-            console.log(data);
             customCourseSemester.displayCustomCourseSemester(data);
         }) 
     },
     displayCustomCourseSemester(data) {
-        //console.log(data);
         for (let x = 0; x <= data.length - 1; x++) {
             let termId = "SemesterTerm_" + data[x].Semester;
             termId += (data[x].Term.length > 1) ? "_" + data[x].Term : '';
-            console.log(termId);
-            console.log('#SemesterTerm_' + termId + ' .card-block');
             $('#' + termId + ' .card-block').append('<p class="card-text">' + data[x].Note + '</p>');
         }
     }
 
 }
-
 $(function () {
     courseMapper.init();
 })
@@ -236,9 +251,8 @@ var degreemap = {
     },
     getDegreeInfo: function () {
         $.get({
-            //url: "https://portal.connect.ucf.edu/pathway/api/degree/GetDegreeInfo?degreeId=" + main.degreeId,
-            url: "/api/v2/DegreeMap/GetDegreeInfo?degreeId=" + degreemap.degreeId,
-            //data : "degreeId="4,
+            url: "https://portal.connect.ucf.edu/pathway/api/v2/DegreeMap/GetDegreeInfo?degreeId=" + degreemap.degreeId,
+            //url: "/api/v2/DegreeMap/GetDegreeInfo?degreeId=" + degreemap.degreeId,
             type: "GET",
             headers: { "APIKey": "Th1sIsth3Way" },
             cache: true,
@@ -255,9 +269,8 @@ var degreemap = {
     },
     getListByUCFDegree: function () {
         $.get({
-            //url: "https://portal.connect.ucf.edu/pathway/api/degree/GetListByUCFDegree?ucfDegreeId=" + degreemap.ucfDegreeId + "&catalogId=" + degreemap.catalogId,
-            url: "/api/v2/DegreeMap/GetListByUCFDegree?ucfDegreeId=" + degreemap.ucfDegreeId + "&catalogId=" + degreemap.catalogId,
-            //data : "degreeId="4,
+            url: "https://portal.connect.ucf.edu/pathway/api/v2/DegreeMap/GetListByUCFDegree?ucfDegreeId=" + degreemap.ucfDegreeId + "&catalogId=" + degreemap.catalogId,
+            //url: "/api/v2/DegreeMap/GetListByUCFDegree?ucfDegreeId=" + degreemap.ucfDegreeId + "&catalogId=" + degreemap.catalogId,
             type: "GET",
             headers: { "APIKey": "Th1sIsth3Way" },
             cache: true,
@@ -363,27 +376,15 @@ var ucfSemesterTerm = {
     },
     getUCFSemesterCourse: function () {
         $.get({
-            //url: "https://portal.connect.ucf.edu/pathway/api/degree/GetUCFSemesterCourse?degreeId=" + ucfSemesterTerm.degreeId,
-            //url: "/api/degree/GetUCFSemesterCourse?degreeId=" + ucfSemesterTerm.degreeId,
-            url: "/api/v2/DegreeMap/getCustomCourseMapper?degreeId=" + ucfSemesterTerm.degreeId,
+            url: "https://portal.connect.ucf.edu/pathway/api/v2/DegreeMap/getCustomCourseMapper?degreeId=" + ucfSemesterTerm.degreeId,
+            //url: "/api/v2/DegreeMap/getCustomCourseMapper?degreeId=" + ucfSemesterTerm.degreeId,
             type: "GET",
             headers: { "APIKey": "Th1sIsth3Way" },
             cache: true,
             async:false,
             success: function (data) {
-                //console.log('GetUCFSemesterCourse');
-                //console.log(data);
-                //ucfSemesterTerm.data = data;
-                //ucfSemesterTerm.setSemesterTerms(data);
-                //if (ucfSemesterTerm.semesterTerms.length > 0) {
-                //    ucfSemesterTerm.displayUCFSemesterCourse(data);
-                //} else {
-                //    $("#" + ucfSemesterTerm.target.UCFPathwaySection).remove();
-                //}
             }
         }).done(function (data) {
-            //console.log('GetUCFSemesterCourse');
-            console.log(data);
             ucfSemesterTerm.data = data;
             ucfSemesterTerm.setSemesterTerms(data);
             if (ucfSemesterTerm.semesterTerms.length > 0) {
@@ -401,9 +402,4 @@ var ucfSemesterTerm = {
 }
 $(function () {
     ucfSemesterTerm.init();
-})
-
-
-$(function () {
-    //customCourseSemester.getCustomCourseSemester();
 })

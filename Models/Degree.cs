@@ -45,6 +45,9 @@ namespace DegreeMapping.Models
         [DisplayName("Catalog URL")]
         public string CatalogUrl { get; set; }
         public int? CloneDegreeId { get; set; }
+        public int SemesterStart { get; set; }
+        [DisplayName("Semester Start Term")]
+        public string SemesterStartTerm { get; set; }
 
         public Degree()
         { 
@@ -99,6 +102,7 @@ namespace DegreeMapping.Models
                 cmd.Parameters.AddWithValue("@DegreeUrl", d.DegreeURL);
                 cmd.Parameters.AddWithValue("@CatalogUrl", d.CatalogUrl);
                 cmd.Parameters.AddWithValue("@NID", d.NID);
+                cmd.Parameters.AddWithValue("@SemesterStart", d.SemesterStart);
                 if (d.UCFDegreeId.HasValue)
                 {
                     cmd.Parameters.AddWithValue("@UCFDegreeId", d.UCFDegreeId.Value);
@@ -134,6 +138,7 @@ namespace DegreeMapping.Models
                 cmd.Parameters.AddWithValue("@DegreeUrl", d.DegreeURL);
                 cmd.Parameters.AddWithValue("@CatalogUrl", d.CatalogUrl);
                 cmd.Parameters.AddWithValue("@NID", d.NID);
+                cmd.Parameters.AddWithValue("@SemesterStart", d.SemesterStart);
                 if (d.CloneDegreeId.HasValue)
                 {
                     cmd.Parameters.AddWithValue("@CloneDegreeId", d.CloneDegreeId.Value);
@@ -302,6 +307,21 @@ namespace DegreeMapping.Models
                 int clonedegreeId;
                 Int32.TryParse(dr["CloneDegreeId"].ToString(), out clonedegreeId);
                 d.CloneDegreeId = clonedegreeId;
+                d.SemesterStart = Convert.ToInt32(dr["SemesterStart"].ToString());
+                SetSemesterStartTerm(ref d);
+            }
+        }
+
+        private static void SetSemesterStartTerm(ref Degree d)
+        {
+            switch (d.SemesterStart)
+            {
+                case 1 : d.SemesterStartTerm = "Spring";
+                    break;
+                case 2: d.SemesterStartTerm = "Summer";
+                    break;
+                default: d.SemesterStartTerm = "Fall";
+                    break;
             }
         }
     }

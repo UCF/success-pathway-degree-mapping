@@ -55,7 +55,7 @@ namespace DegreeMapping.Models
         [DisplayName("Catalog Year")]
         public string CatalogYear { get; set; }
         public int? CloneCourseId { get; set; }
-
+        public string TermOrder { get; set; }
 
         public Course()
         {
@@ -306,6 +306,7 @@ namespace DegreeMapping.Models
                 }
                 int cloneCourseId;
                 Int32.TryParse(dr["CloneCourseId"].ToString(), out cloneCourseId);
+                c.TermOrder = dr["TermOrder"].ToString();
             }
         }
 

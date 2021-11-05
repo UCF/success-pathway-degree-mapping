@@ -19,7 +19,7 @@
             </div>
             <div class="form-group py-4 px-4" id="semesters" style="border:3px solid #fcf8e3">
                 @Html.LabelFor(x => x.Semester) :
-                @for (int i = 4; i <= 11; i++)
+                @for (int i = 4; i <= 12; i++)
                 {
                     string semesterId = string.Format("semesterId_{0}", i);
                     string cssClass = (Model.Semester == i) ? "alert alert-warning" : string.Empty;
@@ -34,6 +34,15 @@
                 @Html.LabelFor(x => x.Term) :
                 <label id="term_None" class="px-5">Do not display <input type="radio" name="Term" checked="checked" value="" class="alert alert-info" /></label>
                 @{
+                    if (Model.Term == DegreeMapping.Models.Course.CourseTerm.Summer)
+                    {
+                        <label id="term_@DegreeMapping.Models.Course.CourseTerm.Summer.Replace(" ", "_")" class="px-4 alert alert-info">@DegreeMapping.Models.Course.CourseTerm.Summer @Html.RadioButtonFor(x => x.Term, DegreeMapping.Models.Course.CourseTerm.Summer)</label>
+                    }
+                    else
+                    {
+                        <label id="term_@DegreeMapping.Models.Course.CourseTerm.Summer.Replace(" ", "_")" class="px-4">@DegreeMapping.Models.Course.CourseTerm.Summer @Html.RadioButtonFor(x => x.Term, DegreeMapping.Models.Course.CourseTerm.Summer)</label>
+                    }
+
                     if (Model.Term == DegreeMapping.Models.Course.CourseTerm.Fall)
                     {
                         <label id="term_@DegreeMapping.Models.Course.CourseTerm.Fall.Replace(" ", "_")" class="px-4 alert alert-info">@DegreeMapping.Models.Course.CourseTerm.Fall @Html.RadioButtonFor(x => x.Term, DegreeMapping.Models.Course.CourseTerm.Fall)</label>
@@ -50,15 +59,6 @@
                     else
                     {
                         <label id="term_@DegreeMapping.Models.Course.CourseTerm.Spring.Replace(" ", "_")" class="px-4">@DegreeMapping.Models.Course.CourseTerm.Spring @Html.RadioButtonFor(x => x.Term, DegreeMapping.Models.Course.CourseTerm.Spring)</label>
-                    }
-
-                    if (Model.Term == DegreeMapping.Models.Course.CourseTerm.Summer)
-                    {
-                        <label id="term_@DegreeMapping.Models.Course.CourseTerm.Summer.Replace(" ", "_")" class="px-4 alert alert-info">@DegreeMapping.Models.Course.CourseTerm.Summer @Html.RadioButtonFor(x => x.Term, DegreeMapping.Models.Course.CourseTerm.Summer)</label>
-                    }
-                    else
-                    {
-                        <label id="term_@DegreeMapping.Models.Course.CourseTerm.Summer.Replace(" ", "_")" class="px-4">@DegreeMapping.Models.Course.CourseTerm.Summer @Html.RadioButtonFor(x => x.Term, DegreeMapping.Models.Course.CourseTerm.Summer)</label>
                     }
                 }
             </div>

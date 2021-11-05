@@ -2220,7 +2220,7 @@
     <Content Include="Scripts\tinymce\tinymce.min.js" />
     <Content Include="Scripts\tinymce\version.txt" />
     <Content Include="Scripts\UCFCourseSemester.js" />
-    <Content Include="Scripts\v2\DegreeList_2022_2022.js" />
+    <Content Include="Scripts\v2\DegreeList_2021_2022.js" />
     <Content Include="Scripts\v2\DegreeList_2020_2021.js" />
     <Content Include="Scripts\v2\degreelist - Copy.js" />
     <Content Include="Scripts\v2\degreelist.js" />

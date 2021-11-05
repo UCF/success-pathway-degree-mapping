@@ -21,12 +21,6 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    @*@if (cy.Current)
-                    {
-                        <div class="pt-3">
-                            <h3>Current Catalog</h3>
-                        </div>
-                    }*@
                     <h1 class="heading-underline">Pathway Catalog @cy.Year</h1>
                     <h2>@degreeCount degrees</h2>
                 </div>
@@ -128,9 +122,9 @@
                 let notActiveHtml = '<span class="px-3 h5" style="color:red">Not Active</span>';
                 for (let x = 0; x <= degreelist.length - 1; x++) {
                     if (degreelist[x].Active) {
-                        output += '<li><strong>' + degreelist[x].Name + '</strong><a href="@path/App/DegreeView/' + degreelist[x].Id + '">Edit</a></li>'
+                        output += '<li><strong>UCF ' + degreelist[x].Name + '</strong><a href="@path/App/DegreeView/' + degreelist[x].Id + '"> Edit</a></li>'
                     } else {
-                        output += '<li><strong>' + degreelist[x].Name + '</strong><a href="@path/App/DegreeView/' + degreelist[x].Id + '">Edit</a>' + notActiveHtml + '</li>'
+                        output += '<li><strong>UCF ' + degreelist[x].Name + '</strong><a href="@path/App/DegreeView/' + degreelist[x].Id + '"> Edit</a>' + notActiveHtml + '</li>'
                     }
                     for (let y = 0; y <= this.institutionList.length - 1; y++) {
                         if (this.institutionList[y].Id != 1) {

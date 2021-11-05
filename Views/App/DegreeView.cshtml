@@ -14,7 +14,7 @@
     {
         collegeURL = DegreeMapping.Models.College.Get(Model.CollegeId).Url;
     }
-    if (Model.UCFDegreeId.HasValue)
+    if (Model.UCFDegreeId.HasValue && Model.UCFDegreeId.Value > 1)
     {
         DegreeMapping.Models.Degree ucfDegree = DegreeMapping.Models.Degree.Get(Model.UCFDegreeId.Value);
         Model.DegreeURL = (!string.IsNullOrEmpty(Model.DegreeURL)) ? Model.DegreeURL : ucfDegree.DegreeURL;
@@ -22,6 +22,8 @@
         Model.LimitedAccess = ucfDegree.LimitedAccess;
         Model.RestrictedAccess = ucfDegree.RestrictedAccess;
         Model.GPA = ucfDegree.GPA;
+        Model.SemesterStart = ucfDegree.SemesterStart;
+        Model.SemesterStartTerm = ucfDegree.SemesterStartTerm;
     }
 }
 
@@ -56,6 +58,7 @@
 
         <div class="form-group">
             <div class="col-md-10">
+                <i class="fa fa-info-circle" role="button" onclick="alert('Set by parent degree')"></i> 
                 @Html.LabelFor(x => x.CatalogUrl) :
                 @if (!string.IsNullOrEmpty(Model.CatalogUrl))
                 {
@@ -66,6 +69,7 @@
 
         <div class="form-group">
             <div class="col-md-10">
+                <i class="fa fa-info-circle" role="button" onclick="alert('Set by parent degree')"></i> 
                 @Html.LabelFor(x => x.DegreeURL) :
                 @if (!string.IsNullOrEmpty(Model.DegreeURL))
                 {
@@ -76,7 +80,7 @@
 
         <div class="form-group">
             <div class="col-md-10">
-                @Html.LabelFor(x => x.GPA) : @Model.GPA
+                <i class="fa fa-info-circle" role="button" onclick="alert('Set by parent degree')"></i> @Html.LabelFor(x => x.GPA) : @Model.GPA
             </div>
         </div>
 
@@ -88,13 +92,19 @@
 
         <div class="form-group">
             <div class="col-md-10">
-                @Html.LabelFor(x => x.LimitedAccess) : @(Model.LimitedAccess?"Yes":"No")
+                <i class="fa fa-info-circle" role="button" onclick="alert('Set by parent degree')"></i> @Html.LabelFor(x => x.LimitedAccess) : @(Model.LimitedAccess?"Yes":"No")
             </div>
         </div>
 
         <div class="form-group">
             <div class="col-md-10">
-                @Html.LabelFor(x => x.RestrictedAccess) : @(Model.RestrictedAccess?"Yes":"No")
+                <i class="fa fa-info-circle" role="button" onclick="alert('Set by parent degree')"></i> @Html.LabelFor(x => x.RestrictedAccess) : @(Model.RestrictedAccess?"Yes":"No")
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-10">
+                <i class="fa fa-info-circle" role="button" onclick="alert('Set by parent degree')"></i> @Html.LabelFor(x => x.SemesterStartTerm) : <span class="bg-warning px-2">@Model.SemesterStartTerm</span>
             </div>
         </div>
 
@@ -119,7 +129,7 @@
     @if (Model.InstitutionId > 1)
     {
         <div class="col-md-6">
-            <h2 class="pt-5">UCF Related Degree</h2>
+            <h2 class="pt-5">Parent Degree</h2>
             @if (string.IsNullOrEmpty(Model.UCFDegreeName))
             {
                 <div>
@@ -128,9 +138,9 @@
             }
             else
             {
-                <div>
-                    Degree is mapped to @Html.ActionLink("UCF " + Model.UCFDegreeName, "DegreeView", new { id = Model.UCFDegreeId })
-                </div>
+        <div>
+            Parent degree is mapped to @Html.ActionLink("UCF " + Model.UCFDegreeName, "DegreeView", new { id = Model.UCFDegreeId })
+        </div>
             }
         </div>
     }
@@ -232,7 +242,7 @@
                 @if (list_c.Count > 0)
                 {
                     <tbody>
-                        @foreach (DegreeMapping.Models.Course c in list_c.OrderBy(x => x.Code))
+                        @foreach (DegreeMapping.Models.Course c in list_c.OrderBy(x => x.TermOrder))
                         {
                             credit = (!string.IsNullOrEmpty(c.CreditText)) ? c.CreditText : c.Credits.ToString();
                             <tr>
@@ -278,7 +288,7 @@
                     @if (list_c.Count > 0)
                     {
                         string semester = string.Empty;
-                        foreach (DegreeMapping.Models.Course c in list_c.OrderBy(x => x.Semester).ThenBy(x => x.Term).ThenBy(x => x.Code))
+                        foreach (DegreeMapping.Models.Course c in list_c.OrderBy(x=>x.TermOrder))
                         {
                             credit = (!string.IsNullOrEmpty(c.CreditText)) ? c.CreditText : c.Credits.ToString();
                             if (semester != c.SemesterTerm)

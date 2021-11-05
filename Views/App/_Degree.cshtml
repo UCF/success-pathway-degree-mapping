@@ -4,11 +4,13 @@
     List<DegreeMapping.Models.College> list_c = DegreeMapping.Models.College.List(null);
     List<DegreeMapping.Models.Catalog> list_cy = DegreeMapping.Models.Catalog.List();
     Model.CollegeName = list_c.Where(x => x.Id == Model.CollegeId).Select(x => x.CollegeName).FirstOrDefault();
-    if (Model.UCFDegreeId.HasValue && Model.UCFDegreeId > 0)
+    if (Model.UCFDegreeId.HasValue && Model.UCFDegreeId > 1)
     {
         DegreeMapping.Models.Degree ucfDegree = DegreeMapping.Models.Degree.Get(Model.UCFDegreeId.Value);
         Model.DegreeURL = (!string.IsNullOrEmpty(Model.DegreeURL)) ? Model.DegreeURL : ucfDegree.DegreeURL;
         Model.CollegeName = (!string.IsNullOrEmpty(Model.CollegeName)) ? Model.CollegeName : ucfDegree.CollegeName;
+        Model.SemesterStart = ucfDegree.SemesterStart;
+        Model.SemesterStartTerm = ucfDegree.SemesterStartTerm;
     }
 }
 @using (Html.BeginForm("DegreeSave", "App", FormMethod.Post, new { @class = "form-horizontal" }))
@@ -18,7 +20,7 @@
     @Html.HiddenFor(x => x.DegreeType)
     @Html.HiddenFor(x => x.NID)
     @Html.HiddenFor(x => x.CloneDegreeId)
-    
+
     <div class="row">
         <div class="col-md-6">
             <div class="form-group">
@@ -40,34 +42,20 @@
 
         <div class="row">
             <div class="col-md-6">
+                <div class="form-group" id="SemesterTermOrderSection">
+                    @Html.LabelFor(x => x.SemesterStartTerm) :
+                    <span id="semesterTermOrder_0" class="semsterTermOrder"><label>@Html.RadioButtonFor(x => x.SemesterStart, 0) Fall</label></span>
+                    <span id="semesterTermOrder_2" class="semsterTermOrder"><label>@Html.RadioButtonFor(x => x.SemesterStart, 2) Summer</label></span>
+                    @*Spring Semster was not asked for but is programmed for just in case.*@ 
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
                 <div class="form-group">
                     @Html.LabelFor(x => x.CatalogYear) : @Model.CatalogYear
                     @Html.HiddenFor(x => x.CatalogId)
-                    @*UNCOMMENT TO CHANGE CATALOG YEAR
-                        <select name="CatalogId" class="form-control">
-                            @{
-                                bool active = false;
-                            }
-                            @foreach (DegreeMapping.Models.Catalog cy in list_cy.OrderByDescending(x => x.Active).ThenBy(x => x.Year))
-                            {
-                                string current = (cy.Current) ? "Current" : string.Empty;
-                                if (active != cy.Active)
-                                {
-                                    active = cy.Active;
-                                    string label = (cy.Active) ? "Active Catalogs" : "Inactive Catalogs";
-                                    <optgroup label="@label">@label</optgroup>
-                                }
-                                if (Model.CatalogId == cy.Id)
-                                {
-                                    <option selected value="@cy.Id">@cy.Year @current</option>
-                                }
-                                else
-                                {
-                                    <option value="@cy.Id">@cy.Year @current</option>
-                                }
-                            }
-                        </select>
-                    *@
                 </div>
             </div>
         </div>
@@ -120,6 +108,14 @@
                 <div class="form-group">
                     @Html.LabelFor(x => x.Name) :
                     @Html.TextBoxFor(x => x.Name, new { @class = "form-control d-inline" })
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(x => x.SemesterStartTerm) : @Model.SemesterStartTerm
                 </div>
             </div>
         </div>
@@ -252,3 +248,29 @@
         })
     </script>
 }
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        SetTerm(@Model.SemesterStart);
+
+        $("#SemesterTermOrderSection input:radio").on("click", function () {
+            let term = $(this).val();
+            SetTerm(term);
+            console.log(term);
+        })
+
+        function SetTerm(term) {
+            $("#SemesterTermOrderSection input:radio").each(function () {
+                let termVal = $(this).val();
+                if (termVal == term) {
+                    $("#semesterTermOrder_" + termVal).addClass("alert");
+                    $("#semesterTermOrder_" + termVal).addClass("alert-warning");
+                } else {
+                    $("#semesterTermOrder_" + termVal).removeClass("alert");
+                    $("#semesterTermOrder_" + termVal).removeClass("alert-warning");
+                }
+            })
+        }
+    })
+</script>

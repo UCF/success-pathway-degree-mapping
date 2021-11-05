@@ -16,30 +16,33 @@
         displayCatalogList: function () {
         let card = '';
             for (let x = 0; x <= this.catalogData.length - 1; x++) {
-        let url = this.getURL(this.catalogData[x].Id);
+                let url = this.getURL(this.catalogData[x].Id, this.catalogData[x].Current);
                 card += this.cardTemplate(this.catalogData[x].Year, url);
             }
             $('#' + this.targetId.catalogList).html(card);
         },
-        getURL: function (id) {
+        getURL: function (id, current) {
+            if (current == 1) {
+                return "/pathway-degree-list";
+            }
             switch (id) {
-                case 1: return "Catalog2020_2021";
+                case 1: return "pathway-catalog-2020-2021";
                     break;
-                case 2: return "Catalog2021_2022";
+                case 2: return "pathway-catalog-2021-2022";
                     break;
-                case 3: return "Catalog2022_2023";
+                case 3: return "pathway-catalog-2022-2023";
                     break;
-                case 4: return "Catalog2023_2024"
+                case 4: return "pathway-catalog-2023-2024"
                     break;
-                case 5: return "Catalog2024_2025";
+                case 5: return "pathway-catalog-2024-2025";
                     break;
-                default: return "Catalog2020_2021";
+                default: return "pathway-degree-list";
             }
         },
         cardTemplate: function (year, url,) {
         let template = '<div class="card text-center">';
             template += '<div class="card-header card-primary">';
-            template += '<a href="/DegreeMap2/' + url + '" class="text-secondary">';
+            template += '<a href="/' + url + '" class="text-secondary">';
             template += '<h1>Pathway Catalog<br />' + year + '</h1>';
             template += '<div><i class="fa fa-book fa-4x"></i></div>';
             template += '</a>';

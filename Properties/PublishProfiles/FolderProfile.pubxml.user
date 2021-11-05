@@ -16,16 +16,16 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/10/2013 16:29:20</publishTime>
     </File>
     <File Include="bin/DegreeMapper.dll">
-      <publishTime>11/01/2021 11:39:25</publishTime>
+      <publishTime>11/03/2021 11:21:39</publishTime>
     </File>
     <File Include="bin/DegreeMapper.pdb">
-      <publishTime>11/01/2021 11:39:25</publishTime>
+      <publishTime>11/03/2021 11:21:39</publishTime>
     </File>
     <File Include="bin/DegreeMapping.dll">
-      <publishTime>11/01/2021 11:39:26</publishTime>
+      <publishTime>11/03/2021 11:21:41</publishTime>
     </File>
     <File Include="bin/DegreeMapping.pdb">
-      <publishTime>11/01/2021 11:39:26</publishTime>
+      <publishTime>11/03/2021 11:21:41</publishTime>
     </File>
     <File Include="bin/EntityFramework.dll">
       <publishTime>04/16/2020 20:38:42</publishTime>
@@ -6189,11 +6189,14 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Scripts/v2/DegreeList_2020_2021.js">
       <publishTime>11/01/2021 10:51:53</publishTime>
     </File>
+    <File Include="Scripts/v2/DegreeList_2021_2022.js">
+      <publishTime>11/01/2021 10:52:40</publishTime>
+    </File>
     <File Include="Scripts/v2/DegreeList_2022_2022.js">
       <publishTime>11/01/2021 10:52:40</publishTime>
     </File>
     <File Include="Scripts/v2/DegreeMap.js">
-      <publishTime>10/28/2021 16:51:00</publishTime>
+      <publishTime>11/01/2021 12:59:55</publishTime>
     </File>
     <File Include="Scripts/v2/DegreeMap_2020-2021.js">
       <publishTime>11/01/2021 10:47:08</publishTime>
@@ -6205,7 +6208,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/30/2021 15:56:11</publishTime>
     </File>
     <File Include="Scripts/v2/pathwaycatalogs.js">
-      <publishTime>11/01/2021 11:09:32</publishTime>
+      <publishTime>11/01/2021 12:39:01</publishTime>
     </File>
     <File Include="Views/App/Catalog.cshtml">
       <publishTime>10/19/2021 09:05:20</publishTime>
