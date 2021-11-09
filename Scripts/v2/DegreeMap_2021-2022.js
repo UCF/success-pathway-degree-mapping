@@ -84,8 +84,8 @@ var courseMapper = {
     },
     getCourseMapper: function () {
         $.get({
-            url: "https://portal.connect.ucf.edu/pathway/api/v2/DegreeMap/GetCourseMapper?degreeId=" + courseMapper.degreeId,
-            //url: "/api/v2/DegreeMap/GetCourseMapper?degreeId=" + courseMapper.degreeId,
+            //url: "https://portal.connect.ucf.edu/pathway/api/v2/DegreeMap/GetCourseMapper?degreeId=" + courseMapper.degreeId,
+            url: "/api/v2/DegreeMap/GetCourseMapper?degreeId=" + courseMapper.degreeId,
             type: "GET",
             headers: { "APIKey": "Th1sIsth3Way" },
             cache: true,

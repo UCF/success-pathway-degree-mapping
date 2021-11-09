@@ -84,8 +84,8 @@ var courseMapper = {
     },
     getCourseMapper: function () {
         $.get({
-            url: "https://portal.connect.ucf.edu/pathway/api/v2/DegreeMap/GetCourseMapper?degreeId=" + courseMapper.degreeId,
-            //url: "/api/v2/DegreeMap/GetCourseMapper?degreeId=" + courseMapper.degreeId,
+            //url: "https://portal.connect.ucf.edu/pathway/api/v2/DegreeMap/GetCourseMapper?degreeId=" + courseMapper.degreeId,
+            url: "/api/v2/DegreeMap/GetCourseMapper?degreeId=" + courseMapper.degreeId,
             type: "GET",
             headers: { "APIKey": "Th1sIsth3Way" },
             cache: true,
@@ -158,8 +158,8 @@ var customCourseSemester = {
     data: {},
     getCustomCourseSemester: function () {
         $.get({
-            url: "https://portal.connect.ucf.edu/pathway/api/v2/DegreeMap/GetCustomCourseSemester?degreeId=" + main.degreeId,
-            //url: "/api/v2/DegreeMap/GetCustomCourseSemester?degreeId=" + main.degreeId,
+            //url: "https://portal.connect.ucf.edu/pathway/api/v2/DegreeMap/GetCustomCourseSemester?degreeId=" + main.degreeId,
+            url: "/api/v2/DegreeMap/GetCustomCourseSemester?degreeId=" + main.degreeId,
             type: "GET",
             headers: { "APIKey": "Th1sIsth3Way" },
             cache: true,
@@ -251,8 +251,8 @@ var degreemap = {
     },
     getDegreeInfo: function () {
         $.get({
-            url: "https://portal.connect.ucf.edu/pathway/api/v2/DegreeMap/GetDegreeInfo?degreeId=" + degreemap.degreeId,
-            //url: "/api/v2/DegreeMap/GetDegreeInfo?degreeId=" + degreemap.degreeId,
+            //url: "https://portal.connect.ucf.edu/pathway/api/v2/DegreeMap/GetDegreeInfo?degreeId=" + degreemap.degreeId,
+            url: "/api/v2/DegreeMap/GetDegreeInfo?degreeId=" + degreemap.degreeId,
             type: "GET",
             headers: { "APIKey": "Th1sIsth3Way" },
             cache: true,
@@ -269,8 +269,8 @@ var degreemap = {
     },
     getListByUCFDegree: function () {
         $.get({
-            url: "https://portal.connect.ucf.edu/pathway/api/v2/DegreeMap/GetListByUCFDegree?ucfDegreeId=" + degreemap.ucfDegreeId + "&catalogId=" + degreemap.catalogId,
-            //url: "/api/v2/DegreeMap/GetListByUCFDegree?ucfDegreeId=" + degreemap.ucfDegreeId + "&catalogId=" + degreemap.catalogId,
+            //url: "https://portal.connect.ucf.edu/pathway/api/v2/DegreeMap/GetListByUCFDegree?ucfDegreeId=" + degreemap.ucfDegreeId + "&catalogId=" + degreemap.catalogId,
+            url: "/api/v2/DegreeMap/GetListByUCFDegree?ucfDegreeId=" + degreemap.ucfDegreeId + "&catalogId=" + degreemap.catalogId,
             type: "GET",
             headers: { "APIKey": "Th1sIsth3Way" },
             cache: true,
@@ -376,8 +376,8 @@ var ucfSemesterTerm = {
     },
     getUCFSemesterCourse: function () {
         $.get({
-            url: "https://portal.connect.ucf.edu/pathway/api/v2/DegreeMap/getCustomCourseMapper?degreeId=" + ucfSemesterTerm.degreeId,
-            //url: "/api/v2/DegreeMap/getCustomCourseMapper?degreeId=" + ucfSemesterTerm.degreeId,
+            //url: "https://portal.connect.ucf.edu/pathway/api/v2/DegreeMap/getCustomCourseMapper?degreeId=" + ucfSemesterTerm.degreeId,
+            url: "/api/v2/DegreeMap/getCustomCourseMapper?degreeId=" + ucfSemesterTerm.degreeId,
             type: "GET",
             headers: { "APIKey": "Th1sIsth3Way" },
             cache: true,
