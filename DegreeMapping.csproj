@@ -2320,6 +2320,7 @@
     <Content Include="Views\DegreeMap2\_PathwayDegreeFooter.cshtml" />
     <Content Include="Views\DegreeMap2\DegreeMap.cshtml" />
     <Content Include="Views\DegreeMap2\Catalog2021_2022.cshtml" />
+    <Content Include="Views\App\_DisplayRelatedDegrees.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

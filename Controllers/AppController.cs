@@ -137,9 +137,15 @@ namespace DegreeMapping.Controllers
         {
             return PartialView(model);
         }
+
+        public ActionResult _DisplayRelatedDegrees(Degree model)
+        {
+            return PartialView(model);
+        }
+
         #endregion
 
-        #region Code - Updates course code only
+        #region NOTE USE | Code - Updates course code only
         public ActionResult CodeList()
         {
             List<Course> list_c = Course.List(null, null);
@@ -480,25 +486,10 @@ namespace DegreeMapping.Controllers
         }
         #endregion
 
-        #region Cloning at Kamino
+        #region NOT USED Cloning at Kamino
         public ActionResult CatalogClone()
         {
             return View();
-        }
-
-        public ActionResult CloneDegrees(int sourceCatalogId, int targetCatalogId) 
-        {
-            //Step 1: Clone UCF Degrees 
-            Clone.CloneUCFDegrees(sourceCatalogId, targetCatalogId);
-            //Step 2: Clone Degrees
-            Clone.ClonePartnerDegrees(sourceCatalogId, targetCatalogId);
-            //Step 3: Update UCFDegreeId
-            List<Degree> list_degress = Degree.GetPartnerDegrees(null, targetCatalogId, null);
-            foreach (Degree d in list_degress)
-            {
-                Clone.UpdateUCFDegreeId(d.Id);
-            }
-            return Json(new { status = 1, message = "this is the message" }, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult CloneCourse(int sourceCatalogId, int targetCatalogId)

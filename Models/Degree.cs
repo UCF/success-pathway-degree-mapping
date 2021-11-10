@@ -237,10 +237,8 @@ namespace DegreeMapping.Models
         /// institutionId != 1
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="catalogId"></param>
-        /// <param name="institutionId"></param>
         /// <returns></returns>
-        public static List<Degree> GetPartnerDegrees(int? id, int? catalogId, int? institutionId)
+        public static List<Degree> GetPartnerDegrees(int id)
         {
             List<Degree> list_degrees = new List<Degree>();
             using (SqlConnection cn = new SqlConnection(Database.DC_DegreeMapping))
@@ -249,18 +247,7 @@ namespace DegreeMapping.Models
                 SqlCommand cmd = cn.CreateCommand();
                 cmd.CommandText = "GetPartnerDegree";
                 cmd.CommandType = CommandType.StoredProcedure;
-                if (id.HasValue)
-                {
-                    cmd.Parameters.AddWithValue("@Id", id.Value);
-                }
-                if (catalogId.HasValue)
-                {
-                    cmd.Parameters.AddWithValue("@CatalogId", catalogId.Value);
-                }
-                if (institutionId.HasValue)
-                {
-                    cmd.Parameters.AddWithValue("@InstitutionId", institutionId.Value);
-                }
+                cmd.Parameters.AddWithValue("@Id", id);
                 SqlDataReader dr = cmd.ExecuteReader();
                 if (dr.HasRows)
                 {

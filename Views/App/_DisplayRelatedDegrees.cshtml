@@ -1,0 +1,30 @@
+﻿@model DegreeMapping.Models.Degree
+@{ 
+    List<DegreeMapping.Models.Degree> list_degrees = new List<DegreeMapping.Models.Degree>();
+    string title = string.Empty;
+    if (Model.UCFDegreeId.HasValue && Model.UCFDegreeId.Value > 0)
+    {
+        list_degrees = DegreeMapping.Models.Degree.GetPartnerDegrees(Model.UCFDegreeId.Value);
+        title = "Other related institutions with this degree: ";
+    }
+    else
+    {
+        list_degrees = DegreeMapping.Models.Degree.GetPartnerDegrees(Model.Id);
+        title = "Child institutions with this degree: ";
+    }
+}
+
+@if (list_degrees.Count > 0)
+{
+    <div class="pt-4">
+        <h3>@title</h3>
+        <ul>
+            @foreach (DegreeMapping.Models.Degree d in list_degrees.Where(x=>x.InstitutionId != Model.InstitutionId).OrderBy(x=>x.Name))
+            { 
+                <li>
+                    @Html.ActionLink(d.Institution, "DegreeView", "App", new { id = d.Id }, new { target="_blank"})
+                </li>
+            }
+        </ul>
+    </div>
+}

@@ -140,9 +140,14 @@
             {
                 <div>
                     Parent degree is mapped to @Html.ActionLink("UCF " + Model.UCFDegreeName, "DegreeView", new { id = Model.UCFDegreeId })
+                    @Html.Action("_DisplayRelatedDegrees", "App", new { model = Model })
                 </div>
             }
         </div>
+    }
+    else
+    {
+        @Html.Action("_DisplayRelatedDegrees", "App", new { model = Model })
     }
 </div>
 
@@ -244,12 +249,13 @@
                     <tbody>
                         @foreach (DegreeMapping.Models.Course c in list_c.OrderBy(x => x.TermOrder))
                         {
+                            c.Code = (!string.IsNullOrEmpty(c.Description)) ? c.Code + "<br /><em>" + c.Description + "</em>" : c.Code; 
                             credit = (!string.IsNullOrEmpty(c.CreditText)) ? c.CreditText : c.Credits.ToString();
                             <tr>
                                 <td>@Html.ActionLink("Edit", "CourseEdit", new { id = c.Id })</td>
                                 @*<td>@Html.Raw(c.UCFRelatedCourse)</td>*@
                                 @*<td>@c.UCFCourseCredits</td>*@
-                                <td>@c.Code</td>
+                                <td>@Html.Raw(c.Code)</td>
                                 <td>@credit</td>
                                 <td>-</td>
                                 <td>-</td>
@@ -290,6 +296,7 @@
                         string semester = string.Empty;
                         foreach (DegreeMapping.Models.Course c in list_c.OrderBy(x => x.TermOrder))
                         {
+                            c.Code = (!string.IsNullOrEmpty(c.Description)) ? c.Code + "<br /><em>" + c.Description + "</em>" : c.Code;
                             credit = (!string.IsNullOrEmpty(c.CreditText)) ? c.CreditText : c.Credits.ToString();
                             if (semester != c.SemesterTerm)
                             {
@@ -300,7 +307,7 @@
                             }
                             <tr>
                                 <td>@Html.ActionLink("Course Edit", "CourseEdit", "App", new { id = c.Id }, null)</td>
-                                <td>@c.Code</td>
+                                <td>@Html.Raw(c.Code)</td>
                                 <td>@credit</td>
                                 @if (c.Semester == 1)
                                 {
