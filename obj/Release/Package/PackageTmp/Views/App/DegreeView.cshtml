@@ -10,6 +10,7 @@
     }
     string cssClass = (string.IsNullOrEmpty(Model.Description)) ? "" : "alert alert-warning";
     string collegeURL = string.Empty;
+    string degreeUrl = string.Empty;
     if (Model.CollegeId > 0)
     {
         collegeURL = DegreeMapping.Models.College.Get(Model.CollegeId).Url;
@@ -24,6 +25,8 @@
         Model.GPA = ucfDegree.GPA;
         Model.SemesterStart = ucfDegree.SemesterStart;
         Model.SemesterStartTerm = ucfDegree.SemesterStartTerm;
+
+        degreeUrl = string.Format("https://connect.ucf.edu/degree-mapping/?degreeId={0}&degree={1}&institution={2}&catalog={3}", Model.Id, Model.Name, Model.Institution, Model.CatalogYear);
     }
 }
 
@@ -129,6 +132,14 @@
     @if (Model.InstitutionId > 1)
     {
         <div class="col-md-6">
+
+            @if (!string.IsNullOrEmpty(degreeUrl))
+            { 
+                <div>
+                    <a href="@degreeUrl" target="_blank" title="@Model.Name"><i class="fa fa-globe"></i> Go to @Model.Name</a>
+                </div>
+            }
+
             <h2 class="pt-5">Parent Degree</h2>
             @if (string.IsNullOrEmpty(Model.UCFDegreeName))
             {
@@ -139,10 +150,15 @@
             else
             {
                 <div>
-                    Parent degree is mapped to @Html.ActionLink("UCF " + Model.UCFDegreeName, "DegreeView", new { id = Model.UCFDegreeId })
+                    Parent degree is @Html.ActionLink("UCF " + Model.UCFDegreeName, "DegreeView", new { id = Model.UCFDegreeId })
+                    @Html.Action("_DisplayRelatedDegrees", "App", new { model = Model })
                 </div>
             }
         </div>
+    }
+    else
+    {
+        @Html.Action("_DisplayRelatedDegrees", "App", new { model = Model })
     }
 </div>
 
@@ -244,12 +260,13 @@
                     <tbody>
                         @foreach (DegreeMapping.Models.Course c in list_c.OrderBy(x => x.TermOrder))
                         {
+                            c.Code = (!string.IsNullOrEmpty(c.Description)) ? c.Code + "<br /><em>" + c.Description + "</em>" : c.Code; 
                             credit = (!string.IsNullOrEmpty(c.CreditText)) ? c.CreditText : c.Credits.ToString();
                             <tr>
                                 <td>@Html.ActionLink("Edit", "CourseEdit", new { id = c.Id })</td>
                                 @*<td>@Html.Raw(c.UCFRelatedCourse)</td>*@
                                 @*<td>@c.UCFCourseCredits</td>*@
-                                <td>@c.Code</td>
+                                <td>@Html.Raw(c.Code)</td>
                                 <td>@credit</td>
                                 <td>-</td>
                                 <td>-</td>
@@ -290,6 +307,7 @@
                         string semester = string.Empty;
                         foreach (DegreeMapping.Models.Course c in list_c.OrderBy(x => x.TermOrder))
                         {
+                            c.Code = (!string.IsNullOrEmpty(c.Description)) ? c.Code + "<br /><em>" + c.Description + "</em>" : c.Code;
                             credit = (!string.IsNullOrEmpty(c.CreditText)) ? c.CreditText : c.Credits.ToString();
                             if (semester != c.SemesterTerm)
                             {
@@ -300,7 +318,7 @@
                             }
                             <tr>
                                 <td>@Html.ActionLink("Course Edit", "CourseEdit", "App", new { id = c.Id }, null)</td>
-                                <td>@c.Code</td>
+                                <td>@Html.Raw(c.Code)</td>
                                 <td>@credit</td>
                                 @if (c.Semester == 1)
                                 {

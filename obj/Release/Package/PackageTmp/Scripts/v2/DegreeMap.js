@@ -33,7 +33,7 @@ var pCourse = '';
 var pCredit = '';
 var heading = '';
 var courseMapper = {
-    version: "1.0.0",
+    version: "1.0.1",
     data: {},
     target: {
         coursesTable: "coursesTable",
@@ -50,12 +50,13 @@ var courseMapper = {
                 if (ucfCourses[x].Course == null) {
                     continue;
                 }
+                let description = (ucfCourses[x].Description.length > 0) ? '<br><em>' + ucfCourses[x].Description + '</em>' : '';
                 let critical = courseMapper.getCritialCourseIcon(ucfCourses[x].Critical);
                 let required = courseMapper.getRequiredCourseIcon(ucfCourses[x].Required);
                 let cpp = courseMapper.getCPPIcon(ucfCourses[x].CPP);
                 ucfCourseSymbolsDesktop = '<div class="col-md-2 d-none d-md-block d-lg-block">' + critical + required + cpp + '</div>';
                 ucfCourseSymbolsMobile = '<div class="d-block d-sm-block d-md-none">' + critical + required + cpp + '</div>';
-                let course1 = '<div class="col-md-7">' + ucfCourses[x].Course + '</div>'
+                let course1 = '<div class="col-md-7">' + ucfCourses[x].Course + description + '</div>';
                 let course2 = '<div class="col-md-3">' + ucfCourses[x].Credit + ' credits</div>';
                 ucfCourse += '<div class="row">' + ucfCourseSymbolsDesktop + course1 + course2 + '</div>' + ucfCourseSymbolsMobile;
             }
@@ -70,7 +71,8 @@ var courseMapper = {
                 if (partnerCourses[x].Course == null) {
                     continue;
                 }
-                let pcourse1 = '<div class="col-md-8">' + partnerCourses[x].Course + '</div>'
+                let description = (partnerCourses[x].Description.length > 0) ? '<br><em>' + partnerCourses[x].Description + '</em>' : '';
+                let pcourse1 = '<div class="col-md-8">' + partnerCourses[x].Course + description + '</div>';
                 let pcourse2 = '<div class="col-md-4">' + partnerCourses[x].Credit + ' credits</div>';
                 pCourse += '<div class="row">' + pcourse1 + pcourse2 + '</div>';
             }
@@ -84,8 +86,8 @@ var courseMapper = {
     },
     getCourseMapper: function () {
         $.get({
-            url: "https://portal.connect.ucf.edu/pathway/api/v2/DegreeMap/GetCourseMapper?degreeId=" + courseMapper.degreeId,
-            //url: "/api/v2/DegreeMap/GetCourseMapper?degreeId=" + courseMapper.degreeId,
+            //url: "https://portal.connect.ucf.edu/pathway/api/v2/DegreeMap/GetCourseMapper?degreeId=" + courseMapper.degreeId,
+            url: "/api/v2/DegreeMap/GetCourseMapper?degreeId=" + courseMapper.degreeId,
             type: "GET",
             headers: { "APIKey": "Th1sIsth3Way" },
             cache: true,
@@ -158,8 +160,8 @@ var customCourseSemester = {
     data: {},
     getCustomCourseSemester: function () {
         $.get({
-            url: "https://portal.connect.ucf.edu/pathway/api/v2/DegreeMap/GetCustomCourseSemester?degreeId=" + main.degreeId,
-            //url: "/api/v2/DegreeMap/GetCustomCourseSemester?degreeId=" + main.degreeId,
+            //url: "https://portal.connect.ucf.edu/pathway/api/v2/DegreeMap/GetCustomCourseSemester?degreeId=" + main.degreeId,
+            url: "/api/v2/DegreeMap/GetCustomCourseSemester?degreeId=" + main.degreeId,
             type: "GET",
             headers: { "APIKey": "Th1sIsth3Way" },
             cache: true,
@@ -251,8 +253,8 @@ var degreemap = {
     },
     getDegreeInfo: function () {
         $.get({
-            url: "https://portal.connect.ucf.edu/pathway/api/v2/DegreeMap/GetDegreeInfo?degreeId=" + degreemap.degreeId,
-            //url: "/api/v2/DegreeMap/GetDegreeInfo?degreeId=" + degreemap.degreeId,
+            //url: "https://portal.connect.ucf.edu/pathway/api/v2/DegreeMap/GetDegreeInfo?degreeId=" + degreemap.degreeId,
+            url: "/api/v2/DegreeMap/GetDegreeInfo?degreeId=" + degreemap.degreeId,
             type: "GET",
             headers: { "APIKey": "Th1sIsth3Way" },
             cache: true,
@@ -269,8 +271,8 @@ var degreemap = {
     },
     getListByUCFDegree: function () {
         $.get({
-            url: "https://portal.connect.ucf.edu/pathway/api/v2/DegreeMap/GetListByUCFDegree?ucfDegreeId=" + degreemap.ucfDegreeId + "&catalogId=" + degreemap.catalogId,
-            //url: "/api/v2/DegreeMap/GetListByUCFDegree?ucfDegreeId=" + degreemap.ucfDegreeId + "&catalogId=" + degreemap.catalogId,
+            //url: "https://portal.connect.ucf.edu/pathway/api/v2/DegreeMap/GetListByUCFDegree?ucfDegreeId=" + degreemap.ucfDegreeId + "&catalogId=" + degreemap.catalogId,
+            url: "/api/v2/DegreeMap/GetListByUCFDegree?ucfDegreeId=" + degreemap.ucfDegreeId + "&catalogId=" + degreemap.catalogId,
             type: "GET",
             headers: { "APIKey": "Th1sIsth3Way" },
             cache: true,
@@ -361,7 +363,8 @@ var ucfSemesterTerm = {
             let cardblock = '';
             for (y = 0; y <= data.length - 1; y++) {
                 if (data[y].SemesterTerm == term[x]) {
-                    cardblock += '<p class="card-text">' + data[y].Course + '<br/>' + data[y].Credit + ' Credits</p>'
+                    let description = (data[y].Description.length > 0) ? '<br/><em>' + data[y].Description + '</em>' : '';
+                    cardblock += '<p class="card-text">' + data[y].Course + description + '<br/>' + data[y].Credit + ' Credits</p>'
                 }
             }
             if (x <= breakpoint) {
@@ -376,8 +379,8 @@ var ucfSemesterTerm = {
     },
     getUCFSemesterCourse: function () {
         $.get({
-            url: "https://portal.connect.ucf.edu/pathway/api/v2/DegreeMap/getCustomCourseMapper?degreeId=" + ucfSemesterTerm.degreeId,
-            //url: "/api/v2/DegreeMap/getCustomCourseMapper?degreeId=" + ucfSemesterTerm.degreeId,
+            //url: "https://portal.connect.ucf.edu/pathway/api/v2/DegreeMap/getCustomCourseMapper?degreeId=" + ucfSemesterTerm.degreeId,
+            url: "/api/v2/DegreeMap/getCustomCourseMapper?degreeId=" + ucfSemesterTerm.degreeId,
             type: "GET",
             headers: { "APIKey": "Th1sIsth3Way" },
             cache: true,
