@@ -195,10 +195,10 @@
     <Compile Include="Models\CustomCourseSemester.cs" />
     <Compile Include="Models\DegreeInfo.cs" />
     <Compile Include="Models\DegreeList.cs" />
-    <Compile Include="Models\DegreeListJSON.cs" />
     <Compile Include="Models\DegreeListv2.cs" />
     <Compile Include="Models\DegreeMap.cs" />
     <Compile Include="Models\DegreeNote.cs" />
+    <Compile Include="Models\FavoriteDegree.cs" />
     <Compile Include="Models\Generic.cs" />
     <Compile Include="Models\IdentityModel.cs" />
     <Compile Include="Models\Institution.cs" />
@@ -1959,6 +1959,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\main.js" />
     <Content Include="Scripts\Pathway\degreelist.js" />
+    <Content Include="Scripts\SetFavoriteDegree.js" />
     <Content Include="Scripts\tinymce\jquery.tinymce.min.js" />
     <Content Include="Scripts\tinymce\license.txt" />
     <Content Include="Scripts\tinymce\plugins\a11ychecker\changelog.txt" />
@@ -2321,6 +2322,8 @@
     <Content Include="Views\DegreeMap2\DegreeMap.cshtml" />
     <Content Include="Views\DegreeMap2\Catalog2021_2022.cshtml" />
     <Content Include="Views\App\_DisplayRelatedDegrees.cshtml" />
+    <Content Include="Views\App\_DisplayFavoriteDegree.cshtml" />
+    <Content Include="Views\App\_DisplaySetFavoriteDegree.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

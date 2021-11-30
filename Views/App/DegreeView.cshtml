@@ -45,6 +45,8 @@
     </div>
 }
 
+@Html.Action("_DisplaySetFavoriteDegree", "App", new { NID=User.Identity.Name, degreeId = Model.Id })
+
 <div class="row pt-5">
     <div class="col-md-6">
         <div class="form-group">

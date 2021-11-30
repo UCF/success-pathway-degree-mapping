@@ -660,5 +660,45 @@ namespace DegreeMapping.Controllers
         }
         #endregion
 
+        #region Favorite Degree
+        public ActionResult _DisplayFavoriteDegree(string NID)
+        {
+            FavoriteDegree fd = FavoriteDegree.Get(NID);
+            return PartialView(fd);
+        }
+
+        public ActionResult _DisplaySetFavoriteDegree(string NID, int degreeId)
+        {
+            FavoriteDegree fd = FavoriteDegree.Get(NID);
+            ViewBag.DegreeId = degreeId;
+            return PartialView(fd);
+        }
+
+        public ActionResult SetFavoriteDegree(string NID, int degreeId)
+        {
+            FavoriteDegree fd = FavoriteDegree.Get(NID);
+            if (fd.DegreeList.Count == 0)
+            {
+                fd.DegreeList.Add(degreeId);
+                FavoriteDegree.Insert(fd);
+                return Json(true, JsonRequestBehavior.AllowGet);
+            }
+            if (fd.DegreeList.Contains(degreeId))
+            {
+                fd.DegreeList.Remove(degreeId);
+                FavoriteDegree.Update(fd);
+                return Json(false, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                fd.DegreeList.Add(degreeId);
+                FavoriteDegree.Update(fd);
+                return Json(true, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+
+        #endregion
+
     }
 }

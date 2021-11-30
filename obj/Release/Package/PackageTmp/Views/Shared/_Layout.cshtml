@@ -40,9 +40,9 @@
                         if (User.Identity.Name == "jgiron")
                         {
                             <span class="px-3">@Html.ActionLink("Users", "ViewUsers", "App", null, new { @class = "btn btn-primary btn-lg" })</span>
-                            <span class="px-3">@Html.ActionLink("Degree Map v2", "DegreemapV2", "App", null, new { @class = "btn btn-primary btn-lg" })</span>
+                            <span class="px-3">@Html.ActionLink("Degree Map v2", "Index", "DegreeMap2", null, new { @class = "btn btn-primary btn-lg" })</span>
                         }
-                        <span class="px-3">@Html.ActionLink("Sign Out", "SignOut", "Home", null, new { @class = "btn btn-primary btn-lg" })</span>
+                        <span class="px-3">@Html.ActionLink("Sign Out", "SignOut", "Home", null, new { @class = "btn btn-warning btn-lg" })</span>
                     }
                 </div>
             </div>
@@ -51,16 +51,14 @@
     @RenderSection("JumbotronMain", false)
     <div class="container body-content">
         @RenderBody()
-        <footer class="pt-5">
+        <footer class="pt-3 fixed-bottom text-center bg-success">
             @if (User.Identity.IsAuthenticated)
             {
-                <hr />
                 <div>You are signed in as @User.Identity.Name</div>
                 <div>Version 2.1.1</div>
             }
         </footer>
     </div>
-
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
