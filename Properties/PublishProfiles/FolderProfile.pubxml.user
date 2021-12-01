@@ -6355,7 +6355,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/05/2021 14:28:40</publishTime>
     </File>
     <File Include="Views/App/_DisplayFavoriteDegree.cshtml">
-      <publishTime>11/30/2021 13:22:16</publishTime>
+      <publishTime>12/01/2021 11:13:07</publishTime>
     </File>
     <File Include="Views/App/_DisplayRelatedDegrees.cshtml">
       <publishTime>11/10/2021 09:40:43</publishTime>
