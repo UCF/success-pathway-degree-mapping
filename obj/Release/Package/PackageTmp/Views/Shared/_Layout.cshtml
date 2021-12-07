@@ -8,6 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pathway - @ViewBag.Title</title>
+    <meta name="robots" content="noindex" />
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js"></script>"
@@ -51,13 +52,13 @@
     @RenderSection("JumbotronMain", false)
     <div class="container body-content">
         @RenderBody()
-        <footer class="pt-3 fixed-bottom text-center bg-success">
+        @*<footer class="pt-3 fixed-bottom text-center bg-success">
             @if (User.Identity.IsAuthenticated)
             {
                 <div>You are signed in as @User.Identity.Name</div>
                 <div>Version 2.1.1</div>
             }
-        </footer>
+        </footer>*@
     </div>
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")

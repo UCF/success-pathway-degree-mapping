@@ -5,11 +5,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <meta name="robots" content="noindex" />
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
     <!-- This site is optimized with the Yoast SEO plugin v16.7 - https://yoast.com/wordpress/plugins/seo/ -->
     <title>Pathway Degree List - UCF Connect</title>
     <!-- Admin only notice: this page does not show a meta description because it does not have one, either write it for this page specifically or go into the [SEO - Search Appearance] menu and set up a template. -->
@@ -95,12 +94,23 @@
         }
     </style>
     <style type="text/css" media="screen">
-	html { margin-top: 32px !important; }
-	* html body { margin-top: 32px !important; }
-	@@media screen and ( max-width: 782px ) {
-		html { margin-top: 46px !important; }
-		* html body { margin-top: 46px !important; }
-	}
+        html {
+            margin-top: 32px !important;
+        }
+
+        * html body {
+            margin-top: 32px !important;
+        }
+
+        @@media screen and ( max-width: 782px ) {
+            html {
+                margin-top: 46px !important;
+            }
+
+            * html body {
+                margin-top: 46px !important;
+            }
+        }
     </style>
     <link rel="icon" href="https://connectucncmsqa.smca.ucf.edu/wp-content/uploads/sites/4/2019/07/pegasus-192x192-150x150.png" sizes="32x32">
     <link rel="icon" href="https://connectucncmsqa.smca.ucf.edu/wp-content/uploads/sites/4/2019/07/pegasus-192x192.png" sizes="192x192">
@@ -111,6 +121,7 @@
             width: 40px;
             height: 40px;
         }
+
         .checkbox {
             background-color: #fff;
             display: inline-block;
@@ -121,6 +132,7 @@
             border: 1px solid #ccc;
             float: none
         }
+
             .checkbox span {
                 display: block;
                 height: 28px;
@@ -128,6 +140,7 @@
                 width: 28px;
                 padding: 0
             }
+
                 .checkbox span:after {
                     -moz-transform: scaleX(-1) rotate(135deg);
                     -ms-transform: scaleX(-1) rotate(135deg);
@@ -147,12 +160,15 @@
                     top: 15px;
                     width: 10px
                 }
+
                 .checkbox span:hover:after {
                     border-color: #999
                 }
+
             .checkbox input {
                 display: none
             }
+
                 .checkbox input:checked + span:after {
                     -webkit-animation: check .8s;
                     -moz-animation: check .8s;
@@ -160,15 +176,19 @@
                     animation: check .8s;
                     border-color: #555
                 }
+
                 .checkbox input:checked + .default:after {
                     border-color: #444
                 }
+
                 .checkbox input:checked + .primary:after {
                     border-color: #2196F3
                 }
+
                 .checkbox input:checked + .success:after {
                     border-color: #8bc34a
                 }
+
                 .checkbox input:checked + .info:after {
                     border-color: #3de0f5
                 }

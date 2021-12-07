@@ -189,6 +189,12 @@ var degreemap = {
         GPA: "GPA",
         LimitedAccess: "LimitedAccess",
         RestrictedAccess: "RestrictedAccess",
+        Section_AdditionalRequirements: "section_additionalrequirements",
+        Section_AdditionalRequirements: "section_additionalrequirements",
+        Section_GPA: "section_gpa",
+        Section_LimitedAccess: "section_limitedaccess",
+        Section_RestrictionAccess: "section_restrictionaccess",
+        Section_ForeignLaugangeRequirements: "section_foreignlaugangerequirements",
         AdditionalRequirement: "AdditionalRequirement",
         ForeignLanguageRequirement: "ForeignLanguageRequirement",
         ListItems: "ListItems",
@@ -214,12 +220,30 @@ var degreemap = {
         $("." + this.target.LimitedAccess).html(main.getYesNo(data.LimitedAccess));
         $("." + this.target.RestrictedAccess).html(main.getYesNo(data.RestrictedAccess));
         $("." + this.target.ForeignLanguageRequirement).html(data.ForeignLanguageRequirement);
-        $("." + this.target.AdditionalRequirement).html(data.AdditionalRequirement);
         $("." + this.target.Degree).html(data.CatalogYear + ' ' + data.Degree);
         $("." + this.target.Institution).html(data.Institution);
         $("." + this.target.CatalogYear).html(data.CatalogYear);
         $("." + this.target.UndergraduateCatalogUrl).attr("href", data.UndergraduateCatalogUrl);
         degreemap.displayListItems(data);
+    },
+    displayAdditionalRequirements: function (data) {
+        if (data.AdditionalRequirement.length > 5) {
+            $("." + this.target.AdditionalRequirement).html(data.AdditionalRequirement);
+            $('#' + this.target.Section_AdditionalRequirements).removeClass('d-none');
+        }
+    },
+    displayForeignLanguageRequirements: function (data) {
+        if (data.ForeignLanguageRequirement.length > 5) {
+            $("." + this.target.ForeignLanguageRequirement).html(data.ForeignLanguageRequirement);
+            $('#' + this.target.Section_ForeignLaugangeRequirements).removeClass('d-none');
+        }
+    },
+    displayAdditionalRequirements: function (data) {
+        if (data.AdditionalRequirement.length < 10) {
+            $('#' + this.target.Section_AdditionalRequirements).hide();
+        } else {
+            $("." + this.target.AdditionalRequirement).html(data.AdditionalRequirement);
+        }
     },
     displayListItems: function (data) {
         if (data.Notes.length > 0) {
