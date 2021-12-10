@@ -39,7 +39,7 @@
         <div class="col-md-6">
             <div class="form-group">
                 @Html.LabelFor(x => x.Description) :
-                @Html.TextBoxFor(x => x.Description, new { maxlength = "25" })
+                @Html.TextBoxFor(x => x.Description, new { maxlength = "25", @class = "form-control" })
                 <div><em>25 max characters</em></div>
                 <div><em>Will display under the course</em></div>
             </div>
