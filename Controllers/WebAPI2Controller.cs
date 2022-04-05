@@ -74,9 +74,9 @@ namespace DegreeMapping.Controllers
 
         [HttpGet]
         [Route("GetCustomCourseSemester")]
-        public List<CustomCourseSemester> GetCustomCourseSemester(int degreeId)
+        public List<Models.CustomCourseSemester> GetCustomCourseSemester(int degreeId)
         {
-            return CustomCourseSemester.List(degreeId, null);
+            return Models.CustomCourseSemester.List(degreeId, null);
         }
 
     }

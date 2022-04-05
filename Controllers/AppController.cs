@@ -208,7 +208,8 @@ namespace DegreeMapping.Controllers
             ViewBag.CatalogId = catalogId;
             return View(list_c);
         }
-
+        [HttpPost]
+        [ValidateInput(false)]
         public ActionResult CourseSave(Course c)
         {
             if (c.Id > 0)

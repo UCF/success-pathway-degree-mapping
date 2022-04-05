@@ -35,6 +35,7 @@ namespace DegreeMapping.Models
         [DisplayName("Common Program Prerequisite")]
         public bool CommonProgramPrerequiste { get; set; }
         public bool Required { get; set; }
+        [DisplayName("Notes")]
         public string Description { get; set; }
         public bool Active { get; set; }
         public string Degree { get; set; }
