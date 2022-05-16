@@ -38,7 +38,8 @@ var courseMapper = {
     target: {
         coursesTable: "coursesTable",
         UCFPathwaySection: "UCFPathwaySection",
-        FooterDegreeMapLegend: "footerDegreeMapLegend"
+        FooterDegreeMapLegend: "footerDegreeMapLegend",
+        courseMappingLegend: "courseMappingLegend"
     },
     displayCourses: function (displayName, ucfCourses, partnerCourses) {
         let row = '';
@@ -135,6 +136,7 @@ var courseMapper = {
         let template = '<tr><td colspan="2"><div>No course mappings available</div></td></tr>';
         $('#' + this.target.FooterDegreeMapLegend).html(template);
         $('#' + this.target.FooterDegreeMapLegend).removeClass('d-none');
+        $('#' + this.target.FooterDegreeMapLegend).show();
     },
     getCritialCourseIcon(critical) {
         if (critical) return '<span class="badge badge-secondary p-1" title="Critical Course">C</span>';
@@ -360,7 +362,7 @@ var ucfSemesterTerm = {
             }
         }
     },
-    setCard: function (term, cardblock) {
+    setCard_OLD: function (term, cardblock) {
         let termId = term.replace(" ", "_");
         let card = '<div class="card" id="SemesterTerm_' + termId + '">';
         card += '<div class="card-header card-inverse"><h4> Semester ' + term + '</h4>';
@@ -369,7 +371,50 @@ var ucfSemesterTerm = {
         card += '</div>';
         return card;
     },
+    setCard: function (term, cardblock) {
+        let termId = term.replace(" ", "_");
+        //let card = '<div class="" id="SemesterTerm_' + termId + '">';
+
+        let card = '<table class="w-100 table">'
+        card += '<tr><th colspan="2" class="bg-primary"><h4> Semester ' + term + '</h4></th></tr>';
+        card += cardblock;
+
+        //card += '<div class="row bg-primary p-1"><h4> Semester ' + term + '</h4></div>';
+        //card += '<div class="card-block">' + cardblock + '</div>';
+        //card += '</div>';
+        card += '</table>'; 
+        return card;
+    },
     displayUCFSemesterCourse: function (data) {
+        data.sort((a, b) => {
+            if (a.Credit > b.Credit)
+                return -1;
+            if (a.Credit < b.Credit)
+                return 1;
+            return 0;
+        })
+        let term = ucfSemesterTerm.semesterTerms;
+        let carddeck = '';
+        for (let x = 0; x <= term.length - 1; x++) {
+            let cardblock = '';
+            let course = '';
+            let description = '';
+            let credits = '';
+            for (y = 0; y <= data.length - 1; y++) {
+                if (data[y].SemesterTerm == term[x]) {
+                    course = data[y].Course;
+                    credits = data[y].Credit;
+                    let description = (data[y].Description.length > 0) ? '<p><em>' + data[y].Description + '</em></p>' : '';
+                    //cardblock += '<p class="card-text">' + data[y].Course + description + '<br/>' + data[y].Credit + ' Credits</p>'
+                    cardblock += '<tr><td>' + data[y].Course + description + '</td><td class="text-right">' + data[y].Credit + '</td></tr>';
+                }
+            }
+            carddeck += ucfSemesterTerm.setCard(term[x], cardblock);
+        }
+        $('#UCFCourseSection').html('<div>' + carddeck + '</div>');
+    },
+
+    displayUCFSemesterCourse_OLD: function (data) {
         data.sort((a, b) => {
             if (a.Credit > b.Credit)
                 return -1;
@@ -421,7 +466,7 @@ var ucfSemesterTerm = {
             cache: true,
             async: false,
             success: function (data) {
-                
+
             }
         }).done(function (data) {
             ucfSemesterTerm.data = data;

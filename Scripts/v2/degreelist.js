@@ -1,12 +1,15 @@
 ﻿var degreeList = {
+    version: '1.0.0',
     data: {},
     ucfDegrees: [],
     partnerDegrees: [],
     noPartnerColleges: [],
     alphaCharList: [],
+    collegeList: {},
     target: {
         DegreeListOutput: 'DegreeListOutput',
-        DegreeAlphaList: 'degree-alpha-list'
+        DegreeAlphaList: 'degree-alpha-list',
+        CollegeFilter: 'collegeFilter'
     },
     addToAlphaCharList: function (letter) {
         if (!this.alphaCharList.includes(letter)) {
@@ -83,6 +86,7 @@
         }
     },
     search: function (keyword) {
+        $('#collegeFilter').prop('selectedIndex', 0);
         if (keyword.length < 1) {
             this.displayByDegree(this.ucfDegrees, this.partnerDegrees);
             return;
@@ -159,10 +163,56 @@
                     }
                     degreeList.filter(degreeList.ucfDegrees, degreeList.partnerDegrees);
                     degreeList.displayByDegree(degreeList.ucfDegrees, degreeList.partnerDegrees);
+                    degreeList.setCollegeList();
                 }
             }
         })
     },
+
+    setCollegeList: function () {
+        let collegeIdArray = [];
+        let cloneUCFDegrees = this.ucfDegrees;
+        cloneUCFDegrees.sort(this.getSortOrder("College"));
+        $('#collegeFilter').append(this.getSelectOption('', 'View all colleges'));
+        for (x = 0; x <= this.ucfDegrees.length - 1; x++) {
+            let collegeName = this.ucfDegrees[x].College;
+            let collegeId = this.ucfDegrees[x].CollegeId;
+            if (this.ucfDegrees[x].College.length < 1) {
+                continue;
+            }
+            if (!collegeIdArray.includes(collegeId)) {
+                collegeIdArray.push(collegeId);
+                $('#collegeFilter').append(this.getSelectOption(collegeId, collegeName));
+            }
+        }
+    },
+    getSelectOption(val,text) {
+        let opt = document.createElement('option');
+        opt.value = val;
+        opt.innerHTML = text;
+        return opt;
+    },
+
+    filterByCollege: function (id) {
+        this.clear();
+        if (id < 1) {
+            this.displayByDegree(this.ucfDegrees, this.partnerDegrees);
+            return;
+        }
+        let obj = [];
+        for (x = 0; x <= this.ucfDegrees.length - 1; x++) {
+            let collegId = this.ucfDegrees[x].CollegeId;
+            if (collegId==id) {
+                obj.push(this.ucfDegrees[x]);
+            }
+        }
+        degreeList.displayByDegree(obj, this.partnerDegrees);
+
+        if (obj.length == 0) {
+            $('#' + this.target.DegreeListOutput).html('No degrees found')
+        }
+    },
+
     setHost: function () {
         let host = window.location.hostname.toLowerCase();
         if (host == "portal.connect.ucf.edu") {
@@ -186,5 +236,8 @@ $(document).ready(function () {
         if ($(this).val().length == 0) {
             degreeList.clear();
         }
+    })
+    $("#collegeFilter").on('change', function () {
+        degreeList.filterByCollege($(this).val());
     })
 })

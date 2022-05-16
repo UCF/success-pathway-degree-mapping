@@ -49,6 +49,7 @@
             <div class="form-group">
                 @Html.LabelFor(x => x.Value) :
                 @Html.TextAreaFor(x => x.Value, new { @class = "form-control", cols = "80", rows = "20" })
+                <span class="alert alert-warning">2000 characters max</span>
             </div>
         </div>
     </div>

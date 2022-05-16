@@ -31,6 +31,8 @@ namespace DegreeMapping.Models
         public int CatalogId { get; set; }
         public string CatalogYear { get; set; }
 
+        public int SortOrder { get; set; }
+
         public List<int> UCFCourseIds { get; set; }
         public List<Course> UCFCourses { get; set; }
 
@@ -70,14 +72,12 @@ namespace DegreeMapping.Models
         public string Alternate4DisplayName { get; set; }
         public int Alternate4DisplayValue { get; set; }
 
-
         public List<int> Alternate5PartnerCourseIds { get; set; }
         public List<int> Alternate5UCFCourseIds { get; set; }
         public List<Course> Alternate5PartnerCourses { get; set; }
         public List<Course> Alternate5UCFCourses { get; set; }
         public string Alternate5DisplayName { get; set; }
         public int Alternate5DisplayValue { get; set; }
-
 
         public int InstitutionId { get; set; }
         public string Institution { get; set; }
@@ -156,6 +156,11 @@ namespace DegreeMapping.Models
 
         public static int Insert(CourseMapper cm)
         {
+            List<CourseMapper> existingCM = CourseMapper.List(cm.DegreeId, null, null);
+            if (existingCM != null && existingCM.Count > 0)
+            {
+                cm.SortOrder = existingCM.Max(x => x.SortOrder) + 1;
+            }
             int id = 0;
             using (SqlConnection cn = new SqlConnection(Database.DC_DegreeMapping))
             {
@@ -164,6 +169,7 @@ namespace DegreeMapping.Models
                 cmd.CommandText = "InsertCourseMapper";
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@DegreeId", cm.DegreeId);
+                cmd.Parameters.AddWithValue("@SortOrder", cm.SortOrder);
                 #region Primary
                 cmd.Parameters.AddWithValue("@UCFCourseIds", string.Join(",", cm.UCFCourseIds));
                 cmd.Parameters.AddWithValue("@PartnerCourseIds", string.Join(",", cm.PartnerCourseIds));
@@ -237,6 +243,7 @@ namespace DegreeMapping.Models
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@Id", cm.Id);
                 cmd.Parameters.AddWithValue("@DegreeId", cm.DegreeId);
+                cmd.Parameters.AddWithValue("@SortOrder", cm.SortOrder);
                 #region Primary
                 cmd.Parameters.AddWithValue("@UCFCourseIds", string.Join(",", cm.UCFCourseIds));
                 cmd.Parameters.AddWithValue("@PartnerCourseIds", string.Join(",", cm.PartnerCourseIds));
@@ -300,6 +307,21 @@ namespace DegreeMapping.Models
             }
         }
 
+        public static void UpdateSortOrder(int courserMapperId, int sortOrderValue)
+        {
+            using (SqlConnection cn = new SqlConnection(Database.DC_DegreeMapping))
+            {
+                cn.Open();
+                SqlCommand cmd = cn.CreateCommand();
+                cmd.CommandText = "UpdateCourseMapperOrderBy";
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@CouserMapperId", courserMapperId);
+                cmd.Parameters.AddWithValue("@SortOrderValue", sortOrderValue);
+                cmd.ExecuteScalar();
+                cn.Close();
+            }
+        }
+
         public static List<CourseMapper> List(int? degreeId, int? id, int? catalogId)
         {
             List<CourseMapper> list_cm = new List<CourseMapper>();
@@ -352,6 +374,13 @@ namespace DegreeMapping.Models
                 #region Primary
                 cm.DisplayValue = Convert.ToInt32(dr["DisplayValue"].ToString());
                 cm.DisplayName = SetDisplayName(cm.DisplayValue);
+
+                int sortOrder = 0;
+                Int32.TryParse(dr["OrderBy"].ToString(), out sortOrder);
+                cm.SortOrder = sortOrder;
+                //cm.SortOrder = Convert.ToInt32(dr["OrderBy"].ToString());
+
+
                 if (!string.IsNullOrEmpty(dr["PartnerCourseIds"].ToString()))
                 {
                     cm.PartnerCourseIds = dr["PartnerCourseIds"].ToString().Split(',').Select(Int32.Parse).ToList();
@@ -493,5 +522,61 @@ namespace DegreeMapping.Models
                 cn.Close();
             }
         }
+
+        //public static void SetSortOrderBy()
+        //{
+        //    int position = 100;
+        //    List<Degree> list_d = DegreeMapping.Models.Degree.List(null, null);
+        //    foreach (Degree d in list_d)
+        //    {
+        //        List<CourseMapper> list_cm = CourseMapper.List(d.Id, null, null);
+        //        foreach (CourseMapper cm in list_cm.OrderBy(x=>x.SortOrder))
+        //        {
+        //            cm.SortOrder = position;
+        //            position++;
+        //            UpdateSortOrder(cm.Id, cm.SortOrder);
+        //        }
+        //        position = 100;
+        //    }
+        //}
+
+        public static List<int> GetCourseMapperDistinctDegreeId()
+        {
+            List<int> list_degreeIds = new List<int>();
+            using (SqlConnection cn = new SqlConnection(Database.DC_DegreeMapping))
+            {
+                cn.Open();
+                SqlCommand cmd = cn.CreateCommand();
+                cmd.CommandText = "GetCourseMapperDistinctDegreeId";
+                cmd.CommandType = CommandType.StoredProcedure;
+                SqlDataReader dr = cmd.ExecuteReader();
+                if (dr.HasRows)
+                {
+                    while (dr.Read())
+                    {
+                        list_degreeIds.Add(int.Parse(dr["DegreeId"].ToString()));
+                    }
+                }
+                cn.Close();
+            }
+            return list_degreeIds;
+        }
+
+        public static void SwapSortOrder(int courseMapperId, int degreeId, string direction)
+        {
+            List<CourseMapper> list_cm = CourseMapper.List(degreeId, null, null);
+
+            CourseMapper cmObj1 = list_cm.Where(x => x.Id == courseMapperId).FirstOrDefault();
+            if (direction.ToLower() == "up")
+            {
+
+            } else { 
+            
+            }
+
+        
+        }
+
+       
     }
 }

@@ -43,61 +43,63 @@
         </div>
         &nbsp;
 
-        &nbsp;
-        <h3 class="heading-underline"><span class="Degree"></span> Success Pathway</h3>
-        <p class="lead">Listed courses are to account for degree requirements, pre-requisites and critical courses to prepare students for admission to intended major at UCF. Courses should be completed before transfering to UCF.</p>
+        <section style="page-break-before:always;">
+            <h3 class="heading-underline"><span class="Degree"></span> Success Pathway</h3>
+            <p class="lead">Listed courses are to account for degree requirements, pre-requisites and critical courses to prepare students for admission to intended major at UCF. Courses should be completed before transfering to UCF.</p>
 
-        <div class="btn-group">
-            <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                State College Plan
-            </button>
-            <div class="dropdown-menu" id="InstitutionList">
-                <a class="dropdown-item" href="#">General</a>
-                <a class="dropdown-item" href="#">Daytona State College</a>
-                <a class="dropdown-item" href="#">Valencia College</a>
+            <div class="btn-group">
+                <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    State College Plan
+                </button>
+                <div class="dropdown-menu d-print-none" id="InstitutionList">
+                    <a class="dropdown-item" href="#">General</a>
+                    <a class="dropdown-item" href="#">Daytona State College</a>
+                    <a class="dropdown-item" href="#">Valencia College</a>
+                </div>
+                &nbsp;
+
             </div>
             &nbsp;
-
-        </div>
-        &nbsp;
-        <div class="">
-            <h3><span class="badge badge-primary"><span class="Institution"></span> Pathway</span></h3>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <table class="table table-hover table-bordered">
-                    <caption>UCF course mapping for partner institution</caption>
-                    <thead class="thead-inverse">
-                        <tr>
-                            <th>UCF Course Prefix &amp; Course Number</th>
-                            <th>State College Course Prefix &amp; Number</th>
-                        </tr>
-                        <tr>
-                            <td colspan="2">
-                                <div><span class="badge badge-secondary p-1">C</span> Critical Course Requirements</div>
-                                <div><span class="badge badge-danger p-1">R</span> Required Course</div>
-                                <div><span class="badge badge-primary p-1">CPP</span> Common Course Prerequisite</div>
-                            </td>
-                        </tr>
-                    </thead>
-                    <tbody id="coursesTable"></tbody>
-                    <tfoot id="footerDegreeMapLegend" class="d-none">
-                        <tr>
-                            <td colspan="2">
-                                <div><span class="badge badge-secondary p-1">C</span> Critical Course Requirements</div>
-                                <div><span class="badge badge-danger p-1">R</span> Required Course</div>
-                                <div><span class="badge badge-primary p-1">CPP</span> Common Course Prerequisite</div>
-                            </td>
-                        </tr>
-                    </tfoot>
-                </table>
+            <div class="">
+                <h3><span class="badge badge-primary"><span class="Institution"></span> Pathway</span></h3>
             </div>
-        </div>
-        <div id="UCFPathwaySection">
+            <div class="row">
+                <div class="col-md-12">
+                    <table class="table table-hover table-bordered">
+                        <caption>UCF course mapping for partner institution</caption>
+                        <thead class="thead-inverse">
+                            <tr>
+                                <th>UCF Course Prefix &amp; Course Number</th>
+                                <th>State College Course Prefix &amp; Number</th>
+                            </tr>
+                            <tr class="courseMappingLegend">
+                                <td colspan="2">
+                                    <div><span class="badge badge-secondary p-1">C</span> Critical Course Requirements</div>
+                                    <div><span class="badge badge-danger p-1">R</span> Required Course</div>
+                                    <div><span class="badge badge-primary p-1">CPP</span> Common Course Prerequisite</div>
+                                </td>
+                            </tr>
+                        </thead>
+                        <tbody id="coursesTable"></tbody>
+                        <tfoot id="footerDegreeMapLegend" class="courseMappingLegend d-none">
+                            <tr>
+                                <td colspan="2">
+                                    <div><span class="badge badge-secondary p-1">C</span> Critical Course Requirements</div>
+                                    <div><span class="badge badge-danger p-1">R</span> Required Course</div>
+                                    <div><span class="badge badge-primary p-1">CPP</span> Common Course Prerequisite</div>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+
+        <div id="UCFPathwaySection" style="page-break-before:always">
             &nbsp;
             <h3 class="heading-underline">UCF Pathway</h3>
             <p class="lead">The semester curriculum suggested below assumes that the student: a) has earned an A.A., b) has completed required lower-level courses and academic milestones, c) will be enrolled full-time at UCF. Upon matriculation to UCF, the student is strongly encouraged to consult their major advisor at UCF and utilize the academic planning tools such as Pegasus Path, myKnight Audit, and mySchedule Builder for any of their academic planning needs.</p>
-
             <div id="UCFCourseSection"></div>
             <div id="UCFCourseSection2" class="pt-3"></div>
         </div>
@@ -112,5 +114,5 @@
 @Html.Action("_PathwayDegreeFooter")
 
 
-<script src="~/Scripts/v2/main.js"></script>
-<script src="~/Scripts/v2/DegreeMap.js"></script>
+<script src="~/Scripts/v3/main.js"></script>
+<script src="~/Scripts/v3/DegreeMap.js"></script>
