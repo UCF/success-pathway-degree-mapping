@@ -31,7 +31,9 @@ namespace DegreeMapping.Models
         public int CatalogId { get; set; } 
         public bool Active { get; set; }
         public string Institution { get; set; }
+        [DisplayName("Add Date")]
         public DateTime AddDate { get; set; }
+        [DisplayName("Update Date")]
         public DateTime UpdateDate { get; set; }
         public string NID { get; set; }
         public int? UCFDegreeId { get; set; }
@@ -48,6 +50,8 @@ namespace DegreeMapping.Models
         public int SemesterStart { get; set; }
         [DisplayName("Semester Start Term")]
         public string SemesterStartTerm { get; set; }
+        [DisplayName("Career Path URL")]
+        public string CareerPathURL { get; set; }
 
         public Degree()
         { 
@@ -103,6 +107,7 @@ namespace DegreeMapping.Models
                 cmd.Parameters.AddWithValue("@CatalogUrl", d.CatalogUrl);
                 cmd.Parameters.AddWithValue("@NID", d.NID);
                 cmd.Parameters.AddWithValue("@SemesterStart", d.SemesterStart);
+                cmd.Parameters.AddWithValue("@CareerPathURL", d.CareerPathURL);
                 if (d.UCFDegreeId.HasValue)
                 {
                     cmd.Parameters.AddWithValue("@UCFDegreeId", d.UCFDegreeId.Value);
@@ -139,6 +144,7 @@ namespace DegreeMapping.Models
                 cmd.Parameters.AddWithValue("@CatalogUrl", d.CatalogUrl);
                 cmd.Parameters.AddWithValue("@NID", d.NID);
                 cmd.Parameters.AddWithValue("@SemesterStart", d.SemesterStart);
+                cmd.Parameters.AddWithValue("@CareerPathURL", d.CareerPathURL);
                 if (d.CloneDegreeId.HasValue)
                 {
                     cmd.Parameters.AddWithValue("@CloneDegreeId", d.CloneDegreeId.Value);
@@ -231,7 +237,6 @@ namespace DegreeMapping.Models
             return d;
         }
 
-
         /// <summary>
         /// returns partner institutions only
         /// institutionId != 1
@@ -295,6 +300,7 @@ namespace DegreeMapping.Models
                 Int32.TryParse(dr["CloneDegreeId"].ToString(), out clonedegreeId);
                 d.CloneDegreeId = clonedegreeId;
                 d.SemesterStart = Convert.ToInt32(dr["SemesterStart"].ToString());
+                d.CareerPathURL = dr["CareerPathURL"].ToString();
                 SetSemesterStartTerm(ref d);
             }
         }

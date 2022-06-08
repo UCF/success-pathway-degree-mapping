@@ -70,15 +70,14 @@ namespace DegreeMapping.Controllers
             return View();
         }
 
-        public ActionResult DegreeMapV2(int? degreeId)
+        [ActionName("Degree-Mapping")]
+        public ActionResult DegreeMapping(int degreeId)
         {
-            //ViewBag.degreeId = degreeId;
-            //ViewBag.DegreeList = DegreeMapping.Models.Degree.List(null, null);
             return View();
         }
 
-        [ActionName("Degree-Mapping")]
-        public ActionResult DegreeMapping(int degreeId) {
+        public ActionResult DegreeMapV2(int? degreeId)
+        {
             return View();
         }
 
@@ -86,6 +85,22 @@ namespace DegreeMapping.Controllers
         {
             return PartialView();
         }
+
+        public ActionResult DegreeMapV3(int? degreeId)
+        {
+            return View();
+        }
+
+        public ActionResult _DegreeMapV3WPTemplate()
+        {
+            return PartialView();
+        }
+
+        public ActionResult _DegreeMapV3Footer()
+        {
+            return PartialView();
+        }
+
 
         public ActionResult About()
         {

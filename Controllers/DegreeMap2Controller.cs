@@ -42,6 +42,11 @@ namespace DegreeMapping.Controllers
             return View();
         }
 
+        public ActionResult Catalog2022_2023()
+        {
+            return View();
+        }
+
         public ActionResult DegreeMap()
         {
             return View();

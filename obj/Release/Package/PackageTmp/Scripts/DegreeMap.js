@@ -164,6 +164,7 @@ var degreemap = {
         InstitutionList: "InstitutionList",
         DegreemapRow: "DegreemapRow",
         Degree: "Degree",
+        DegreeURL : "DegreeURL",
         UCFPathwaySection: "UCFPathwaySection",
         CollegeName: "CollegeName",
         UCFCourseSection: "UCFCourseSection",
@@ -183,6 +184,7 @@ var degreemap = {
         $("." + this.target.ForeignLanguageRequirement).html(data.ForeignLanguageRequirement);
         $("." + this.target.AdditionalRequirement).html(data.AdditionalRequirement);
         $("." + this.target.Degree).html(data.CatalogYear + ' ' + data.Degree);
+        $("." + this.target.DegreeURL).html(data.DegreeURL);
         $("." + this.target.Institution).html(data.Institution);
         $("." + this.target.CatalogYear).html(data.CatalogYear);
         degreemap.displayListItems(data);

@@ -574,6 +574,12 @@ namespace DegreeMapping.Controllers
             return RedirectToAction("DegreeView", new { id = ccm.DegreeId });
         }
 
+        public ActionResult CourseMapperSortOrderUpdate(int courseMapperId, int sortOrderValue)
+        {
+            DegreeMapping.Models.CourseMapper.UpdateSortOrder(courseMapperId, sortOrderValue);
+            return Json(true, JsonRequestBehavior.AllowGet);
+        }
+
         #endregion
 
         #region Custom Course Semester
@@ -697,8 +703,14 @@ namespace DegreeMapping.Controllers
                 return Json(true, JsonRequestBehavior.AllowGet);
             }
         }
-
-
+        #endregion
+        #region UpdateCourseMapperOrderBy
+        public ActionResult UpdateCourseMapperOrderBy(int? id)
+        {
+            CourseMapperSort.SetAllSort();
+            //CourseMapperSort.UpdateOrderBy(id);
+            return View();
+        }
         #endregion
 
     }

@@ -96,5 +96,18 @@ namespace DegreeMapping.Models
                 dl.UCFDegreeId = (string.IsNullOrEmpty(dr["UCFDegreeId"].ToString())) ? 0 : Convert.ToInt32(dr["UCFDegreeId"].ToString());
             }
         }
+
+        private static void SetCollege(ref DegreeListv2 dl)
+        {
+            if (dl.CollegeId == 0)
+            {
+                if (dl.UCFDegreeId > 0)
+                {
+                    Degree d = Models.Degree.Get(dl.UCFDegreeId);
+                    dl.College = d.CollegeName;
+                    dl.CollegeId = d.CollegeId;
+                }
+            }
+        }
     }
 }

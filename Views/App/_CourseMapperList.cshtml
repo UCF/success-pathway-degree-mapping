@@ -1,7 +1,24 @@
 ﻿@model List<DegreeMapping.Models.CourseMapper>
 @{ 
+    string url =  HttpContext.Current.Request.Url.Host;
+    string APIPath = "https://portal.connect.ucf.edu/pathway/app/CourseMapperSortOrderUpdate/";
+    if (url.ToLower() == "localhost")
+    {
+        APIPath = "/app/CourseMapperSortOrderUpdate/";
+    }
+
     int degreeId = ViewBag.DegreeId;
     DegreeMapping.Models.Degree d = DegreeMapping.Models.Degree.Get(degreeId);
+    int maxSortOrder, minSortOrder;
+    try
+    {
+        maxSortOrder = Model.Max(x => x.SortOrder);
+        minSortOrder = Model.Min(x => x.SortOrder);
+    }
+    catch (Exception ex) {
+        maxSortOrder = 0;
+        minSortOrder = 0;
+    }
 }
 <div class="container py-5">
     <a name="CourseMapper">&nbsp;</a>
@@ -9,6 +26,7 @@
     <table class="table table-hover">
         <thead>
             <tr>
+                <th>&nbsp;</th>
                 <th>&nbsp;</th>
                 <th>UCF Courses</th>
                 <th>Partner Courses</th>
@@ -18,9 +36,16 @@
         <tbody>
             @if (Model.Count > 0)
             {
-                foreach (DegreeMapping.Models.CourseMapper cm in Model.OrderBy(x => x.UCFCourses.Select(y => y.Code).FirstOrDefault()))
+                int SortOrderValue = 1000;
+                foreach (DegreeMapping.Models.CourseMapper cm in Model.OrderBy(x => x.SortOrder))
                 {
-                    <tr>
+                    <tr id="someRow_@cm.Id" coursemapperId="@cm.Id" ordervalue="@cm.SortOrder">
+                        <td>
+                            <input type="hidden" id="@cm.Id" name="preOrder" value="@SortOrderValue" />
+                            <a href="javascript:void(0)" class="up"><i class="fa fa-arrow-alt-circle-up"></i></a>
+                            <a href="javascript:void(0)" class="down"><i class="fa fa-arrow-alt-circle-down"></i></a>
+                            <div>@cm.Id | @cm.SortOrder</div>
+                        </td>
                         <td>
                             @Html.ActionLink("Edit", "CourseMapperEdit", "App", new { id = cm.Id }, null)
                         </td>
@@ -48,3 +73,65 @@
         </tbody>
     </table>
 </div>
+<script type="text/javascript">
+    var obj;
+    var maxSortOrder = @maxSortOrder;
+    var minSortOrder = @minSortOrder;
+
+    $(document).ready(function () {
+        $(".up,.down").click(function () {
+            let row = $(this).parents("tr:first");
+            let el = $(this).siblings('input');
+            let currentOrderValue;
+            let nextOrderValue;
+            let prevOrderValue;
+            var courseMapperId = parseInt($(el).attr('id'));
+
+            if ($(this).is(".up")) {
+                currentOrderValue = parseInt($(row).attr('orderValue'));
+                prevOrderValue = parseInt($(row.prev()).attr('orderValue'));
+                if (minSortOrder == prevOrderValue) {
+                    minSortOrder = minSortOrder - 1;
+                    prevOrderValue = minSortOrder;
+                }
+                UpdateSortOrder($(row).attr('coursemapperId'), prevOrderValue, 'up');
+                UpdateSortOrder($(row.prev()).attr('coursemapperId'), currentOrderValue, 'up');
+
+                $(row).attr('orderValue', prevOrderValue);
+                $(row.prev()).attr('orderValue', currentOrderValue);
+                row.insertBefore(row.prev());
+            } else {
+                currentOrderValue = parseInt($(row.next()).attr('orderValue'));
+                nextOrderValue = parseInt($(row.next()).attr('orderValue'));
+                if (maxSortOrder == nextOrderValue) {
+                    maxSortOrder = maxSortOrder + 1;
+                    nextOrderValue = maxSortOrder;
+                }
+                UpdateSortOrder($(row).attr('coursemapperId'), nextOrderValue, 'down');
+                UpdateSortOrder($(row.next()).attr('coursemapperId'), currentOrderValue, 'down');
+                //update attribute
+                $(row.next()).attr('orderValue', nextOrderValue);
+                $(row.next()).attr('orderValue', currentOrderValue);
+                row.insertAfter(row.next());
+            }
+        })
+    })
+
+    function UpdateSortOrder(courseMapperId, sortOrderVal, direction) {
+        $.get({
+            //url: "https://portal.connect.ucf.edu/pathway/api/v2/DegreeMap/getCustomCourseMapper?degreeId=" + ucfSemesterTerm.degreeId,
+            //url: "/app/CourseMapperSortOrderUpdate/?courseMapperId=" + courseMapperId + "&sortOrderValue=" + sortOrderVal,
+            url: "@APIPath?courseMapperId=" + courseMapperId + "&sortOrderValue=" + sortOrderVal,
+            type: "GET",
+            cache: false,
+            async: false,
+            success: function (data) {
+                //do something
+            }
+        }).done(function (data) {
+            // do something
+        }).fail(function (message) {
+            alert(message);
+        })
+    }
+</script>

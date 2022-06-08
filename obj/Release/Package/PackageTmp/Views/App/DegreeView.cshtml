@@ -25,6 +25,7 @@
         Model.GPA = ucfDegree.GPA;
         Model.SemesterStart = ucfDegree.SemesterStart;
         Model.SemesterStartTerm = ucfDegree.SemesterStartTerm;
+        Model.CareerPathURL = ucfDegree.CareerPathURL;
 
         degreeUrl = string.Format("https://connect.ucf.edu/degree-mapping/?degreeId={0}&degree={1}&institution={2}&catalog={3}", Model.Id, Model.Name, Model.Institution, Model.CatalogYear);
     }
@@ -68,6 +69,17 @@
                 @if (!string.IsNullOrEmpty(Model.CatalogUrl))
                 {
                     <a href="@Html.Raw(Model.CatalogUrl)" target="_blank">@Html.Raw(Model.CatalogUrl)</a>
+                }
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-10">
+                <i class="fa fa-info-circle" role="button" data-toggle="tooltip" data-placement="left" title="Set by parent degree"></i>
+                @Html.LabelFor(x => x.CareerPathURL) :
+                @if (!string.IsNullOrEmpty(Model.CareerPathURL))
+                {
+                    <a href="@Html.Raw(Model.CareerPathURL)" target="_blank">@Html.Raw(Model.CareerPathURL)</a>
                 }
             </div>
         </div>
@@ -262,7 +274,7 @@
                     <tbody>
                         @foreach (DegreeMapping.Models.Course c in list_c.OrderBy(x => x.TermOrder))
                         {
-                            c.Code = (!string.IsNullOrEmpty(c.Description)) ? c.Code + "<br /><em>" + c.Description + "</em>" : c.Code; 
+                            c.Code = (!string.IsNullOrEmpty(c.Description)) ? c.Code + "<br /><em>" + c.Description + "</em>" : c.Code;
                             credit = (!string.IsNullOrEmpty(c.CreditText)) ? c.CreditText : c.Credits.ToString();
                             <tr>
                                 <td>@Html.ActionLink("Edit", "CourseEdit", new { id = c.Id })</td>

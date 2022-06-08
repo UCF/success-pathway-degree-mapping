@@ -16,7 +16,7 @@ namespace DegreeMapping.Controllers
 {
     [RoutePrefix("api/v2/DegreeMap")]
 
-    [EnableCors(origins: "https://connectucncmsqa.smca.ucf.edu, https://connectucncmsdev.smca.ucf.edu, https://connect.ucf.edu", headers: "APIKey", methods: "*")]
+    [EnableCors(origins: "https://connectucncmsqa.smca.ucf.edu, https://connectucncmsdev.smca.ucf.edu, https://connect.ucf.edu, http://localhost:62752", headers: "APIKey", methods: "*")]
     public class WebAPI2Controller : ApiController
     {
         [HttpGet]
@@ -70,14 +70,11 @@ namespace DegreeMapping.Controllers
             //return CustomCourseMapper.List(degreeId);
         }
 
-
-
         [HttpGet]
         [Route("GetCustomCourseSemester")]
         public List<Models.CustomCourseSemester> GetCustomCourseSemester(int degreeId)
         {
             return Models.CustomCourseSemester.List(degreeId, null);
         }
-
     }
 }

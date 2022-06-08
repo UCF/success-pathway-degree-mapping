@@ -37,32 +37,3 @@
         }
     </div>
 </div>
-
-<script type="text/javascript">
-    //$.get("/api/Courses/GetCourses?keyData=1", function (data, status) {
-    //    alert("Status: " + status);
-    //});
-    var degreeMapping =
-    {
-        institutionId: 2,
-        degreeId: 3,
-        getDegree: function (institutionId, degreeId) {
-            degreeMapping.institutionId = institutionId;
-            degreeMapping.degreeId = degreeId;
-            $.get({
-                url: "/api/Degree/GetDegree?institutionId=" + degreeMapping.institutionId + "&DegreeId=" + degreeMapping.degreeId,
-                type: "GET",
-                headers: {
-                    "APIKey": "Th1sIsth3Way" },
-                cache: false,
-                    success: function (data) {
-                        console.log(data);
-                    }
-                })
-        }
-    }
-    $(document).ready(function () {
-        degreeMapping.getDegree(2, 3);
-    })
-</script>
-

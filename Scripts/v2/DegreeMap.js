@@ -165,11 +165,11 @@ var customCourseSemester = {
             type: "GET",
             headers: { "APIKey": "Th1sIsth3Way" },
             cache: true,
-            async:false
+            async: false
         }).done(function (data) {
             customCourseSemester.data = data;
             customCourseSemester.displayCustomCourseSemester(data);
-        }) 
+        })
     },
     displayCustomCourseSemester(data) {
         for (let x = 0; x <= data.length - 1; x++) {
@@ -225,6 +225,7 @@ var degreemap = {
         $("." + this.target.Institution).html(data.Institution);
         $("." + this.target.CatalogYear).html(data.CatalogYear);
         $("." + this.target.UndergraduateCatalogUrl).attr("href", data.UndergraduateCatalogUrl);
+        this.displayCareerPath(data.CareerPathURL);
         degreemap.displayListItems(data);
     },
     displayAdditionalRequirements: function (data) {
@@ -252,11 +253,16 @@ var degreemap = {
     },
     displayInstitutionList: function (data) {
         let output = '';
+        let lastObj;
         for (var x = 0; x <= data.length - 1; x++) {
             //Need to select the degree for the new 
-            output += '<a class="dropdown-item" href="/degree-mapping?degreeId=' + data[x].DegreeId + '">' + data[x].Institution + '</a>';
+            if (data[x].InstitutionId != 7) {
+                output += '<a class="dropdown-item" href="/degree-mapping?degreeId=' + data[x].DegreeId + '">' + data[x].Institution + '</a>';
+            } else {
+                lastObj = '<a class="dropdown-item" href="/degree-mapping?degreeId=' + data[x].DegreeId + '">' + data[x].Institution + '</a>';
+            }
         }
-        $('#' + this.target.InstitutionList).html(output);
+        $('#' + this.target.InstitutionList).html(output + lastObj);
     },
     getUrlVars: function () {
         var vars = [], hash;
@@ -286,6 +292,18 @@ var degreemap = {
             }
         })
     },
+    //Phase 3
+    displayCareerPath: function (careerPathUrl) {
+        //if (careerPathUrl.length > 0) {
+        $(".resourcesNavigation").removeClass("col-md-4");
+        $(".resourcesNavigation").addClass("col-md-3");
+        $(".resourcesFour").removeClass("d-none");
+        $(".resourcesFour").show();
+        $(".careerPathURL").attr("href", careerPathUrl)
+        //}
+    },
+
+
     getListByUCFDegree: function () {
         $.get({
             //url: "https://portal.connect.ucf.edu/pathway/api/v2/DegreeMap/GetListByUCFDegree?ucfDegreeId=" + degreemap.ucfDegreeId + "&catalogId=" + degreemap.catalogId,
@@ -344,7 +362,7 @@ var ucfSemesterTerm = {
     },
     setCard: function (term, cardblock) {
         let termId = term.replace(" ", "_");
-        let card = '<div class="card" id="SemesterTerm_' + termId +'">';
+        let card = '<div class="card" id="SemesterTerm_' + termId + '">';
         card += '<div class="card-header card-inverse"><h4> Semester ' + term + '</h4>';
         card += '</div>';
         card += '<div class="card-block">' + cardblock + '</div>';
@@ -401,8 +419,9 @@ var ucfSemesterTerm = {
             type: "GET",
             headers: { "APIKey": "Th1sIsth3Way" },
             cache: true,
-            async:false,
+            async: false,
             success: function (data) {
+                
             }
         }).done(function (data) {
             ucfSemesterTerm.data = data;

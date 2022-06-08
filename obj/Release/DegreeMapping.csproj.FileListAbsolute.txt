@@ -58,10 +58,6 @@ C:\wwwroot\DegreeMapping\DegreeMapping\bin\System.Web.Http.Cors.dll
 C:\wwwroot\DegreeMapping\DegreeMapping\bin\System.Web.Http.Cors.xml
 C:\wwwroot\DegreeMapping\DegreeMapping\bin\DegreeMapper.dll
 C:\wwwroot\DegreeMapping\DegreeMapping\bin\DegreeMapper.pdb
-C:\wwwroot\DegreeMapping\obj\Release\DegreeMapping.csproj.AssemblyReference.cache
-C:\wwwroot\DegreeMapping\obj\Release\DegreeMapping.csproj.CoreCompileInputs.cache
-C:\wwwroot\DegreeMapping\obj\Release\DegreeMapping.dll
-C:\wwwroot\DegreeMapping\obj\Release\DegreeMapping.pdb
 C:\wwwroot\DegreeMapping\bin\DegreeMapping.dll.config
 C:\wwwroot\DegreeMapping\bin\DegreeMapping.dll
 C:\wwwroot\DegreeMapping\bin\DegreeMapping.pdb
@@ -117,4 +113,8 @@ C:\wwwroot\DegreeMapping\bin\System.Web.WebPages.Deployment.xml
 C:\wwwroot\DegreeMapping\bin\System.Web.WebPages.Razor.xml
 C:\wwwroot\DegreeMapping\bin\Newtonsoft.Json.xml
 C:\wwwroot\DegreeMapping\bin\Antlr3.Runtime.pdb
+C:\wwwroot\DegreeMapping\obj\Release\DegreeMapping.csproj.AssemblyReference.cache
+C:\wwwroot\DegreeMapping\obj\Release\DegreeMapping.csproj.CoreCompileInputs.cache
 C:\wwwroot\DegreeMapping\obj\Release\DegreeMapping.csproj.CopyComplete
+C:\wwwroot\DegreeMapping\obj\Release\DegreeMapping.dll
+C:\wwwroot\DegreeMapping\obj\Release\DegreeMapping.pdb

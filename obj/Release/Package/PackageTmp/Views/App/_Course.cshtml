@@ -10,7 +10,7 @@
     Model.Credits = (!string.IsNullOrEmpty(Model.CreditText)) ? 99 : Model.Credits;
     string cssClass = string.Empty;
 }
-
+@Html.Action("_TinyMCE")
 @using (Html.BeginForm("CourseSave", "App", FormMethod.Post, new { @Class = "form-horizontal" }))
 {
     @Html.HiddenFor(x => x.Id)
@@ -36,12 +36,16 @@
     </div>
 
     <div class="row pt-2">
-        <div class="col-md-6">
+        <div class="col-md-10">
             <div class="form-group">
+                <!--
                 @Html.LabelFor(x => x.Description) :
                 @Html.TextBoxFor(x => x.Description, new { maxlength = "25", @class = "form-control" })
                 <div><em>25 max characters</em></div>
                 <div><em>Will display under the course</em></div>
+                -->
+                @Html.LabelFor(x => x.Description) :
+                @Html.TextAreaFor(x => x.Description, new { @class = "form-control", cols = "80", rows = "20" })
             </div>
         </div>
     </div>

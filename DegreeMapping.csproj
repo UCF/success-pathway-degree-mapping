@@ -191,6 +191,7 @@
     <Compile Include="Models\CourseMapper.cs" />
     <Compile Include="Models\CourseMapperHtml.cs" />
     <Compile Include="Models\CourseMapperJSON.cs" />
+    <Compile Include="Models\CourseMapperSort.cs" />
     <Compile Include="Models\CustomCourseMapper.cs" />
     <Compile Include="Models\CustomCourseSemester.cs" />
     <Compile Include="Models\DegreeInfo.cs" />
@@ -2230,6 +2231,8 @@
     <Content Include="Scripts\v2\DegreeMap.js" />
     <Content Include="Scripts\v2\main.js" />
     <Content Include="Scripts\v2\pathwaycatalogs.js" />
+    <Content Include="Scripts\v3\DegreeMap.js" />
+    <Content Include="Scripts\v3\main.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -2324,6 +2327,10 @@
     <Content Include="Views\App\_DisplayRelatedDegrees.cshtml" />
     <Content Include="Views\App\_DisplayFavoriteDegree.cshtml" />
     <Content Include="Views\App\_DisplaySetFavoriteDegree.cshtml" />
+    <Content Include="Views\DegreeMap2\Catalog2022_2023.cshtml" />
+    <Content Include="Views\Home\_DegreeMapV3WPTemplate.cshtml" />
+    <Content Include="Views\Home\DegreeMapV3.cshtml" />
+    <Content Include="Views\Home\_DegreeMapV3Footer.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

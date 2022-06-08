@@ -55,48 +55,7 @@
             </div>
         </div>
 
-        <div class="row pt-5" style="display:none">
-            <div class="col-md-12">
-                <ul>
-                    @foreach (DegreeMapping.Models.Degree d in Model.Where(x => x.InstitutionId == DegreeMapping.Models.Institution.UCFId))
-                    {
-                        <li>
-                            <strong>UCF @d.Name <small>@Html.ActionLink("Edit", "DegreeView", "App", new { id = d.Id }, null)</small></strong>
-                            <ul>
-                                @foreach (DegreeMapping.Models.Institution i in list_i.OrderBy(x => x.Name).Where(x => x.Id != DegreeMapping.Models.Institution.UCFId))
-                                {
-                                    <li style="list-style-type:none">
-                                        <ul>
-                                            <li class="pt-2">
-                                                @*@Html.ActionLink(i.Name, "InstitutionView", new { id = i.Id })*@
-                                                @{
-                                                    bool hasDegree = false;
-                                                    foreach (DegreeMapping.Models.Degree d2 in Model.Where(x => x.InstitutionId != DegreeMapping.Models.Institution.UCFId))
-                                                    {
-                                                        if (d.Id == d2.UCFDegreeId && i.Id == d2.InstitutionId)
-                                                        {
-                                                            hasDegree = true;
-                                                            @*@Html.ActionLink(i.Name, "InstitutionView", new { id = i.Id })*@
-                                                            @Html.ActionLink(i.Name, "DegreeView", "App", new { id = d2.Id }, null)
-                                                        }
-                                                    }
-                                                    if (!hasDegree)
-                                                    {
-                                                        <span>@i.Name</span>
-                                                        <span style="color:red" class="px-2">no information</span>
-                                                        @Html.ActionLink("Add", "DegreeAdd", "App", new { institutionId = i.Id }, new { @class = "btn btn-primary btn-lg ml-5" })
-                                                    }
-                                                }
-                                            </li>
-                                        </ul>
-                                    </li>
-                                }
-                            </ul>
-                        </li>
-                    }
-                </ul>
-            </div>
-        </div>
+        @*THIS Is not used, degree list comes from json*@
     </div>
 
     <script type="text/javascript">
