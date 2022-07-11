@@ -13,6 +13,7 @@ namespace DegreeMapping.Models
     {
         public static int UCFId { get { return 1; } }
         public static int GenericId { get { return 7; } }
+        public static int OtherInstitutionId { get { return 7; } }
         public int Id { get; set; }
         public string Name { get; set; }
         public string URL { get; set; }
@@ -21,6 +22,7 @@ namespace DegreeMapping.Models
         public DateTime UpdateDate { get; set; }
         public string NID { get; set; }
         public string Description { get; set; }
+        public int OrderBy { get; set; }
 
         public Institution()
         {
@@ -30,6 +32,7 @@ namespace DegreeMapping.Models
 
         public static int Insert(Institution i)
         {
+            int nextOrderBy = Institution.List().Where(x => x.Id != Institution.OtherInstitutionId).Max(x => x.OrderBy);
             int id = 0;
             using (SqlConnection cn = new SqlConnection(Database.DC_DegreeMapping))
             {
@@ -43,6 +46,7 @@ namespace DegreeMapping.Models
                 cmd.Parameters.AddWithValue("@UpdateDate", DateTime.Now);
                 cmd.Parameters.AddWithValue("@NID", i.NID);
                 cmd.Parameters.AddWithValue("@Description", i.Description);
+                cmd.Parameters.AddWithValue("@OrderBy", i.OrderBy);
                 id = Convert.ToInt32(cmd.ExecuteScalar());
                 cn.Close();
             }
@@ -64,6 +68,7 @@ namespace DegreeMapping.Models
                 cmd.Parameters.AddWithValue("@UpdateDate", DateTime.Now);
                 cmd.Parameters.AddWithValue("@NID", i.NID);
                 cmd.Parameters.AddWithValue("@Description", i.Description);
+                cmd.Parameters.AddWithValue("@OrderBy", i.OrderBy);
                 cmd.ExecuteScalar();
                 cn.Close();
             }
@@ -116,6 +121,7 @@ namespace DegreeMapping.Models
                 i.UpdateDate = Convert.ToDateTime(dr["UpdateDate"].ToString());
                 i.NID = dr["NID"].ToString();
                 i.Description = dr["Description"].ToString();
+                i.OrderBy = Convert.ToInt32(dr["OrderBy"].ToString());
             }
         }
     }

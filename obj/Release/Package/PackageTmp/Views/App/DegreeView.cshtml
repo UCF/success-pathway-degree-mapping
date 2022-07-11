@@ -3,6 +3,7 @@
     List<DegreeMapping.Models.Course> list_c = DegreeMapping.Models.Course.List(Model.Id, null);
     List<DegreeMapping.Models.Note> list_n = DegreeMapping.Models.Note.List(Model.Id, null);
     List<DegreeMapping.Models.Note> list_ucfNotes = new List<DegreeMapping.Models.Note>();
+    DegreeMapping.Models.Catalog cy = DegreeMapping.Models.Catalog.Get(Model.CatalogId);
     string credit = string.Empty;
     if (Model.UCFDegreeId.HasValue)
     {
@@ -26,13 +27,15 @@
         Model.SemesterStart = ucfDegree.SemesterStart;
         Model.SemesterStartTerm = ucfDegree.SemesterStartTerm;
         Model.CareerPathURL = ucfDegree.CareerPathURL;
+        Model.GlobalCourseNotes = ucfDegree.GlobalCourseNotes;
+        //Model.GlobalCourseNotes = (!string.IsNullOrEmpty(ucfDegree.GlobalCourseNotes)) ? ucfDegree.GlobalCourseNotes : "No Global Course Notes";
 
         degreeUrl = string.Format("https://connect.ucf.edu/degree-mapping/?degreeId={0}&degree={1}&institution={2}&catalog={3}", Model.Id, Model.Name, Model.Institution, Model.CatalogYear);
     }
 }
 
 @section JumbotronMain {
-    <div class="jumbotron jumbotron-fluid">
+    <div class="jumbotron jumbotron-fluid" style="background-color:@cy.BGColor">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
@@ -46,7 +49,7 @@
     </div>
 }
 
-@Html.Action("_DisplaySetFavoriteDegree", "App", new { NID=User.Identity.Name, degreeId = Model.Id })
+@Html.Action("_DisplaySetFavoriteDegree", "App", new { NID = User.Identity.Name, degreeId = Model.Id })
 
 <div class="row pt-5">
     <div class="col-md-6">
@@ -148,7 +151,7 @@
         <div class="col-md-6">
 
             @if (!string.IsNullOrEmpty(degreeUrl))
-            { 
+            {
                 <div>
                     <a href="@degreeUrl" target="_blank" title="@Model.Name"><i class="fa fa-globe"></i> Go to @Model.Name</a>
                 </div>
@@ -252,6 +255,16 @@
     <div class="row pt-5">
         <h2 class="heading-underline">Course List for @Model.Institution</h2>
         <div class="col-md-12">
+            <div class="pb-5">
+                <h3>Global Course Notes for Semester 1</h3>
+                <div class="ml-2 pt-1 pb-4" style="border: 1px solid #000; background-color:#f3f2f5;">
+                    <div id="globalCourseNotesText">@Html.Raw(Model.GlobalCourseNotes)</div><hr />
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#ModalGlobalCourseNotes">EDIT</button>
+                    @Html.Action("_DisplayGlobalCourseNotes", "App", new { GlobalCourseNotes = Model.GlobalCourseNotes, DegreeId = Model.UCFDegreeId })
+                </div>
+            </div>
+
             <table class="table table-hover">
                 <thead>
                     <tr>
@@ -303,6 +316,15 @@
     <div class="row pt-5">
         <h2 class="heading-underline">@Model.Institution Courses for @Model.Institution</h2>
         <div class="col-md-12">
+            <div class="pb-5">
+                <h3>Global Course Notes for Semester 1</h3>
+                <div class="ml-2 pt-1 pb-4" style="border: 1px solid #000; background-color:#f3f2f5;">
+                    <div id="globalCourseNotesText">@Html.Raw(Model.GlobalCourseNotes)</div><hr />
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#ModalGlobalCourseNotes">EDIT</button>
+                    @Html.Action("_DisplayGlobalCourseNotes", "App", new { GlobalCourseNotes = Model.GlobalCourseNotes, DegreeId = Model.Id })
+                </div>
+            </div>
             <table class="table table-hover">
                 <thead>
                     <tr>
@@ -319,7 +341,7 @@
                     @if (list_c.Count > 0)
                     {
                         string semester = string.Empty;
-                        foreach (DegreeMapping.Models.Course c in list_c.OrderBy(x => x.TermOrder))
+                        foreach (DegreeMapping.Models.Course c in list_c.OrderBy(x => x.Semester).ThenBy(x => x.TermOrder))
                         {
                             c.Code = (!string.IsNullOrEmpty(c.Description)) ? c.Code + "<br /><em>" + c.Description + "</em>" : c.Code;
                             credit = (!string.IsNullOrEmpty(c.CreditText)) ? c.CreditText : c.Credits.ToString();

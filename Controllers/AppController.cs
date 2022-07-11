@@ -143,6 +143,25 @@ namespace DegreeMapping.Controllers
             return PartialView(model);
         }
 
+        /// <summary>
+        /// Global Course Notes is stored in the Degree Table
+        /// DegreeId is the UCF Degree Id NOT the Partner DegreeId
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult _DisplayGlobalCourseNotes(string globalCourseNotes, int degreeId)
+        {
+            ViewBag.GlobalCourseNotes = globalCourseNotes;
+            ViewBag.DegreeId = degreeId;
+            return PartialView();
+        }
+        [HttpPost, ValidateInput(false)]
+        public ActionResult UpdateGlobalCourseNotes(string globalCourseNotes, int degreeId)
+        {
+            Degree.UpdateGlobalCourseNotes(globalCourseNotes, degreeId);
+            string updateGlobalCourseNotes = Degree.Get(degreeId).GlobalCourseNotes;
+            return Json(new { globalCourseNotes = updateGlobalCourseNotes, degreeId = degreeId }, JsonRequestBehavior.AllowGet);
+        }
+
         #endregion
 
         #region NOTE USE | Code - Updates course code only

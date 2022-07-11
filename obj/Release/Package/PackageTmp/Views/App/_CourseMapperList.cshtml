@@ -1,5 +1,12 @@
 ﻿@model List<DegreeMapping.Models.CourseMapper>
 @{ 
+    string url =  HttpContext.Current.Request.Url.Host;
+    string APIPath = "https://portal.connect.ucf.edu/pathway/app/CourseMapperSortOrderUpdate/";
+    if (url.ToLower() == "localhost")
+    {
+        APIPath = "/app/CourseMapperSortOrderUpdate/";
+    }
+
     int degreeId = ViewBag.DegreeId;
     DegreeMapping.Models.Degree d = DegreeMapping.Models.Degree.Get(degreeId);
     int maxSortOrder, minSortOrder;
@@ -69,7 +76,7 @@
 <script type="text/javascript">
     var obj;
     var maxSortOrder = @maxSortOrder;
-    var minSortOrder = @minSortOrder
+    var minSortOrder = @minSortOrder;
 
     $(document).ready(function () {
         $(".up,.down").click(function () {
@@ -110,20 +117,21 @@
         })
     })
 
-        function UpdateSortOrder(courseMapperId, sortOrderVal, direction) {
-            $.get({
-                //url: "https://portal.connect.ucf.edu/pathway/api/v2/DegreeMap/getCustomCourseMapper?degreeId=" + ucfSemesterTerm.degreeId,
-                url: "/app/CourseMapperSortOrderUpdate/?courseMapperId=" + courseMapperId + "&sortOrderValue=" + sortOrderVal,
-                type: "GET",
-                cache: false,
-                async: false,
-                success: function (data) {
-                    //do something
-                }
-            }).done(function (data) {
-                // do something
-            }).fail(function (message) {
-                alert(message);
-            }) 
-        }
+    function UpdateSortOrder(courseMapperId, sortOrderVal, direction) {
+        $.get({
+            //url: "https://portal.connect.ucf.edu/pathway/api/v2/DegreeMap/getCustomCourseMapper?degreeId=" + ucfSemesterTerm.degreeId,
+            //url: "/app/CourseMapperSortOrderUpdate/?courseMapperId=" + courseMapperId + "&sortOrderValue=" + sortOrderVal,
+            url: "@APIPath?courseMapperId=" + courseMapperId + "&sortOrderValue=" + sortOrderVal,
+            type: "GET",
+            cache: false,
+            async: false,
+            success: function (data) {
+                //do something
+            }
+        }).done(function (data) {
+            // do something
+        }).fail(function (message) {
+            alert(message);
+        })
+    }
 </script>

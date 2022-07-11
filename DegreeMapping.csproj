@@ -300,6 +300,10 @@
     <Content Include="Scripts\fontawesome-free-5.15.2-web\webfonts\fa-solid-900.ttf" />
     <Content Include="Scripts\fontawesome-free-5.15.2-web\webfonts\fa-solid-900.woff" />
     <Content Include="Scripts\fontawesome-free-5.15.2-web\webfonts\fa-solid-900.woff2" />
+    <None Include="Scripts\jquery-1.9.1.intellisense.js" />
+    <Content Include="Scripts\jquery-1.9.1.js" />
+    <Content Include="Scripts\jquery-1.9.1.min.js" />
+    <Content Include="Scripts\jquery-1.9.1.min.map" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\degreeGeneric.js" />
     <Content Include="Scripts\DegreeList.js" />
@@ -1954,6 +1958,8 @@
     <Content Include="Scripts\fontawesome-free-5.15.2-web\webfonts\fa-regular-400.svg" />
     <Content Include="Scripts\fontawesome-free-5.15.2-web\webfonts\fa-solid-900.svg" />
     <Content Include="Scripts\GenericList.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -2331,6 +2337,7 @@
     <Content Include="Views\Home\_DegreeMapV3WPTemplate.cshtml" />
     <Content Include="Views\Home\DegreeMapV3.cshtml" />
     <Content Include="Views\Home\_DegreeMapV3Footer.cshtml" />
+    <Content Include="Views\App\_DisplayGlobalCourseNotes.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

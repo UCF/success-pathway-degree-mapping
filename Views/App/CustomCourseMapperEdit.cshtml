@@ -10,10 +10,11 @@
     {
         list_courses = DegreeMapping.Models.Course.List(d.UCFDegreeId.Value, null);
     }
+    DegreeMapping.Models.Catalog cy = DegreeMapping.Models.Catalog.Get(Model.CatalogId);
 }
 
 @section JumbotronMain {
-    <div class="jumbotron jumbotron-fluid">
+    <div class="jumbotron jumbotron-fluid" style="background-color:@cy.BGColor">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">

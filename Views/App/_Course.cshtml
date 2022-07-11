@@ -118,7 +118,7 @@
             <div class="col-md-10">
                 <div class="form-group py-4 px-4" id="terms" style="border:3px solid #d9edf7">
                     @Html.LabelFor(x => x.Term) :
-                    <label id="term_None" class="px-5">Do not display <input type="radio" name="Term" checked="checked" value="" class="alert alert-info" /></label>
+                    <label id="term_None" class="px-5">*Do not display <input type="radio" name="Term" checked="checked" value="" class="alert alert-info" /></label>
                     @{
                         if (Model.Term == DegreeMapping.Models.Course.CourseTerm.Summer)
                         {
@@ -147,6 +147,7 @@
                             <label id="term_@DegreeMapping.Models.Course.CourseTerm.Spring.Replace(" ", "_")" class="px-4">@DegreeMapping.Models.Course.CourseTerm.Spring @Html.RadioButtonFor(x => x.Term, DegreeMapping.Models.Course.CourseTerm.Spring)</label>
                         }
                     }
+                <p><em>*When selecting <u>Do not display</u> it defaults to Fall</em></p>
                 </div>
             </div>
         </div>

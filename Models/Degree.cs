@@ -52,7 +52,8 @@ namespace DegreeMapping.Models
         public string SemesterStartTerm { get; set; }
         [DisplayName("Career Path URL")]
         public string CareerPathURL { get; set; }
-
+        [DisplayName("Global Course Notes")]
+        public string GlobalCourseNotes { get; set; }
         public Degree()
         { 
         
@@ -301,7 +302,23 @@ namespace DegreeMapping.Models
                 d.CloneDegreeId = clonedegreeId;
                 d.SemesterStart = Convert.ToInt32(dr["SemesterStart"].ToString());
                 d.CareerPathURL = dr["CareerPathURL"].ToString();
+                d.GlobalCourseNotes = dr["GlobalCourseNotes"].ToString();
                 SetSemesterStartTerm(ref d);
+            }
+        }
+
+        public static void UpdateGlobalCourseNotes(string globalCourseNotes, int degreeId)
+        {
+            using (SqlConnection cn = new SqlConnection(Database.DC_DegreeMapping))
+            {
+                cn.Open();
+                SqlCommand cmd = cn.CreateCommand();
+                cmd.CommandText = "UpdateGlobalCourseNotes";
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@DegreeId", degreeId);
+                cmd.Parameters.AddWithValue("@GlobalCourseNotes", globalCourseNotes.Trim());
+                cmd.ExecuteNonQuery();
+                cn.Close();
             }
         }
 

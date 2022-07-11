@@ -178,6 +178,9 @@ var customCourseSemester = {
         for (let x = 0; x <= data.length - 1; x++) {
             let semester = (data[x].Term.length > 0) ? data[x].Semester + '_' + data[x].Term : data[x].Semester;
             if (tid == semester) {
+                if ($(data[x].Note).length < 1) {
+                    continue;
+                }
                 //let el = $(data[x].Note).find('span').removeAttr('style').html();
                 let textObj = customCourseSemester.removeStyleAttributes($(data[x].Note));
                 let note = data[x].Note;
@@ -222,6 +225,7 @@ var degreemap = {
         NotesSection: "NotesSection",
         CatalogYear: "CatalogYear",
         UndergraduateCatalogUrl: "UndergraduateCatalogUrl",
+        GlobalCourseNotes : "GlobalCourseNotes"
     },
     degreeId: 0,
     institutionId: 0,
@@ -238,12 +242,13 @@ var degreemap = {
         $("." + this.target.Degree).html(data.CatalogYear + ' ' + data.Degree);
         $("." + this.target.Institution).html(data.Institution);
         $("." + this.target.CatalogYear).html(data.CatalogYear);
+        $("." + this.target.GlobalCourseNotes).html(data.GlobalCourseNotes);
         this.displayCareerPath(data.CareerPathURL);
         this.displayDegreeURLFooter(data);
         degreemap.displayListItems(data);
     },
     displayDegreeURLFooter: function (data) {
-        if (data.DegreeUrl.length > 0) {
+        if (data.DegreeUrl != null && data.DegreeUrl.length > 0) {
             $('.undergraduateCatalogUrlCard').hide();
             $("." + this.target.DegreeURLHREF).attr("href", data.DegreeUrl);
         } else {
@@ -252,7 +257,7 @@ var degreemap = {
         }
     },
     displayAdditionalRequirements: function (data) {
-        if (data.AdditionalRequirement.length > 5) {
+        if (data.AdditionalRequirement != null && data.AdditionalRequirement.length > 1) {
             $("." + this.target.AdditionalRequirement).html(data.AdditionalRequirement);
             $('#' + this.target.Section_AdditionalRequirements).removeClass('d-none');
         }
@@ -264,7 +269,7 @@ var degreemap = {
         }
     },
     displayListItems: function (data) {
-        if (data.Notes.length > 0) {
+        if (data.Notes != null && data.Notes.length > 0) {
             let item = '';
             for (let x = 0; x <= data.Notes.length - 1; x++) {
                 item += '<li>' + data.Notes[x] + '</li>';
@@ -317,7 +322,7 @@ var degreemap = {
     },
     displayCareerPath: function (careerPathUrl) {
         $('.careerPathURLCard').hide();
-        if (careerPathUrl.length > 0) {
+        if (careerPathUrl != null && careerPathUrl.length > 0) {
             $('.careerPathURLCard').show();
             $(".careerPathURL").attr("href", careerPathUrl)
         }
@@ -363,13 +368,6 @@ var ucfSemesterTerm = {
     setSemesterTerms: function (data) {
         if (data.length > 0) {
             let term = '';
-            data.sort((a, b) => {
-                if (a.TermOrder < b.TermOrder)
-                    return -1;
-                if (a.TermOrder > b.TermOrder)
-                    return 1;
-                return 0;
-            })
             for (let x = 0; x <= data.length - 1; x++) {
                 if (term == '' || term != data[x].SemesterTerm) {
                     ucfSemesterTerm.semesterTerms.push(data[x].SemesterTerm);
@@ -380,13 +378,13 @@ var ucfSemesterTerm = {
     },
     setCard: function (term, cardblock) {
         let termId = term.replace(" ", "_");
-        let card = '<table class="w-100 table" id="SemesterTerm_' + termId + '">';
+        let card = '<table class="w-100 table mb-0" id="SemesterTerm_' + termId + '">';
         card += '<tr><th colspan="2" class="bg-primary"><h4> Semester ' + term + '</h4></th></tr>';
         card += '<tr class="h6"><td>Course</td><td class="text-right">Credits</td></tr>';
         card += cardblock;
         let customCourseRow = customCourseSemester.displayCustomCourseSemester(customCourseSemester.data, termId);
         card += customCourseRow;
-        card += '</table>'; 
+        card += '</table>';
         return card;
     },
     displayUCFSemesterCourse: function (data) {
@@ -431,7 +429,7 @@ var ucfSemesterTerm = {
         }).done(function (data) {
             ucfSemesterTerm.data = data;
             ucfSemesterTerm.setSemesterTerms(data);
-            if (ucfSemesterTerm.semesterTerms.length > 0) {
+            if (ucfSemesterTerm.semesterTerms != null && ucfSemesterTerm.semesterTerms.length > 0) {
                 customCourseSemester.getCustomCourseSemester();
                 ucfSemesterTerm.displayUCFSemesterCourse(data);
             } else {
@@ -447,4 +445,10 @@ var ucfSemesterTerm = {
 }
 $(function () {
     ucfSemesterTerm.init();
+})
+$(window).on('load', function () {
+    $('#UCFCourseSection li').each(function () {
+        $(this).find('span').removeAttr('style').html()
+        $(this).find('br').replaceWith(' ')
+    })
 })

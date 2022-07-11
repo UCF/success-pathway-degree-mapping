@@ -24,7 +24,7 @@ namespace DegreeMapping.Controllers
         [Route("GetCatalogs")]
         public List<DegreeMapperWebAPI.Catalog> GetCatalogs()
         {
-            return DegreeMapperWebAPI.Catalog.List().Where(x => x.Active).OrderByDescending(x => x.Year).ToList();
+            return DegreeMapperWebAPI.Catalog.List().Where(x => x.Active && x.DisplayOnWeb).OrderByDescending(x => x.Year).ToList();
         }
 
         [HttpGet]
@@ -59,7 +59,7 @@ namespace DegreeMapping.Controllers
         [Route("GetCustomCourseMapper")]
         public List<CustomCourseMapper> GetCustomCourseMapper(int degreeId)
         {
-            return CustomCourseMapper.List(degreeId);
+            return CustomCourseMapper.List(degreeId).OrderBy(x => x.Semester).ThenBy(x => x.TermOrder).ToList();
         }
 
         [HttpGet]

@@ -147,7 +147,7 @@
     getDegreeList: function () {
         $.get({
             //url: "https://portal.connect.ucf.edu/pathway/api/v2/DegreeMap/GetListByCatalog",
-            url: "/api/v2/DegreeMap/GetListByCatalog?catalogId=2",
+            url: "/api/v2/DegreeMap/GetListByCatalog?catalogId=3",
             type: "GET",
             headers: { "APIKey": "Th1sIsth3Way" },
             cache: false,

@@ -4,12 +4,12 @@
     string title = string.Empty;
     if (Model.UCFDegreeId.HasValue && Model.UCFDegreeId.Value > 0)
     {
-        list_degrees = DegreeMapping.Models.Degree.GetPartnerDegrees(Model.UCFDegreeId.Value);
+        list_degrees = DegreeMapping.Models.Degree.GetPartnerDegrees(Model.UCFDegreeId.Value).Where(x=>x.Active).ToList();
         title = "Other related institutions with this degree: ";
     }
     else
     {
-        list_degrees = DegreeMapping.Models.Degree.GetPartnerDegrees(Model.Id);
+        list_degrees = DegreeMapping.Models.Degree.GetPartnerDegrees(Model.Id).Where(x=>x.Active).ToList();
         title = "Child institutions with this degree: ";
     }
 }
@@ -19,10 +19,16 @@
     <div class="pt-4">
         <h3>@title</h3>
         <ul>
-            @foreach (DegreeMapping.Models.Degree d in list_degrees.Where(x=>x.InstitutionId != Model.InstitutionId).OrderBy(x=>x.Name))
-            { 
+            @foreach (DegreeMapping.Models.Degree d in list_degrees.Where(x => x.InstitutionId != Model.InstitutionId && x.InstitutionId != DegreeMapping.Models.Institution.OtherInstitutionId).OrderBy(x => x.Name))
+            {
                 <li>
-                    @Html.ActionLink(d.Institution, "DegreeView", "App", new { id = d.Id }, new { target="_blank"})
+                    @Html.ActionLink(d.Institution, "DegreeView", "App", new { id = d.Id }, new { target = "_blank" })
+                </li>
+            }
+            @foreach (DegreeMapping.Models.Degree d in list_degrees.Where(x => x.InstitutionId == DegreeMapping.Models.Institution.OtherInstitutionId))
+            {
+                <li>
+                    @Html.ActionLink(d.Institution, "DegreeView", "App", new { id = d.Id }, new { target = "_blank" })
                 </li>
             }
         </ul>

@@ -19,7 +19,11 @@ namespace DegreeMapping.Models
         public bool Current { get; set; }
         [DisplayName("Undergraduate Catalog")]
         public string UndergraduateCatalogURL { get; set; }
-
+        [DisplayName("Background-color")]
+        public string BGColor { get; set; }
+        [DisplayName("Display On Web")]
+        public bool DisplayOnWeb { get; set; }
+        public string PathwayCatalogURL { get; set; }
         public Catalog()
         {
 
@@ -27,12 +31,15 @@ namespace DegreeMapping.Models
 
         public Catalog(bool current)
         {
-            Catalog c = Catalog.List().Where(x => x.Current).FirstOrDefault();
-            Id = c.Id;
-            Year = c.Year;
-            Active = c.Active;
-            Current = c.Current;
-            UndergraduateCatalogURL = c.UndergraduateCatalogURL;
+            Catalog cy = Catalog.List().Where(x => x.Current).FirstOrDefault();
+            Id = cy.Id;
+            Year = cy.Year;
+            Active = cy.Active;
+            Current = cy.Current;
+            UndergraduateCatalogURL = cy.UndergraduateCatalogURL;
+            BGColor = cy.BGColor;
+            DisplayOnWeb = cy.DisplayOnWeb;
+            SetPathwayCatalogURL(ref cy);
         }
 
         public static Catalog Get(int id)
@@ -115,6 +122,8 @@ namespace DegreeMapping.Models
                 cmd.Parameters.AddWithValue("@Current", cy.Current);
                 cmd.Parameters.AddWithValue("@Year", cy.Year);
                 cmd.Parameters.AddWithValue("@UndergraduateCatalogURL", cy.UndergraduateCatalogURL);
+                cmd.Parameters.AddWithValue("@BGColor", cy.BGColor);
+                cmd.Parameters.AddWithValue("@DisplayOnWeb", cy.DisplayOnWeb);
                 id = Convert.ToInt32(cmd.ExecuteScalar());
                 cn.Close();
             }
@@ -134,21 +143,35 @@ namespace DegreeMapping.Models
                 cmd.Parameters.AddWithValue("@Current", cy.Current);
                 cmd.Parameters.AddWithValue("@Year", cy.Year);
                 cmd.Parameters.AddWithValue("@UndergraduateCatalogURL", cy.UndergraduateCatalogURL);
+                cmd.Parameters.AddWithValue("@BGColor", cy.BGColor);
+                cmd.Parameters.AddWithValue("@DisplayOnWeb", cy.DisplayOnWeb);
                 cmd.ExecuteScalar();
                 cn.Close();
             }
         }
 
-        private static void Set(SqlDataReader dr, ref Catalog c)
+        private static void Set(SqlDataReader dr, ref Catalog cy)
         {
             if (dr.HasRows)
             {
-                c.Id = Convert.ToInt32(dr["Id"].ToString());
-                c.Year = dr["Year"].ToString();
-                c.Active = Convert.ToBoolean(dr["Active"].ToString());
-                c.Current = Convert.ToBoolean(dr["Current"].ToString());
-                c.UndergraduateCatalogURL = dr["UndergraduateCatalogURL"].ToString();
+                cy.Id = Convert.ToInt32(dr["Id"].ToString());
+                cy.Year = dr["Year"].ToString();
+                cy.Active = Convert.ToBoolean(dr["Active"].ToString());
+                cy.Current = Convert.ToBoolean(dr["Current"].ToString());
+                cy.UndergraduateCatalogURL = dr["UndergraduateCatalogURL"].ToString();
+                cy.BGColor = dr["BGColor"].ToString();
+                cy.DisplayOnWeb = Convert.ToBoolean(dr["DisplayOnWeb"].ToString());
+                SetPathwayCatalogURL(ref cy);
             }
+        }
+
+        private static void SetPathwayCatalogURL(ref Catalog cy) 
+        {
+            if (cy.Current) 
+            {
+                cy.PathwayCatalogURL = "pathway-degree-list";
+            }
+            cy.PathwayCatalogURL = string.Format("pathway-catalog-{0}", cy.Year);
         }
     }
 }

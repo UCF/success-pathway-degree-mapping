@@ -63,5 +63,11 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+    @if (User.Identity.IsAuthenticated)
+    { 
+        <footer class="px-5 bg-inverse">
+            <div>&nbsp;</div>
+        </footer>
+    }
 </body>
 </html>

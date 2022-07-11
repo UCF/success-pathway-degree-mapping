@@ -29,17 +29,18 @@
                 @foreach (DegreeMapping.Models.Catalog cy in list_cy.OrderByDescending(x => x.Current).ThenBy(x => x.Year).Where(x => x.Active))
                 {
                     string cssClassCurrent = string.Empty;//(cy.Current) ? "bg-success" : string.Empty;
-                    <div class="card mt-5 mb-5">
-                        <div class="py-5 card-header text-center @cssClassCurrent">
+                    string cssCurrentCatalogBorder = (cy.Current) ? "border:3px solid green" : string.Empty;
+                    <div class="card mt-5 mb-5" style="@cssCurrentCatalogBorder">
+                        <div class="py-5 card-header text-center @cssClassCurrent" style="background-color:@cy.BGColor">
                             <h2 class="h1"> @cy.Year</h2>
-                            @*@if (cy.Current)
+                        @if (cy.Current)
                         {
-                            <div>Current</div>
+                            <div class="w-100" style="background-color:green">Current</div>
                         }
                         else
                         {
                             <div>&nbsp;</div>
-                        }*@
+                        }
                         </div>
                         @using (Html.BeginForm("CatalogSave", "App", FormMethod.Post, new { @Class = "form-horizontal" }))
                         {
@@ -47,6 +48,7 @@
                             @Html.HiddenFor(x => cy.Year)
                             @Html.HiddenFor(x => cy.Active)
                             @Html.HiddenFor(x => cy.Current)
+
                             <div class="card-block">
                                 <div>@Html.LabelFor(c => cy.UndergraduateCatalogURL)</div>
                                 <div>
@@ -60,6 +62,28 @@
                                         <p>&nbsp;</p>
                                     }
                                 </div>
+                            </div>
+                            <div>
+                                @if (User.Identity.Name == "jgiron")
+                                {
+                                    <div class="pl-2">
+                                        <fieldset>
+                                            <lengend><strong>Admin only</strong></lengend>
+                                            <div class="pl-4">
+                                                @Html.LabelFor(x => cy.BGColor) :
+                                                @Html.TextBoxFor(x => cy.BGColor)
+                                                <br />
+                                                @Html.LabelFor(x => cy.DisplayOnWeb) :
+                                                @Html.CheckBoxFor(x => cy.DisplayOnWeb)
+                                            </div>
+                                        </fieldset>
+                                    </div>
+                                }
+                                else
+                                {
+                                    @Html.HiddenFor(x => cy.BGColor)
+                                    @Html.HiddenFor(x => cy.DisplayOnWeb)
+                                }
                             </div>
                             <div class="card-footer pt-5">
                                 @Html.ActionLink("View Catalog", "DegreeList", "App", new { id = cy.Id }, new { @Class = "btn btn-primary btn-block btn-lg" })

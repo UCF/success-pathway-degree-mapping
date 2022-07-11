@@ -17,11 +17,11 @@
     string title = (catalogId > 0) ? list_cy.Where(x => x.Id == catalogId).Select(x => x.Year).FirstOrDefault() + " Degree List" : "Select Catalog Year";
 }
 @section JumbotronMain {
-    <div class="jumbotron jumbotron-fluid">
+    <div class="jumbotron jumbotron-fluid" style="background-color:@cy.BGColor">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <h1 class="heading-underline">Pathway Catalog @cy.Year</h1>
+                    <h1 class="heading-underline">@cy.Year Pathway Catalog</h1>
                     <h2>@degreeCount degrees</h2>
                 </div>
             </div>
@@ -78,7 +78,7 @@
             displayDegreeList: function (degreelist) {
                 let stopCounter = 0;
                 let output = '';
-                let notActiveHtml = '<span class="px-3 h5" style="color:red">Not Active</span>';
+                let notActiveHtml = '<span class="px-3 h5" style="color:red">Not Active TTT</span>';
                 for (let x = 0; x <= degreelist.length - 1; x++) {
                     if (degreelist[x].Active) {
                         output += '<li><strong>UCF ' + degreelist[x].Name + '</strong><a href="@path/App/DegreeView/' + degreelist[x].Id + '"> Edit</a></li>'

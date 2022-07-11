@@ -1,0 +1,41 @@
+﻿@Html.Action("_TinyMCE")
+
+<!-- Modal -->
+<div class="modal fade" id="ModalGlobalCourseNotes" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" style="padding-top:120px; margin-top:70px;">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="exampleModalLongTitle">Global Course Notes for Semester 1</h2>
+                <div class="alert alert-success float-right text-center" id="globalCourseNotesSuccess" style="width:50px; display:none"><i class="fa fa-check-circle"></i></div>
+            </div>
+            @using (Ajax.BeginForm("UpdateGlobalCourseNotes", "App", new AjaxOptions { HttpMethod = "POST", OnComplete = "displayGlobalCourseNotes" }, new { @id = "AjaxformId", @class = "form-horizontal", role = "form" }))
+            {
+                <div class="modal-body">
+
+                    <div>
+                        <input type="hidden" name="degreeId" value="@ViewBag.DegreeId" />
+                        <textarea id="globalCourseNotes" rows="5" name="GlobalCourseNotes">@Html.Raw(ViewBag.GlobalCourseNotes)</textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-lg" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-success btn-lg">Save</button>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+
+
+<script type="text/javascript">
+    //https://www.c-sharpcorner.com/article/asp-net-mvc5-razor-ajax-form-control/
+    function displayGlobalCourseNotes(data) {
+        let result = JSON.parse(data.responseText);
+        let globalCourseNotes = result.globalCourseNotes;
+        tinyMCE.activeEditor.setContent(globalCourseNotes);
+        $("#globalCourseNotesText").html(globalCourseNotes);
+        //$("#globalCourseNotesSuccess").show('slow').hide(3000);
+        $('#ModalGlobalCourseNotes').modal('hide');
+    }
+</script>
