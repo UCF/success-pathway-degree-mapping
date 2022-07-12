@@ -1,0 +1,73 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model DegreeMapping.Models.CustomCourseMapper
+@{
+    string semesterTerm = string.Empty;
+    DegreeMapping.Models.Degree d = DegreeMapping.Models.Degree.Get(Model.DegreeId);
+    List<DegreeMapping.Models.Course> list_courses = new List<DegreeMapping.Models.Course>();
+    if (d.UCFDegreeId.HasValue)
+    {
+        list_courses = DegreeMapping.Models.Course.List(d.UCFDegreeId.Value, null);
+    }
+    DegreeMapping.Models.Catalog cy = DegreeMapping.Models.Catalog.Get(Model.CatalogId);
+}
+
+@section JumbotronMain {
+    <div class="jumbotron jumbotron-fluid" style="background-color:@cy.BGColor">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="h3">@Html.ActionLink("Back to Degree List", "DegreeList", "App", new { Id = Model.CatalogId }, null)</div>
+                    <h1 class="heading-underline">@Model.CatalogYear @Model.Degree</h1>
+                    <h2>@Model.Institution</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@using (Html.BeginForm("CustomCourseMapperSave", "App", FormMethod.Post, new { @Class = "form-horizontal" }))
+{
+    @Html.HiddenFor(x => x.DegreeId)
+    @Html.HiddenFor(x => x.HasRecord)
+    <div class="container pt-5">
+        <div class="row">
+            <div class="col-md-12">
+                <p class="h3">Select UCF Courses to display</p>
+                <div class="text-right">
+                    <button type="submit" class="btn btn-success btn-lg">Update</button>
+                    @Html.ActionLink("Cancel", "DegreeView", "App", new { Id = Model.DegreeId }, new { @Class = "btn btn-primary btn-lg" })
+                </div>
+                <table class="table table-hover">
+                    @foreach (DegreeMapping.Models.Course c in list_courses.OrderBy(x => x.Semester).ThenBy(x => x.Term).ThenBy(x => x.Code).Where(x => x.Semester > 1))
+                    {
+                        if (string.IsNullOrEmpty(semesterTerm) || semesterTerm != c.SemesterTerm)
+                        {
+                            semesterTerm = c.SemesterTerm;
+                            <tr>
+                                <td class="text-center alert alert-warning h3">Semester @c.Semester @c.Term</td>
+                            </tr>
+                        }
+                        <tr>
+                            <td>
+                                @if (Model.List_CourseIds.Contains(c.Id))
+                                {
+                                    <label><input type="checkbox" name="courseId" checked="checked" value="@c.Id" /> @c.Code (@c.Credits credits)</label>
+                                }
+                                else
+                                {
+                                    <label><input type="checkbox" name="CourseId" value="@c.Id" /> @c.Code (@c.Credits credits)</label>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </table>
+                <div class="text-right">
+                    <button type="submit" class="btn btn-success btn-lg">Update</button>
+                    @Html.ActionLink("Cancel", "DegreeView", "App", new { Id = Model.DegreeId }, new { @Class = "btn btn-primary btn-lg" })
+                </div>
+            </div>
+        </div>
+    </div>
+}

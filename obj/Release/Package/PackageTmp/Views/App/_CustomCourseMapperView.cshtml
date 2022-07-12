@@ -1,0 +1,60 @@
+﻿@model DegreeMapping.Models.CustomCourseMapper
+@{
+    string semesterTerm = string.Empty;
+    DegreeMapping.Models.Degree d = DegreeMapping.Models.Degree.Get(Model.DegreeId);
+    List<DegreeMapping.Models.Course> list_courses = new List<DegreeMapping.Models.Course>();
+    string credit = string.Empty;
+    if (d.UCFDegreeId.HasValue)
+    {
+        DegreeMapping.Models.Degree ucfDegree = DegreeMapping.Models.Degree.Get(d.UCFDegreeId.Value);
+        list_courses = DegreeMapping.Models.Course.List(d.UCFDegreeId.Value, null);
+        d.SemesterStart = ucfDegree.SemesterStart;
+        d.SemesterStartTerm = ucfDegree.SemesterStartTerm;
+    }
+}
+
+<div class="container py-5">
+    <a name="customcoursemapper"></a>
+    <div class="row">
+        <div class="col-md-12">
+            <h2 class="heading-underline">Custom Course Mapper for @Model.Institution</h2>
+            <div>Semster Term Order is by <span class="bg-warning px-2">@d.SemesterStartTerm</span></div>
+            <div><span class="fa fa-check" style="color:green"></span> Will be displayed</div>
+            <div><span class="fa fa-times" style="color:red"></span> Will <i>not</i> be displayed</div>
+            @Html.ActionLink("Edit", "CustomCourseMapperEdit", "App", new { degreeId = Model.DegreeId }, null)
+        <table class="table table-hover">
+            @foreach (DegreeMapping.Models.Course c in list_courses.OrderBy(x => x.Semester).ThenBy(x=>x.TermOrder))
+            {
+                c.Description = (!string.IsNullOrEmpty(c.Description)) ? "<br /><em>" + c.Description + "</em>" : c.Description;
+                credit = (!string.IsNullOrEmpty(c.CreditText)) ? c.CreditText : c.Credits.ToString();
+                if (string.IsNullOrEmpty(semesterTerm) || semesterTerm != c.SemesterTerm)
+                {
+                    semesterTerm = c.SemesterTerm;
+                    <tr>
+                        <td class="text-center alert alert-warning h3">Semester @c.Semester @c.Term</td>
+                    </tr>
+                }
+                <tr class="">
+                    <td>
+                        @if (Model.List_CourseIds.Contains(c.Id))
+                        {
+                            <span class="fa fa-check" style="color:green"></span>
+                        }
+                        else
+                        {
+                            <span class="fa fa-times" style="color:red"></span>
+                        }
+                        @c.Code (@credit credits)
+                        @Html.Raw(c.Description)
+                        @if (!c.Active)
+                        {
+                            <p class="pt-3 mb-0 pb-3"><span class="alert alert-danger">Not Active</span></p>
+                        }
+                        <p>@Html.ActionLink("Edit Course", "CourseEdit", "App", new { id = c.Id }, null)</p>
+                    </td>
+                </tr>
+            }
+        </table>
+        </div>
+    </div>
+</div>

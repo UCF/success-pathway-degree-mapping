@@ -1,0 +1,62 @@
+﻿@section JumbotronMain {
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="h1">Error Logs</div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@Html.Action("_DisplayFatalErrors", "App")
+
+@Html.Action("_DisplayErrors", "App")
+
+@Html.Action("_DisplayWarnErrors", "App")
+
+
+<!-- Modal -->
+<div class="modal fade" id="ErrorLogModal" tabindex="-1" role="dialog" aria-labelledby="ErrorLogModal" aria-hidden="true" style=" padding-top:120px; margin-top:70px;">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header alert">
+                <h5 class="modal-title" id="ErrorlogModalTitle">Modal title</h5>
+            </div>
+            <div id="ModalExceptionMessage" class="modal-body" style="word-wrap: break-word">
+                ...
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var errorId;
+    function displayExceptionMessage(id, level) {
+        errorId = id;
+        getErrorException();
+        $('#ErrorlogModalTitle').html(level.toUpperCase() + ' Message')
+        if (level == 'fatal') {
+            $('.modal-header').removeClass('alert-warning');
+            $('.modal-header').addClass('alert-danger');
+        } else {
+            $('.modal-header').removeClass('alert-danger');
+            $('.modal-header').addClass('alert-warning');
+        }
+    }
+
+    function getErrorException() {
+        $.get({
+            url: "/App/GetErrorException?Id=" + errorId,
+            type: "GET",
+            cache: false,
+            success: function (data) {
+                $('#ModalExceptionMessage').html(data.message);
+            }
+        })
+    }
+</script>

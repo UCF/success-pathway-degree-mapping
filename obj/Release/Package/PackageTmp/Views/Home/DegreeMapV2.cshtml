@@ -1,0 +1,20 @@
+﻿@{
+    Layout = "~/Views/Shared/_Pathway.cshtml";
+
+//int? degreeid = ViewBag.degreeId;
+//List<DegreeMapping.Models.Degree> list_d = ViewBag.DegreeList;
+}
+@section Head {
+    <link href="https://connectucncmsqa.smca.ucf.edu/wp-content/themes/Colleges-Theme/static/css/style.min.css?ver=5.7.2" rel="stylesheet" />
+    <link href="https://connectucncmsqa.smca.ucf.edu/wp-content/themes/UCF-Connect-Child-Theme/css/custom.css?9982&ver=1.0.0" rel="stylesheet" />
+    <link href="https://connectucncmsqa.smca.ucf.edu/wp-includes/css/dist/block-library/style.min.css?ver=5.7.2" rel="stylesheet"/>
+}
+@*@if (degreeid.HasValue)
+{*@
+    @Html.Action("_DegreeMapV2WPTemplate")
+    <script src="~/Scripts/main.js"></script>
+    <script src="~/Scripts/DegreeMap3.js"></script>
+    @*<script src="~/Scripts/DegreeInfo.js"></script>*@
+    <script src="~/Scripts/CourseMapper.js"></script>
+    <script src="~/Scripts/UCFCourseSemester.js"></script>
+@*}*@

@@ -1,0 +1,57 @@
+﻿@model DegreeMapping.Models.FavoriteDegree
+@{ 
+
+}
+<div class="row">
+    <h2 class="heading-underline">Favorite Degrees</h2>
+    <div class="col-md-12">
+        @if (Model != null && Model.List_Degrees.Count > 0)
+        {
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Degree</th>
+                        <th>Institution</th>
+                        <th>Catalog Year</th>
+                        <th>&nbsp;</th>
+                        <th>&nbsp;</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (DegreeMapping.Models.Degree d in Model.List_Degrees.OrderBy(x => x.CatalogYear).ThenBy(x => x.Name))
+                    {
+                        <tr id="favoriteDegreeRow_@d.Id">
+                            <td>@d.Name</td>
+                            <td>@d.Institution</td>
+                            <td>@d.CatalogYear</td>
+                            <td>@Html.ActionLink("View", "DegreeView", "App", new { id = d.Id }, null)</td>
+                            <td><a href="#" title="Remove favorite" onclick="updateFavoriteDegree(@d.Id); return false;" style="color:red">Remove</a></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <div>No degree has been marked as a favorite</div>
+        }
+    </div>
+</div>
+
+<script type="text/javascript">
+        var NID = '@User.Identity.Name';
+        function updateFavoriteDegree(degreeId) {
+            $.get({
+                url: "/pathway/app/SetFavoriteDegree?degreeId="+degreeId+"&NID="+NID,
+                //url: "/pathway/app/SetFavoriteDegree?id="+val+"&NID="+NID,
+                type: "GET",
+                cache: false,
+                success: function (isFavorite) {
+                    console.log(isFavorite);
+                    if (!isFavorite) {
+                        $('#favoriteDegreeRow_'+ degreeId).remove();
+                    }
+                }
+            })
+        }
+</script>

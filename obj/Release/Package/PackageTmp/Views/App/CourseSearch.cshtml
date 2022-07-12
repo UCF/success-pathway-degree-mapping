@@ -1,0 +1,68 @@
+﻿@model  List<DegreeMapping.Models.Course>
+@{
+    List<DegreeMapping.Models.Catalog> list_cy = DegreeMapping.Models.Catalog.List();
+
+}
+@section JumbotronMain {
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1>Search Courses</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<div class="container">
+    <div class="row py-5">
+        <div class="col-md-12">
+            @using (Html.BeginForm("CourseSearch", "App", FormMethod.Post, new { @Class = "form-inline" }))
+            {
+                <div class="form-group">
+                    <input type="text" class="" name="keyword" value="@ViewBag.Keyword" style="width:300px" />
+                    <div class="form-group">
+                        <select name="catalogId" class="" style="height:30px">
+                            @foreach (DegreeMapping.Models.Catalog cy in list_cy.Where(x => x.Active).OrderByDescending(x => x.Year))
+                            {
+                                <option value="@cy.Id">@cy.Year</option>
+                            }
+                        </select>
+                    </div>
+                    <button type="submit" name="submit" class="btn btn-primary btn-lg">Search</button>
+                </div>
+            }
+        </div>
+    </div>
+
+    @if (Model.Count > 0)
+    {
+        int count = 0;
+        <div class="alert alert-warning">Found @Model.Count courses</div>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>&nbsp;</th>
+                    <th>&nbsp;</th>
+                    <th>Course</th>
+                    <th>Degree</th>
+                    <th>Institution</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (DegreeMapping.Models.Course c in Model.OrderBy(x => x.CatalogYear).ThenBy(x => x.Code).ThenBy(x => x.Degree).ThenBy(x => x.Institution))
+                {
+                    count++;
+                    <tr>
+                        <td>@count</td>
+                        <td>@Html.ActionLink("Edit", "CourseEdit", new { id = c.Id })</td>
+                        <td>@c.Code</td>
+                        <td>@c.CatalogYear @c.Degree</td>
+                        <td>@c.Institution</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>

@@ -1,0 +1,19 @@
+﻿@{
+    List<DegreeMapping.Models.Course> list_courses = ViewBag.list_courses;
+    ViewBag.Title = (ViewBag.title == DegreeMapping.Models.CourseMapper.DisplayType.Default) ? string.Empty : string.Format("<h4>{0}</h4>",ViewBag.title);
+}
+@if (list_courses != null && list_courses.Count > 0)
+{   
+    @Html.Raw(ViewBag.title)
+        foreach (DegreeMapping.Models.Course c in list_courses.OrderBy(x => x.Code))
+        {
+            c.Code = (!string.IsNullOrEmpty(c.Description)) ? c.Code + "<br /><em>" + c.Description + "</em>" : c.Code; 
+            string credit = (!string.IsNullOrEmpty(c.CreditText)) ? c.CreditText : c.Credits.ToString();
+            if (!string.IsNullOrEmpty(c.Code)) 
+            {
+            <div class="pt-2">
+                <div>@Html.Raw(c.Code) (@credit credits) </div>
+            </div>
+            }
+        }
+}

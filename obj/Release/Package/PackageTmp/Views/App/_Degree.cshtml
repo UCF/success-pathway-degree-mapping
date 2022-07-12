@@ -1,0 +1,295 @@
+﻿@model DegreeMapping.Models.Degree
+@{
+    List<DegreeMapping.Models.Degree> list_d = DegreeMapping.Models.Degree.List(null, null);
+    List<DegreeMapping.Models.College> list_c = DegreeMapping.Models.College.List(null);
+    List<DegreeMapping.Models.Catalog> list_cy = DegreeMapping.Models.Catalog.List();
+    Model.CollegeName = list_c.Where(x => x.Id == Model.CollegeId).Select(x => x.CollegeName).FirstOrDefault();
+    if (Model.UCFDegreeId.HasValue && Model.UCFDegreeId > 1)
+    {
+        DegreeMapping.Models.Degree ucfDegree = DegreeMapping.Models.Degree.Get(Model.UCFDegreeId.Value);
+        Model.DegreeURL = (!string.IsNullOrEmpty(Model.DegreeURL)) ? Model.DegreeURL : ucfDegree.DegreeURL;
+        Model.CollegeName = (!string.IsNullOrEmpty(Model.CollegeName)) ? Model.CollegeName : ucfDegree.CollegeName;
+        Model.SemesterStart = ucfDegree.SemesterStart;
+        Model.SemesterStartTerm = ucfDegree.SemesterStartTerm;
+        Model.CareerPathURL = ucfDegree.CareerPathURL;
+    }
+}
+@using (Html.BeginForm("DegreeSave", "App", FormMethod.Post, new { @class = "form-horizontal" }))
+{
+    @Html.HiddenFor(x => x.Id);
+    @Html.HiddenFor(x => x.InstitutionId)
+    @Html.HiddenFor(x => x.DegreeType)
+    @Html.HiddenFor(x => x.NID)
+    @Html.HiddenFor(x => x.CloneDegreeId)
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                @Html.LabelFor(x => x.Active) :
+                @Html.CheckBoxFor(x => x.Active, new { @class = "" })
+            </div>
+        </div>
+    </div>
+    if (Model.InstitutionId == DegreeMapping.Models.Institution.UCFId)
+    {
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(x => x.Name) :
+                    @Html.TextBoxFor(x => x.Name, new { @class = "form-control" })
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group" id="SemesterTermOrderSection">
+                    @Html.LabelFor(x => x.SemesterStartTerm) :
+                    <span id="semesterTermOrder_0" class="semsterTermOrder"><label>@Html.RadioButtonFor(x => x.SemesterStart, 0) Fall</label></span>
+                    <span id="semesterTermOrder_2" class="semsterTermOrder"><label>@Html.RadioButtonFor(x => x.SemesterStart, 2) Summer</label></span>
+                    <span id="semesterTermOrder_1" class="semsterTermOrder"><label>@Html.RadioButtonFor(x => x.SemesterStart, 1) Spring</label></span>
+                    @*Spring Semster was not asked for but is programmed for just in case.*@
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(x => x.CatalogYear) : @Model.CatalogYear
+                    @Html.HiddenFor(x => x.CatalogId)
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <span>@Html.LabelFor(x => x.CollegeName) : </span>
+                    <select name="CollegeId" class="form-control">
+                        <option>Select College</option>
+                        @foreach (DegreeMapping.Models.College c in list_c.OrderBy(x => x.CollegeName))
+                        {
+                            if (Model.CollegeId == c.Id)
+                            {
+                                <option selected value="@c.Id">@c.CollegeName</option>
+                            }
+                            else
+                            {
+                                <option value="@c.Id">@c.CollegeName</option>
+                            }
+                        }
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(x => x.CatalogUrl) :
+                    @Html.TextBoxFor(x => x.CatalogUrl, new { @class = "form-control" })
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(x => x.CareerPathURL) :
+                    @Html.TextBoxFor(x => x.CareerPathURL, new { @class = "form-control" })
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(x => x.DegreeURL) :
+                    @Html.TextBoxFor(x => x.DegreeURL, new { @class = "form-control" })
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        @Html.HiddenFor(x => x.CatalogId)
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(x => x.Name) :
+                    @Html.TextBoxFor(x => x.Name, new { @class = "form-control d-inline" })
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(x => x.SemesterStartTerm) : @Model.SemesterStartTerm
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="UCFDegreeId">UCF Related Degree : </label>
+                    <select name="UCFDegreeId" id="UCFDegreeId" class="form-control d-inline">
+                        <option value="">Select UCF Degree: </option>
+                        @foreach (DegreeMapping.Models.Degree d in list_d.Where(x => x.InstitutionId == 1).OrderBy(x => x.Name))
+                        {
+                            if (Model.UCFDegreeId == d.Id)
+                            {
+                                <option value="@d.Id" selected>@d.Name</option>
+                            }
+                            else
+                            {
+                                <option value="@d.Id">@d.Name</option>
+                            }
+                        }
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(x => x.CollegeName) : @Html.Raw(Model.CollegeName)
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(x => x.CatalogUrl) : <a href="@Html.Raw(Model.CatalogUrl)" target="">@Html.Raw(Model.CatalogUrl)</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(x => x.CareerPathURL) : <a href="@Model.CareerPathURL" target="_blank">@Model.CareerPathURL</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(x => x.DegreeURL) : <a href="@Html.Raw(Model.DegreeURL)" target="">@Html.Raw(Model.DegreeURL)</a>
+                </div>
+            </div>
+        </div>
+    }
+
+    if (Model.InstitutionId == DegreeMapping.Models.Institution.UCFId)
+    {
+        <div class="row pt-2">
+            <div class="col-md-3">
+                <div class="form-group">
+                    @Html.LabelFor(x => x.GPA) :
+                    @Html.TextBoxFor(x => x.GPA, new { @class = "form-control" })
+                </div>
+            </div>
+        </div>
+        <div class="row pt-2">
+            <div class="col-md-2">
+                <div class="form-group">
+                    @Html.LabelFor(x => x.LimitedAccess) :
+                    @Html.CheckBoxFor(x => x.LimitedAccess)
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    @Html.LabelFor(x => x.RestrictedAccess) :
+                    @Html.CheckBoxFor(x => x.RestrictedAccess)
+                </div>
+            </div>
+        </div>
+    }
+    if (User.Identity.Name == "jgiron")
+    {
+        <div class="row pt-2" style="display:none">
+            <div class="col-md-10">
+                <div class="form-group">
+                    <h5>Admin only</h5>
+                    @Html.LabelFor(x => x.Description) :
+                    @Html.TextAreaFor(x => x.Description, new { @class = "form-control", col = "5", rows = "4", maxlength = "100" })
+                    <span class="alert alert-warning">100 characters max</span>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        @Html.HiddenFor(x => x.Description)
+    }
+    <div class="row pt-2">
+        <div class="col-md-10">
+            <div class="form-group hidden">
+                @Html.LabelFor(x => x.CatalogYear) :
+                @Html.TextAreaFor(x => x.CatalogYear, new { @class = "form-control", col = "5", rows = "4" })
+            </div>
+        </div>
+    </div>
+
+    <div class="row pt-2">
+        <div class="col-md-10">
+            <div class="form-group">
+                <button type="submit" class="btn btn-success">Save</button>
+                @if (Model.Id == 0)
+                {
+                    @Html.ActionLink("Back", "InstitutionView", new { id = Model.InstitutionId }, new { @class = "btn btn-primary" })
+                }
+                else
+                {
+                    @Html.ActionLink("Back", "DegreeView", new { id = Model.Id }, new { @class = "btn btn-primary" })
+                }
+            </div>
+        </div>
+    </div>
+
+    @Html.Action("_DisplayCloneInfo", "App", new { CloneId = Model.CloneDegreeId, CloneType = "Degree" })
+}
+
+@if (Model.InstitutionId != DegreeMapping.Models.Institution.UCFId)
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#UCFDegreeId").on("change", function () {
+                let selected = $("#UCFDegreeId option:selected").text();
+                $("#Name").val(selected);
+            })
+        })
+    </script>
+}
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        SetTerm(@Model.SemesterStart);
+
+        $("#SemesterTermOrderSection input:radio").on("click", function () {
+            let term = $(this).val();
+            SetTerm(term);
+            console.log(term);
+        })
+
+        function SetTerm(term) {
+            $("#SemesterTermOrderSection input:radio").each(function () {
+                let termVal = $(this).val();
+                if (termVal == term) {
+                    $("#semesterTermOrder_" + termVal).addClass("alert");
+                    $("#semesterTermOrder_" + termVal).addClass("alert-warning");
+                } else {
+                    $("#semesterTermOrder_" + termVal).removeClass("alert");
+                    $("#semesterTermOrder_" + termVal).removeClass("alert-warning");
+                }
+            })
+        }
+    })
+</script>

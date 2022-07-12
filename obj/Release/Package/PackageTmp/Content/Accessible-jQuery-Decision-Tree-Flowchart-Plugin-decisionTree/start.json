@@ -1,0 +1,15 @@
+{
+	"id": "start",
+	"question": "Have you graduated from high school or earned a GED?",
+	"answers": [
+
+		{
+			"text": "Yes",
+			"target": "dtn1"
+		},
+		{
+			"text": "No",
+			"target": "dtn2"
+		}
+	]
+}

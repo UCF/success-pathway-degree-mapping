@@ -182,6 +182,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\APIKeyMessageHandler.cs" />
+    <Compile Include="Models\AppSettings.cs" />
     <Compile Include="Models\Authentication.cs" />
     <Compile Include="Models\BreadCrumb.cs" />
     <Compile Include="Models\Catalog.cs" />

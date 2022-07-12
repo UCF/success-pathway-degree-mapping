@@ -8,13 +8,22 @@ using DegreeMapping.Models;
 using System.ComponentModel;
 //using System.Data.SqlTypes;
 using System.DirectoryServices.ActiveDirectory;
+using log4net;
 
 namespace DegreeMapping.Controllers
 {
     public class HomeController : Controller
     {
+        //private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+        //private static readonly log4net.ILog log = log4net.LogManager.GetLogger(typeof("HomeController"));
+        private static readonly ILog log = log4net.LogManager.GetLogger(typeof(HomeController));
+
         public ActionResult Index()
         {
+            //log4net.Config.XmlConfigurator.Configure();
+            log.Debug("Test Debug error");
+            log.Warn("Test Warn Error");
+            log.Error("Test Error");
             if (User.Identity.IsAuthenticated)
             {
                 return RedirectToAction("Catalog", "App");

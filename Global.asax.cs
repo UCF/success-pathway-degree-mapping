@@ -50,7 +50,20 @@ namespace DegreeMapping
         void Application_Error(Object sender, EventArgs e)
         {
             Exception ex = Server.GetLastError().GetBaseException();
-            log.Fatal("Application Error", ex);
+            HttpException httpException = ex as HttpException;
+            int? httpStatusCode = (httpException != null ? httpException.GetHttpCode() : (int?)null);
+            if (httpStatusCode.HasValue && httpStatusCode.Value >= 500)
+            {
+                log.Fatal(httpStatusCode.Value.ToString() + " Fatal Error", ex);
+            }
+            else if (httpStatusCode.HasValue && httpStatusCode.Value >= 400)
+            { 
+                log.Warn(httpStatusCode.Value.ToString() + " Warn Error", ex);
+            } 
+            else
+            {
+                log.Error(httpStatusCode.Value.ToString() + " Error", ex);
+            }
         }
 
         protected void Application_Start()

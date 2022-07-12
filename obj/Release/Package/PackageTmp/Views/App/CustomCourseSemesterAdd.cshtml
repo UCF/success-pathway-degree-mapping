@@ -1,0 +1,22 @@
+﻿@model DegreeMapping.Models.CustomCourseSemester
+@{
+    DegreeMapping.Models.Catalog cy = DegreeMapping.Models.Catalog.Get(Model.CatalogId);
+}
+
+@section JumbotronMain {
+    <div class="jumbotron jumbotron-fluid" style="background-color:@cy.BGColor">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="h3">@Html.ActionLink("Back to Degree List", "DegreeList", "App", new { Id = Model.CatalogId }, null)</div>
+                    <h1 class="heading-underline">@Model.CatalogYear @Model.Degree</h1>
+                    <h2>@Model.Institution</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<div class="container">
+    @Html.Action("_CustomCourseSemester", new { ccs = Model })
+</div>
