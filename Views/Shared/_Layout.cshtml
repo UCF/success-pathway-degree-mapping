@@ -41,7 +41,8 @@
                         if (User.Identity.Name == "jgiron")
                         {
                             <span class="px-3">@Html.ActionLink("Users", "ViewUsers", "App", null, new { @class = "btn btn-primary btn-lg" })</span>
-                            <span class="px-3">@Html.ActionLink("Degree Map v2", "Index", "DegreeMap2", null, new { @class = "btn btn-primary btn-lg" })</span>
+                            <span class="px-3">@Html.ActionLink("Degree Map v2", "Index", "DegreeMap2", null, new { @class = "btn btn-primary btn-lg", target="_blank" })</span>
+                            <span class="px-3">@Html.ActionLink("Error Logs", "ErrorLog", "App", null, new { @class = "btn btn-primary btn-lg" })</span>
                         }
                         <span class="px-3">@Html.ActionLink("Sign Out", "SignOut", "Home", null, new { @class = "btn btn-warning btn-lg" })</span>
                     }

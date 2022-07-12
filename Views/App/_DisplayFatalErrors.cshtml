@@ -1,0 +1,44 @@
+﻿@model List<DegreeMapping.Models.ErrorLog>
+
+<section id="FatalErrorSection">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 alert alert-danger"><h2>Fatal Errors</h2></div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Date</th>
+                            <th>Source</th>
+                            <th>Message</th>
+                            <th>Exception</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (DegreeMapping.Models.ErrorLog el in Model)
+                        {
+                            <tr>
+                                <td>@el.Id</td>
+                                <td>@el.LogDate</td>
+                                <td>@el.LogSource</td>
+                                <td>@el.LogMessage</td>
+                                <td>
+                                    @if (!string.IsNullOrEmpty(el.Exception))
+                                    {
+                                        <button type="button" onclick="displayExceptionMessage(@el.Id, 'fatal')" class="btn btn-primary" data-toggle="modal" data-target="#ErrorLogModal">
+                                            View
+                                        </button>
+
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>

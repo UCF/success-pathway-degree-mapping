@@ -9,11 +9,13 @@ using System.Web.Optimization;
 using System.Web.Routing;
 using WebApplication1.App_Start;
 
+[assembly:log4net.Config.XmlConfigurator(Watch = true)]
 
 namespace DegreeMapping
 {
     public class MvcApplication : System.Web.HttpApplication
     {
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         protected void Application_BeginRequest(Object sender, EventArgs e)
         {
             // Preflight request comes with HttpMethod OPTIONS
@@ -45,6 +47,12 @@ namespace DegreeMapping
             return false;
         }
 
+        void Application_Error(Object sender, EventArgs e)
+        {
+            Exception ex = Server.GetLastError().GetBaseException();
+            log.Fatal("Application Error", ex);
+        }
+
         protected void Application_Start()
         {
 
@@ -54,6 +62,8 @@ namespace DegreeMapping
             GlobalConfiguration.Configure(WebApiConfig.Register);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+            log4net.Config.XmlConfigurator.Configure();
+
         }
     }
 }

@@ -732,5 +732,36 @@ namespace DegreeMapping.Controllers
         }
         #endregion
 
+
+        #region ErrrorLogging
+        public ActionResult ErrorLog()
+        {
+            return View();
+        }
+
+        public ActionResult _DisplayFatalErrors()
+        {
+            List<ErrorLog> list_el = DegreeMapping.Models.ErrorLog.List("FATAL");
+            return PartialView(list_el);
+        }
+
+        public ActionResult _DisplayErrors()
+        {
+            List<ErrorLog> list_el = DegreeMapping.Models.ErrorLog.List("ERROR");
+            return PartialView(list_el);
+        }
+
+        public ActionResult _DisplayWarnErrors()
+        {
+            List<ErrorLog> list_el = DegreeMapping.Models.ErrorLog.List("WARN");
+            return PartialView(list_el);
+        }
+
+        public ActionResult GetErrorException(int id)
+        {
+            string message = DegreeMapping.Models.ErrorLog.Get(id);
+            return Json(new { message = message }, JsonRequestBehavior.AllowGet);
+        }
+        #endregion
     }
 }
