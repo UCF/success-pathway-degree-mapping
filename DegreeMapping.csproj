@@ -216,6 +216,7 @@
     <Compile Include="Models\NoteList.cs" />
     <Compile Include="Models\SemesterCourse.cs" />
     <Compile Include="Models\User.cs" />
+    <Compile Include="Models\Role.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -2343,6 +2344,7 @@
     <Content Include="Views\App\_DisplayWarnErrors.cshtml" />
     <Content Include="Views\App\_DisplayErrors.cshtml" />
     <Content Include="Views\App\_DisplayGlobalCourseNotes.cshtml" />
+    <Content Include="Views\App\_DisplayUserRoles.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

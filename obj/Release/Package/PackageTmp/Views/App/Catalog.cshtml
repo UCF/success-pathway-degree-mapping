@@ -20,8 +20,6 @@
 <div class="container">
 
     @Html.Action("_DisplayFavoriteDegree", "App", new { NID = User.Identity.Name } )
-
-    
     <div class="row pt-5">
         <h2 class="heading-underline">Active Catalogs</h2>
         <div class="col-md-12">
@@ -64,7 +62,7 @@
                                 </div>
                             </div>
                             <div>
-                                @if (User.Identity.Name == "jgiron")
+                                @if (User.IsInRole(DegreeMapping.Models.Role.Admin))
                                 {
                                     <div class="pl-2">
                                         <fieldset>
@@ -75,20 +73,32 @@
                                                 <br />
                                                 @Html.LabelFor(x => cy.DisplayOnWeb) :
                                                 @Html.CheckBoxFor(x => cy.DisplayOnWeb)
+
+                                                <div><strong>Catalog Roles:</strong></div>
+                                                <div class="pl-2"><label>@Html.RadioButtonFor(x => cy.EditableRoleId, 2) Admin Only</label></div>
+                                                <div class="pl-2"><label>@Html.RadioButtonFor(x => cy.EditableRoleId, 3) Publisher</label></div>
                                             </div>
                                         </fieldset>
                                     </div>
                                 }
                                 else
                                 {
+                                    @Html.HiddenFor(x => cy.EditableRoleId)
                                     @Html.HiddenFor(x => cy.BGColor)
                                     @Html.HiddenFor(x => cy.DisplayOnWeb)
                                 }
                             </div>
-                            <div class="card-footer pt-5">
-                                @Html.ActionLink("View Catalog", "DegreeList", "App", new { id = cy.Id }, new { @Class = "btn btn-primary btn-block btn-lg" })
-                                <button type="submit" class="btn btn-success btn-block btn-lg">Save</button>
-                            </div>
+                            if (User.IsInRole(cy.EditableRole))
+                            {
+                                <div class="card-footer pt-5">
+                                    @Html.ActionLink("View Catalog", "DegreeList", "App", new { id = cy.Id }, new { @Class = "btn btn-primary btn-block btn-lg" })
+                                    <button type="submit" class="btn btn-success btn-block btn-lg">Save</button>
+                                </div>
+                            }
+                            else 
+                            { 
+                                <div class="alert alert-info">This Catalog is closed for editing</div>
+                            }
                         }
                     </div>
                 }

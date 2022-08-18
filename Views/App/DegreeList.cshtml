@@ -14,7 +14,7 @@
     string JSONInstitutionList = jss.Serialize(list_i);
     string JSONUCFDegreeList = jss.Serialize(list_UCFDegrees);
     string JSONPartnerDegreeList = jss.Serialize(list_parnterDegrees);
-    string title = (catalogId > 0) ? list_cy.Where(x => x.Id == catalogId).Select(x => x.Year).FirstOrDefault() + " Degree List" : "Select Catalog Year";
+    //string title = (catalogId > 0) ? list_cy.Where(x => x.Id == catalogId).Select(x => x.Year).FirstOrDefault() + " Degree List" : "Select Catalog Year";
 }
 @section JumbotronMain {
     <div class="jumbotron jumbotron-fluid" style="background-color:@cy.BGColor">
@@ -29,34 +29,39 @@
     </div>
 }
 
-<div class="row">
-    <div class="col-md-12">
-        @using (Html.BeginForm("DegreeList", "App", FormMethod.Post, new { @Class = "form-inline" }))
-        {
-            <div class="form-group">
-                <input type="text" placeholder="Search degrees" style="width:500px" class="form-control" name="keyword" id="keyword" autocomplete="true" aria-autocomplete="list" aria-haspopup="false" autocapitalize="off" autocorrect="off" title="Degree Search" aria-label="Degree Search">
-                <button type="submit" class="btn btn-primary btn-lg">Search</button>
-                <button type="button" class="btn btn-info btn-lg" onclick="portalDegreeList.clear();">Clear</button>
-            </div>
-        }
-    </div>
-</div>
 
-    <div class="container pt-5">
-        <div class="row">
-            <div class="clearfix">
-                @Html.ActionLink("New Degree", "DegreeAdd", "App", new { institutionId = DegreeMapping.Models.Institution.UCFId, catalogId = catalogId }, new { @class = "btn btn-primary btn-lg" })
-            </div>
-        </div>
-
+@if (User.IsInRole(cy.EditableRole))
+{
+    <section>
         <div class="row">
             <div class="col-md-12">
-                <div id="degreeListOutput" style="font-size:22px"></div>
+                @using (Html.BeginForm("DegreeList", "App", FormMethod.Post, new { @Class = "form-inline" }))
+                {
+                    <div class="form-group">
+                        <input type="text" placeholder="Search degrees" style="width:500px" class="form-control" name="keyword" id="keyword" autocomplete="true" aria-autocomplete="list" aria-haspopup="false" autocapitalize="off" autocorrect="off" title="Degree Search" aria-label="Degree Search">
+                        <button type="submit" class="btn btn-primary btn-lg">Search</button>
+                        <button type="button" class="btn btn-info btn-lg" onclick="portalDegreeList.clear();">Clear</button>
+                    </div>
+                }
             </div>
         </div>
 
-        @*THIS Is not used, degree list comes from json*@
-    </div>
+        <div class="container pt-5">
+            <div class="row">
+                <div class="clearfix">
+                    @Html.ActionLink("New Degree", "DegreeAdd", "App", new { institutionId = DegreeMapping.Models.Institution.UCFId, catalogId = catalogId }, new { @class = "btn btn-primary btn-lg" })
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div id="degreeListOutput" style="font-size:22px"></div>
+                </div>
+            </div>
+
+            @*THIS Is not used, degree list comes from json*@
+        </div>
+    </section>
 
     <script type="text/javascript">
 
@@ -172,3 +177,8 @@
             })
         })
     </script>
+}
+else 
+{ 
+    <div class="alert alert-info text-center">Catalog is closed for editing</div>
+}

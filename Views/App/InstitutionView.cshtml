@@ -4,7 +4,7 @@
     string cssClass = (string.IsNullOrEmpty(Model.Description)) ? "" : "alert alert-warning";
 }
 
-<div class="row py-5">
+<div class="row py-5 mb-5">
     <div class="col-md-12">
         <small>@Html.ActionLink("Degree list", "Checklist", "App")</small>
         <h1>@Model.Name</h1>
@@ -31,24 +31,5 @@
                 @Html.ActionLink("Edit Institution", "InstitutionEdit", new { id = Model.Id })
             </div>
         </div>
-    </div>
-</div>
-<div class="row px-5">
-    <div class="col-md-12">
-        <div>
-            <h2>2020-2021 Degrees</h2>
-            @Html.ActionLink("Add Degree", "DegreeAdd", new { institutionId = Model.Id }, new { @class = "btn btn-primary btn-lg"})
-        </div>
-        @if (list_d.Count > 0)
-        {
-            <ul>
-                @foreach (DegreeMapping.Models.Degree d in list_d.OrderBy(x => x.Name))
-                {
-                    <li>
-                        @Html.ActionLink(d.Name, "DegreeView", new { id = d.Id })
-                    </li>
-                }
-            </ul>
-        }
     </div>
 </div>

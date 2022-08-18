@@ -341,7 +341,11 @@ namespace DegreeMapping.Controllers
         #region Users
         public ActionResult ViewUsers()
         {
-            List<string> list_users = DegreeMapping.Models.User.List();
+            if (!User.IsInRole(DegreeMapping.Models.Role.Admin))
+            {
+                return RedirectToAction("Catalog", "App");
+            }
+            List<User> list_users = DegreeMapping.Models.User.List();
             return View(list_users);
         }
 
@@ -357,6 +361,19 @@ namespace DegreeMapping.Controllers
             DegreeMapping.Models.User.Delete(nid);
             return RedirectToAction("ViewUsers");
         }
+
+        public ActionResult UpdateUserRole(string nid, int roleId)
+        {
+            DegreeMapping.Models.User user = DegreeMapping.Models.User.Get(nid);
+            DegreeMapping.Models.User.Update(nid, roleId, user.DisplayName);
+            return Json(new { status = 1 }, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult _DisplayUserRoles(User user)
+        {
+            return PartialView(user);
+        }
+
         #endregion
 
         #region Checklist

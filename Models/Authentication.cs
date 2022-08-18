@@ -22,6 +22,13 @@ namespace DegreeMapping.Models
 
         public static int LoginTimeOut { get { return 60; } }
 
+        /// <summary>
+        /// Setting up Authentication
+        /// https://stackoverflow.com/questions/36538958/if-formsauthentication-ticket-is-set-why-doesnt-user-isinrole-admin-work
+        /// </summary>
+        /// <param name="nid"></param>
+        /// <param name="password"></param>
+        /// <param name="u"></param>
         public Authentication(string nid, string password, ref Models.User u)
         {
             using (var context = new PrincipalContext(ContextType.Domain, "NET", "NET\\" + ServiceAcct, ServiceAcctPass))
@@ -51,11 +58,11 @@ namespace DegreeMapping.Models
         }
         private static void FormsAuthentication(User u)
         {
-            string roles = GetRoles(u);
-
+            string roles = GetRoles(u.RoleId);
+            string name = (!string.IsNullOrEmpty(u.DisplayName)) ? u.DisplayName : u.NID;
             System.Web.Security.FormsAuthenticationTicket ticket = new System.Web.Security.FormsAuthenticationTicket(
                 1, //Ticket Version
-                u.NID, //User Associated with ticket
+                name, //User Associated with ticket
                 System.DateTime.Now, //DateTime Issued
                 System.DateTime.Now.AddMinutes(LoginTimeOut), //DateTime to Expire
                 false, //True for a persistent user cookie
@@ -74,19 +81,34 @@ namespace DegreeMapping.Models
             System.Web.HttpContext.Current.Response.Cookies.Add(cookie);// Add the cookie to the list for outgoing response
 
             //System.Web.Security.FormsAuthentication.SetAuthCookie(u.NID, true);
-
+            Models.User.Update(u.NID, u.RoleId, u.DisplayName);
         }
 
-        public static string GetRoles(User u)
+        public static string GetRoles(int roleId)
         {
-            List<string> list_roles = new List<string>();
-            list_roles.Add("authorized");
-            if (u.NID == "jgiron" || u.NID == "mmalpica")
+            List<string> myRoles = new List<string>();
+            switch (roleId)
             {
-                list_roles.Add("admin");
+                case 1:
+                    myRoles.Add(DegreeMapping.Models.Role.SuperAdmin);
+                    myRoles.Add(DegreeMapping.Models.Role.Admin);
+                    myRoles.Add(DegreeMapping.Models.Role.Publisher);
+                    myRoles.Add(DegreeMapping.Models.Role.Editor);
+                    break;
+                case 2:
+                    myRoles.Add(DegreeMapping.Models.Role.Admin);
+                    myRoles.Add(DegreeMapping.Models.Role.Publisher);
+                    myRoles.Add(DegreeMapping.Models.Role.Editor);
+                    break;
+                case 3:
+                    myRoles.Add(DegreeMapping.Models.Role.Publisher);
+                    myRoles.Add(DegreeMapping.Models.Role.Editor);
+                    break;
+                default:
+                    myRoles.Add(DegreeMapping.Models.Role.Editor);
+                    break;
             }
-            return string.Join(",", list_roles);
+            return string.Join(",", myRoles);
         }
-
     }
 }

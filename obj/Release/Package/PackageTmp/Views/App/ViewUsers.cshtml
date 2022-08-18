@@ -1,4 +1,4 @@
-﻿@model List<string>
+﻿@model List<DegreeMapping.Models.User>
 
 @section JumbotronMain {
     <div class="jumbotron jumbotron-fluid">
@@ -27,6 +27,7 @@
                                 <button type="submit" class="btn btn-success btn-lg">Add User</button>
                             </span>
                         </div>
+                        <div>New users will be given Publisher rights</div>
                     </div>
                 </div>
             }
@@ -38,10 +39,15 @@
             {
                 <h2>Authorized Users</h2>
                 <ul class="list-group">
-                    @foreach (string nid in Model)
+                    @foreach (DegreeMapping.Models.User user in Model)
                     {
+                        if (!User.IsInRole(DegreeMapping.Models.Role.SuperAdmin) && user.RoleId == 1)
+                        {
+                            continue;
+                        }
                         <li class="list-group-item">
-                            @nid <span class="px-3"> @Html.ActionLink("Delete", "UserDelete", new { nid = nid }, new { @class = "btn btn-danger" })</span>
+                            <div class="font-weight-bold pr-2">@user.DisplayName</div> <em>@user.NID</em>
+                            @Html.Action("_DisplayUserRoles", "App", new { user = user })
                         </li>
                     }
                 </ul>
@@ -49,3 +55,23 @@
         </div>
     </div>
 </div>
+
+<script type="text/javascript">
+    var nid;
+    var roleId;
+    $('input[type=radio]').on('click', function () {
+        nid = $(this).attr("name");
+        roleId = $(this).val();
+        $.ajax({
+            url: "/App/UpdateUserRole?nid=" + nid + "&roleId=" + roleId,
+            method: "get",
+            async: false,
+        }).done(function (status) {
+            console.log('.tr_' + nid + '_' + roleId);
+            $('.tr_' + nid + '_' + roleId).addClass('alert-success');
+            setTimeout(function () {
+                $('.tr_' + nid + '_' + roleId).removeClass('alert-success');
+            }, 1000);
+        })
+    })
+</script>

@@ -1,4 +1,8 @@
-﻿@section JumbotronMain {
+﻿@{
+    string urlPath = DegreeMapping.Models.AppSettings.URLPath;
+}
+
+@section JumbotronMain {
     <div class="jumbotron jumbotron-fluid">
         <div class="container">
             <div class="row">
@@ -51,7 +55,7 @@
 
     function getErrorException() {
         $.get({
-            url: "/App/GetErrorException?Id=" + errorId,
+            url: "@urlPath/App/GetErrorException?Id=" + errorId,
             type: "GET",
             cache: false,
             success: function (data) {

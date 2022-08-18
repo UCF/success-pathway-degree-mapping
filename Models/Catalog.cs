@@ -24,9 +24,12 @@ namespace DegreeMapping.Models
         [DisplayName("Display On Web")]
         public bool DisplayOnWeb { get; set; }
         public string PathwayCatalogURL { get; set; }
+        public int EditableRoleId { get; set; }
+        public string EditableRole { get { return DegreeMapping.Models.Role.Get(EditableRoleId); } }
         public Catalog()
         {
-
+            DisplayOnWeb = false;
+            EditableRoleId = 3;
         }
 
         public Catalog(bool current)
@@ -39,6 +42,7 @@ namespace DegreeMapping.Models
             UndergraduateCatalogURL = cy.UndergraduateCatalogURL;
             BGColor = cy.BGColor;
             DisplayOnWeb = cy.DisplayOnWeb;
+            EditableRoleId = cy.EditableRoleId;
             SetPathwayCatalogURL(ref cy);
         }
 
@@ -124,6 +128,7 @@ namespace DegreeMapping.Models
                 cmd.Parameters.AddWithValue("@UndergraduateCatalogURL", cy.UndergraduateCatalogURL);
                 cmd.Parameters.AddWithValue("@BGColor", cy.BGColor);
                 cmd.Parameters.AddWithValue("@DisplayOnWeb", cy.DisplayOnWeb);
+                cmd.Parameters.AddWithValue("@EditableRoleId", cy.EditableRoleId);
                 id = Convert.ToInt32(cmd.ExecuteScalar());
                 cn.Close();
             }
@@ -145,6 +150,7 @@ namespace DegreeMapping.Models
                 cmd.Parameters.AddWithValue("@UndergraduateCatalogURL", cy.UndergraduateCatalogURL);
                 cmd.Parameters.AddWithValue("@BGColor", cy.BGColor);
                 cmd.Parameters.AddWithValue("@DisplayOnWeb", cy.DisplayOnWeb);
+                cmd.Parameters.AddWithValue("@EditableRoleId", cy.EditableRoleId);
                 cmd.ExecuteScalar();
                 cn.Close();
             }
@@ -161,6 +167,7 @@ namespace DegreeMapping.Models
                 cy.UndergraduateCatalogURL = dr["UndergraduateCatalogURL"].ToString();
                 cy.BGColor = dr["BGColor"].ToString();
                 cy.DisplayOnWeb = Convert.ToBoolean(dr["DisplayOnWeb"].ToString());
+                cy.EditableRoleId = Convert.ToInt32(dr["EditableRoleId"].ToString());
                 SetPathwayCatalogURL(ref cy);
             }
         }

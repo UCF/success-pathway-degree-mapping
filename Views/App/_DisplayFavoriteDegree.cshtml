@@ -1,6 +1,6 @@
 ﻿@model DegreeMapping.Models.FavoriteDegree
 @{ 
-
+    int counter = 0;
 }
 <div class="row">
     <h2 class="heading-underline">Favorite Degrees</h2>
@@ -20,13 +20,24 @@
                 <tbody>
                     @foreach (DegreeMapping.Models.Degree d in Model.List_Degrees.OrderBy(x => x.CatalogYear).ThenBy(x => x.Name))
                     {
-                        <tr id="favoriteDegreeRow_@d.Id">
-                            <td>@d.Name</td>
-                            <td>@d.Institution</td>
-                            <td>@d.CatalogYear</td>
-                            <td>@Html.ActionLink("View", "DegreeView", "App", new { id = d.Id }, null)</td>
-                            <td><a href="#" title="Remove favorite" onclick="updateFavoriteDegree(@d.Id); return false;" style="color:red">Remove</a></td>
-                        </tr>
+                        DegreeMapping.Models.Catalog cy = DegreeMapping.Models.Catalog.Get(d.CatalogYear);
+                        if (User.IsInRole(cy.EditableRole))
+                        {
+                            <tr id="favoriteDegreeRow_@d.Id">
+                                <td>@d.Name</td>
+                                <td>@d.Institution</td>
+                                <td>@d.CatalogYear</td>
+                                <td>@Html.ActionLink("View", "DegreeView", "App", new { id = d.Id }, null)</td>
+                                <td><a href="#" title="Remove favorite" onclick="updateFavoriteDegree(@d.Id); return false;" style="color:red">Remove</a></td>
+                            </tr>
+                        }
+                        else
+                        {
+                            <tr id="favoriteDegreeRow_@d.Id" class="alert alert-warning">
+                                <td colspan="4">@d.Name - @d.CatalogYear Catalog is closed for editing</td>
+                                <td><a href="#" title="Remove favorite" onclick="updateFavoriteDegree(@d.Id); return false;" style="color:red">Remove</a></td>
+                            </tr>
+                        }
                     }
                 </tbody>
             </table>

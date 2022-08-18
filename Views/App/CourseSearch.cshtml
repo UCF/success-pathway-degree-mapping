@@ -26,7 +26,10 @@
                         <select name="catalogId" class="" style="height:30px">
                             @foreach (DegreeMapping.Models.Catalog cy in list_cy.Where(x => x.Active).OrderByDescending(x => x.Year))
                             {
-                                <option value="@cy.Id">@cy.Year</option>
+                                if (User.IsInRole(cy.EditableRole))
+                                { 
+                                    <option value="@cy.Id">@cy.Year</option>
+                                }
                             }
                         </select>
                     </div>

@@ -20,6 +20,8 @@ namespace DegreeMapping.Models
             public static string Alternate { get { return "Alternate"; } }
             public static string SelectOne { get { return "Select One"; } }
             public static string SelectTwo { get { return "Select Two"; } }
+            public static string SelectThree { get { return "Select Three"; } }
+            public static string SelectFour { get { return "Select Four"; } }
             public static string OR { get { return "OR";  } }
             public static string AND { get { return "AND"; } }
         }
@@ -489,6 +491,8 @@ namespace DegreeMapping.Models
         {
             switch(value)
             {
+                case 7: return CourseMapper.DisplayType.SelectFour;
+                case 6: return CourseMapper.DisplayType.SelectThree;
                 case 5: return CourseMapper.DisplayType.SelectTwo;
                 case 4: return CourseMapper.DisplayType.SelectOne;
                 case 3: return CourseMapper.DisplayType.OR;

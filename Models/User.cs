@@ -20,13 +20,16 @@ namespace DegreeMapping.Models
         public string LastName { get; set; }
         public string Password { get; set; }
         public string Message { get; set; }
+        public int RoleId { get; set; }
 
         public User()
-        { 
+        {
+            RoleId = 3;
         }
         public User(string nid)
         {
             NID = nid;
+            RoleId = 3;
             Allowed(nid);
         }
 
@@ -39,6 +42,23 @@ namespace DegreeMapping.Models
                 cmd.CommandText = "InsertUser";
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@NID", nid);
+                cmd.Parameters.AddWithValue("@RoleId", 3);
+                cmd.ExecuteScalar();
+                cn.Close();
+            }
+        }
+
+        public static void Update(string nid, int roleId, string displayName)
+        {
+            using (SqlConnection cn = new SqlConnection(Database.DC_DegreeMapping))
+            {
+                cn.Open();
+                SqlCommand cmd = cn.CreateCommand();
+                cmd.CommandText = "UpdateUser";
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@NID", nid);
+                cmd.Parameters.AddWithValue("@RoleId", roleId);
+                cmd.Parameters.AddWithValue("@DisplayName", displayName);
                 cmd.ExecuteScalar();
                 cn.Close();
             }
@@ -54,18 +74,53 @@ namespace DegreeMapping.Models
                 cmd.CommandText = "GetUser";
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@NID", nid);
-                string userNID = cmd.ExecuteScalar().ToString();
-                if (!string.IsNullOrEmpty(userNID))
+                SqlDataReader dr = cmd.ExecuteReader();
+                //string userNID = cmd.ExecuteScalar().ToString();
+                if (dr.HasRows)
                 {
-                    Authorized = true;
+                    while (dr.Read())
+                    {
+                        if (!string.IsNullOrEmpty(dr["NID"].ToString()))
+                        {
+                            RoleId = Convert.ToInt32(dr["RoleId"].ToString());
+                            Authorized = true;
+                            DisplayName = dr["DisplayName"].ToString();
+                        }
+                    }
                 }
                 cn.Close();
             }
         }
 
-        public static List<string> List()
+
+        public static User Get(string nid)
         {
-            List<string> list_users = new List<string>();
+            User user = new User();
+            using (SqlConnection cn = new SqlConnection(Database.DC_DegreeMapping))
+            {
+                cn.Open();
+                SqlCommand cmd = cn.CreateCommand();
+                cmd.CommandText = "GetUser";
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@NID", nid);
+                SqlDataReader dr = cmd.ExecuteReader();
+                if (dr.HasRows)
+                {
+                    while (dr.Read())
+                    {
+                        user.NID = (dr["NID"].ToString());
+                        user.RoleId = Convert.ToInt32(dr["RoleId"].ToString());
+                        user.DisplayName = dr["DisplayName"].ToString();
+                    }
+                }
+                cn.Close();
+            }
+            return user;
+        }
+
+        public static List<User> List()
+        {
+            List<User> list_users = new List<User>();
             using (SqlConnection cn = new SqlConnection(Database.DC_DegreeMapping))
             {
                 cn.Open();
@@ -77,7 +132,11 @@ namespace DegreeMapping.Models
                 {
                     while (dr.Read())
                     {
-                        list_users.Add(dr["NID"].ToString());
+                        User user = new User();
+                        user.NID = (dr["NID"].ToString());
+                        user.RoleId = Convert.ToInt32(dr["RoleId"].ToString());
+                        user.DisplayName = dr["DisplayName"].ToString();
+                        list_users.Add(user);
                     }
                 }
                 cn.Close();

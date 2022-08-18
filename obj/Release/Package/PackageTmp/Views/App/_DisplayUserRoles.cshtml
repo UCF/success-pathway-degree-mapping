@@ -1,0 +1,34 @@
+﻿@model DegreeMapping.Models.User
+@{
+    Dictionary<int, string> dict_r = DegreeMapping.Models.Role.List();
+}
+
+<table class="table ml-5">
+    @foreach (var role in dict_r)
+    {
+        //Super Admin==>Only for the developer
+        if (!User.IsInRole(DegreeMapping.Models.Role.SuperAdmin) && role.Key == 1)
+        {
+            continue;
+        }
+        //Editor==>Not sure what to use it for
+        if (role.Key == 4)
+        {
+            continue;
+        }
+        string cssClass = string.Format("tr_{0}_{1}", Model.NID, role.Key);
+        <tr class="alert @cssClass">
+            <td>
+                @if (Model.RoleId == role.Key)
+                {
+                    <label><input type="radio" name="@Model.NID" id="" value="@role.Key" checked="checked" /> @role.Value</label>
+                }
+                else
+                {
+                    <label><input type="radio" name="@Model.NID" id="" value="@role.Key" /> @role.Value</label>
+                }
+            </td>
+        </tr>
+    }
+</table>
+<span class="px-3"> @Html.ActionLink("Delete", "UserDelete", new { nid = Model.NID }, new { @class = "btn btn-danger" })</span>

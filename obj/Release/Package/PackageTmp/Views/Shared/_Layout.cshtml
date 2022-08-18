@@ -1,6 +1,25 @@
-﻿@{ 
+﻿@{
     string url = HttpContext.Current.Request.Url.AbsoluteUri;
     url = (url.ToLower().Contains("localhost")) ? "" : "/Pathway";
+
+    string role = string.Empty;
+    if (User.Identity.IsAuthenticated)
+    {
+        if (User.IsInRole(DegreeMapping.Models.Role.Admin))
+        {
+            role = DegreeMapping.Models.Role.Admin;
+        } else if (User.IsInRole(DegreeMapping.Models.Role.Publisher))
+        {
+            role = DegreeMapping.Models.Role.Publisher;
+        } else if (User.IsInRole(DegreeMapping.Models.Role.SuperAdmin))
+        {
+            role = DegreeMapping.Models.Role.SuperAdmin;
+        }
+        else
+        {
+            role = DegreeMapping.Models.Role.Editor;
+        }
+    }
 }
 <!DOCTYPE html>
 <html>
@@ -28,25 +47,31 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("UCF Success Pathway", "Index", "Home", null, new { @class = "navbar-brand h1" })
+                @Html.ActionLink("UCF Success Pathway", "Index", "Home", null, new { @class = "navbar-brand" })
             </div>
-            <div class="navbar-collapse collapse">
+            <div class="navbar-collapse collapse pt-3">
                 <div class="float-right">
                     @if (User.Identity.IsAuthenticated)
                     {
                         <span class="px-3">@Html.ActionLink("Pathway Catalogs", "Catalog", "App", null, new { @class = "btn btn-primary btn-lg" })</span>
-                        <span class="px-3">@Html.ActionLink("Colleges", "CollegeList", "App", null, new { @class = "btn btn-primary btn-lg" })</span>
                         <span class="px-3">@Html.ActionLink("Course Search", "CourseSearch", "App", null, new { @class = "btn btn-primary btn-lg" })</span>
-                        <span class="px-3">@Html.ActionLink("Institutions", "Institutions", "App", null, new { @class = "btn btn-primary btn-lg" })</span>
-                        if (User.Identity.Name == "jgiron")
+                        if (User.IsInRole(DegreeMapping.Models.Role.Admin))
                         {
+                            <span class="px-3">@Html.ActionLink("Colleges", "CollegeList", "App", null, new { @class = "btn btn-primary btn-lg" })</span>
+                            <span class="px-3">@Html.ActionLink("Institutions", "Institutions", "App", null, new { @class = "btn btn-primary btn-lg" })</span>
                             <span class="px-3">@Html.ActionLink("Users", "ViewUsers", "App", null, new { @class = "btn btn-primary btn-lg" })</span>
-                            <span class="px-3">@Html.ActionLink("Degree Map v2", "Index", "DegreeMap2", null, new { @class = "btn btn-primary btn-lg", target="_blank" })</span>
-                            <span class="px-3">@Html.ActionLink("Error Logs", "ErrorLog", "App", null, new { @class = "btn btn-primary btn-lg" })</span>
+                        }
+                        if (User.IsInRole(DegreeMapping.Models.Role.SuperAdmin))
+                        {
+                            <span class="px-3">@Html.ActionLink("Error Logs", "ErrorLog", "App", null, new { @class = "btn btn-danger btn-lg" })</span>
                         }
                         <span class="px-3">@Html.ActionLink("Sign Out", "SignOut", "Home", null, new { @class = "btn btn-warning btn-lg" })</span>
                     }
                 </div>
+            </div>
+            <div class="clearfix float-right" style="color:white">
+                <span>@User.Identity.Name</span>
+                <div><em>@role</em></div>
             </div>
         </div>
     </div>
@@ -54,18 +79,18 @@
     <div class="container body-content">
         @RenderBody()
         @*<footer class="pt-3 fixed-bottom text-center bg-success">
-            @if (User.Identity.IsAuthenticated)
-            {
-                <div>You are signed in as @User.Identity.Name</div>
-                <div>Version 2.1.1</div>
-            }
-        </footer>*@
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <div>You are signed in as @User.Identity.Name</div>
+                    <div>Version 2.1.1</div>
+                }
+            </footer>*@
     </div>
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
     @if (User.Identity.IsAuthenticated)
-    { 
+    {
         <footer class="px-5 bg-inverse">
             <div>&nbsp;</div>
         </footer>
