@@ -1,4 +1,7 @@
 ﻿@model List<DegreeMapping.Models.User>
+@{
+    string urlPath = DegreeMapping.Models.AppSettings.URLPath;
+}
 
 @section JumbotronMain {
     <div class="jumbotron jumbotron-fluid">
@@ -63,7 +66,7 @@
         nid = $(this).attr("name");
         roleId = $(this).val();
         $.ajax({
-            url: "/App/UpdateUserRole?nid=" + nid + "&roleId=" + roleId,
+            url: "/@urlPath/App/UpdateUserRole?nid=" + nid + "&roleId=" + roleId,
             method: "get",
             async: false,
         }).done(function (status) {

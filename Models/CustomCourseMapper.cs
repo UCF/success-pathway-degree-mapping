@@ -43,7 +43,14 @@ namespace DegreeMapping.Models
                 cmd.CommandText = "InsertCustomCourseMapper";
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@DegreeId", ccm.DegreeId);
-                cmd.Parameters.AddWithValue("@CourseIds", string.Join(",", ccm.List_CourseIds).TrimEnd(','));
+                if (ccm.List_CourseIds != null)
+                {
+                    cmd.Parameters.AddWithValue("@CourseIds", string.Join(",", ccm.List_CourseIds).TrimEnd(','));
+                }
+                else
+                {
+                    cmd.Parameters.AddWithValue("@CourseIds", null);
+                }
                 cmd.ExecuteNonQuery();
                 cn.Close();
             }
@@ -58,7 +65,14 @@ namespace DegreeMapping.Models
                 cmd.CommandText = "UpdateCustomCourseMapper";
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@DegreeId", ccm.DegreeId);
-                cmd.Parameters.AddWithValue("@CourseIds", string.Join(",", ccm.List_CourseIds).TrimEnd(','));
+                if (ccm.List_CourseIds is null)
+                {
+                    cmd.Parameters.AddWithValue("@CourseIds", null);
+                }
+                else
+                {
+                    cmd.Parameters.AddWithValue("@CourseIds", string.Join(",", ccm.List_CourseIds).TrimEnd(','));
+                }
                 cmd.ExecuteNonQuery();
                 cn.Close();
             }
@@ -78,11 +92,20 @@ namespace DegreeMapping.Models
                 if (dr.HasRows)
                 {
                     while (dr.Read()) 
-                    { 
-                        ccm.List_CourseIds = dr["CourseIds"].ToString().TrimEnd(',').Split(',').Select(Int32.Parse).ToList();
+                    {
+                        ccm.HasRecord = true;
+                        if (!string.IsNullOrEmpty(dr["CourseIds"].ToString()))
+                        {
+                            ccm.List_CourseIds = dr["CourseIds"].ToString().TrimEnd(',').Split(',').Select(Int32.Parse).ToList();
+                        }
+                        else
+                        {
+                            ccm.List_CourseIds = new List<int>();
+                        }
+                        
                         if (ccm.List_CourseIds.Count > 0)
                         {
-                            ccm.HasRecord = true;
+                            
                             foreach (int id in ccm.List_CourseIds)
                             {
                                 Course c = Course.Get(id);
@@ -95,7 +118,7 @@ namespace DegreeMapping.Models
             }
             if (ccm.List_Courses.Count == 0)
             {
-                ccm.HasRecord = false;
+                //ccm.HasRecord = false;
                 GetUCFDefaultSemesterCourses(ref ccm);
             }
             return ccm;

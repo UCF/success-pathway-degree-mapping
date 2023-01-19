@@ -7,7 +7,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
   <PropertyGroup>
     <TimeStampOfAssociatedLegacyPublishXmlFile />
     <_PublishTargetUrl>C:\wwwroot\DegreeMapPublish\published-files</_PublishTargetUrl>
-    <History>True|2022-07-12T20:43:22.4308827Z;True|2022-07-12T16:33:06.4937712-04:00;True|2022-07-07T11:54:12.7969978-04:00;True|2022-07-05T16:25:54.7115707-04:00;True|2022-06-16T16:15:30.2313376-04:00;False|2022-06-16T16:02:26.0478112-04:00;True|2022-06-16T15:47:02.8999217-04:00;True|2022-06-16T10:33:39.1232727-04:00;True|2022-06-09T16:37:40.0396432-04:00;True|2022-06-09T16:19:42.6765955-04:00;True|2022-05-25T12:56:14.4523737-04:00;True|2022-05-24T16:48:24.5605739-04:00;True|2022-05-18T08:45:19.1019026-04:00;</History>
+    <History>True|2022-08-23T19:35:20.8194175Z;True|2022-08-18T09:53:08.1193466-04:00;True|2022-07-12T16:43:22.4308827-04:00;True|2022-07-12T16:33:06.4937712-04:00;True|2022-07-07T11:54:12.7969978-04:00;True|2022-07-05T16:25:54.7115707-04:00;True|2022-06-16T16:15:30.2313376-04:00;False|2022-06-16T16:02:26.0478112-04:00;True|2022-06-16T15:47:02.8999217-04:00;True|2022-06-16T10:33:39.1232727-04:00;True|2022-06-09T16:37:40.0396432-04:00;True|2022-06-09T16:19:42.6765955-04:00;True|2022-05-25T12:56:14.4523737-04:00;True|2022-05-24T16:48:24.5605739-04:00;True|2022-05-18T08:45:19.1019026-04:00;</History>
   </PropertyGroup>
   <ItemGroup>
     <File Include="bin/Antlr3.Runtime.dll">
@@ -17,16 +17,16 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/10/2013 16:29:20</publishTime>
     </File>
     <File Include="bin/DegreeMapper.dll">
-      <publishTime>07/12/2022 09:22:17</publishTime>
+      <publishTime>08/18/2022 09:53:02</publishTime>
     </File>
     <File Include="bin/DegreeMapper.pdb">
-      <publishTime>07/12/2022 09:22:17</publishTime>
+      <publishTime>08/18/2022 09:53:02</publishTime>
     </File>
     <File Include="bin/DegreeMapping.dll">
-      <publishTime>07/26/2022 08:50:42</publishTime>
+      <publishTime>08/23/2022 15:35:15</publishTime>
     </File>
     <File Include="bin/DegreeMapping.pdb">
-      <publishTime>07/26/2022 08:50:42</publishTime>
+      <publishTime>08/23/2022 15:35:15</publishTime>
     </File>
     <File Include="bin/EntityFramework.dll">
       <publishTime>04/16/2020 20:38:42</publishTime>
@@ -6359,7 +6359,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/12/2021 15:05:45</publishTime>
     </File>
     <File Include="Views/App/_CourseMapperHtml.cshtml">
-      <publishTime>08/26/2021 14:02:11</publishTime>
+      <publishTime>08/18/2022 09:11:25</publishTime>
     </File>
     <File Include="Views/App/_CourseMapperList.cshtml">
       <publishTime>07/11/2022 11:36:03</publishTime>

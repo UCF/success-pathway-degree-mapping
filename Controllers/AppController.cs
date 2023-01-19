@@ -607,7 +607,7 @@ namespace DegreeMapping.Controllers
                 CustomCourseMapper.Insert(ccm);
             }
             CustomCourseMapper.Update(ccm);
-            return RedirectToAction("DegreeView", new { id = ccm.DegreeId });
+            return RedirectToAction("CustomCourseMapperEdit", new { degreeId = ccm.DegreeId });
         }
 
         public ActionResult CourseMapperSortOrderUpdate(int courseMapperId, int sortOrderValue)
