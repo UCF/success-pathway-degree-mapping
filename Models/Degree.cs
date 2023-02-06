@@ -54,9 +54,12 @@ namespace DegreeMapping.Models
         public string CareerPathURL { get; set; }
         [DisplayName("Global Course Notes")]
         public string GlobalCourseNotes { get; set; }
+
+        [DisplayName("Display multiple semesters")]
+        public bool DisplayMultipleSemesters { get; set; }
         public Degree()
-        { 
-        
+        {
+            DisplayMultipleSemesters = true;
         }
 
         public Degree(int? catalogId)
@@ -69,6 +72,7 @@ namespace DegreeMapping.Models
             UCFDegreeId = null;
             CatalogId = (catalogId.HasValue) ? catalogId.Value : new Catalog(true).Id;
             CatalogYear = (catalogId.HasValue) ? Catalog.Get(catalogId.Value).Year : new Catalog(true).Year;
+            DisplayMultipleSemesters = true;
         }
 
         public Degree(int institutionId, int? catalogId)
@@ -83,6 +87,7 @@ namespace DegreeMapping.Models
             UCFDegreeId = null;
             CatalogId = (catalogId.HasValue) ? catalogId.Value : new Catalog(true).Id;
             CatalogYear = (catalogId.HasValue) ? Catalog.Get(catalogId.Value).Year : new Catalog(true).Year;
+            DisplayMultipleSemesters = true;
         }
 
         public static int Insert(Degree d)
@@ -303,6 +308,7 @@ namespace DegreeMapping.Models
                 d.SemesterStart = Convert.ToInt32(dr["SemesterStart"].ToString());
                 d.CareerPathURL = dr["CareerPathURL"].ToString();
                 d.GlobalCourseNotes = dr["GlobalCourseNotes"].ToString();
+                d.DisplayMultipleSemesters = Convert.ToBoolean(dr["DisplayMultipleSemesters"].ToString());
                 SetSemesterStartTerm(ref d);
             }
         }
@@ -333,6 +339,22 @@ namespace DegreeMapping.Models
                 default: d.SemesterStartTerm = "Fall";
                     break;
             }
+        }
+
+        public static bool UpdateDisplayMultipleSemesters(bool displayMultipleSemesters, int degreeId)
+        {
+            using (SqlConnection cn = new SqlConnection(Database.DC_DegreeMapping))
+            {
+                cn.Open();
+                SqlCommand cmd = cn.CreateCommand();
+                cmd.CommandText = "UpdateDisplayMultipleSemesters";
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@DegreeId", degreeId);
+                cmd.Parameters.AddWithValue("@DisplayMultipleSemesters", displayMultipleSemesters);
+                displayMultipleSemesters = Convert.ToBoolean(cmd.ExecuteScalar().ToString());
+                cn.Close();
+            }
+            return displayMultipleSemesters;
         }
     }
 }

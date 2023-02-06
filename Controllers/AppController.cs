@@ -161,6 +161,19 @@ namespace DegreeMapping.Controllers
             string updateGlobalCourseNotes = Degree.Get(degreeId).GlobalCourseNotes;
             return Json(new { globalCourseNotes = updateGlobalCourseNotes, degreeId = degreeId }, JsonRequestBehavior.AllowGet);
         }
+        /// <summary>
+        /// February 2023
+        /// New feature 
+        /// Update the DisplayMultipleSemesters
+        /// </summary>
+        /// <param name="displatMultipleSemesters"></param>
+        /// <param name="degreeId"></param>
+        /// <returns></returns>
+        public ActionResult UpdateDisplatMultipleSemesters(bool displatMultipleSemesters, int degreeId)
+        {
+            displatMultipleSemesters = Degree.UpdateDisplayMultipleSemesters(displatMultipleSemesters, degreeId);
+            return Json(new { displatMultipleSemesters = displatMultipleSemesters }, JsonRequestBehavior.AllowGet);
+        }
 
         #endregion
 
