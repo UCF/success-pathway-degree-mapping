@@ -11,8 +11,6 @@
         d.SemesterStart = ucfDegree.SemesterStart;
         d.SemesterStartTerm = ucfDegree.SemesterStartTerm;
     }
-
-    string urlPath = DegreeMapping.Models.AppSettings.URLPath;
     string DisplayMultipleSemesterNoClass = (d.DisplayMultipleSemesters) ? string.Empty : "alert alert-danger";
 }
 
@@ -87,7 +85,7 @@
         $("#DisplayMultipleSemesters input[type='radio']").on('click', function () {
             isChecked = $(this).val();
             $.ajax({
-                url: "@urlPath/App/UpdateDisplatMultipleSemesters?displatMultipleSemesters=" + isChecked + "&degreeId=" + @d.Id,
+                url: "/pathway/App/UpdateDisplatMultipleSemesters?displatMultipleSemesters=" + isChecked + "&degreeId=" + @d.Id,
                 method: "get",
                 async: false,
             }).done(function (data) {
