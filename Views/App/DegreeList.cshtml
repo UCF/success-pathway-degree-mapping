@@ -83,7 +83,7 @@
             displayDegreeList: function (degreelist) {
                 let stopCounter = 0;
                 let output = '';
-                let notActiveHtml = '<span class="px-3 h5" style="color:red">Not Active TTT</span>';
+                let notActiveHtml = '<span class="px-3 h5" style="color:red">Not Active</span>';
                 for (let x = 0; x <= degreelist.length - 1; x++) {
                     if (degreelist[x].Active) {
                         output += '<li><strong>UCF ' + degreelist[x].Name + '</strong><a href="@path/App/DegreeView/' + degreelist[x].Id + '"> Edit</a></li>'
