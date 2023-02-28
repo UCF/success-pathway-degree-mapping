@@ -18,27 +18,26 @@
 }
 
 <div class="container">
-
-    @Html.Action("_DisplayFavoriteDegree", "App", new { NID = User.Identity.Name } )
+    @Html.Action("_DisplayFavoriteDegree", "App", new { NID = User.Identity.Name })
     <div class="row pt-5">
         <h2 class="heading-underline">Active Catalogs</h2>
         <div class="col-md-12">
             <div class="card-deck">
-                @foreach (DegreeMapping.Models.Catalog cy in list_cy.OrderByDescending(x => x.Current).ThenBy(x => x.Year).Where(x => x.Active))
+                @foreach (DegreeMapping.Models.Catalog cy in list_cy.OrderByDescending(x => x.Current).ThenByDescending(x => x.Year).Where(x => x.Active))
                 {
                     string cssClassCurrent = string.Empty;//(cy.Current) ? "bg-success" : string.Empty;
                     string cssCurrentCatalogBorder = (cy.Current) ? "border:3px solid green" : string.Empty;
-                    <div class="card mt-5 mb-5" style="@cssCurrentCatalogBorder">
+                    <div class="card mt-5 mb-5" style="@cssCurrentCatalogBorder; max-width: 335px">
                         <div class="py-5 card-header text-center @cssClassCurrent" style="background-color:@cy.BGColor">
                             <h2 class="h1"> @cy.Year</h2>
-                        @if (cy.Current)
-                        {
-                            <div class="w-100" style="background-color:green">Current</div>
-                        }
-                        else
-                        {
-                            <div>&nbsp;</div>
-                        }
+                            @if (cy.Current)
+                            {
+                                <div class="w-100" style="background-color:green">Current</div>
+                            }
+                            else
+                            {
+                                <div>&nbsp;</div>
+                            }
                         </div>
                         @using (Html.BeginForm("CatalogSave", "App", FormMethod.Post, new { @Class = "form-horizontal" }))
                         {
@@ -95,8 +94,8 @@
                                     <button type="submit" class="btn btn-success btn-block btn-lg">Save</button>
                                 </div>
                             }
-                            else 
-                            { 
+                            else
+                            {
                                 <div class="alert alert-info">This Catalog is closed for editing</div>
                             }
                         }

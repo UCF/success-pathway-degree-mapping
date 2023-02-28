@@ -137,7 +137,7 @@
                     <label for="UCFDegreeId">UCF Related Degree : </label>
                     <select name="UCFDegreeId" id="UCFDegreeId" class="form-control d-inline">
                         <option value="">Select UCF Degree: </option>
-                        @foreach (DegreeMapping.Models.Degree d in list_d.Where(x => x.InstitutionId == 1).OrderBy(x => x.Name))
+                        @foreach (DegreeMapping.Models.Degree d in list_d.Where(x => x.InstitutionId == 1 && x.CatalogId == Model.CatalogId).OrderBy(x => x.Name))
                         {
                             if (Model.UCFDegreeId == d.Id)
                             {
