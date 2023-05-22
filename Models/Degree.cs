@@ -57,6 +57,10 @@ namespace DegreeMapping.Models
 
         [DisplayName("Display multiple semesters")]
         public bool DisplayMultipleSemesters { get; set; }
+
+        [DisplayName("Degree is 100% Online")]
+        public bool DegreeFullOnline { get; set; } = false;
+
         public Degree()
         {
             DisplayMultipleSemesters = true;
@@ -114,6 +118,7 @@ namespace DegreeMapping.Models
                 cmd.Parameters.AddWithValue("@NID", d.NID);
                 cmd.Parameters.AddWithValue("@SemesterStart", d.SemesterStart);
                 cmd.Parameters.AddWithValue("@CareerPathURL", d.CareerPathURL);
+                cmd.Parameters.AddWithValue("@DegreeFullOnline", d.DegreeFullOnline);
                 if (d.UCFDegreeId.HasValue)
                 {
                     cmd.Parameters.AddWithValue("@UCFDegreeId", d.UCFDegreeId.Value);
@@ -151,6 +156,7 @@ namespace DegreeMapping.Models
                 cmd.Parameters.AddWithValue("@NID", d.NID);
                 cmd.Parameters.AddWithValue("@SemesterStart", d.SemesterStart);
                 cmd.Parameters.AddWithValue("@CareerPathURL", d.CareerPathURL);
+                cmd.Parameters.AddWithValue("@DegreeFullOnline", d.DegreeFullOnline);
                 if (d.CloneDegreeId.HasValue)
                 {
                     cmd.Parameters.AddWithValue("@CloneDegreeId", d.CloneDegreeId.Value);
@@ -309,6 +315,7 @@ namespace DegreeMapping.Models
                 d.CareerPathURL = dr["CareerPathURL"].ToString();
                 d.GlobalCourseNotes = dr["GlobalCourseNotes"].ToString();
                 d.DisplayMultipleSemesters = Convert.ToBoolean(dr["DisplayMultipleSemesters"].ToString());
+                d.DegreeFullOnline = Convert.ToBoolean(dr["DegreeFullOnline"]);
                 SetSemesterStartTerm(ref d);
             }
         }
