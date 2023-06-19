@@ -44,7 +44,6 @@
                             @Html.HiddenFor(x => cy.Id)
                             @Html.HiddenFor(x => cy.Year)
                             @Html.HiddenFor(x => cy.Active)
-                            @Html.HiddenFor(x => cy.Current)
 
                             <div class="card-block">
                                 <div>@Html.LabelFor(c => cy.UndergraduateCatalogURL)</div>
@@ -72,6 +71,10 @@
                                                 <br />
                                                 @Html.LabelFor(x => cy.DisplayOnWeb) :
                                                 @Html.CheckBoxFor(x => cy.DisplayOnWeb)
+                                                <br />
+                                                <label>Current catalog : </label>
+                                                <label class="pr-3">Yes @Html.RadioButtonFor(x => cy.Current, true)</label>
+                                                <label>No @Html.RadioButtonFor(x => cy.Current, false)</label>
 
                                                 <div><strong>Catalog Roles:</strong></div>
                                                 <div class="pl-2"><label>@Html.RadioButtonFor(x => cy.EditableRoleId, 2) Admin Only</label></div>
@@ -101,6 +104,9 @@
                         }
                     </div>
                 }
+
+
+
             </div>
         </div>
     </div>

@@ -137,6 +137,12 @@ namespace DegreeMapping.Models
 
         public static void Update(Catalog cy)
         {
+            if (cy.Current)
+            {
+                SetCurrentCatalog(null);
+                SetCurrentCatalog(cy.Id);
+            }
+
             using (SqlConnection cn = new SqlConnection(Database.DC_DegreeMapping))
             {
                 cn.Open();
@@ -155,6 +161,31 @@ namespace DegreeMapping.Models
                 cn.Close();
             }
         }
+
+        public static void SetCurrentCatalog(int? id)
+        {
+            using (SqlConnection cn = new SqlConnection(Database.DC_DegreeMapping))
+            {
+                cn.Open();
+                SqlCommand cmd = cn.CreateCommand();
+                if (id.HasValue)
+                {
+                    cmd.CommandText = "UPDATE [CATALOG] SET [Current]=@current WHERE Id = @Id";
+                    cmd.Parameters.AddWithValue("@current", true);
+                    cmd.Parameters.AddWithValue("@Id", id.Value);
+                }
+                else 
+                {
+                    cmd.CommandText = "UPDATE [CATALOG] SET [Current]=@current"; 
+                    cmd.Parameters.AddWithValue("@current", false);
+                }
+                cmd.CommandType = CommandType.Text;
+                cmd.ExecuteScalar();
+                cn.Close();
+            }
+
+        }
+
 
         private static void Set(SqlDataReader dr, ref Catalog cy)
         {

@@ -18,34 +18,32 @@
 }
 
 <div class="container">
-
-    @Html.Action("_DisplayFavoriteDegree", "App", new { NID = User.Identity.Name } )
+    @Html.Action("_DisplayFavoriteDegree", "App", new { NID = User.Identity.Name })
     <div class="row pt-5">
         <h2 class="heading-underline">Active Catalogs</h2>
         <div class="col-md-12">
             <div class="card-deck">
-                @foreach (DegreeMapping.Models.Catalog cy in list_cy.OrderByDescending(x => x.Current).ThenBy(x => x.Year).Where(x => x.Active))
+                @foreach (DegreeMapping.Models.Catalog cy in list_cy.OrderByDescending(x => x.Current).ThenByDescending(x => x.Year).Where(x => x.Active))
                 {
                     string cssClassCurrent = string.Empty;//(cy.Current) ? "bg-success" : string.Empty;
                     string cssCurrentCatalogBorder = (cy.Current) ? "border:3px solid green" : string.Empty;
-                    <div class="card mt-5 mb-5" style="@cssCurrentCatalogBorder">
+                    <div class="card mt-5 mb-5" style="@cssCurrentCatalogBorder; max-width: 335px">
                         <div class="py-5 card-header text-center @cssClassCurrent" style="background-color:@cy.BGColor">
                             <h2 class="h1"> @cy.Year</h2>
-                        @if (cy.Current)
-                        {
-                            <div class="w-100" style="background-color:green">Current</div>
-                        }
-                        else
-                        {
-                            <div>&nbsp;</div>
-                        }
+                            @if (cy.Current)
+                            {
+                                <div class="w-100" style="background-color:green">Current</div>
+                            }
+                            else
+                            {
+                                <div>&nbsp;</div>
+                            }
                         </div>
                         @using (Html.BeginForm("CatalogSave", "App", FormMethod.Post, new { @Class = "form-horizontal" }))
                         {
                             @Html.HiddenFor(x => cy.Id)
                             @Html.HiddenFor(x => cy.Year)
                             @Html.HiddenFor(x => cy.Active)
-                            @Html.HiddenFor(x => cy.Current)
 
                             <div class="card-block">
                                 <div>@Html.LabelFor(c => cy.UndergraduateCatalogURL)</div>
@@ -73,6 +71,10 @@
                                                 <br />
                                                 @Html.LabelFor(x => cy.DisplayOnWeb) :
                                                 @Html.CheckBoxFor(x => cy.DisplayOnWeb)
+                                                <br />
+                                                <label>Current catalog : </label>
+                                                <label class="pr-3">Yes @Html.RadioButtonFor(x => cy.Current, true)</label>
+                                                <label>No @Html.RadioButtonFor(x => cy.Current, false)</label>
 
                                                 <div><strong>Catalog Roles:</strong></div>
                                                 <div class="pl-2"><label>@Html.RadioButtonFor(x => cy.EditableRoleId, 2) Admin Only</label></div>
@@ -95,13 +97,16 @@
                                     <button type="submit" class="btn btn-success btn-block btn-lg">Save</button>
                                 </div>
                             }
-                            else 
-                            { 
+                            else
+                            {
                                 <div class="alert alert-info">This Catalog is closed for editing</div>
                             }
                         }
                     </div>
                 }
+
+
+
             </div>
         </div>
     </div>

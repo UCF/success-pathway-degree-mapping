@@ -184,6 +184,39 @@
                 </div>
             </div>
         </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(x => x.GPA) : @Model.GPA
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(x => x.DegreeFullOnline) : @(Model.DegreeFullOnline?"Yes":"No")
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(x => x.LimitedAccess) : @(Model.LimitedAccess?"Yes":"No")
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(x => x.RestrictedAccess) : @(Model.RestrictedAccess?"Yes":"No")
+                </div>
+            </div>
+        </div>
+
     }
 
     if (Model.InstitutionId == DegreeMapping.Models.Institution.UCFId)
@@ -196,6 +229,16 @@
                 </div>
             </div>
         </div>
+
+        <div class="row pt-2">
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(x => x.DegreeFullOnline) :
+                    @Html.CheckBoxFor(x => x.DegreeFullOnline)
+                </div>
+            </div>
+        </div>
+
         <div class="row pt-2">
             <div class="col-md-2">
                 <div class="form-group">

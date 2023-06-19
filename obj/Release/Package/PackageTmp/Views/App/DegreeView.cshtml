@@ -28,6 +28,7 @@
         Model.SemesterStartTerm = ucfDegree.SemesterStartTerm;
         Model.CareerPathURL = ucfDegree.CareerPathURL;
         Model.GlobalCourseNotes = ucfDegree.GlobalCourseNotes;
+        Model.DegreeFullOnline = ucfDegree.DegreeFullOnline;
         //Model.GlobalCourseNotes = (!string.IsNullOrEmpty(ucfDegree.GlobalCourseNotes)) ? ucfDegree.GlobalCourseNotes : "No Global Course Notes";
 
         degreeUrl = string.Format("https://connect.ucf.edu/degree-mapping/?degreeId={0}&degree={1}&institution={2}&catalog={3}", Model.Id, Model.Name, Model.Institution, Model.CatalogYear);
@@ -125,6 +126,12 @@
         <div class="form-group">
             <div class="col-md-10">
                 <i class="fa fa-info-circle" role="button" data-toggle="tooltip" data-placement="left" title="Set by parent degree"></i> @Html.LabelFor(x => x.SemesterStartTerm) : <span class="bg-warning px-2">@Model.SemesterStartTerm</span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-10">
+                <i class="fa fa-info-circle" role="button" data-toggle="tooltip" data-placement="left" title="Set by parent degree"></i> @Html.LabelFor(x => x.DegreeFullOnline) : @(Model.DegreeFullOnline?"Yes":"No")
             </div>
         </div>
 
