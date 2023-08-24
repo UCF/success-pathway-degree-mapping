@@ -72,9 +72,15 @@
                                                 @Html.LabelFor(x => cy.DisplayOnWeb) :
                                                 @Html.CheckBoxFor(x => cy.DisplayOnWeb)
                                                 <br />
-                                                <label>Current catalog : </label>
-                                                <label class="pr-3">Yes @Html.RadioButtonFor(x => cy.Current, true)</label>
-                                                <label>No @Html.RadioButtonFor(x => cy.Current, false)</label>
+                                                <strong>Current catalog : @(cy.Current ? " Yes" : "No")</strong>
+                                                @Html.HiddenFor(x => cy.Current)
+
+                                                @*********************************************************************************************************
+                                                August 2023 a user set the current catalog to NO and no default current catalog was set.
+                                                This caused the entire website to crash. Setting current catalog now must be set manually in the database.
+                                                *********************************************************************************************************@
+                                                @*<label class="pr-3">Yes @Html.RadioButtonFor(x => cy.Current, true)</label>
+                                                <label>No @Html.RadioButtonFor(x => cy.Current, false)</label>*@
 
                                                 <div><strong>Catalog Roles:</strong></div>
                                                 <div class="pl-2"><label>@Html.RadioButtonFor(x => cy.EditableRoleId, 2) Admin Only</label></div>
