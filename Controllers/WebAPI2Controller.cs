@@ -16,7 +16,13 @@ namespace DegreeMapping.Controllers
 {
     [RoutePrefix("api/v2/DegreeMap")]
 
-    [EnableCors(origins: "https://connectucncmsqa.smca.ucf.edu, https://connectucncmsdev.smca.ucf.edu, https://connect.ucf.edu, http://localhost:62752", headers: "APIKey", methods: "*")]
+    [EnableCors(origins: 
+        "https://connectucncmsqa.smca.ucf.edu, " +
+        "https://connectucncmsdev.smca.ucf.edu, " +
+        "https://connect.ucf.edu, " +
+        "http://localhost:62752, " +
+        "https://dev-ucf-bs.pantheonsite.io",
+        headers: "APIKey", methods: "*")]
     public class WebAPI2Controller : ApiController
     {
         [HttpGet]

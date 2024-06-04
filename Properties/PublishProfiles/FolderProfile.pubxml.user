@@ -6,8 +6,8 @@ by editing this MSBuild file. In order to learn more about this please visit htt
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <TimeStampOfAssociatedLegacyPublishXmlFile />
-    <_PublishTargetUrl>C:\wwwroot\DegreeMapPublish\published-files</_PublishTargetUrl>
-    <History>True|2023-08-24T00:46:28.8288025Z;True|2023-02-28T15:24:59.0476637-05:00;True|2023-02-28T15:24:32.1240426-05:00;True|2023-02-28T11:07:04.7115735-05:00;True|2023-01-19T08:45:55.7622368-05:00;True|2022-08-23T15:35:20.8194175-04:00;True|2022-08-18T09:53:08.1193466-04:00;True|2022-07-12T16:43:22.4308827-04:00;True|2022-07-12T16:33:06.4937712-04:00;True|2022-07-07T11:54:12.7969978-04:00;True|2022-07-05T16:25:54.7115707-04:00;True|2022-06-16T16:15:30.2313376-04:00;False|2022-06-16T16:02:26.0478112-04:00;True|2022-06-16T15:47:02.8999217-04:00;True|2022-06-16T10:33:39.1232727-04:00;True|2022-06-09T16:37:40.0396432-04:00;True|2022-06-09T16:19:42.6765955-04:00;True|2022-05-25T12:56:14.4523737-04:00;True|2022-05-24T16:48:24.5605739-04:00;True|2022-05-18T08:45:19.1019026-04:00;</History>
+    <_PublishTargetUrl>C:\wwwroot\DegreeMapPublishDEV</_PublishTargetUrl>
+    <History>True|2024-05-19T20:58:35.4782631Z;True|2023-08-23T20:46:28.8288025-04:00;True|2023-02-28T15:24:59.0476637-05:00;True|2023-02-28T15:24:32.1240426-05:00;True|2023-02-28T11:07:04.7115735-05:00;True|2023-01-19T08:45:55.7622368-05:00;True|2022-08-23T15:35:20.8194175-04:00;True|2022-08-18T09:53:08.1193466-04:00;True|2022-07-12T16:43:22.4308827-04:00;True|2022-07-12T16:33:06.4937712-04:00;True|2022-07-07T11:54:12.7969978-04:00;True|2022-07-05T16:25:54.7115707-04:00;True|2022-06-16T16:15:30.2313376-04:00;False|2022-06-16T16:02:26.0478112-04:00;True|2022-06-16T15:47:02.8999217-04:00;True|2022-06-16T10:33:39.1232727-04:00;True|2022-06-09T16:37:40.0396432-04:00;True|2022-06-09T16:19:42.6765955-04:00;True|2022-05-25T12:56:14.4523737-04:00;True|2022-05-24T16:48:24.5605739-04:00;True|2022-05-18T08:45:19.1019026-04:00;</History>
   </PropertyGroup>
   <ItemGroup>
     <File Include="bin/Antlr3.Runtime.dll">
@@ -23,10 +23,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/23/2023 21:53:14</publishTime>
     </File>
     <File Include="bin/DegreeMapping.dll">
-      <publishTime>08/23/2023 20:46:25</publishTime>
+      <publishTime>05/19/2024 16:58:23</publishTime>
     </File>
     <File Include="bin/DegreeMapping.pdb">
-      <publishTime>08/23/2023 20:46:25</publishTime>
+      <publishTime>05/19/2024 16:58:23</publishTime>
     </File>
     <File Include="bin/EntityFramework.dll">
       <publishTime>04/16/2020 20:38:42</publishTime>
@@ -6329,7 +6329,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>06/16/2022 10:23:41</publishTime>
     </File>
     <File Include="Views/App/NoteView.cshtml">
-      <publishTime>08/05/2021 14:28:40</publishTime>
+      <publishTime>06/16/2022 10:23:40</publishTime>
     </File>
     <File Include="Views/App/ViewUsers.cshtml">
       <publishTime>07/26/2022 10:05:28</publishTime>
@@ -6488,7 +6488,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>12/07/2020 16:49:17</publishTime>
     </File>
     <File Include="Views/Shared/_Layout.cshtml">
-      <publishTime>02/22/2023 16:32:21</publishTime>
+      <publishTime>05/19/2024 16:54:56</publishTime>
     </File>
     <File Include="Views/Shared/_Pathway.cshtml">
       <publishTime>05/17/2022 14:55:33</publishTime>
@@ -6503,7 +6503,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>12/07/2020 16:49:17</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>08/23/2023 20:46:27</publishTime>
+      <publishTime>05/19/2024 16:58:25</publishTime>
     </File>
   </ItemGroup>
 </Project>
