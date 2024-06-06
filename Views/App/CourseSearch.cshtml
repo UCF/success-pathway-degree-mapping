@@ -42,12 +42,21 @@
     @if (Model.Count > 0)
     {
         int count = 0;
-        <div class="alert alert-warning">Found @Model.Count courses</div>
-        <table class="table table-hover">
+
+        <div class="row">
+            <div class="col-md-10">
+                <div class="alert alert-warning">Found @Model.Count courses</div>
+            </div>
+            <div class="col-md-2">
+                <a href="#" class="btn btn-primary btn-lg" onclick="download_table_as_csv('course-search');">Download as CSV</a>
+            </div>
+        </div>
+        
+        <table class="table table-hover" id="course-search">
             <thead>
                 <tr>
-                    <th>&nbsp;</th>
-                    <th>&nbsp;</th>
+                    <th>Count</th>
+                    <th>-</th>
                     <th>Course</th>
                     <th>Degree</th>
                     <th>Institution</th>
@@ -69,3 +78,4 @@
         </table>
     }
 </div>
+<script src="~/Scripts/table-to-csv.js"></script>
