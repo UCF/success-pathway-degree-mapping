@@ -20,9 +20,7 @@ namespace DegreeMapping.Controllers
         "https://connectucncmsqa.smca.ucf.edu, " +
         "https://connectucncmsdev.smca.ucf.edu, " +
         "https://connect.ucf.edu, " +
-        "http://localhost:62752, " +
-        "https://dev-ucf-ucn.pantheonsite.io, " +
-        "https://dev-ucf-ucn.pantheonsite.io/connect-ucf-edu, ",
+        "http://localhost:62752, ",
         headers: "APIKey", methods: "*")]
     public class WebAPI2Controller : ApiController
     {
