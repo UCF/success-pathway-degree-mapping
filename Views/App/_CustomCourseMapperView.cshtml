@@ -22,8 +22,6 @@
             <div>Semster Term Order is by <span class="bg-warning px-2">@d.SemesterStartTerm</span></div>
             <div><span class="fa fa-check" style="color:green"></span> Will be displayed</div>
             <div><span class="fa fa-times" style="color:red"></span> Will <i>not</i> be displayed</div>
-            @Html.ActionLink("Edit", "CustomCourseMapperEdit", "App", new { degreeId = Model.DegreeId }, null)
-
 
         <div class="form-check alert alert-info pt-3" id="DisplayMultipleSemesters">
             @Html.LabelFor(x => d.DisplayMultipleSemesters) :
@@ -31,6 +29,10 @@
             <label>Yes @Html.RadioButtonFor(x => d.DisplayMultipleSemesters, true, new { @class = "displayMultipleSemestersYes" })</label>
             <label class="DisplayMultipleSemesterNoClass @DisplayMultipleSemesterNoClass pl-3">No @Html.RadioButtonFor(x => d.DisplayMultipleSemesters, false, new { @class = "displayMultipleSemestersNo" })</label>
             <span class="pl-2 font-weight-bold" id="DisplayMultipleSemestersMessage">By selecting no, only semester 1 will display</span>
+        </div>
+
+        <div>
+            @Html.ActionLink("Edit courses to be displayed on the website", "CustomCourseMapperEdit", "App", new { degreeId = Model.DegreeId }, new { @class="btn btn-primary btn-lg"})
         </div>
 
 
