@@ -6,7 +6,9 @@ using System.Net.Http;
 using System.Security.Cryptography.X509Certificates;
 using System.Web.Http;
 using System.Web.Http.Cors;
+using DegreeMapper.PDFTemplate;
 using DegreeMapperWebAPI;
+using SelectPdf;
 
 /// <summary>
 /// This uses the DegreeMapperWebAPI Project
@@ -25,6 +27,22 @@ namespace DegreeMapping.Controllers
         headers: "APIKey", methods: "*")]
     public class WebAPI2Controller : ApiController
     {
+        [HttpGet]
+        [Route("GetPDFDegree")]
+        public object GetPDFDegree(int id)
+        {
+            PDFTemplate template = new PDFTemplate(id);
+            HtmlToPdf converter = new HtmlToPdf();
+            PdfDocument doc = converter.ConvertHtmlString(template.HTMLPage);
+            doc.DocumentInformation.Title = template.PDFTitle;
+            doc.DocumentInformation.Subject = template.PDFSubject;
+            doc.DocumentInformation.Author = template.PDFAuthor;
+            doc.DocumentInformation.CreationDate = DateTime.Now;
+            //doc.Save(httpResponse), false, "rerwer.pdf");
+            return string.Empty;
+        }
+
+
         [HttpGet]
         //[MyCustomAttribute]
         [Route("GetCatalogs")]
