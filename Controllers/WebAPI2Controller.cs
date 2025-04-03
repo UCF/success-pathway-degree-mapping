@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -28,18 +29,36 @@ namespace DegreeMapping.Controllers
     public class WebAPI2Controller : ApiController
     {
         [HttpGet]
-        [Route("GetPDFDegree")]
-        public object GetPDFDegree(int id)
+        [Route("GetPDFDegree")]        
+        public IHttpActionResult GetPDFDegree(int degreeId)
         {
-            PDFTemplate template = new PDFTemplate(id);
+            PDFTemplate template = new PDFTemplate(degreeId);
             HtmlToPdf converter = new HtmlToPdf();
             PdfDocument doc = converter.ConvertHtmlString(template.HTMLPage);
             doc.DocumentInformation.Title = template.PDFTitle;
             doc.DocumentInformation.Subject = template.PDFSubject;
             doc.DocumentInformation.Author = template.PDFAuthor;
             doc.DocumentInformation.CreationDate = DateTime.Now;
-            //doc.Save(httpResponse), false, "rerwer.pdf");
-            return string.Empty;
+
+            //https://stackoverflow.com/questions/26038856/how-to-return-a-file-filecontentresult-in-asp-net-webapi
+            var result = new HttpResponseMessage(HttpStatusCode.OK)
+            { 
+                Content = new ByteArrayContent(doc.Save())
+            };
+
+            result.Content.Headers.ContentDisposition = new System.Net.Http.Headers.ContentDispositionHeaderValue("attachment")
+            {
+                FileName = $"{template.PDFFileName}"
+            };
+
+            result.Content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/octet-stream");
+
+            var response = ResponseMessage(result);
+
+            return response;
+
+            //https://stackoverflow.com/questions/77603727/how-to-send-the-pdf-file-through-c-sharp-asp-net-web-api
+            
         }
 
 
