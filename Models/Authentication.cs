@@ -14,9 +14,9 @@ namespace DegreeMapping.Models
 {
     public class Authentication
     {
-        protected static string ServiceAcct { get { return "svc_RC_CEWWW"; } }
+        protected static string ServiceAcct { get { return "svc_ucn_Degreemap"; } }
 
-        protected static string ServiceAcctPass { get { return "Yg553@9tnb$Eh6eKTzzE"; } }
+        protected static string ServiceAcctPass { get { return "l#j5I)XXGDY951D1m!b2rc7@Q"; } }
 
         public static string OU_SLAS { get { return "RC CE Web Admins"; } }
 
@@ -31,8 +31,8 @@ namespace DegreeMapping.Models
         /// <param name="u"></param>
         public Authentication(string nid, string password, ref Models.User u)
         {
-            SetFakeAuthentication(ref u);
-            return;
+            //SetFakeAuthentication(ref u);
+            //return;
 
             using (var context = new PrincipalContext(ContextType.Domain, "NET", "NET\\" + ServiceAcct, ServiceAcctPass))
             {
