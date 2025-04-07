@@ -29,7 +29,7 @@ namespace DegreeMapping.Controllers
     public class WebAPI2Controller : ApiController
     {
         [HttpGet]
-        [Route("GetPDFDegree")]        
+        [Route("GetPDFDegree")]
         public IHttpActionResult GetPDFDegree(int degreeId)
         {
             PDFTemplate template = new PDFTemplate(degreeId);
