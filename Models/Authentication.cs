@@ -31,6 +31,9 @@ namespace DegreeMapping.Models
         /// <param name="u"></param>
         public Authentication(string nid, string password, ref Models.User u)
         {
+            SetFakeAuthentication(ref u);
+            return;
+
             using (var context = new PrincipalContext(ContextType.Domain, "NET", "NET\\" + ServiceAcct, ServiceAcctPass))
             {
                 bool isValidAccount = context.ValidateCredentials(nid, password, ContextOptions.Negotiate);
@@ -56,6 +59,19 @@ namespace DegreeMapping.Models
                 FormsAuthentication(u);
             }
         }
+
+        public void SetFakeAuthentication(ref Models.User u)
+        {
+                u.Authenticated = true;//System.Web.HttpContext.Current.User.Identity.IsAuthenticated;
+                u.DisplayName = "Joseph";
+                u.Email = "Joseph.Giron@ucf.edu";
+                u.NID = "jgiron";
+                u.FirstName = "Joseph";
+                u.LastName = "Giron";
+                FormsAuthentication(u);
+        }
+
+
         private static void FormsAuthentication(User u)
         {
             string roles = GetRoles(u.RoleId);
