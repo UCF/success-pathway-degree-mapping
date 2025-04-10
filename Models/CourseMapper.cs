@@ -14,15 +14,15 @@ namespace DegreeMapping.Models
 {
     public class CourseMapper
     {
-        public struct DisplayType 
-        { 
-            public static string Default { get { return "Default";  } }
+        public struct DisplayType
+        {
+            public static string Default { get { return "Default"; } }
             public static string Alternate { get { return "Alternate"; } }
             public static string SelectOne { get { return "Select One"; } }
             public static string SelectTwo { get { return "Select Two"; } }
             public static string SelectThree { get { return "Select Three"; } }
             public static string SelectFour { get { return "Select Four"; } }
-            public static string OR { get { return "OR";  } }
+            public static string OR { get { return "OR"; } }
             public static string AND { get { return "AND"; } }
         }
 
@@ -153,6 +153,14 @@ namespace DegreeMapping.Models
             Alternate4UCFCourses = new List<Course>();
             #endregion
 
+            #region alternate 5
+            Alternate5DisplayValue = 0;
+            Alternate5PartnerCourseIds = new List<int>();
+            Alternate5PartnerCourses = new List<Course>();
+            Alternate5UCFCourseIds = new List<int>();
+            Alternate5UCFCourses = new List<Course>();
+            #endregion
+
             DisplayValue = 0;
         }
 
@@ -187,7 +195,8 @@ namespace DegreeMapping.Models
                 {
                     cmd.Parameters.AddWithValue("@Alternate2UCFCourseIds", string.Join(",", cm.Alternate2UCFCourseIds));
                 }
-                if (cm.Alternate2PartnerCourseIds  != null) {
+                if (cm.Alternate2PartnerCourseIds != null)
+                {
                     cmd.Parameters.AddWithValue("@Alternate2PartnerCourseIds", string.Join(",", cm.Alternate2PartnerCourseIds));
                 }
                 cmd.Parameters.AddWithValue("@Alternate2DisplayValue", cm.Alternate2DisplayValue);
@@ -200,7 +209,7 @@ namespace DegreeMapping.Models
                 if (cm.Alternate3PartnerCourseIds != null)
                 {
                     cmd.Parameters.AddWithValue("@Alternate3PartnerCourseIds", string.Join(",", cm.Alternate3PartnerCourseIds));
-                }               
+                }
                 cmd.Parameters.AddWithValue("@Alternate3DisplayValue", cm.Alternate3DisplayValue);
                 #endregion
                 #region Alternate 4
@@ -225,7 +234,7 @@ namespace DegreeMapping.Models
                 }
                 cmd.Parameters.AddWithValue("@Alternate5DisplayValue", cm.Alternate5DisplayValue);
                 #endregion
-                if (cm.CloneCourseMapperId.HasValue) 
+                if (cm.CloneCourseMapperId.HasValue)
                 {
                     cmd.Parameters.AddWithValue("@CloneCourseMapperId", cm.CloneCourseMapperId.Value);
                 }
@@ -489,7 +498,7 @@ namespace DegreeMapping.Models
 
         public static string SetDisplayName(int value)
         {
-            switch(value)
+            switch (value)
             {
                 case 7: return CourseMapper.DisplayType.SelectFour;
                 case 6: return CourseMapper.DisplayType.SelectThree;
@@ -505,7 +514,7 @@ namespace DegreeMapping.Models
         private static List<Course> SetCourse(List<int> courseIds)
         {
             List<Course> list_c = new List<Course>();
-            foreach (int id in courseIds) 
+            foreach (int id in courseIds)
             {
                 Course c = Course.Get(id);
                 list_c.Add(c);
@@ -521,7 +530,7 @@ namespace DegreeMapping.Models
                 SqlCommand cmd = cn.CreateCommand();
                 cmd.CommandText = "DeleteCourseMapper";
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@Id",id);
+                cmd.Parameters.AddWithValue("@Id", id);
                 cmd.ExecuteNonQuery();
                 cn.Close();
             }
@@ -574,13 +583,13 @@ namespace DegreeMapping.Models
             if (direction.ToLower() == "up")
             {
 
-            } else { 
-            
+            }
+            else
+            {
+
             }
 
-        
-        }
 
-       
+        }
     }
 }
