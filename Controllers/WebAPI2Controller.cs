@@ -30,6 +30,7 @@ namespace DegreeMapping.Controllers
     {
         [HttpGet]
         [Route("GetPDFDegree")]
+        [AllowAnonymous]
         public IHttpActionResult GetPDFDegree(int degreeId)
         {
             PDFTemplate template = new PDFTemplate(degreeId);
@@ -39,6 +40,9 @@ namespace DegreeMapping.Controllers
             doc.DocumentInformation.Subject = template.PDFSubject;
             doc.DocumentInformation.Author = template.PDFAuthor;
             doc.DocumentInformation.CreationDate = DateTime.Now;
+
+
+            doc.Save(@"C:\\temp\\test.pdf");
 
             //https://stackoverflow.com/questions/26038856/how-to-return-a-file-filecontentresult-in-asp-net-webapi
             var result = new HttpResponseMessage(HttpStatusCode.OK)
