@@ -50,19 +50,52 @@
     })
 
     var pdf = {
+
+
         getPathwayPDF: function () {
             $.get({
                 ///api/v2/DegreeMap/GetPDFDegree?degreeid=4419
                 //url: "https://portal.connect.ucf.edu/pathway/GetListByUCFDegree?degreeId="+degreemap.degreeId,
                 url: "api/v2/DegreeMap/GetPDFDegree?degreeid=3142",
+                xhrFields: {
+                    responseType: 'blob' // important for binary data
+                },
                 //data : "degreeId="4,
                 type: "GET",
                 headers: { "APIKey": "Th1sIsth3Way" },
                 cache: false,
                 success: function (data) {
-                    console.log(data);
+                    const url = window.URL.createObjectURL(data);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = 'filename.pdf'; // optional
+                    document.body.appendChild(a);
+                    a.click();
+                    a.remove();
+                    window.URL.revokeObjectURL(url);
+                },
+                error: function () {
+                    alert('Failed to download PDF');
                 }
             })
         }
+
+
+
+
+        //getPathwayPDF: function () {
+        //    $.get({
+        //        ///api/v2/DegreeMap/GetPDFDegree?degreeid=4419
+        //        //url: "https://portal.connect.ucf.edu/pathway/GetListByUCFDegree?degreeId="+degreemap.degreeId,
+        //        url: "api/v2/DegreeMap/GetPDFDegree?degreeid=3142",
+        //        //data : "degreeId="4,
+        //        type: "GET",
+        //        headers: { "APIKey": "Th1sIsth3Way" },
+        //        cache: false,
+        //        success: function (data) {
+        //            console.log(data);
+        //        }
+        //    })
+        //}
     }
 </script>

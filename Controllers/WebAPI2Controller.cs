@@ -31,7 +31,7 @@ namespace DegreeMapping.Controllers
         [HttpGet]
         [Route("GetPDFDegree")]
         [AllowAnonymous]
-        public IHttpActionResult GetPDFDegree(int degreeId)
+        public object GetPDFDegree(int degreeId)
         {
             PDFTemplate template = new PDFTemplate(degreeId);
             HtmlToPdf converter = new HtmlToPdf();
@@ -42,7 +42,7 @@ namespace DegreeMapping.Controllers
             doc.DocumentInformation.CreationDate = DateTime.Now;
 
 
-            doc.Save(@"C:\\temp\\test.pdf");
+            //doc.Save(@"C:\\temp\\test.pdf");
 
             //https://stackoverflow.com/questions/26038856/how-to-return-a-file-filecontentresult-in-asp-net-webapi
             var result = new HttpResponseMessage(HttpStatusCode.OK)
@@ -59,7 +59,7 @@ namespace DegreeMapping.Controllers
 
             var response = ResponseMessage(result);
 
-            return response;
+            return ();
 
             //https://stackoverflow.com/questions/77603727/how-to-send-the-pdf-file-through-c-sharp-asp-net-web-api
             
