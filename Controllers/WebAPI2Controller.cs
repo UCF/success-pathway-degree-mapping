@@ -11,27 +11,33 @@ using DegreeMapper.PDFTemplate;
 using DegreeMapperWebAPI;
 using SelectPdf;
 
+
 /// <summary>
 /// This uses the DegreeMapperWebAPI Project
 /// Not the Degree Mapping Models
 /// </summary>
+/// 
 namespace DegreeMapping.Controllers
 {
     [RoutePrefix("api/v2/DegreeMap")]
 
     [EnableCors(origins: 
-        "https://connectucncmsqa.smca.ucf.edu, " +
-        "https://connectucncmsdev.smca.ucf.edu, " +
         "https://connect.ucf.edu, " +
         "http://localhost:62752, " +
         "https://dev-ucf-ucn.pantheonsite.io, ",
         headers: "APIKey", methods: "*")]
     public class WebAPI2Controller : ApiController
     {
+        /// <summary>
+        /// Returns Success Pathway PDF Degree
+        /// Helper Video: https://www.youtube.com/watch?v=jfk_-42rN9k
+        /// </summary>
+        /// <param name="degreeId"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("GetPDFDegree")]
         [AllowAnonymous]
-        public object GetPDFDegree(int degreeId)
+        public HttpResponseMessage GetPDFDegree(int degreeId)
         {
             PDFTemplate template = new PDFTemplate(degreeId);
             HtmlToPdf converter = new HtmlToPdf();
@@ -41,30 +47,23 @@ namespace DegreeMapping.Controllers
             doc.DocumentInformation.Author = template.PDFAuthor;
             doc.DocumentInformation.CreationDate = DateTime.Now;
 
+            HttpResponseMessage result = new HttpResponseMessage(System.Net.HttpStatusCode.OK);
+            var stream = new MemoryStream(doc.Save());
+            stream.Position = 0;
 
-            //doc.Save(@"C:\\temp\\test.pdf");
+            //attachment
+            //inline
+            result.Content = new StreamContent(stream);
+            result.Content.Headers.ContentDisposition = new System.Net.Http.Headers.ContentDispositionHeaderValue("inline");
+            result.Content.Headers.ContentDisposition.FileName = $"{template.PDFFileName}";
+            //application/octet-stream
+            //application/pdf
+            result.Content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/pdf");
+            result.Content.Headers.ContentLength = stream.Length;
 
-            //https://stackoverflow.com/questions/26038856/how-to-return-a-file-filecontentresult-in-asp-net-webapi
-            var result = new HttpResponseMessage(HttpStatusCode.OK)
-            { 
-                Content = new ByteArrayContent(doc.Save())
-            };
-
-            result.Content.Headers.ContentDisposition = new System.Net.Http.Headers.ContentDispositionHeaderValue("attachment")
-            {
-                FileName = $"{template.PDFFileName}"
-            };
-
-            result.Content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/octet-stream");
-
-            var response = ResponseMessage(result);
-
-            return ();
-
-            //https://stackoverflow.com/questions/77603727/how-to-send-the-pdf-file-through-c-sharp-asp-net-web-api
-            
+            doc.Close();
+            return result;
         }
-
 
         [HttpGet]
         //[MyCustomAttribute]
