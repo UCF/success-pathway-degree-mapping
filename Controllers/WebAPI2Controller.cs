@@ -54,11 +54,13 @@ namespace DegreeMapping.Controllers
             //attachment
             //inline
             result.Content = new StreamContent(stream);
-            result.Content.Headers.ContentDisposition = new System.Net.Http.Headers.ContentDispositionHeaderValue("inline");
-            result.Content.Headers.ContentDisposition.FileName = $"{template.PDFFileName}";
+
+            //result.Content.Headers.Add("Content-Disposition:", "attachment; filename=Degree.pdf");
+            result.Content.Headers.ContentDisposition = new System.Net.Http.Headers.ContentDispositionHeaderValue("attachment");
+            result.Content.Headers.ContentDisposition.FileName = "SuccessPathwayDegree.pdf";
             //application/octet-stream
             //application/pdf
-            result.Content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/pdf");
+            result.Content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/octet-pdf");
             result.Content.Headers.ContentLength = stream.Length;
 
             doc.Close();
