@@ -62,7 +62,11 @@ namespace DegreeMapping
 
         private static bool ValidOrigin(string url)
         {
-            if (url.ToLower().Contains("connect.ucf.edu") || url.ToLower().Contains("smca.ucf.edu") || url.ToLower().Contains("portal.connect.ucf.edu"))
+            if (url.ToLower().Contains("connect.ucf.edu") || 
+                url.ToLower().Contains("smca.ucf.edu") || 
+                url.ToLower().Contains("portal.connect.ucf.edu") ||
+                url.ToLower().Contains("dev-ucf-ucn.pantheonsite.io") ||
+                url.ToLower().Contains("test-ucf-ucn.pantheonsite.io"))
             {
                 return true;
             }
@@ -90,10 +94,9 @@ namespace DegreeMapping
 
         protected void Application_Start()
         {
-
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
-            GlobalConfiguration.Configuration.MessageHandlers.Add(new APIKeyMessageHandler());
+            //GlobalConfiguration.Configuration.MessageHandlers.Add(new APIKeyMessageHandler());
             GlobalConfiguration.Configure(WebApiConfig.Register);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);

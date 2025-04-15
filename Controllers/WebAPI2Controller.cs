@@ -24,7 +24,8 @@ namespace DegreeMapping.Controllers
     [EnableCors(origins: 
         "https://connect.ucf.edu, " +
         "http://localhost:62752, " +
-        "https://dev-ucf-ucn.pantheonsite.io, ",
+        "https://dev-ucf-ucn.pantheonsite.io, " +
+        "https://test-ucf-ucn.pantheonsite.io, ",
         headers: "APIKey", methods: "*")]
     public class WebAPI2Controller : ApiController
     {
