@@ -36,51 +36,6 @@ namespace DegreeMapping.Controllers
         /// <param name="degreeId"></param>
         /// <returns></returns>
         [HttpGet]
-        [Route("GetPDF")]
-        [AllowAnonymous]
-        public HttpResponseMessage GetPDF(int degreeId)
-        {
-            PDFTemplate template = new PDFTemplate(degreeId);
-            HtmlToPdf converter = new HtmlToPdf();
-            PdfDocument doc = converter.ConvertHtmlString(template.HTMLPage);
-            doc.DocumentInformation.Title = template.PDFTitle;
-            doc.DocumentInformation.Subject = template.PDFSubject;
-            doc.DocumentInformation.Author = template.PDFAuthor;
-            doc.DocumentInformation.CreationDate = DateTime.Now;
-
-            doc.Save(@"C:\\temp\\DegreePathway_Download2.pdf");
-
-            HttpResponseMessage result = new HttpResponseMessage(System.Net.HttpStatusCode.OK);
-            var stream = new MemoryStream(doc.Save());
-            stream.Position = 0;
-
-            //attachment
-            //inline
-            result.Content = new StreamContent(stream);
-
-            //result.Content.Headers.Add("Content-Disposition:", "attachment; filename=Degree.pdf");
-            result.Content.Headers.ContentDisposition = new System.Net.Http.Headers.ContentDispositionHeaderValue("inline");
-            result.Content.Headers.ContentDisposition.FileName = "SuccessPathwayDegree.pdf";
-            //application/octet-stream
-            //application/pdf
-            result.Content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/octet-stream");
-            result.Content.Headers.ContentLength = stream.Length;
-
-            doc.Close();
-            return result;
-        }
-
-
-
-
-
-        /// <summary>
-        /// Returns Success Pathway PDF Degree
-        /// Helper Video: https://www.youtube.com/watch?v=jfk_-42rN9k
-        /// </summary>
-        /// <param name="degreeId"></param>
-        /// <returns></returns>
-        [HttpGet]
         [Route("GetPDFDegree")]
         [AllowAnonymous]
         public HttpResponseMessage GetPDFDegree(int degreeId)
@@ -92,7 +47,6 @@ namespace DegreeMapping.Controllers
             doc.DocumentInformation.Subject = template.PDFSubject;
             doc.DocumentInformation.Author = template.PDFAuthor;
             doc.DocumentInformation.CreationDate = DateTime.Now;
-
             //doc.Save(@"C:\\temp\\DegreePathway_Download2.pdf");
 
             HttpResponseMessage result = new HttpResponseMessage(System.Net.HttpStatusCode.OK);
@@ -108,7 +62,7 @@ namespace DegreeMapping.Controllers
             result.Content.Headers.ContentDisposition.FileName = "SuccessPathwayDegree.pdf";
             //application/octet-stream
             //application/pdf
-            result.Content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/octet-pdf");
+            result.Content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/pdf");
             result.Content.Headers.ContentLength = stream.Length;
 
             doc.Close();
