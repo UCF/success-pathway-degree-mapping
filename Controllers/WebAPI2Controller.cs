@@ -59,7 +59,7 @@ namespace DegreeMapping.Controllers
 
             //result.Content.Headers.Add("Content-Disposition:", "attachment; filename=Degree.pdf");
             result.Content.Headers.ContentDisposition = new System.Net.Http.Headers.ContentDispositionHeaderValue("attachment");
-            result.Content.Headers.ContentDisposition.FileName = "SuccessPathwayDegree.pdf";
+            result.Content.Headers.ContentDisposition.FileName = template.PDFFileName; //"SuccessPathwayDegree.pdf";
             //application/octet-stream
             //application/pdf
             result.Content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/pdf");
