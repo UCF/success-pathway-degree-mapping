@@ -48,8 +48,8 @@ namespace DegreeMapping.Controllers
             doc.DocumentInformation.Author = template.PDFAuthor;
             doc.DocumentInformation.CreationDate = DateTime.Now;
 
-            PdfMargins margins = new PdfMargins(0);
-            doc.Margins = margins;
+            //PdfMargins margins = new PdfMargins(0);
+            //doc.Margins = margins;
             //doc.Save(@"C:\\temp\\DegreePathway_Download2.pdf");
 
             HttpResponseMessage result = new HttpResponseMessage(System.Net.HttpStatusCode.OK);
