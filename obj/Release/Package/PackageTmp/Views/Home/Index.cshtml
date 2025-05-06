@@ -2,6 +2,25 @@
 @{
     ViewBag.Title = "Sign In";
 }
+
+
+@*<div><a href="https://dev.portal.connect.ucf.edu/pathway/api/v2/DegreeMap/GetPDFDegree?degreeId=4419" target="_blank">2024-2025 Accounting (B.S.B.A.) College of Central Florida Pathways</a></div>
+<div><a href="https://dev.portal.connect.ucf.edu/pathway/api/v2/DegreeMap/GetPDFDegree?degreeid=4858" target="_blank">2024-2025 Biology (B.S.) Daytona State College Pathways</a></div>
+<div><a href="https://dev.portal.connect.ucf.edu/pathway/api/v2/DegreeMap/GetPDFDegree?degreeId=4630" target="_blank">2024-2025 Biotechnology (B.S.) Seminole State College Pathways</a></div>
+<div><a href="https://dev.portal.connect.ucf.edu/pathway/api/v2/DegreeMap/GetPDFDegree?degreeId=5392" target="_blank">2024-2025 Emerging Media, Character Animation Track (B.F.A.) Miami Dade College Pathways</a></div>
+<div><a href="https://dev.portal.connect.ucf.edu/pathway/api/v2/DegreeMap/GetPDFDegree?degreeId=4877" target="_blank">2024-2025 Political Science (B.A.) Success Pathways Lake-Sumter State College Pathways</a></div>
+<div><a href="https://dev.portal.connect.ucf.edu/pathway/api/v2/DegreeMap/GetPDFDegree?degreeId=5110" target="_blank">2024-2025 Theatre, Acting Track (B.F.A) Success Pathways Eastern Florida State College Pathways</a></div>*@
+
+
+
+<div><a href="//localhost:62752/api/v2/DegreeMap/GetPDFDegree?degreeId=4419" target="_blank">2024-2025 Accounting (B.S.B.A.) College of Central Florida Pathways</a></div>
+<div><a href="//localhost:62752/api/v2/DegreeMap/GetPDFDegree?degreeid=4858" target="_blank">2024-2025 Biology (B.S.) Daytona State College Pathways</a></div>
+<div><a href="//localhost:62752/api/v2/DegreeMap/GetPDFDegree?degreeId=4630" target="_blank">2024-2025 Biotechnology (B.S.) Seminole State College Pathways</a></div>
+<div><a href="//localhost:62752/api/v2/DegreeMap/GetPDFDegree?degreeId=5392" target="_blank">2024-2025 Emerging Media, Character Animation Track (B.F.A.) Miami Dade College Pathways</a></div>
+<div><a href="//localhost:62752/api/v2/DegreeMap/GetPDFDegree?degreeId=4877" target="_blank">2024-2025 Political Science (B.A.) Success Pathways Lake-Sumter State College Pathways</a></div>
+<div><a href="//localhost:62752/api/v2/DegreeMap/GetPDFDegree?degreeId=5110" target="_blank">2024-2025 Theatre, Acting Track (B.F.A) Success Pathways Eastern Florida State College Pathways</a></div>
+
+
 <div class="row">
     <div class="col-md-12">
         @using (Html.BeginForm("Index", "Home", FormMethod.Post, new { @class = "form-horizontal" }))
@@ -37,3 +56,95 @@
         }
     </div>
 </div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#GetPDF").on('click', function () {
+            pdf.getPathwayPDF();
+        })
+    })
+
+    $(document).ready(function () {
+        $("#GetPDF2").on('click', function () {
+            DownloadFile("successpathaydegree.pdf");
+        })
+    })
+
+
+    var pdf = {
+        getPathwayPDF: function () {
+            $.get({
+                ///api/v2/DegreeMap/GetPDFDegree?degreeid=4419
+                //url: "https://portal.connect.ucf.edu/pathway/GetListByUCFDegree?degreeId="+degreemap.degreeId,
+                url: "https://dev.portal.connect.ucf.edu/pathway/api/v2/DegreeMap/GetPDFDegree?degreeid=4858",
+                xhrFields: {
+                    responseType: 'blob' // important for binary data
+                },
+                //data : "degreeId="4,
+                type: "GET",
+                headers: { "APIKey": "Th1sIsth3Way" },
+                cache: false,
+                success: function (data) {
+                    const url = window.URL.createObjectURL(data);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = 'filename.pdf'; // optional
+                    document.body.appendChild(a);
+                    a.click();
+                    a.remove();
+                    window.URL.revokeObjectURL(url);
+                },
+                error: function () {
+                    alert('Failed to download PDF');
+                }
+            })
+        }
+    }
+</script>
+
+<script type="text/javascript">
+
+    function DownloadFile(fileName) {
+        //Set the File URL.
+        var url = "https://dev.portal.connect.ucf.edu/pathway/api/v2/DegreeMap/GetPDFDegree?degreeid=4858";
+
+        $.ajax({
+            url: url,
+            cache: false,
+            type: "GET",
+            headers: { "APIKey": "Th1sIsth3Way" },
+            xhr: function () {
+                var xhr = new XMLHttpRequest();
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState == 2) {
+                        if (xhr.status == 200) {
+                            xhr.responseType = "blob";
+                        } else {
+                            xhr.responseType = "text";
+                        }
+                    }
+                };
+                return xhr;
+            },
+            success: function (data) {
+                //Convert the Byte Data to BLOB object.
+                var blob = new Blob([data], { type: "application/octetstream" });
+
+                //Check the Browser type and download the File.
+                var isIE = false || !!document.documentMode;
+                if (isIE) {
+                    window.navigator.msSaveBlob(blob, fileName);
+                } else {
+                    var url = window.URL || window.webkitURL;
+                    link = url.createObjectURL(blob);
+                    var a = $("<a />");
+                    a.attr("download", fileName);
+                    a.attr("href", link);
+                    $("body").append(a);
+                    a[0].click();
+                    $("body").remove(a);
+                }
+            }
+        });
+    };
+</script>
