@@ -42,6 +42,10 @@ namespace DegreeMapping.Controllers
         {
             PDFTemplate template = new PDFTemplate(degreeId);
             HtmlToPdf converter = new HtmlToPdf();
+            converter.Options.MarginTop = 25;
+            converter.Options.MarginBottom = 25;
+            converter.Options.MarginLeft = 25;
+            converter.Options.MarginRight = 25;
             PdfDocument doc = converter.ConvertHtmlString(template.HTMLPage);
             doc.DocumentInformation.Title = template.PDFTitle;
             doc.DocumentInformation.Subject = template.PDFSubject;
