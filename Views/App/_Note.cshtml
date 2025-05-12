@@ -10,13 +10,16 @@
     @Html.HiddenFor(x => x.DegreeId)
     @Html.HiddenFor(x => x.CloneNoteId)
 
-    <div class="row pt-2">
-        <div class="col-md-10">
-            <div class="form-group">
-                <i>Last updated on @Model.UpdateDate.ToString()</i>
+    if (Model.Id > 0)
+    {
+        <div class="row pt-2">
+            <div class="col-md-10">
+                <div class="form-group">
+                    <i>Last updated on @Model.UpdateDate.ToString()</i>
+                </div>
             </div>
         </div>
-    </div>
+    }
 
     <div class="row pt-2">
         <div class="col-md-10">
