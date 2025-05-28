@@ -52,6 +52,7 @@
 
 @Html.Action("_DisplaySetFavoriteDegree", "App", new { NID = User.Identity.Name, degreeId = Model.Id })
 
+
 <div class="row pt-5">
     <div class="col-md-6">
         <div class="form-group">
@@ -135,6 +136,13 @@
             </div>
         </div>
 
+        <div class="form-group">
+            <div class="col-md-10">
+                <i>Last updated on @Model.UpdateDate.ToShortDateString()</i>
+            </div>
+        </div>
+
+
         <div class="form-group" style="display:none">
             <div class="col-md-10 @cssClass">
                 @Html.LabelFor(x => x.Description) : @Html.Raw(Model.Description)
@@ -199,6 +207,7 @@
                     {
                         <li>
                             @Html.ActionLink(n.Name, "NoteView", new { id = n.Id })
+                            <div>Last Updated on @n.UpdateDate.ToShortDateString()</div>
                         </li>
                     }
                 </ul>
@@ -219,7 +228,10 @@
                     {
                         if (n.NoteType.Equals(DegreeMapping.Models.Note.NoteTypeValue.ListItem))
                         {
-                            <li>@Html.Raw(n.Value)</li>
+                            <li>
+                                @Html.Raw(n.Value)
+                                <div><i>Last updated on @n.UpdateDate.ToShortDateString()</i></div>
+                            </li>
                         }
                     }
 
@@ -241,6 +253,7 @@
                                 @Html.ActionLink("Edit", "NoteEdit", new { id = n.Id })
                                 <blockquote>
                                     @Html.Raw(n.Value)
+                                    <div><i>Last updated on @n.UpdateDate.ToShortDateString()</i></div>
                                 </blockquote>
 
                                 @*<a href="@Url.Action("NoteEdit", new {Id = n.Id})">@Html.Raw(n.Value)</a>*@
