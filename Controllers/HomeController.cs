@@ -21,9 +21,9 @@ namespace DegreeMapping.Controllers
         public ActionResult Index()
         {
             //log4net.Config.XmlConfigurator.Configure();
-            log.Debug("Test Debug error");
-            log.Warn("Test Warn Error");
-            log.Error("Test Error");
+            //log.Debug("Test Debug error");
+            //log.Warn("Test Warn Error");
+            //log.Error("Test Error");
             if (User.Identity.IsAuthenticated)
             {
                 return RedirectToAction("Catalog", "App");
