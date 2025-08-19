@@ -222,24 +222,29 @@ namespace DegreeMapping.Controllers
             return View(list_course);
         }
 
-        public ActionResult CourseSearch(string keyword, int? catalogId)
+        public ActionResult CourseSearch(string keyword, int? catalogId, int? collegeId=0, int? institutionId=0)
         {
+            
             List<Course> list_c = new List<Course>();
             if (!string.IsNullOrEmpty(keyword))
             {
                 if (catalogId.HasValue) {
-                    list_c = Course.Search(keyword, catalogId.Value);
+                    list_c = Course.Search(keyword, catalogId.Value, collegeId.Value, institutionId.Value);
                 } 
                 else
                 {
-                    list_c = Course.Search(keyword, null);
+                    list_c = Course.Search(keyword, null, collegeId.Value, institutionId.Value);
                 }
-                
             }
             ViewBag.Keyword = keyword;
             ViewBag.CatalogId = catalogId;
+            ViewBag.CollegeId = collegeId;
+            ViewBag.Institution = institutionId;
             return View(list_c);
         }
+
+
+
         [HttpPost]
         [ValidateInput(false)]
         public ActionResult CourseSave(Course c)
