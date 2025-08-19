@@ -42,6 +42,10 @@ namespace DegreeMapping.Models
         public string Institution { get; set; }
         [DisplayName("Institution Id")]
         public int InstitutionId { get; set; }
+
+        public int CollegeId { get; set; }
+        public string CollegeName { get; set; } = string.Empty;
+
         public DateTime AddDate { get; set; }
         public DateTime UpdateDate { get; set; }
         public string NID { get; set; }
@@ -238,7 +242,7 @@ namespace DegreeMapping.Models
             return c;
         }
 
-        public static List<Course> Search(string keyword, int? catalogId)
+        public static List<Course> Search(string keyword, int? catalogId, int? collegeId, int? institutionId)
         {
             List<Course> list_c = new List<Course>();
             using (SqlConnection cn = new SqlConnection(Database.DC_DegreeMapping))
@@ -251,6 +255,14 @@ namespace DegreeMapping.Models
                 if (catalogId.HasValue)
                 {
                     cmd.Parameters.AddWithValue("@CatalogId", catalogId);
+                }
+                if (collegeId.HasValue)
+                {
+                    cmd.Parameters.AddWithValue("@CollegeId", collegeId.Value);
+                }
+                if (institutionId.HasValue)
+                {
+                    cmd.Parameters.AddWithValue("@InstitutionId", institutionId.Value);
                 }
                 SqlDataReader dr = cmd.ExecuteReader();
                 if (dr.HasRows)
@@ -284,6 +296,11 @@ namespace DegreeMapping.Models
                 c.Degree = dr["Degree"].ToString();
                 c.Institution = dr["Institution"].ToString();
                 c.InstitutionId = Convert.ToInt32(dr["InstitutionId"].ToString());
+
+                int collegeId = 0;
+                Int32.TryParse(dr["CollegeId"].ToString(), out collegeId);
+                c.CollegeName = dr["CollegeName"].ToString();
+
                 c.Active = Convert.ToBoolean(dr["Active"].ToString());
                 c.AddDate = Convert.ToDateTime(dr["AddDate"].ToString());
                 c.UpdateDate = Convert.ToDateTime(dr["UpdateDate"].ToString());
