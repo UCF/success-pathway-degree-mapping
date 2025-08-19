@@ -16,6 +16,15 @@
     @Html.HiddenFor(x => x.Id)
     @Html.HiddenFor(x => x.DegreeId)
     @Html.HiddenFor(x => x.CloneCourseId)
+
+    <div class="row pt-2">
+        <div class="col-md-6">
+            <div class="form-group">
+                <i>Last updated on @Model.UpdateDate.ToShortDateString() by @Model.NID</i>
+            </div>
+        </div>
+    </div>
+
     <div class="row pt-2">
         <div class="col-md-6">
             <div class="form-group">
@@ -29,7 +38,7 @@
         <div class="col-md-6">
             <div class="form-group">
                 @Html.LabelFor(x => x.Active) :
-                @Html.CheckBoxFor(x=>x.Active)
+                @Html.CheckBoxFor(x => x.Active)
             </div>
         </div>
     </div>
@@ -147,7 +156,7 @@
                             <label id="term_@DegreeMapping.Models.Course.CourseTerm.Spring.Replace(" ", "_")" class="px-4">@DegreeMapping.Models.Course.CourseTerm.Spring @Html.RadioButtonFor(x => x.Term, DegreeMapping.Models.Course.CourseTerm.Spring)</label>
                         }
                     }
-                <p><em>*When selecting <u>Do not display</u> it defaults to Fall</em></p>
+                    <p><em>*When selecting <u>Do not display</u> it defaults to Fall</em></p>
                 </div>
             </div>
         </div>

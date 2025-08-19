@@ -28,7 +28,14 @@
 
             <label>Yes @Html.RadioButtonFor(x => d.DisplayMultipleSemesters, true, new { @class = "displayMultipleSemestersYes" })</label>
             <label class="DisplayMultipleSemesterNoClass @DisplayMultipleSemesterNoClass pl-3">No @Html.RadioButtonFor(x => d.DisplayMultipleSemesters, false, new { @class = "displayMultipleSemestersNo" })</label>
-            <span class="pl-2 font-weight-bold" id="DisplayMultipleSemestersMessage">By selecting no, only semester 1 will display</span>
+            @*<span class="pl-2 font-weight-bold" id="DisplayMultipleSemestersMessage">By selecting no, only semester 1 will display</span>*@
+            <div>
+                <ol>
+                    <li>If degree has 5+ semesters, these will always display</li>
+                    <li>If YES and degree has no semesters, then parent semesters will display</li>
+                    <li>If NO and degree has no semesters, then nothing will be displayed</li>
+                </ol>
+            </div>
         </div>
 
         <div>
