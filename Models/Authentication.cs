@@ -31,8 +31,8 @@ namespace DegreeMapping.Models
         /// <param name="u"></param>
         public Authentication(string nid, string password, ref Models.User u)
         {
-            //SetFakeAuthentication(ref u);
-            //return;
+            SetFakeAuthentication(ref u);
+            return;
 
             using (var context = new PrincipalContext(ContextType.Domain, "NET", "NET\\" + ServiceAcct, ServiceAcctPass))
             {

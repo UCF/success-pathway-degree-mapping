@@ -236,10 +236,10 @@ namespace DegreeMapping.Controllers
                     list_c = Course.Search(keyword, null, collegeId.Value, institutionId.Value);
                 }
             }
-            ViewBag.Keyword = keyword;
-            ViewBag.CatalogId = catalogId;
-            ViewBag.CollegeId = collegeId;
-            ViewBag.Institution = institutionId;
+            ViewBag.Keyword = keyword ?? string.Empty;
+            ViewBag.CatalogId = catalogId ?? 0;
+            ViewBag.CollegeId = collegeId ?? 0;
+            ViewBag.Institution = institutionId ?? 0;
             return View(list_c);
         }
 
