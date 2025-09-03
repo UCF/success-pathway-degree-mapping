@@ -1,5 +1,8 @@
 ﻿@model  List<DegreeMapping.Models.Course>
 @{
+
+    string keyword = ViewBag.Keyword ?? string.Empty;
+    int catalogId = ViewBag.CatalogId ?? 0;
     int collegeId = ViewBag.CollegeId ?? 0;
     int institutionId = ViewBag.Institution ?? 0;
 
@@ -20,10 +23,15 @@
     </div>
 }
 
+ @*@if (User.IsInRole(cy.EditableRole))
+ { 
+ 
+ }*@
+
 <div class="container">
     <div class="row py-5">
         <div class="col-md-12">
-            @using (Html.BeginForm("CourseSearch", "App", FormMethod.Post, new { @Class = "form-inline" }))
+            @using (Html.BeginForm("CourseSearch", "App", FormMethod.Get, new { @Class = "form-inline" }))
             {
                 <div class="form-group">
                     <input type="text" class="form-control" name="keyword" value="@ViewBag.Keyword" style="width:300px" />
@@ -31,7 +39,11 @@
                         <select name="catalogId" class="form-control" style="height:30px">
                             @foreach (DegreeMapping.Models.Catalog cy in list_cy.Where(x => x.Active).OrderByDescending(x => x.Year))
                             {
-                                if (User.IsInRole(cy.EditableRole))
+                                if (catalogId == cy.Id)
+                                {
+                                    <option selected="selected" value="@cy.Id">@cy.Year</option>
+                                }
+                                else
                                 {
                                     <option value="@cy.Id">@cy.Year</option>
                                 }
@@ -53,7 +65,6 @@
                                 {
                                     <option value="@college.Id">@college.CollegeName</option>
                                 }
-
                             }
                         </select>
                     </div>
@@ -63,7 +74,7 @@
                     <div class="form-group">
                         <select name="institutionId" class="form-control" style="height:30px">
                             <option>Select Institution</option>
-                            @foreach (DegreeMapping.Models.Institution instition in list_i.OrderBy(x=>x.Name))
+                            @foreach (DegreeMapping.Models.Institution instition in list_i.OrderBy(x => x.Name))
                             {
                                 if (institutionId == instition.Id)
                                 {
@@ -95,7 +106,7 @@
                 <a href="#" class="btn btn-primary btn-lg" onclick="download_table_as_csv('course-search');">Download as CSV</a>
             </div>
         </div>
-        
+
         <table class="table table-hover" id="course-search">
             <thead>
                 <tr>
