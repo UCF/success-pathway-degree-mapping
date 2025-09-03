@@ -20,6 +20,9 @@ namespace DegreeMapping.Models
         public int CatalogId { get; set; }
         public bool HasRecord { get; set; }
 
+        public DateTime? UpdatedDate { get; set; }
+        public string NID { get; set; } = "system";
+
         public CustomCourseMapper(int degreeId)
         {
             List_CourseIds = new List<int>();
@@ -42,6 +45,10 @@ namespace DegreeMapping.Models
                 SqlCommand cmd = cn.CreateCommand();
                 cmd.CommandText = "InsertCustomCourseMapper";
                 cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.AddWithValue("@UpdatedDate", DateTime.Now);
+                cmd.Parameters.AddWithValue("@NID", ccm.NID);
+
                 cmd.Parameters.AddWithValue("@DegreeId", ccm.DegreeId);
                 if (ccm.List_CourseIds != null)
                 {
@@ -65,6 +72,8 @@ namespace DegreeMapping.Models
                 cmd.CommandText = "UpdateCustomCourseMapper";
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@DegreeId", ccm.DegreeId);
+                cmd.Parameters.AddWithValue("@UpdatedDate", DateTime.Now);
+                cmd.Parameters.AddWithValue("@NID", ccm.NID);
                 if (ccm.List_CourseIds is null)
                 {
                     cmd.Parameters.AddWithValue("@CourseIds", null);
@@ -94,6 +103,16 @@ namespace DegreeMapping.Models
                     while (dr.Read()) 
                     {
                         ccm.HasRecord = true;
+                        if (!string.IsNullOrEmpty(dr["UpdatedDate"].ToString()))
+                        {
+                            ccm.UpdatedDate = null;
+                        }
+
+                        if (!string.IsNullOrEmpty(dr["NID"].ToString()))
+                        {
+                            ccm.NID = string.Empty;
+                        }
+
                         if (!string.IsNullOrEmpty(dr["CourseIds"].ToString()))
                         {
                             ccm.List_CourseIds = dr["CourseIds"].ToString().TrimEnd(',').Split(',').Select(Int32.Parse).ToList();
