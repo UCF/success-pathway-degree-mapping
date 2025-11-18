@@ -33,6 +33,12 @@ namespace DegreeMapping.Models
         public int CatalogId { get; set; }
         public string CatalogYear { get; set; }
 
+
+        public DateTime? UpdatedDate { get; set; }
+        public string NID { get; set; } = string.Empty;
+
+
+
         public int SortOrder { get; set; }
 
         public List<int> UCFCourseIds { get; set; }
@@ -238,6 +244,11 @@ namespace DegreeMapping.Models
                 {
                     cmd.Parameters.AddWithValue("@CloneCourseMapperId", cm.CloneCourseMapperId.Value);
                 }
+
+                cmd.Parameters.AddWithValue("@UpdatedDate", DateTime.Now);
+                cmd.Parameters.AddWithValue("@NID", cm.NID);
+
+
                 id = Convert.ToInt32(cmd.ExecuteScalar());
                 cn.Close();
             }
@@ -313,6 +324,9 @@ namespace DegreeMapping.Models
                 {
                     cmd.Parameters.AddWithValue("@CloneCourseMapperId", cm.CloneCourseMapperId.Value);
                 }
+
+                cmd.Parameters.AddWithValue("@NID", cm.NID);
+
                 cmd.ExecuteScalar();
                 cn.Close();
             }
@@ -490,6 +504,15 @@ namespace DegreeMapping.Models
                 int cloneCourseMapperId;
                 Int32.TryParse(dr["CloneCourseMapperId"].ToString(), out cloneCourseMapperId);
                 cm.CloneCourseMapperId = cloneCourseMapperId;
+
+                cm.NID = dr["NID"].ToString();
+
+                string dt = dr["UpdatedDate"].ToString();
+                if (!string.IsNullOrEmpty(dt))
+                {
+                    cm.UpdatedDate = Convert.ToDateTime(dr["UpdatedDate"].ToString());
+                }
+
                 //cm.DisplayValue = Convert.ToInt32(dr["DisplayValue"].ToString());
                 //SetDisplayName(ref cm);
                 //SetCourse(ref cm);

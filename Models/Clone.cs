@@ -379,6 +379,7 @@ namespace DegreeMapping.Models
                     Course newCourse = Course.GetClonedCourse(id);
                     newCCM.List_CourseIds.Add(newCourse.Id);
                 }
+                newCCM.NID = "system";
                 CustomCourseMapper.Insert(newCCM);
             }
         }

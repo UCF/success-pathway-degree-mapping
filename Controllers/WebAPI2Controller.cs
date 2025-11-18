@@ -21,12 +21,16 @@ namespace DegreeMapping.Controllers
 {
     [RoutePrefix("api/v2/DegreeMap")]
 
-    [EnableCors(origins: 
-        "https://connect.ucf.edu, " +
-        "http://localhost:62752, " +
-        "https://dev-ucf-ucn.pantheonsite.io, " +
-        "https://test-ucf-ucn.pantheonsite.io, ",
-        headers: "APIKey", methods: "*")]
+    //[EnableCors(origins: 
+    //    "https://connect.ucf.edu, " +
+    //    "http://localhost:62752, " +
+    //    "https://dev-ucf-ucn.pantheonsite.io, " +
+    //    "https://test-ucf-ucn.pantheonsite.io, ",
+    //    headers: "APIKey", methods: "*")]
+    [EnableCors(origins: "https://connect.ucf.edu,http://localhost:62752,https://dev-ucf-ucn.pantheonsite.io,https://test-ucf-ucn.pantheonsite.io",
+            headers: "*",
+            methods: "*")]
+
     public class WebAPI2Controller : ApiController
     {
         /// <summary>
@@ -79,6 +83,7 @@ namespace DegreeMapping.Controllers
         [HttpGet]
         //[MyCustomAttribute]
         [Route("GetCatalogs")]
+        [AllowAnonymous]
         public List<DegreeMapperWebAPI.Catalog> GetCatalogs()
         {
             return DegreeMapperWebAPI.Catalog.List().Where(x => x.Active && x.DisplayOnWeb).OrderByDescending(x => x.Year).ToList();
@@ -86,6 +91,7 @@ namespace DegreeMapping.Controllers
 
         [HttpGet]
         [Route("GetListByCatalog")]
+        [AllowAnonymous]
         public List<DegreeMapperWebAPI.DegreeList> GetListByCatalog(int catalogId)
         {
             return DegreeMapperWebAPI.DegreeList.List(catalogId, null).OrderBy(x => x.Degree).ThenBy(x => x.Institution).ToList();
@@ -93,6 +99,7 @@ namespace DegreeMapping.Controllers
 
         [HttpGet]
         [Route("GetCourseMapper")]
+        [AllowAnonymous]
         public List<CourseMapperJSON> GetCourseMapper(int degreeId)
         {
             return CourseMapperJSON.List(degreeId);
@@ -100,6 +107,7 @@ namespace DegreeMapping.Controllers
 
         [HttpGet]
         [Route("GetDegreeInfo")]
+        [AllowAnonymous]
         public DegreeInfo GetDegreeInfo(int degreeId)
         {
             return DegreeInfo.Get(degreeId);
@@ -107,13 +115,27 @@ namespace DegreeMapping.Controllers
 
         [HttpGet]
         [Route("GetListByUCFDegree")]
+        [AllowAnonymous]
         public List<DegreeList> GetListByUCFDegree(int ucfDegreeId)
         {
             return DegreeList.List(null, ucfDegreeId);
         }
 
         [HttpGet]
+        [Route("GetListByUCFDegreeByDegreeId")]
+        [AllowAnonymous]
+        ///This method was created because calls are now coming from PHP and not JavaScript
+        //Does the same as GetListByUCFDegree
+        //November 11, 2025
+        public List<DegreeList> GetListByUCFDegreeByDegreeId(int degreeId)
+        {
+            Degree degree = Degree.Get(degreeId);
+            return DegreeList.List(null, degree.UCFDegreeId);
+        }
+
+        [HttpGet]
         [Route("GetCustomCourseMapper")]
+        [AllowAnonymous]
         public List<CustomCourseMapper> GetCustomCourseMapper(int degreeId)
         {
             return CustomCourseMapper.List(degreeId).OrderBy(x => x.Semester).ThenBy(x => x.TermOrder).ToList();

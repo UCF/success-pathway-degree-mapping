@@ -2350,6 +2350,7 @@
     <Content Include="Views\App\_DisplayErrors.cshtml" />
     <Content Include="Views\App\_DisplayGlobalCourseNotes.cshtml" />
     <Content Include="Views\App\_DisplayUserRoles.cshtml" />
+    <Content Include="Views\App\_FormatUpdateOutput.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

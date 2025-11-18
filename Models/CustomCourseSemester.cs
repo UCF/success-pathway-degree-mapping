@@ -22,7 +22,10 @@ namespace DegreeMapping.Models
         public string Institution { get; set; }
 
         public int? CloneId { get; set; }
-        
+
+
+        public DateTime? UpdatedDate { get; set; }
+        public string NID { get; set; } = "system";
 
         public CustomCourseSemester()
         {
@@ -55,6 +58,9 @@ namespace DegreeMapping.Models
                 cmd.Parameters.AddWithValue("@Semester", ccs.Semester);
                 cmd.Parameters.AddWithValue("@Term", ccs.Term);
                 cmd.Parameters.AddWithValue("@Note", ccs.Note);
+                cmd.Parameters.AddWithValue("@UpdatedDate", DateTime.Now);
+                cmd.Parameters.AddWithValue("@NID", ccs.NID);
+
                 if (ccs.CloneId.HasValue)
                 {
                     cmd.Parameters.AddWithValue("@CloneId", ccs.CloneId);
@@ -79,6 +85,8 @@ namespace DegreeMapping.Models
                 cmd.Parameters.AddWithValue("@Term", ccs.Term);
                 cmd.Parameters.AddWithValue("@Note", ccs.Note);
                 cmd.Parameters.AddWithValue("@Id", ccs.Id);
+                cmd.Parameters.AddWithValue("@UpdatedDate", DateTime.Now);
+                cmd.Parameters.AddWithValue("@NID", ccs.NID);
                 if (ccs.CloneId.HasValue)
                 {
                     cmd.Parameters.AddWithValue("@CloneId", ccs.CloneId);
@@ -171,6 +179,15 @@ namespace DegreeMapping.Models
                 ccs.CatalogId = Convert.ToInt32(dr["CatalogId"].ToString());
                 ccs.CatalogYear = dr["CatalogYear"].ToString();
                 ccs.Institution = dr["Institution"].ToString();
+
+                if (!string.IsNullOrEmpty(dr["NID"].ToString()))
+                {
+                    ccs.UpdatedDate = Convert.ToDateTime(dr["UpdatedDate"].ToString());
+                }
+                if (!string.IsNullOrEmpty(dr["NID"].ToString()))
+                {
+                    ccs.NID = dr["NID"].ToString();
+                }
                 int cloneId;
                 Int32.TryParse(dr["CloneId"].ToString(), out cloneId);
                 ccs.CloneId = cloneId;

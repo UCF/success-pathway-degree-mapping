@@ -103,14 +103,17 @@ namespace DegreeMapping.Models
                     while (dr.Read()) 
                     {
                         ccm.HasRecord = true;
+
+                        ccm.UpdatedDate = null;
                         if (!string.IsNullOrEmpty(dr["UpdatedDate"].ToString()))
                         {
-                            ccm.UpdatedDate = null;
+                            ccm.UpdatedDate = Convert.ToDateTime(dr["UpdatedDate"].ToString());
                         }
 
+                        ccm.NID = string.Empty;
                         if (!string.IsNullOrEmpty(dr["NID"].ToString()))
                         {
-                            ccm.NID = string.Empty;
+                            ccm.NID = dr["NID"].ToString();
                         }
 
                         if (!string.IsNullOrEmpty(dr["CourseIds"].ToString()))

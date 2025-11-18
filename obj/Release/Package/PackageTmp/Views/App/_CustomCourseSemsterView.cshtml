@@ -19,6 +19,16 @@
         {
             foreach (DegreeMapping.Models.CustomCourseSemester ccs in Model.OrderBy(x => x.Semester).ThenBy(x => x.Term))
             {
+                //string updateDatedMessage = string.Empty;
+                //if (ccs.UpdatedDate.HasValue)
+                //{
+                //    updateDatedMessage = string.Format("<tr><td colspan=\"3\">Last updated on {0} by {1}</td></tr>", ccs.UpdatedDate.Value.ToShortDateString(), ccs.NID);
+                //}
+
+                <tr>
+                    <td colspan="3">@Html.Action("_FormatUpdateOutput", "App", new { nid = ccs.NID, dt = ccs.UpdatedDate })</td>
+                </tr>
+
                 <tr>
                     <td colspan="3" class="alert alert-warning text-center h3">Semester @ccs.Semester @ccs.Term</td>
                 </tr>

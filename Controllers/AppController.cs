@@ -616,6 +616,7 @@ namespace DegreeMapping.Controllers
             CustomCourseMapper ccm = new CustomCourseMapper(degreeId);
             ccm.HasRecord = hasRecord;
             ccm.List_CourseIds = courseId;
+            ccm.NID = User.Identity.Name;
             if (ccm.HasRecord)
             {
                 CustomCourseMapper.Update(ccm);
@@ -765,6 +766,18 @@ namespace DegreeMapping.Controllers
             //CourseMapperSort.UpdateOrderBy(id);
             return View();
         }
+        #endregion
+
+
+        #region Update Formatting Output
+        public ActionResult _FormatUpdateOutput(string nid, DateTime? dt)
+        {
+            ViewBag.NID = nid;
+            ViewBag.dt = (dt.HasValue) ? dt : null;
+            return PartialView();
+        }
+
+
         #endregion
 
 

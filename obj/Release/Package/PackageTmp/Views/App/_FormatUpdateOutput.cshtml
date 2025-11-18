@@ -1,0 +1,18 @@
+﻿@{
+    string nid = ViewBag.NID;
+    DateTime? dt = null;
+    try
+    {
+        dt = Convert.ToDateTime(ViewBag.dt);
+    }
+    catch (Exception ex)
+    {
+    }
+
+    string message = string.Empty;
+    if (dt.HasValue && !string.IsNullOrEmpty(nid))
+    {
+        message = string.Format("<span class=\"font-italic p-2 h4\" style=\"color:black\">Last updated on {0} by {1}</span>", dt.Value.ToShortDateString(), nid);
+    }
+}
+@Html.Raw(message)

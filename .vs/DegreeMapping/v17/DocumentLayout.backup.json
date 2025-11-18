@@ -1,45 +1,22 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\websites\\SuccessPathwayPortal\\github\\success-pathway-degree-mapping\\",
+  "WorkspaceRootPath": "C:\\OLD Github\\Connect\\success-pathway-degree-mapping\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{D8DFF84B-3E06-442E-AC41-55F293E3A4E9}|..\\success-pathway-degree-mapper-API\\DegreeMapperWebAPI.csproj|c:\\websites\\successpathwayportal\\github\\success-pathway-degree-mapper-api\\catalog.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{2F79DB6B-ECEF-489B-A366-5B6DA352FB7E}|DegreeMapping.csproj|c:\\old github\\connect\\success-pathway-degree-mapping\\models\\authentication.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2F79DB6B-ECEF-489B-A366-5B6DA352FB7E}|DegreeMapping.csproj|solutionrelative:models\\authentication.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{2F79DB6B-ECEF-489B-A366-5B6DA352FB7E}|DegreeMapping.csproj|c:\\websites\\successpathwayportal\\github\\success-pathway-degree-mapping\\controllers\\webapi2controller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2F79DB6B-ECEF-489B-A366-5B6DA352FB7E}|DegreeMapping.csproj|solutionrelative:controllers\\webapi2controller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{2F79DB6B-ECEF-489B-A366-5B6DA352FB7E}|DegreeMapping.csproj|C:\\OLD Github\\Connect\\success-pathway-degree-mapping\\web.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
+      "RelativeMoniker": "D:0:0:{2F79DB6B-ECEF-489B-A366-5B6DA352FB7E}|DegreeMapping.csproj|solutionrelative:web.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{2F79DB6B-ECEF-489B-A366-5B6DA352FB7E}|DegreeMapping.csproj|c:\\websites\\successpathwayportal\\github\\success-pathway-degree-mapping\\models\\coursemappersort.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2F79DB6B-ECEF-489B-A366-5B6DA352FB7E}|DegreeMapping.csproj|solutionrelative:models\\coursemappersort.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{2F79DB6B-ECEF-489B-A366-5B6DA352FB7E}|DegreeMapping.csproj|C:\\OLD Github\\Connect\\success-pathway-degree-mapping\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2F79DB6B-ECEF-489B-A366-5B6DA352FB7E}|DegreeMapping.csproj|solutionrelative:models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{2F79DB6B-ECEF-489B-A366-5B6DA352FB7E}|DegreeMapping.csproj|C:\\websites\\SuccessPathwayPortal\\github\\success-pathway-degree-mapping\\controllers\\appcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2F79DB6B-ECEF-489B-A366-5B6DA352FB7E}|DegreeMapping.csproj|solutionrelative:controllers\\appcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{2F79DB6B-ECEF-489B-A366-5B6DA352FB7E}|DegreeMapping.csproj|C:\\websites\\SuccessPathwayPortal\\github\\success-pathway-degree-mapping\\models\\coursemapper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2F79DB6B-ECEF-489B-A366-5B6DA352FB7E}|DegreeMapping.csproj|solutionrelative:models\\coursemapper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{2F79DB6B-ECEF-489B-A366-5B6DA352FB7E}|DegreeMapping.csproj|C:\\websites\\SuccessPathwayPortal\\github\\success-pathway-degree-mapping\\views\\app\\_coursemapperlist.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{2F79DB6B-ECEF-489B-A366-5B6DA352FB7E}|DegreeMapping.csproj|solutionrelative:views\\app\\_coursemapperlist.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{2F79DB6B-ECEF-489B-A366-5B6DA352FB7E}|DegreeMapping.csproj|C:\\websites\\SuccessPathwayPortal\\github\\success-pathway-degree-mapping\\views\\app\\degreeview.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{2F79DB6B-ECEF-489B-A366-5B6DA352FB7E}|DegreeMapping.csproj|solutionrelative:views\\app\\degreeview.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{2F79DB6B-ECEF-489B-A366-5B6DA352FB7E}|DegreeMapping.csproj|C:\\websites\\SuccessPathwayPortal\\github\\success-pathway-degree-mapping\\views\\app\\_degree.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{2F79DB6B-ECEF-489B-A366-5B6DA352FB7E}|DegreeMapping.csproj|solutionrelative:views\\app\\_degree.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{2F79DB6B-ECEF-489B-A366-5B6DA352FB7E}|DegreeMapping.csproj|C:\\websites\\SuccessPathwayPortal\\github\\success-pathway-degree-mapping\\models\\degree.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2F79DB6B-ECEF-489B-A366-5B6DA352FB7E}|DegreeMapping.csproj|solutionrelative:models\\degree.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{2F79DB6B-ECEF-489B-A366-5B6DA352FB7E}|DegreeMapping.csproj|C:\\websites\\SuccessPathwayPortal\\github\\success-pathway-degree-mapping\\views\\app\\degreeedit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{2F79DB6B-ECEF-489B-A366-5B6DA352FB7E}|DegreeMapping.csproj|solutionrelative:views\\app\\degreeedit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{2F79DB6B-ECEF-489B-A366-5B6DA352FB7E}|DegreeMapping.csproj|C:\\OLD Github\\Connect\\success-pathway-degree-mapping\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2F79DB6B-ECEF-489B-A366-5B6DA352FB7E}|DegreeMapping.csproj|solutionrelative:controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -49,12 +26,8 @@
       "DocumentGroups": [
         {
           "DockedWidth": 318,
-          "SelectedChildIndex": 13,
+          "SelectedChildIndex": 14,
           "Children": [
-            {
-              "$type": "Bookmark",
-              "Name": "ST:129:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
-            },
             {
               "$type": "Bookmark",
               "Name": "ST:12:0:{2456bd12-ecf7-4988-a4a6-67d49173f565}"
@@ -104,130 +77,62 @@
               "Name": "ST:1:0:{1f61d2c6-dcce-4a2c-bef8-e5628039dd62}"
             },
             {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{57d563b6-44a5-47df-85be-f4199ad6b651}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:129:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "Catalog.cs",
-              "DocumentMoniker": "C:\\websites\\SuccessPathwayPortal\\github\\success-pathway-degree-mapper-API\\Catalog.cs",
-              "RelativeDocumentMoniker": "..\\success-pathway-degree-mapper-API\\Catalog.cs",
-              "ToolTip": "C:\\websites\\SuccessPathwayPortal\\github\\success-pathway-degree-mapper-API\\Catalog.cs",
-              "RelativeToolTip": "..\\success-pathway-degree-mapper-API\\Catalog.cs",
-              "ViewState": "AgIAABoAAAAAAAAAAAAAwEwAAAANAAAAAAAAAA==",
+              "Title": "Authentication.cs",
+              "DocumentMoniker": "C:\\OLD Github\\Connect\\success-pathway-degree-mapping\\Models\\Authentication.cs",
+              "RelativeDocumentMoniker": "Models\\Authentication.cs",
+              "ToolTip": "C:\\OLD Github\\Connect\\success-pathway-degree-mapping\\Models\\Authentication.cs",
+              "RelativeToolTip": "Models\\Authentication.cs",
+              "ViewState": "AgIAABsAAAAAAAAAAAAAACAAAAADAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-28T13:15:38.415Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "WebAPI2Controller.cs",
-              "DocumentMoniker": "C:\\websites\\SuccessPathwayPortal\\github\\success-pathway-degree-mapping\\Controllers\\WebAPI2Controller.cs",
-              "RelativeDocumentMoniker": "Controllers\\WebAPI2Controller.cs",
-              "ToolTip": "C:\\websites\\SuccessPathwayPortal\\github\\success-pathway-degree-mapping\\Controllers\\WebAPI2Controller.cs",
-              "RelativeToolTip": "Controllers\\WebAPI2Controller.cs",
-              "ViewState": "AgIAABAAAAAAAAAAAAAIwCAAAABaAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-28T13:14:34.482Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "DegreeView.cshtml",
-              "DocumentMoniker": "C:\\websites\\SuccessPathwayPortal\\github\\success-pathway-degree-mapping\\Views\\App\\DegreeView.cshtml",
-              "RelativeDocumentMoniker": "Views\\App\\DegreeView.cshtml",
-              "ToolTip": "C:\\websites\\SuccessPathwayPortal\\github\\success-pathway-degree-mapping\\Views\\App\\DegreeView.cshtml",
-              "RelativeToolTip": "Views\\App\\DegreeView.cshtml",
-              "ViewState": "AgIAAFkBAAAAAAAAAAAnwGMBAAAKAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-03-28T13:08:18.241Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "_CourseMapperList.cshtml",
-              "DocumentMoniker": "C:\\websites\\SuccessPathwayPortal\\github\\success-pathway-degree-mapping\\Views\\App\\_CourseMapperList.cshtml",
-              "RelativeDocumentMoniker": "Views\\App\\_CourseMapperList.cshtml",
-              "ToolTip": "C:\\websites\\SuccessPathwayPortal\\github\\success-pathway-degree-mapping\\Views\\App\\_CourseMapperList.cshtml",
-              "RelativeToolTip": "Views\\App\\_CourseMapperList.cshtml",
-              "ViewState": "AQIAAE4AAAAAAAAAAAAAAAAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002242|",
-              "WhenOpened": "2025-03-28T13:08:18.243Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "Degree.cs",
-              "DocumentMoniker": "C:\\websites\\SuccessPathwayPortal\\github\\success-pathway-degree-mapping\\Models\\Degree.cs",
-              "RelativeDocumentMoniker": "Models\\Degree.cs",
-              "ToolTip": "C:\\websites\\SuccessPathwayPortal\\github\\success-pathway-degree-mapping\\Models\\Degree.cs",
-              "RelativeToolTip": "Models\\Degree.cs",
-              "ViewState": "AQIAAHAAAAAAAAAAAADwv3sAAAASAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-28T13:08:18.244Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "AppController.cs",
-              "DocumentMoniker": "C:\\websites\\SuccessPathwayPortal\\github\\success-pathway-degree-mapping\\Controllers\\AppController.cs",
-              "RelativeDocumentMoniker": "Controllers\\AppController.cs",
-              "ToolTip": "C:\\websites\\SuccessPathwayPortal\\github\\success-pathway-degree-mapping\\Controllers\\AppController.cs",
-              "RelativeToolTip": "Controllers\\AppController.cs",
-              "ViewState": "AgIAALYCAAAAAAAAAAAUwMUCAAAhAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-28T13:08:18.245Z",
+              "WhenOpened": "2025-08-21T18:58:19.461Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "CourseMapperSort.cs",
-              "DocumentMoniker": "C:\\websites\\SuccessPathwayPortal\\github\\success-pathway-degree-mapping\\Models\\CourseMapperSort.cs",
-              "RelativeDocumentMoniker": "Models\\CourseMapperSort.cs",
-              "ToolTip": "C:\\websites\\SuccessPathwayPortal\\github\\success-pathway-degree-mapping\\Models\\CourseMapperSort.cs",
-              "RelativeToolTip": "Models\\CourseMapperSort.cs",
-              "ViewState": "AgIAAAIAAAAAAAAAAADwvxcAAAAsAAAAAAAAAA==",
+              "Title": "User.cs",
+              "DocumentMoniker": "C:\\OLD Github\\Connect\\success-pathway-degree-mapping\\Models\\User.cs",
+              "RelativeDocumentMoniker": "Models\\User.cs",
+              "ToolTip": "C:\\OLD Github\\Connect\\success-pathway-degree-mapping\\Models\\User.cs",
+              "RelativeToolTip": "Models\\User.cs",
+              "ViewState": "AgIAADcAAAAAAAAAAAAvwD4AAAAbAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-28T13:08:18.25Z",
+              "WhenOpened": "2025-08-21T17:55:54.209Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Web.config",
+              "DocumentMoniker": "C:\\OLD Github\\Connect\\success-pathway-degree-mapping\\Web.config",
+              "RelativeDocumentMoniker": "Web.config",
+              "ToolTip": "C:\\OLD Github\\Connect\\success-pathway-degree-mapping\\Web.config",
+              "RelativeToolTip": "Web.config",
+              "ViewState": "AgIAAAEAAAAAAAAAAAAEwBUAAABeAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000601|",
+              "WhenOpened": "2025-08-21T17:57:48.001Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "CourseMapper.cs",
-              "DocumentMoniker": "C:\\websites\\SuccessPathwayPortal\\github\\success-pathway-degree-mapping\\Models\\CourseMapper.cs",
-              "RelativeDocumentMoniker": "Models\\CourseMapper.cs",
-              "ToolTip": "C:\\websites\\SuccessPathwayPortal\\github\\success-pathway-degree-mapping\\Models\\CourseMapper.cs",
-              "RelativeToolTip": "Models\\CourseMapper.cs",
-              "ViewState": "AgIAAGMBAAAAAAAAAAAqwHABAAAbAAAAAAAAAA==",
+              "DocumentIndex": 3,
+              "Title": "HomeController.cs",
+              "DocumentMoniker": "C:\\OLD Github\\Connect\\success-pathway-degree-mapping\\Controllers\\HomeController.cs",
+              "RelativeDocumentMoniker": "Controllers\\HomeController.cs",
+              "ToolTip": "C:\\OLD Github\\Connect\\success-pathway-degree-mapping\\Controllers\\HomeController.cs",
+              "RelativeToolTip": "Controllers\\HomeController.cs",
+              "ViewState": "AgIAABQAAAAAAAAAAAAgwCgAAAAaAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-28T13:08:18.255Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "_Degree.cshtml",
-              "DocumentMoniker": "C:\\websites\\SuccessPathwayPortal\\github\\success-pathway-degree-mapping\\Views\\App\\_Degree.cshtml",
-              "RelativeDocumentMoniker": "Views\\App\\_Degree.cshtml",
-              "ToolTip": "C:\\websites\\SuccessPathwayPortal\\github\\success-pathway-degree-mapping\\Views\\App\\_Degree.cshtml",
-              "RelativeToolTip": "Views\\App\\_Degree.cshtml",
-              "ViewState": "AQIAAAgBAAAAAAAAAAAAABkAAAAeAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002242|",
-              "WhenOpened": "2025-03-28T13:08:18.256Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "DegreeEdit.cshtml",
-              "DocumentMoniker": "C:\\websites\\SuccessPathwayPortal\\github\\success-pathway-degree-mapping\\Views\\App\\DegreeEdit.cshtml",
-              "RelativeDocumentMoniker": "Views\\App\\DegreeEdit.cshtml",
-              "ToolTip": "C:\\websites\\SuccessPathwayPortal\\github\\success-pathway-degree-mapping\\Views\\App\\DegreeEdit.cshtml",
-              "RelativeToolTip": "Views\\App\\DegreeEdit.cshtml",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002242|",
-              "WhenOpened": "2025-03-28T13:08:18.257Z"
+              "WhenOpened": "2025-08-21T17:54:46.637Z"
             }
           ]
         }

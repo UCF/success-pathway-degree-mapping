@@ -138,7 +138,8 @@
 
         <div class="form-group">
             <div class="col-md-10">
-                <i>Last updated on @Model.UpdateDate.ToShortDateString() by @Model.NID</i>
+                @Html.Action("_FormatUpdateOutput", "App", new { nid = Model.NID, dt = Model.UpdateDate })
+                @*<i>Last updated on @Model.UpdateDate.ToShortDateString() by @Model.NID</i>*@
             </div>
         </div>
 
@@ -230,7 +231,8 @@
                         {
                             <li>
                                 @Html.Raw(n.Value)
-                                <div><i>Last updated on @n.UpdateDate.ToShortDateString() by @n.NID</i></div>
+                                @Html.Action("_FormatUpdateOutput", "App", new { nid = n.NID, dt = n.UpdateDate })
+                                @*<div><i>Last updated on @n.UpdateDate.ToShortDateString() by @n.NID</i></div>*@
                             </li>
                         }
                     }
@@ -253,7 +255,8 @@
                                 @Html.ActionLink("Edit", "NoteEdit", new { id = n.Id })
                                 <blockquote>
                                     @Html.Raw(n.Value)
-                                    <div><i>Last updated on @n.UpdateDate.ToShortDateString() by @n.NID</i></div>
+                                    @Html.Action("_FormatUpdateOutput", "App", new { nid = n.NID, dt = n.UpdateDate })
+                                    @*<div><i>Last updated on @n.UpdateDate.ToShortDateString() by @n.NID</i></div>*@
                                 </blockquote>
 
                                 @*<a href="@Url.Action("NoteEdit", new {Id = n.Id})">@Html.Raw(n.Value)</a>*@

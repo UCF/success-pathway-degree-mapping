@@ -14,6 +14,7 @@
     string DisplayMultipleSemesterNoClass = (d.DisplayMultipleSemesters) ? string.Empty : "alert alert-danger";
 }
 
+
 <div class="container py-5">
     <a name="customcoursemapper"></a>
     <div class="row">
@@ -22,67 +23,66 @@
             <div>Semster Term Order is by <span class="bg-warning px-2">@d.SemesterStartTerm</span></div>
             <div><span class="fa fa-check" style="color:green"></span> Will be displayed</div>
             <div><span class="fa fa-times" style="color:red"></span> Will <i>not</i> be displayed</div>
+            @Html.Action("_FormatUpdateOutput", "App", new { nid = Model.NID, dt = Model.UpdatedDate })
+            <div class="form-check alert alert-info pt-3" id="DisplayMultipleSemesters">
+                @Html.LabelFor(x => d.DisplayMultipleSemesters) :
 
-        <div class="form-check alert alert-info pt-3" id="DisplayMultipleSemesters">
-            @Html.LabelFor(x => d.DisplayMultipleSemesters) :
-
-            <label>Yes @Html.RadioButtonFor(x => d.DisplayMultipleSemesters, true, new { @class = "displayMultipleSemestersYes" })</label>
-            <label class="DisplayMultipleSemesterNoClass @DisplayMultipleSemesterNoClass pl-3">No @Html.RadioButtonFor(x => d.DisplayMultipleSemesters, false, new { @class = "displayMultipleSemestersNo" })</label>
-            @*<span class="pl-2 font-weight-bold" id="DisplayMultipleSemestersMessage">By selecting no, only semester 1 will display</span>*@
-            <div>
-                <ol>
-                    <li>If degree has 5+ semesters, these will always display</li>
-                    <li>If YES and degree has no semesters, then parent semesters will display</li>
-                    <li>If NO and degree has no semesters, then nothing will be displayed</li>
-                </ol>
+                <label>Yes @Html.RadioButtonFor(x => d.DisplayMultipleSemesters, true, new { @class = "displayMultipleSemestersYes" })</label>
+                <label class="DisplayMultipleSemesterNoClass @DisplayMultipleSemesterNoClass pl-3">No @Html.RadioButtonFor(x => d.DisplayMultipleSemesters, false, new { @class = "displayMultipleSemestersNo" })</label>
+                @*<span class="pl-2 font-weight-bold" id="DisplayMultipleSemestersMessage">By selecting no, only semester 1 will display</span>*@
+                <div>
+                    <ol>
+                        <li>If degree has 5+ semesters, these will always display</li>
+                        <li>If YES and degree has no semesters, then parent semesters will display</li>
+                        <li>If NO and degree has no semesters, then nothing will be displayed</li>
+                    </ol>
+                </div>
             </div>
-        </div>
 
-        <div>
-            @Html.ActionLink("Edit courses to be displayed on the website", "CustomCourseMapperEdit", "App", new { degreeId = Model.DegreeId }, new { @class="btn btn-primary btn-lg"})
-        </div>
+            <div>
+                @Html.ActionLink("Edit courses to be displayed on the website", "CustomCourseMapperEdit", "App", new { degreeId = Model.DegreeId }, new { @class = "btn btn-primary btn-lg" })
+            </div>
 
-
-        <table class="table table-hover">
-            @foreach (DegreeMapping.Models.Course c in list_courses.OrderBy(x => x.Semester).ThenBy(x=>x.TermOrder))
-            {
-
-                string displayDisplatMultipleSemestersClass = (c.SemesterTerm == "1") ? string.Empty : "displayDisplatMultipleSemestersClass";
-                if (!d.DisplayMultipleSemesters && c.SemesterTerm != "1")
+            <table class="table table-hover">
+                @foreach (DegreeMapping.Models.Course c in list_courses.OrderBy(x => x.Semester).ThenBy(x => x.TermOrder))
                 {
-                    continue;
-                }
 
-                c.Description = (!string.IsNullOrEmpty(c.Description)) ? "<br /><em>" + c.Description + "</em>" : c.Description;
-                credit = (!string.IsNullOrEmpty(c.CreditText)) ? c.CreditText : c.Credits.ToString();
-                if (string.IsNullOrEmpty(semesterTerm) || semesterTerm != c.SemesterTerm)
-                {
-                    semesterTerm = c.SemesterTerm;
-                    <tr>
-                        <td class="text-center alert alert-warning h3 @displayDisplatMultipleSemestersClass">Semester @c.Semester @c.Term</td>
+                    string displayDisplatMultipleSemestersClass = (c.SemesterTerm == "1") ? string.Empty : "displayDisplatMultipleSemestersClass";
+                    if (!d.DisplayMultipleSemesters && c.SemesterTerm != "1")
+                    {
+                        continue;
+                    }
+
+                    c.Description = (!string.IsNullOrEmpty(c.Description)) ? "<br /><em>" + c.Description + "</em>" : c.Description;
+                    credit = (!string.IsNullOrEmpty(c.CreditText)) ? c.CreditText : c.Credits.ToString();
+                    if (string.IsNullOrEmpty(semesterTerm) || semesterTerm != c.SemesterTerm)
+                    {
+                        semesterTerm = c.SemesterTerm;
+                        <tr>
+                            <td class="text-center alert alert-warning h3 @displayDisplatMultipleSemestersClass">Semester @c.Semester @c.Term</td>
+                        </tr>
+                    }
+                    <tr class="@displayDisplatMultipleSemestersClass">
+                        <td>
+                            @if (Model.List_CourseIds.Contains(c.Id))
+                            {
+                                <span class="fa fa-check" style="color:green"></span>
+                            }
+                            else
+                            {
+                                <span class="fa fa-times" style="color:red"></span>
+                            }
+                            @c.Code (@credit credits)
+                            @Html.Raw(c.Description)
+                            @if (!c.Active)
+                            {
+                                <p class="pt-3 mb-0 pb-3"><span class="alert alert-danger">Not Active</span></p>
+                            }
+                            <p>@Html.ActionLink("Edit Course", "CourseEdit", "App", new { id = c.Id }, null)</p>
+                        </td>
                     </tr>
                 }
-                <tr class="@displayDisplatMultipleSemestersClass">
-                    <td>
-                        @if (Model.List_CourseIds.Contains(c.Id))
-                        {
-                            <span class="fa fa-check" style="color:green"></span>
-                        }
-                        else
-                        {
-                            <span class="fa fa-times" style="color:red"></span>
-                        }
-                        @c.Code (@credit credits)
-                        @Html.Raw(c.Description)
-                        @if (!c.Active)
-                        {
-                            <p class="pt-3 mb-0 pb-3"><span class="alert alert-danger">Not Active</span></p>
-                        }
-                        <p>@Html.ActionLink("Edit Course", "CourseEdit", "App", new { id = c.Id }, null)</p>
-                    </td>
-                </tr>
-            }
-        </table>
+            </table>
         </div>
     </div>
 </div>

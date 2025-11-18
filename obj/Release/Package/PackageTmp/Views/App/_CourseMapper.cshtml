@@ -9,6 +9,7 @@
 }
 
 
+@Html.Action("_FormatUpdateOutput", "App", new { nid = Model.NID, dt = Model.UpdatedDate })
 @using (Html.BeginForm("CourseMapperSave", "App", FormMethod.Post, new { @Class = "form-horizontal" }))
 {
     @Html.HiddenFor(x => x.Id)

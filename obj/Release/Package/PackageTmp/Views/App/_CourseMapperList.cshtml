@@ -68,7 +68,15 @@
                             @Html.ActionLink("Delete", "CourseMapperDelete", "App", new { id = cm.Id, degreeId = cm.DegreeId }, new { @Class = "btn btn-danger btn-lg", onclick = "return confirm('Are you sure you wish to delete this course map?');" })
                         </td>
                     </tr>
-                }
+                        if (!string.IsNullOrEmpty(cm.NID))
+                        {
+                            <tr>
+                                <td colspan="5">
+                                    @Html.Action("_FormatUpdateOutput", "App", new { nid = cm.NID, dt = cm.UpdatedDate })
+                                </td>
+                            </tr>
+                        }
+                    }
             }
         </tbody>
     </table>
