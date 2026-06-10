@@ -1,9 +1,0 @@
-﻿@model DegreeMapping.Models.Institution
-
-<div class="row py-5">
-    <div class="col-md-12">
-        @Html.ActionLink("Institutions", "Institutions")
-        <h1>Edit @Html.Raw(Model.Name)</h1>
-        @Html.Action("_Institution", "App", new { model = Model })
-    </div>
-</div>
